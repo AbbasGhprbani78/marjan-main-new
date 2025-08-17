@@ -1,0 +1,79 @@
+import Image from "next/image";
+import React from "react";
+import Form from "@/app/components/NewsLetter/Form";
+
+export const metadata = {
+  title: "عضویت در خبرنامه | وب‌سایت ما",
+  description:
+    "با عضویت در خبرنامه ما از جدیدترین اخبار، مقالات و تخفیف‌ها مطلع شوید.",
+  keywords: [
+    "خبرنامه",
+    "عضویت در خبرنامه",
+    "ایمیل مارکتینگ",
+    "تخفیف ویژه",
+    "مقالات جدید",
+    "به‌روز رسانی‌ها",
+  ],
+  authors: [{ name: "وب‌سایت ما", url: "https://example.com" }],
+  openGraph: {
+    title: "عضویت در خبرنامه | وب‌سایت ما",
+    description:
+      "با عضویت در خبرنامه ما از جدیدترین اخبار، مقالات و تخفیف‌ها مطلع شوید.",
+    url: "https://example.com/newsletter",
+    siteName: "وب‌سایت ما",
+    images: [
+      {
+        url: "/images/12.png",
+        width: 800,
+        height: 600,
+        alt: "خبرنامه",
+      },
+    ],
+    locale: "fa_IR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "عضویت در خبرنامه",
+    description:
+      "جدیدترین اخبار، مقالات و تخفیف‌ها را از طریق ایمیل دریافت کنید.",
+    images: ["/images/12.png"],
+  },
+  alternates: {
+    canonical: "https://example.com/newsletter",
+  },
+};
+
+export default function page() {
+  return (
+    <main className="wrapper ">
+      <h1 className="sr-only">newsLetter</h1>
+      <section
+        className={`relative flex justify-center items-end wrapperheader`}
+      >
+        <Image
+          src="/images/12.png"
+          alt="image header news letter"
+          fill
+          className="object-cover z-0"
+        />
+
+        <div className="absolute inset-0 bg-[rgba(80,80,80,0.5)] z-10"></div>
+
+        <div className="flex flex-col justify-center items-center text-white gap-[1rem] z-10 mb-[15%] md:mb-[1.7rem]">
+          <h2 className="font-medium text-[1.7rem] md:text-[2rem]">
+            در خبرنامه‌ی ما عضو شوید
+          </h2>
+          <p className="w-3/4 md:w-full text-[.9rem] md:text-[1rem] font-normal text-center">
+            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+            استفاده از طراحان گرافیک است.
+          </p>
+        </div>
+      </section>
+
+      <section className="px-20 md:px-40 lg:px-80 py-20  mb-20 lg:mb-0  lg:py-40 w-full  md:w-8/12">
+        <Form />
+      </section>
+    </main>
+  );
+}

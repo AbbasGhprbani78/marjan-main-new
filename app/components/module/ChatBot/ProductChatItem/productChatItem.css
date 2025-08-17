@@ -1,0 +1,49 @@
+.productchat {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.productchat:last-child {
+  margin-bottom: 0;
+}
+
+.img-chat-wrapp {
+  min-width: 80px;
+  min-height: 80px;
+  max-width: 80px;
+  max-height: 80px;
+  overflow: hidden;
+  background-color: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.img-chat-wrapp > img {
+  width: 100%;
+  height: 100%;
+}
+
+.chat-product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 10px;
+  color: #fff;
+}
+
+.product-chat-name {
+  text-align: start;
+}
+
+.product-chat-price {
+}

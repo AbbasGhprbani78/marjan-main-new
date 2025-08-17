@@ -1,0 +1,20 @@
+.wrapperRepresentation {
+  max-height: calc(100dvh - 300px);
+}
+@media (max-width: 1024px) {
+  .mapContainer {
+    height: 50dvh;
+  }
+}
+
+@media (max-width: 800px) {
+  .wrapperRepresentation {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 640px) {
+  .mapContainer {
+    height: 40dvh;
+  }
+}

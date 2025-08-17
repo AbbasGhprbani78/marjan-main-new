@@ -1,0 +1,75 @@
+/* GlobalError.module.css */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  max-height: 100vh;
+  font-family: "Anjoman";
+}
+
+.card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 28rem;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.iconWrapper {
+  margin: 0 auto 1rem;
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 50%;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #dc2626;
+}
+
+.text {
+  margin-top: 0.5rem;
+  color: #4b5563;
+  font-size: 1.3rem;
+}
+
+.button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+  transition: background 0.3s ease;
+  font-family: "Anjoman" !important;
+  font-size: 1.2rem;
+}
+
+.button:hover {
+  background: #dc2626;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
