@@ -154,7 +154,7 @@ export default function Texture({ textureImage }) {
 
                   return tailesToShow.map((tile, index) => {
                     const { width, height } = getScaledSize(
-                      tile.size,
+                      tile?.size,
                       maxDim,
                       150
                     );
@@ -237,7 +237,7 @@ export default function Texture({ textureImage }) {
                     <div
                       className="relative cursor-pointer"
                       style={getScaledSize(
-                        mainVerticalTile.size,
+                        mainVerticalTile?.size,
                         getMaxDimension([mainHorizontalTile, mainVerticalTile]),
                         150
                       )}
@@ -264,7 +264,7 @@ export default function Texture({ textureImage }) {
                       </div>
                     </div>
                   )}
-                  <span className="pt-[10px]">{mainVerticalTile.size}</span>
+                  <span className="pt-[10px]">{mainVerticalTile?.size}</span>
                 </div>
               </div>
             </div>
