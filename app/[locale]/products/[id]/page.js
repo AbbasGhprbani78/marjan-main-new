@@ -33,13 +33,13 @@ export default async function page({ params }) {
         width={1980}
         height={1080}
       />
-      <Table
+      {/* <Table
         title={dataSingleProduct?.title}
         thickness={dataSingleProduct?.thickness}
         colors={dataSingleProduct?.colors}
         surface={dataSingleProduct?.surface}
         size={dataSingleProduct?.size}
-      />
+      /> */}
 
       <div className="px-20 md:px-40 lg:px-80 mt-[2rem] pt-35 pb-61  border-b-1 border-t-1 border-gray-500 ">
         <div className="  text-justify " id="catalog">
