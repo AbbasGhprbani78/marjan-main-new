@@ -41,7 +41,7 @@ export default function CardItem({ product }) {
         {/* <p className="mt-[15px] text-[15px] text-[#919191] text-justify">
           {truncateText(product?.description, 40)}
         </p> */}
-        <div className="flex justify-end items-center mt-[15px]">
+        {/* <div className="flex justify-end items-center mt-[15px]">
           {[
             "/images/2.png",
             "/images/2.png",
@@ -50,7 +50,7 @@ export default function CardItem({ product }) {
           ].map((src, i) => (
             <CirecleProductItem key={i} src={src} index={i} />
           ))}
-        </div>
+        </div> */}
       </div>
     </Link>
   );

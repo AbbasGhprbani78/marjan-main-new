@@ -82,7 +82,7 @@ export default function Texture({ textureImage }) {
 
   return (
     <div>
-      <p className=" font-[500] title  pb-[30]">{t("Color")}</p>
+      <p className=" font-[500] title  pb-[30]">{t("color")}</p>
       <div
         className="grid justify-center gap-y-[2rem] gap-x-[10px] md:gap-x-[3rem] lg:gap-x-[6rem]"
         style={{

@@ -102,8 +102,6 @@ export default function QuestionForm({ openModal, subjects }) {
     }
   }, [openModal]);
 
-  console.log(subjects);
-
   return (
     <form>
       <div className="max-h-[500px] overflow-y-auto ">

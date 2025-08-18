@@ -1,6 +1,8 @@
 import Image from "next/image";
 import React from "react";
 import Form from "@/app/components/NewsLetter/Form";
+import fa from "@/i18n/fa.json";
+import en from "@/i18n/en.json";
 
 export const metadata = {
   title: "عضویت در خبرنامه | وب‌سایت ما",
@@ -44,7 +46,9 @@ export const metadata = {
   },
 };
 
-export default function page() {
+export default async function page({ params }) {
+  const { locale } = await params;
+  const t = locale === "fa" ? fa : en;
   return (
     <main className="wrapper ">
       <h1 className="sr-only">newsLetter</h1>
@@ -62,7 +66,7 @@ export default function page() {
 
         <div className="flex flex-col justify-center items-center text-white gap-[1rem] z-10 mb-[15%] md:mb-[1.7rem]">
           <h2 className="font-medium text-[1.7rem] md:text-[2rem]">
-            در خبرنامه‌ی ما عضو شوید
+            {t.Subscribenewsletter}
           </h2>
           <p className="w-3/4 md:w-full text-[.9rem] md:text-[1rem] font-normal text-center">
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با

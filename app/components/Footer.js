@@ -13,9 +13,7 @@ export default function Footer() {
       <div className="hidden md:block w-full min-h-[210px] bg-gray-400 md:px-40 lg:px-80 pb-[21px] pt-[33px]">
         <TextRow
           icon="Location"
-          text={t(
-            "نشانی دفتر مرکزی شرکت کاشی مرجان : اصفهان، چهارباغ بالا، کوچه کاویان، پلاک ۴۵"
-          )}
+          text={`${t("AddressTitleF")} : ${t("AddressTextF")}`}
         />
         <div className="flex items-center justify-between mt-[1.3rem]">
           <TextRow

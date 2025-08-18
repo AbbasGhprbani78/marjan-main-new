@@ -116,10 +116,7 @@ export default async function page({ params }) {
         <div className=" border-2 border-gray-500">
           <Icons.Danger size={15} className="m-3" />
         </div>
-        <p className="text-gray-900 text-justify">
-          به دلیل تفاوت در تنظیمات نمایشگر‌ها، رنگ محصولات ممکن است با تصویر
-          نمایش داده شده اندکی متفاوت باشد.
-        </p>
+        <p className="text-gray-900 text-justify">{t.TextSizeInfo}</p>
       </div>
     </div>
   );

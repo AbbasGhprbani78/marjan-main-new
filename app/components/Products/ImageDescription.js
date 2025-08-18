@@ -1,6 +1,9 @@
+"use client";
 import React from "react";
 import * as Icons from "iconsax-reactjs";
+import { useTranslation } from "@/hook/useTranslation";
 export default function ImageDescription() {
+  const { t } = useTranslation();
   return (
     <figcaption className="border-t-2 border-[#8b8d91] lg:border-none text-[var(--color-gray-900)] flex   items-center gap-7  py-[30px] lg:py-0  ">
       <div
@@ -10,8 +13,7 @@ export default function ImageDescription() {
         <Icons.Danger size="15" color="#8b8d91" />
       </div>
       <p className="text-sm w-full lg:w-3/4 text-start justify-start  lg:justify-center">
-        به دلیل تفاوت در تنظیمات نمایشگر‌ها، رنگ محصولات ممکن است با تصویر نمایش
-        داده شده اندکی متفاوت باشد.
+        {t("TextSizeInfo")}
       </p>
     </figcaption>
   );

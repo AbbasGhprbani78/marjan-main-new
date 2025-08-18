@@ -212,7 +212,8 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
           ref={swiper}
           loop={true}
           speed={800}
-          dir="ltr"
+          dir={locale}
+          key={locale}
           className="mt-[30px]"
         >
           {data.sections[activeButton - 1].data.map((item) => (
@@ -353,7 +354,8 @@ export function CategorySlider({ data }) {
           ref={swiper}
           loop={true}
           speed={800}
-          dir="ltr"
+          dir={locale}
+          key={locale}
         >
           {data[activeButton - 1]?.groups[0]?.data.map((item) => (
             <SwiperSlide
@@ -426,6 +428,7 @@ export function ProjectsSlider({ data, bgcolor }) {
         loop={true}
         speed={800}
         dir={locale}
+        key={locale}
       >
         {data.map((item, index) => (
           <SwiperSlide key={item.key} style={{ width: getSlideWidth(index) }}>
@@ -510,7 +513,8 @@ export function GallerySlider({ data, onClick }) {
           ref={swiper}
           loop={true}
           speed={800}
-          dir="ltr"
+          dir={locale}
+          key={locale}
         >
           {data.map((item) => {
             const image = (

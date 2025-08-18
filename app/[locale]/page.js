@@ -18,8 +18,6 @@ export default async function Home({ params }) {
 
   const dataHome = await fetchhome(locale);
 
-  console.log(dataHome);
-
   return (
     <div className="wrapper w-full h-full font-fa ">
       <HomeSlider data={dataHome?.home?.slides} route={"/products"} />
@@ -96,7 +94,7 @@ export default async function Home({ params }) {
       </div>
       <div className="flex flex-col items-center px-[20px] md:px-40 py-[50px]  gap-[28px]">
         <Section
-          title={"در خبرنامه‌ی ما عضو شوید"}
+          title={t.Subscribenewsletter}
           descrption={
             "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با . . استفاده از طراحان گرافیک است"
           }

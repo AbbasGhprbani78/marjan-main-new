@@ -56,7 +56,6 @@ export default function ChatBot({}) {
       );
 
       if (res.status === 201 || res.status === 200) {
-        console.log(res.data);
         setDisableInput(false);
         setLoading(false);
 
