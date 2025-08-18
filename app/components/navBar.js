@@ -705,9 +705,20 @@ function MenuMobile() {
         }`}
       >
         <ul className="px-20 py-30 text-[var(--color-gray-900)] flex flex-col gap-[2rem]">
+          <li className="font-medium">
+            <MenuLink
+              href={"/"}
+              onClick={() => setIsOpen(false)}
+              className={`pb-1 ${
+                isActive("/") ? "border-b-2 border-primary" : ""
+              }`}
+            >
+              {t("Home")}
+            </MenuLink>
+          </li>
+
+          <FilterHeader show={true} />
           {[
-            { label: t("Home"), href: "/" },
-            { label: t("Products"), href: "/products" },
             { label: t("Catalog"), href: "/catalog" },
             { label: t("Representatives"), href: "/representatives" },
             { label: t("About"), href: "/aboutus" },
@@ -911,3 +922,31 @@ function MenuLink({ href, children, className = "", onClick }) {
     </Link>
   );
 }
+
+{
+  /* <li className="w-full font-medium">
+            <div
+              onClick={() => toggleItem("products")}
+              className="flex items-center gap-[10px] cursor-pointer"
+            >
+              {t("Products")}
+              <Icons.ArrowDown2
+                size="20"
+                className={`transition-transform duration-300`}
+              />
+            </div>
+            <AnimatePresence>
+              <motion.ul
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
+              ></motion.ul>
+            </AnimatePresence>
+          </li> */
+}
+
+// ${
+//                 openItems.assistant ? "rotate-180" : ""
+//               }
