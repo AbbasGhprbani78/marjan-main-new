@@ -85,6 +85,8 @@ export default function Texture({ textureImage }) {
     };
   };
 
+  // console.log(mainHorizontalTile.size);
+  // console.log(mainVerticalTile.size);
   return (
     <div>
       <p className=" font-[500] title  pb-[30]  px-20 md:px-40 lg:px-80">
@@ -196,69 +198,74 @@ export default function Texture({ textureImage }) {
 
             <div className="col-span-12 order-2 lg:order-1 lg:col-span-4">
               <div className="flex gap-5 items-end overflow-hidden max-w-full">
-                {mainHorizontalTile && (
-                  <div
-                    className="relative cursor-pointer"
-                    style={getScaledSize(
-                      mainHorizontalTile.size,
-                      getMaxDimension([mainHorizontalTile, mainVerticalTile]),
-                      150
-                    )}
-                    onClick={() => {
-                      if (!isHorizontal) switchTiles();
-                    }}
-                  >
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_API_URL}${mainHorizontalTile?.image}`}
-                      alt="main horizontal tile"
-                      className="object-cover"
-                      fill
-                    />
-                    <div className="absolute top-5 right-5 z-10">
-                      <input
-                        type="radio"
-                        name="tileOrientation"
-                        checked={isHorizontal}
-                        onChange={() => {
-                          if (!isHorizontal) switchTiles();
-                        }}
-                        className="w-[16px] h-[16px] accent-black"
+                <div className="flex flex-col">
+                  {mainHorizontalTile && (
+                    <div
+                      className="relative cursor-pointer"
+                      style={getScaledSize(
+                        mainHorizontalTile.size,
+                        getMaxDimension([mainHorizontalTile, mainVerticalTile]),
+                        150
+                      )}
+                      onClick={() => {
+                        if (!isHorizontal) switchTiles();
+                      }}
+                    >
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${mainHorizontalTile?.image}`}
+                        alt="main horizontal tile"
+                        className="object-cover"
+                        fill
                       />
+                      <div className="absolute top-5 right-5 z-10">
+                        <input
+                          type="radio"
+                          name="tileOrientation"
+                          checked={isHorizontal}
+                          onChange={() => {
+                            if (!isHorizontal) switchTiles();
+                          }}
+                          className="w-[16px] h-[16px] accent-black"
+                        />
+                      </div>
                     </div>
-                  </div>
-                )}
-
-                {mainVerticalTile && (
-                  <div
-                    className="relative cursor-pointer"
-                    style={getScaledSize(
-                      mainVerticalTile.size,
-                      getMaxDimension([mainHorizontalTile, mainVerticalTile]),
-                      150
-                    )}
-                    onClick={() => {
-                      if (isHorizontal) switchTiles();
-                    }}
-                  >
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_API_URL}${mainVerticalTile?.image}`}
-                      alt="main vertical tile"
-                      className="object-cover"
-                      fill
-                    />
-                    <div className="absolute top-2 right-2 z-10">
-                      <input
-                        type="radio"
-                        name="tileOrientation"
-                        checked={!isHorizontal}
-                        onChange={() => {
-                          if (isHorizontal) switchTiles();
-                        }}
-                        className="w-[16px] h-[16px] accent-black"
+                  )}
+                  <span className="pt-[10px]">{mainHorizontalTile.size}</span>
+                </div>
+                <div className="flex flex-col">
+                  {mainVerticalTile && (
+                    <div
+                      className="relative cursor-pointer"
+                      style={getScaledSize(
+                        mainVerticalTile.size,
+                        getMaxDimension([mainHorizontalTile, mainVerticalTile]),
+                        150
+                      )}
+                      onClick={() => {
+                        if (isHorizontal) switchTiles();
+                      }}
+                    >
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${mainVerticalTile?.image}`}
+                        alt="main vertical tile"
+                        className="object-cover"
+                        fill
                       />
+                      <div className="absolute top-2 right-2 z-10">
+                        <input
+                          type="radio"
+                          name="tileOrientation"
+                          checked={!isHorizontal}
+                          onChange={() => {
+                            if (isHorizontal) switchTiles();
+                          }}
+                          className="w-[16px] h-[16px] accent-black"
+                        />
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                  <span className="pt-[10px]">{mainVerticalTile.size}</span>
+                </div>
               </div>
             </div>
           </div>

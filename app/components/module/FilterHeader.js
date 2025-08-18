@@ -6,9 +6,29 @@ import * as Icons from "iconsax-reactjs";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/hook/useTranslation";
 import Link from "next/link";
+import axios from "axios";
+import { useEffect } from "react";
 
 export default function FilterHeader({ show }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
+
+  const getFilterHeader = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/product/product-catalog/`
+      );
+
+      if (response.status === 200) {
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getFilterHeader();
+  }, []);
 
   return (
     <>
@@ -181,7 +201,6 @@ function ItemFilterBox({ text, type, item }) {
     const parts = text.split(/[*x]/i);
     if (parts.length === 2) {
       const [height, width] = parts.map((n) => parseInt(n.trim(), 10));
-      console.log(height, width);
     }
   }
 

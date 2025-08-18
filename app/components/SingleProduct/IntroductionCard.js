@@ -15,7 +15,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
     <div className="grid grid-cols-12  md:w-[95vw] lg:w-[70vw] mx-auto ">
       <div className="col-span-12 md:col-span-6 xl:col-span-5 h-full text-[var(--color-gray-900)] bg-white p-[1.2rem] ">
         <div className="flex items-center justify-between mb-[1rem] md:mb-[2rem]">
-          <span className="font-en text-[1.3rem]">{singleProduct.title}</span>
+          <span className="font-fa text-[1.3rem]">{singleProduct.title}</span>
           <Icons.CloseCircle
             size={25}
             className="cursor-pointer hidden md:block"
@@ -137,14 +137,15 @@ function ItemOther({ setOpenModal, item }) {
   return (
     <div className="flex items-center justify-between ">
       <div className="flex items-center gap-[15px]">
-        <div className="relative">
+        <div className="relative w-[80px] h-[80px]">
           <Image
-            src="/images/68.png"
-            alt=" Introduction image"
-            width={100}
-            height={100}
+            src={`${process.env.NEXT_PUBLIC_API_URL}${item.product_image}`}
+            alt="Introduction image"
+            fill
+            className="object-cover aspect-square "
           />
         </div>
+
         <div className="flex flex-col gap-[6px]">
           <sapn>{item.title}</sapn>
           {item.sizes.map((size) => (

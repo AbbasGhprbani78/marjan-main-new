@@ -1,5 +1,6 @@
 export default function CheckBox({ label, checked, onChange, value, name }) {
-  const id = `checkbox-${name || label.replace(/\s+/g, "-").toLowerCase()}`;
+  console.log("lable =>", label);
+  const id = `checkbox-${name || label?.replace(/\s+/g, "-").toLowerCase()}`;
 
   return (
     <div className="flex items-center space-x-2">
