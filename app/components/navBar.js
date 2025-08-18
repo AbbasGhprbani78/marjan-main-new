@@ -465,16 +465,6 @@ function Menu({ show, setShowInnerMenu }) {
               {t("Contactus")}
             </Link>
           </li>
-          <li>
-            <Link
-              href={localizedPath("/industrial")}
-              className={`custom-link ${
-                isActivePath("/industrial") ? "active" : ""
-              }`}
-            >
-              {t("Industrial")}
-            </Link>
-          </li>
         </ul>
       </div>
     </>
@@ -717,7 +707,7 @@ function MenuMobile() {
             </MenuLink>
           </li>
 
-          <FilterHeader show={true} />
+          {/* <FilterHeader show={true} /> */}
           {[
             { label: t("Catalog"), href: "/catalog" },
             { label: t("Representatives"), href: "/representatives" },

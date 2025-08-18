@@ -45,7 +45,7 @@ export default async function page({ params }) {
   const cleanedCategories = {
     environment: dataProducts.categories.environment || [],
     style: dataProducts.categories.style || [],
-    // color: dataProducts.categories.color || [],
+    color: dataProducts.categories.color || [],
     size: dataProducts.categories.size || [],
     industrie: dataProducts.categories.industrie || [],
     thicknesses: (dataProducts.categories.thicknesses || []).map(String),

@@ -72,13 +72,13 @@ export function HomeSlider({ data, bgcolor, dotColor, route }) {
 
   return (
     <div
-      className="relative "
+      className="relative mt-[130px] lg:mt-0"
       style={{
         "--dot-color-active": dotColor ?? "var(--color-gray-100)",
       }}
     >
-      <LeftArrow swiper={swiper} bgcolor={bgcolor} offsetY="60%" />
-      <RightArrow swiper={swiper} bgcolor={bgcolor} offsetY="60%" />
+      <LeftArrow swiper={swiper} bgcolor={bgcolor} offsetY="50%" />
+      <RightArrow swiper={swiper} bgcolor={bgcolor} offsetY="50%" />
 
       <Swiper
         className="my-swiper"
@@ -105,7 +105,7 @@ export function HomeSlider({ data, bgcolor, dotColor, route }) {
           <SwiperSlide key={item.key} style={{ position: "relative" }}>
             <div className="flex flex-col absolute w-full h-[100%]  z-10 bg-black/40">
               <div
-                className="relative m-auto mb-[23px] pt-[13dvh] md:pt-0"
+                className="relative m-auto mb-[23px]  md:pt-0"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
@@ -130,9 +130,13 @@ export function HomeSlider({ data, bgcolor, dotColor, route }) {
               />
             </div>
             <Image
-              src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
+              src={`${
+                item.image.startsWith("/images")
+                  ? item.image
+                  : `${process.env.NEXT_PUBLIC_API_URL}${item.image}`
+              }`}
               alt="Background Image"
-              className="aspect-square object-cover w-full   h-[75dvh]  md:min-h-[400px] lg:h-[100dvh]"
+              className="aspect-4/3 object-cover w-full    md:min-h-[400px] lg:h-[100dvh]"
               width={1980}
               height={1080}
               priority
@@ -144,9 +148,111 @@ export function HomeSlider({ data, bgcolor, dotColor, route }) {
   );
 }
 
+// export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
+//   const { locale } = useParams();
+//   let swiper = useRef(null);
+
+//   const [activeButton, setActiveButton] = useState(1);
+//   const { localizedHref } = useLocalizedLink();
+//   const viewportWidth = useViewportWidth();
+//   const slidesNumber =
+//     viewportWidth < 768 ? 2 : Math.floor(viewportWidth / 340);
+
+//   const buttonsRef = useRef({});
+//   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
+
+//   useEffect(() => {
+//     const currentButton = buttonsRef.current[activeButton];
+//     if (currentButton) {
+//       setUnderlineStyle({
+//         left: currentButton.offsetLeft,
+//         width: currentButton.offsetWidth,
+//       });
+//     }
+//   }, [activeButton]);
+
+//   return (
+//     <div className="relative px-20 md:px-40 lg:px-80">
+//       <div className="relative flex flex-row justify-center gap-[50px] mb-[1rem] mt-[20px] md:mt-[50px]  border-b border-gray-300">
+//         {data.sections.map((item) => (
+//           <button
+//             key={item.id}
+//             ref={(el) => (buttonsRef.current[item.id] = el)}
+//             className={`w-[136px] h-[45px] text-[20px] font-[500] cursor-pointer pb-[5px] transition-all duration-300
+//               ${shadow && activeButton === item.id && "text-black"}`}
+//             onClick={() => setActiveButton(item.id)}
+//           >
+//             {locale === "fa" ? toPersianDigits(item.title) : item.title}
+//           </button>
+//         ))}
+
+//         <span
+//           className={`absolute bottom-0 h-[2px] transition-all duration-300 ${
+//             lineColor ? "bg-yellow-300" : "bg-black"
+//           } `}
+//           style={{
+//             left: underlineStyle.left,
+//             width: underlineStyle.width,
+//           }}
+//         />
+//       </div>
+
+//       <div className="relative w-full">
+//         <LeftArrow
+//           swiper={swiper}
+//           bgcolor={bgcolor}
+//           className="left-[-18px] lg:left-[-18px]"
+//         />
+//         <RightArrow
+//           swiper={swiper}
+//           bgcolor={bgcolor}
+//           className="right-[-18px] lg:right-[-18px]"
+//         />
+
+//         <Swiper
+//           spaceBetween={viewportWidth < 1024 ? 10 : 28}
+//           modules={[Autoplay]}
+//           slidesPerView={slidesNumber}
+//           ref={swiper}
+//           loop={true}
+//           speed={800}
+//           dir={locale}
+//           key={locale}
+//           className="mt-[30px]"
+//         >
+//           {data.sections[activeButton - 1].data.map((item) => (
+//             <SwiperSlide key={item.key}>
+//               <Link href={localizedHref(`/blogs/${item.id}`)}>
+//                 <div className="relative w-full aspect-square md:aspect-auto  md:h-[290px] overflow-hidden">
+//                   <Image
+//                     src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
+//                     alt="Background Image"
+//                     className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
+//                     fill
+//                     priority
+//                   />
+//                 </div>
+
+//                 <div className="flex flex-col mt-[10px]">
+//                   <p
+//                     className="font-fa text-[.9rem]  font-[500]"
+//                     dir={locale === "fa" ? "rtl" : "ltr"}
+//                   >
+//                     {truncateText(item.title, 25)}
+//                   </p>
+//                 </div>
+//               </Link>
+//             </SwiperSlide>
+//           ))}
+//         </Swiper>
+//       </div>
+//     </div>
+//   );
+// }
+
 export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
   const { locale } = useParams();
-  let swiper = useRef(null);
+  const swiper = useRef(null);
 
   const [activeButton, setActiveButton] = useState(1);
   const { localizedHref } = useLocalizedLink();
@@ -156,6 +262,7 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
 
   const buttonsRef = useRef({});
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
+  const [showArrows, setShowArrows] = useState(false);
 
   useEffect(() => {
     const currentButton = buttonsRef.current[activeButton];
@@ -167,9 +274,24 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
     }
   }, [activeButton]);
 
+  useEffect(() => {
+    if (!data?.sections?.length) return;
+
+    const containerPadding = viewportWidth >= 1024 ? 160 : 40;
+    const containerWidth = viewportWidth - containerPadding;
+
+    const slideWidth = viewportWidth < 768 ? viewportWidth / 2 : 340;
+    const gap = viewportWidth < 1024 ? 10 : 28;
+
+    const totalSlidesWidth =
+      (data.sections[activeButton - 1]?.data.length || 0) * (slideWidth + gap);
+
+    setShowArrows(totalSlidesWidth > containerWidth);
+  }, [data, activeButton, viewportWidth]);
+
   return (
     <div className="relative px-20 md:px-40 lg:px-80">
-      <div className="relative flex flex-row justify-center gap-[50px] mb-[1rem] mt-[20px] md:mt-[50px]  border-b border-gray-300">
+      <div className="relative flex flex-row justify-center gap-[50px] mb-[1rem] mt-[20px] md:mt-[50px] border-b border-gray-300">
         {data.sections.map((item) => (
           <button
             key={item.id}
@@ -185,25 +307,29 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
         <span
           className={`absolute bottom-0 h-[2px] transition-all duration-300 ${
             lineColor ? "bg-yellow-300" : "bg-black"
-          } `}
-          style={{
-            left: underlineStyle.left,
-            width: underlineStyle.width,
-          }}
+          }`}
+          style={underlineStyle}
         />
       </div>
 
+      {/* اسلایدر */}
       <div className="relative w-full">
-        <LeftArrow
-          swiper={swiper}
-          bgcolor={bgcolor}
-          className="left-[-18px] lg:left-[-18px]"
-        />
-        <RightArrow
-          swiper={swiper}
-          bgcolor={bgcolor}
-          className="right-[-18px] lg:right-[-18px]"
-        />
+        {showArrows && (
+          <LeftArrow
+            swiper={swiper}
+            bgcolor={bgcolor}
+            className="left-[-18px] lg:left-[-18px]"
+            offsetY="45%"
+          />
+        )}
+        {showArrows && (
+          <RightArrow
+            swiper={swiper}
+            bgcolor={bgcolor}
+            className="right-[-18px] lg:right-[-18px]"
+            offsetY="45%"
+          />
+        )}
 
         <Swiper
           spaceBetween={viewportWidth < 1024 ? 10 : 28}
@@ -216,12 +342,16 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
           key={locale}
           className="mt-[30px]"
         >
-          {data.sections[activeButton - 1].data.map((item) => (
+          {data.sections[activeButton - 1]?.data.map((item) => (
             <SwiperSlide key={item.key}>
               <Link href={localizedHref(`/blogs/${item.id}`)}>
-                <div className="relative w-full aspect-square md:aspect-auto  md:h-[290px] overflow-hidden">
+                <div className="relative w-full aspect-square md:aspect-auto md:h-[290px] overflow-hidden">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
+                    src={`${
+                      item.image.startsWith("/images")
+                        ? item.image
+                        : `${process.env.NEXT_PUBLIC_API_URL}${item.image}`
+                    }`}
                     alt="Background Image"
                     className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
                     fill
@@ -231,7 +361,7 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
 
                 <div className="flex flex-col mt-[10px]">
                   <p
-                    className="font-fa text-[.9rem]  font-[500]"
+                    className="font-fa text-[.9rem] font-[500]"
                     dir={locale === "fa" ? "rtl" : "ltr"}
                   >
                     {truncateText(item.title, 25)}
@@ -248,11 +378,12 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
 
 export function CategorySlider({ data }) {
   const { locale } = useParams();
-  let swiper = useRef(null);
+  const swiper = useRef(null);
   const [activeButton, setActiveButton] = useState(1);
   const viewportWidth = useViewportWidth();
   const buttonsRef = useRef({});
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
+  const [showArrows, setShowArrows] = useState(false);
   const { localizedHref } = useLocalizedLink();
 
   const slidesNumber =
@@ -268,19 +399,30 @@ export function CategorySlider({ data }) {
     }
   }, [activeButton, viewportWidth]);
 
-  console.log(data);
+  useEffect(() => {
+    if (!data?.length) return;
+
+    const containerPadding = viewportWidth >= 1024 ? 160 : 40;
+    const containerWidth = viewportWidth - containerPadding;
+
+    const slideWidth = viewportWidth < 768 ? viewportWidth / 2 : 340;
+    const gap = viewportWidth < 1024 ? 10 : 28;
+
+    const totalSlidesWidth =
+      (data[activeButton - 1]?.data.length || 0) * (slideWidth + gap);
+
+    setShowArrows(totalSlidesWidth > containerWidth);
+  }, [data, activeButton, viewportWidth]);
 
   return (
-    <div className="px-20 md:px-40 lg:px-80 ">
-      <div className="hidden md:flex flex-row justify-center gap-[50px] mt-[50px]  relative border-b border-gray-300">
+    <div className="px-20 md:px-40 lg:px-80">
+      <div className="hidden md:flex flex-row justify-center gap-[50px] mt-[50px] relative border-b border-gray-300">
         {data.map((item) => (
           <button
             key={item.id}
             ref={(el) => (buttonsRef.current[item.id] = el)}
             className="w-[136px] h-[45px] text-[22px] font-[500] cursor-pointer pb-[5px] transition-all duration-300"
-            onClick={() => {
-              setActiveButton(item.id);
-            }}
+            onClick={() => setActiveButton(item.id)}
           >
             {locale === "fa" ? toPersianDigits(item.title) : item.title}
           </button>
@@ -288,21 +430,18 @@ export function CategorySlider({ data }) {
 
         <span
           className="absolute bottom-0 h-[2px] bg-black transition-all duration-300"
-          style={{
-            left: underlineStyle.left,
-            width: underlineStyle.width,
-          }}
+          style={underlineStyle}
         />
       </div>
+
+      {/* موبایل */}
       <div className="md:hidden flex items-center justify-between w-full px-4 mb-2">
         <button
           onClick={() => {
             const currentIndex = data.findIndex(
               (item) => item.id === activeButton
             );
-            if (currentIndex > 0) {
-              setActiveButton(data[currentIndex - 1].id);
-            }
+            if (currentIndex > 0) setActiveButton(data[currentIndex - 1].id);
           }}
           disabled={data.findIndex((item) => item.id === activeButton) === 0}
           className="text-xl px-2 py-1 disabled:opacity-30"
@@ -324,9 +463,8 @@ export function CategorySlider({ data }) {
             const currentIndex = data.findIndex(
               (item) => item.id === activeButton
             );
-            if (currentIndex < data.length - 1) {
+            if (currentIndex < data.length - 1)
               setActiveButton(data[currentIndex + 1].id);
-            }
           }}
           disabled={
             data.findIndex((item) => item.id === activeButton) ===
@@ -342,12 +480,18 @@ export function CategorySlider({ data }) {
           />
         </button>
       </div>
-      <div className="relative    mt-[30px]">
-        <LeftArrow swiper={swiper} className="left-[-18px] lg:left-[-18px]" />
-        <RightArrow
-          swiper={swiper}
-          className="right-[-18px] lg:right-[-18px]"
-        />
+
+      {/* اسلایدر */}
+      <div className="relative mt-[30px]">
+        {showArrows && (
+          <LeftArrow swiper={swiper} className="left-[-18px] lg:left-[-18px]" />
+        )}
+        {showArrows && (
+          <RightArrow
+            swiper={swiper}
+            className="right-[-18px] lg:right-[-18px]"
+          />
+        )}
 
         <Swiper
           spaceBetween={viewportWidth < 1024 ? 10 : 28}
@@ -362,7 +506,7 @@ export function CategorySlider({ data }) {
           {data[activeButton - 1]?.data.map((item) => (
             <SwiperSlide
               key={item.key}
-              className="relative group overflow-hidden "
+              className="relative group overflow-hidden"
             >
               <Link
                 href={localizedHref(
@@ -380,7 +524,7 @@ export function CategorySlider({ data }) {
                   priority
                 />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                  <p className="text-white text-[1.2rem]  text-center px-4 font-fa">
+                  <p className="text-white text-[1.2rem] text-center px-4 font-fa">
                     {item.title}
                   </p>
                 </div>
@@ -397,30 +541,51 @@ export function ProjectsSlider({ data, bgcolor }) {
   const { locale } = useParams();
   const swiper = useRef(null);
   const [windowWidth, setWindowWidth] = useState(null);
+  const [showArrows, setShowArrows] = useState(false);
   const { localizedHref } = useLocalizedLink();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const getSlideWidth = (index) => {
     if (windowWidth < 768) return "50%";
     if (windowWidth < 1024) return index % 2 !== 0 ? "50%" : "40%";
     if (windowWidth < 1400) return index % 2 !== 0 ? "43%" : "33%";
-
     return index % 2 !== 0 ? "40%" : "20%";
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+
+      if (!data?.length) return;
+
+      const containerPadding = windowWidth >= 1024 ? 160 : 40;
+      const containerWidth = window.innerWidth - containerPadding;
+
+      const totalSlidesWidth = data.reduce((acc, _, index) => {
+        const slideWidthPercent = parseFloat(getSlideWidth(index));
+        const slideWidthPx = (slideWidthPercent / 100) * containerWidth;
+        const gap = windowWidth < 1024 ? 10 : 30;
+        return acc + slideWidthPx + gap;
+      }, 0);
+
+      setShowArrows(totalSlidesWidth > containerWidth);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [data, windowWidth]);
 
   if (!windowWidth) return null;
 
   return (
-    <div className="relative mt-[30px] md:mt-[50px] px-20 md:px-40 lg:px-80 ">
-      <LeftArrow swiper={swiper} bgcolor={bgcolor} />
-      <RightArrow swiper={swiper} bgcolor={bgcolor} />
+    <div className="relative mt-[30px] md:mt-[50px] px-20 md:px-40 lg:px-80">
+      {showArrows && (
+        <LeftArrow swiper={swiper} bgcolor={bgcolor} offsetY="55%" />
+      )}
+      {showArrows && (
+        <RightArrow swiper={swiper} bgcolor={bgcolor} offsetY="55%" />
+      )}
 
       <Swiper
         spaceBetween={windowWidth < 1024 ? 10 : 30}
@@ -435,39 +600,33 @@ export function ProjectsSlider({ data, bgcolor }) {
         {data.map((item, index) => (
           <SwiperSlide key={item.key} style={{ width: getSlideWidth(index) }}>
             <Link href={localizedHref(`projects/${item.id}`)}>
-              <p className=" text-[18px] font-[400] mb-[5px]  text-start md:hidden">
+              <p className="text-[18px] font-[400] mb-[5px] text-start md:hidden">
                 {item.title}
               </p>
               {index % 2 === 0 && (
                 <div className="hidden md:flex">
-                  <p className=" text-[18px] font-[400] mb-[5px] me-auto">
+                  <p className="text-[18px] font-[400] mb-[5px] me-auto">
                     {item.title}
                   </p>
-                  {/* <p className=" text-[12px] font-[400] mt-[5px]  ms-auto">
-                    {`${t("Environment")} : ${item.env}`}
-                  </p> */}
                 </div>
               )}
               <div className="relative w-full aspect-square md:aspect-auto md:h-[370px] overflow-hidden">
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
+                  src={`${
+                    item.image.startsWith("/images")
+                      ? item.image
+                      : `${process.env.NEXT_PUBLIC_API_URL}${item.image}`
+                  }`}
                   alt="Background Image"
                   className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
                   fill
                 />
               </div>
-
-              {/* <p className="block  text-[12px] font-[400] mt-[5px] text-start md:hidden font-fa">
-                {`${t("Environment")} : ${item.env}`}
-              </p> */}
               {index % 2 !== 0 && (
-                <div className="hidden  md:flex">
-                  <p className=" text-[18px] font-[400] mt-[5px]  me-auto">
+                <div className="hidden md:flex">
+                  <p className="text-[18px] font-[400] mt-[5px] me-auto">
                     {locale === "fa" ? toPersianDigits(item.title) : item.title}
                   </p>
-                  {/* <p className=" text-[12px] font-[400] mt-[5px]  ms-auto">
-                    {`${t("Environment")} : ${item.env}`}
-                  </p> */}
                 </div>
               )}
             </Link>
@@ -480,7 +639,9 @@ export function ProjectsSlider({ data, bgcolor }) {
 
 export function GallerySlider({ data, onClick }) {
   const { locale } = useParams();
-  let swiper = useRef(null);
+  const swiper = useRef(null);
+  const [showArrows, setShowArrows] = useState(false);
+
   const [activeButton, setActiveButton] = useState(1);
   const viewportWidth = useViewportWidth();
   const buttonsRef = useRef({});
@@ -499,14 +660,32 @@ export function GallerySlider({ data, onClick }) {
     }
   }, [activeButton, viewportWidth]);
 
+  useEffect(() => {
+    if (!data?.length) return;
+
+    const containerPadding = viewportWidth >= 1024 ? 160 : 40;
+    const containerWidth = viewportWidth - containerPadding;
+
+    const slideWidth = viewportWidth < 768 ? viewportWidth / 2 : 340;
+    const gap = viewportWidth < 1024 ? 10 : 28;
+
+    const totalSlidesWidth = data.length * (slideWidth + gap);
+
+    setShowArrows(totalSlidesWidth > containerWidth);
+  }, [data, viewportWidth]);
+
   return (
-    <div className="px-20 md:px-40 lg:px-80 ">
+    <div className="px-20 md:px-40 lg:px-80">
       <div className="relative">
-        <LeftArrow swiper={swiper} className="left-[-18px] lg:left-[-18px]" />
-        <RightArrow
-          swiper={swiper}
-          className="right-[-18px] lg:right-[-18px]"
-        />
+        {showArrows && (
+          <LeftArrow swiper={swiper} className="left-[-18px] lg:left-[-18px]" />
+        )}
+        {showArrows && (
+          <RightArrow
+            swiper={swiper}
+            className="right-[-18px] lg:right-[-18px]"
+          />
+        )}
 
         <Swiper
           spaceBetween={viewportWidth < 1024 ? 10 : 28}

@@ -56,12 +56,12 @@ export default async function page({ params }) {
   return (
     <main className="wrapper w-full">
       <h1 className="sr-only">درباه ما</h1>
-      <section className="w-full relative wrapper_image">
+      <section className="w-full relative wrapper_image aspect-[4/3] mt-[130px] lg:mt-0">
         <Image
           src={data?.imageHeader}
           fill
           alt="about us-picture"
-          className="object-cover"
+          className="object-cover "
         />
         <div className="absolute inset-0 bg-black/30 z-10" />
       </section>

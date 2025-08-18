@@ -1,5 +1,4 @@
 export default function CheckBox({ label, checked, onChange, value, name }) {
-  console.log("lable =>", label);
   const id = `checkbox-${name || label?.replace(/\s+/g, "-").toLowerCase()}`;
 
   return (

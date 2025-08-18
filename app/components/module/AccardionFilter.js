@@ -4,7 +4,7 @@ import * as Icons from "iconsax-reactjs";
 export default function AccardionFilter({ title, children }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="border-b border-gray-200">
+    <div className="">
       <button
         onClick={() => setOpen(!open)}
         className="flex justify-between w-full py-3 font-medium text-[var(--color-gray-900)]"

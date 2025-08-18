@@ -47,7 +47,7 @@ export default async function page({ params }) {
   return (
     <main className="wrapper text-[var(--color-gray-900)] ">
       <h1 className="sr-only"> project name</h1>
-      <section className="w-full relative wrapper_image flex items-center justify-center">
+      <section className="w-full relative aspect-[4/3] wrapper_image flex items-center justify-center mt-[130px] lg:mt-0">
         <Image
           src={"/images/28.jpg"}
           fill
@@ -55,7 +55,7 @@ export default async function page({ params }) {
           className="object-cover"
         />
         <div className="absolute inset-0 bg-black/50 z-10" />
-        <p className="w-max font-fa text-white font-normal  pt-[10dvh] lg:pt-[0] text-[1.5rem] md:text-[2rem]  z-10">
+        <p className="w-max font-fa text-white font-normal  text-[1.5rem] md:text-[2rem]  z-10">
           نام پروژه
         </p>
       </section>

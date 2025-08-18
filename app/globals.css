@@ -183,14 +183,12 @@ button {
     max-height: 350px;
   }
 
-  .wrapper_image {
-    height: 70dvh;
-    max-height: 450px;
-  }
-
   .custom-bullet {
     width: 8px !important;
     height: 8px !important;
     margin: 0 3px !important;
+  }
+  .title {
+    font-size: 1.3rem;
   }
 }

@@ -2,13 +2,11 @@
 import { filter } from "@/app/dataFIlter";
 import Image from "next/image";
 import { MoreButton } from "../moreButton";
-import * as Icons from "iconsax-reactjs";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/hook/useTranslation";
 import Link from "next/link";
 import axios from "axios";
 import { useEffect } from "react";
-import AccardionFilter from "./AccardionFilter";
 
 export default function FilterHeader({ show }) {
   const { t, locale } = useTranslation();
@@ -35,7 +33,6 @@ export default function FilterHeader({ show }) {
   useEffect(() => {
     getFilterHeader();
   }, []);
-
   return (
     <>
       <AnimatePresence>
@@ -47,41 +44,8 @@ export default function FilterHeader({ show }) {
             transition={{ duration: 0.3 }}
             className="absolute top-[70px] left-0 right-0 bg-white z-10 w-full px-80  pt-[3rem]"
           >
-            <div className="xl:h-[80dvh] overflow-y-auto pb-[3rem] hide-scrollbar">
-              <div className="block xl:hidden">
-                <AccardionFilter title={t("size")}>
-                  <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
-                    {filter.size.map((item, i) => (
-                      <ItemFilterBox key={i} text={item} type="size" />
-                    ))}
-                  </div>
-                </AccardionFilter>
-
-                <AccardionFilter title={t("color")}>
-                  <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
-                    {filter.colors.map((item, i) => (
-                      <ItemFilterBox key={i} item={item} type="color" />
-                    ))}
-                  </div>
-                </AccardionFilter>
-
-                <AccardionFilter title={t("style")}>
-                  <div className="grid grid-cols-3 gap-[10px] mt-[1rem]">
-                    {filter.style.map((item, i) => (
-                      <ItemStyle key={i} item={item} />
-                    ))}
-                  </div>
-                </AccardionFilter>
-
-                <AccardionFilter title={t("Usage")}>
-                  <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
-                    {filter.usecase.map((item, i) => (
-                      <UseCase key={i} item={item} />
-                    ))}
-                  </div>
-                </AccardionFilter>
-              </div>
-              <div className="hidden xl:grid grid-cols-12 gap-[2rem] ">
+            <div className="h-[80dvh] overflow-y-auto pb-[3rem] hide-scrollbar">
+              <div className="grid grid-cols-12 gap-[2rem] ">
                 <div className=" md:col-span-6 xl:col-span-3 text-start">
                   <span className="font-medium pb-[5px] border-b-2 inline-block w-85 text-center text-[var(--color-gray-900)]">
                     {t("size")}
@@ -139,7 +103,7 @@ export default function FilterHeader({ show }) {
                   </div>
                 </div>
               </div>
-              <div className="hidden  xl:flex items-center justify-between mt-[1rem]">
+              <div className="flex items-center justify-between mt-[1rem]">
                 <div className="flex items-center gap-[1.5rem]">
                   <MoreButton
                     text={t("Products")}

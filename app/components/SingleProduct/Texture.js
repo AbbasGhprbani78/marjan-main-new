@@ -85,8 +85,6 @@ export default function Texture({ textureImage }) {
     };
   };
 
-  // console.log(mainHorizontalTile.size);
-  // console.log(mainVerticalTile.size);
   return (
     <div>
       <p className=" font-[500] title  pb-[30]  px-20 md:px-40 lg:px-80">
@@ -148,7 +146,7 @@ export default function Texture({ textureImage }) {
 
           <div className="grid grid-cols-12 gap-[2rem] lg:gap-[1rem] px-20 md:px-40 lg:px-80">
             <div className="col-span-12 order-1 lg:order-2 lg:col-span-8">
-              <div className="flex gap-5 items-end max-w-full lg:justify-end">
+              <div className="flex flex-wrap gap-5 items-end max-w-full lg:justify-end">
                 {(() => {
                   const maxDim = getMaxDimension(tailesToShow);
 
