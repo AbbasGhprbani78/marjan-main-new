@@ -37,7 +37,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
           <tbody>
             <tr className="text-center">
               <td className="px-4 py-3 whitespace-nowrap text-center">
-                {size.map((item) => (
+                {size?.map((item) => (
                   <div className="block mb-5" key={item}>
                     {item}
                   </div>
@@ -53,7 +53,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
               </td>
               <td className="px-4 py-3">
                 <div className="flex justify-center gap-[5px]">
-                  {colors.map((item) => (
+                  {colors?.map((item) => (
                     <span
                       key={item}
                       style={{ backgroundColor: item?.color_code }}
