@@ -15,7 +15,12 @@ export default function FilterHeader({ show }) {
   const getFilterHeader = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/product/product-catalog/`
+        `${process.env.NEXT_PUBLIC_API_URL}/product/product-catalog/`,
+        {
+          headers: {
+            "Accept-Language": locale,
+          },
+        }
       );
 
       if (response.status === 200) {
