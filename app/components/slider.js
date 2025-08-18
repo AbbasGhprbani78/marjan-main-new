@@ -268,6 +268,8 @@ export function CategorySlider({ data }) {
     }
   }, [activeButton, viewportWidth]);
 
+  console.log(data);
+
   return (
     <div className="px-20 md:px-40 lg:px-80 ">
       <div className="hidden md:flex flex-row justify-center gap-[50px] mt-[50px]  relative border-b border-gray-300">
@@ -357,7 +359,7 @@ export function CategorySlider({ data }) {
           dir={locale}
           key={locale}
         >
-          {data[activeButton - 1]?.groups[0]?.data.map((item) => (
+          {data[activeButton - 1]?.data.map((item) => (
             <SwiperSlide
               key={item.key}
               className="relative group overflow-hidden "
