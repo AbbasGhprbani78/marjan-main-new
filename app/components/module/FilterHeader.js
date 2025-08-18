@@ -25,48 +25,31 @@ export default function FilterHeader({ show }) {
               <div className="grid grid-cols-12 gap-[2rem] ">
                 <div className=" md:col-span-6 xl:col-span-3 text-start">
                   <span className="font-medium pb-[5px] border-b-2 inline-block w-85 text-center text-[var(--color-gray-900)]">
-                    {t("Size")}
+                    {t("size")}
                   </span>
                   <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
                     {filter.size.map((item, i) => (
-                      <ItemFilterBox
-                        key={i}
-                        text={item}
-                        type="size"
-                        // selected={selectedSizes.includes(item)}
-                        // onClick={() => handleSizeClick(item)}
-                      />
+                      <ItemFilterBox key={i} text={item} type="size" />
                     ))}
                   </div>
                 </div>
                 <div className=" md:col-span-6 xl:col-span-3 text-start">
                   <span className="font-medium pb-[5px] border-b-2 inline-block w-85 text-center text-[var(--color-gray-900)]">
-                    {t("Color")}
+                    {t("color")}
                   </span>
                   <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
                     {filter.colors.map((item, i) => (
-                      <ItemFilterBox
-                        key={i}
-                        item={item}
-                        type="color"
-                        // selected={selectedColors.includes(item)}
-                        // onClick={() => handleColorClick(item)}
-                      />
+                      <ItemFilterBox key={i} item={item} type="color" />
                     ))}
                   </div>
                 </div>
                 <div className=" md:col-span-6 xl:col-span-3 text-start ">
                   <span className="font-medium pb-[5px] border-b-2 inline-block w-85 text-center text-[var(--color-gray-900)]">
-                    {t("Style")}
+                    {t("style")}
                   </span>
                   <div className="grid grid-cols-3 gap-[10px] mt-[1rem]">
                     {filter.style.map((item, i) => (
-                      <ItemStyle
-                        key={i}
-                        item={item}
-                        // selected={selectedStyles.includes(item.title)}
-                        // onClick={() => handleStyleClick(item)}
-                      />
+                      <ItemStyle key={i} item={item} />
                     ))}
                   </div>
                 </div>
@@ -76,12 +59,7 @@ export default function FilterHeader({ show }) {
                   </span>
                   <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
                     {filter.usecase.map((item, i) => (
-                      <UseCase
-                        key={i}
-                        item={item}
-                        // selected={selectedUseCases.includes(item.title)}
-                        // onClick={() => handleUseCaseClick(item)}
-                      />
+                      <UseCase key={i} item={item} />
                     ))}
                     <Link
                       href={"/industrial"}
@@ -199,13 +177,26 @@ function ItemFilterBox({ text, type, item }) {
   let width = 0;
   let height = 0;
 
-  if (text && text.includes("*")) {
-    [height, width] = text.split("*").map((n) => parseInt(n.trim()));
+  if (text) {
+    const parts = text.split(/[*x]/i);
+    if (parts.length === 2) {
+      const [height, width] = parts.map((n) => parseInt(n.trim(), 10));
+      console.log(height, width);
+    }
   }
 
+  const displayText = text ? text : item.text;
+
+  const filterValue = text ? text : item.text;
+
   return (
-    <div className="relative flex items-center justify-around h-[46px] px-2 bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer">
-      <span className="font-medium">{text ? text : item.text}</span>
+    <Link
+      href={`/products?filterKey=${type}&values=${encodeURIComponent(
+        filterValue
+      )}`}
+      className="relative flex items-center justify-around h-[46px] px-2 bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer"
+    >
+      <span className="font-medium">{displayText}</span>
       <div>
         {type === "size" ? (
           <div
@@ -231,13 +222,18 @@ function ItemFilterBox({ text, type, item }) {
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 }
 
 function ItemStyle({ item }) {
   return (
-    <div className="relative flex flex-col gap-[2px] cursor-pointer">
+    <Link
+      href={`/products?filterKey=style&values=${encodeURIComponent(
+        item.title
+      )}`}
+      className="relative flex flex-col gap-[2px] cursor-pointer"
+    >
       <div className="relative aspect-square">
         <Image
           src={item.image}
@@ -249,13 +245,18 @@ function ItemStyle({ item }) {
       <span className="font-medium text-[.85rem] text-[var(--color-gray-900)]">
         {item.title}
       </span>
-    </div>
+    </Link>
   );
 }
 
 function UseCase({ item }) {
   return (
-    <div className="relative aspect-[3/2] cursor-pointer">
+    <Link
+      href={`/products?filterKey=environment&values=${encodeURIComponent(
+        item.title
+      )}`}
+      className="relative aspect-[3/2] cursor-pointer"
+    >
       <Image
         src={item.image}
         alt="use case image item filter"
@@ -267,47 +268,6 @@ function UseCase({ item }) {
           {item.title}
         </span>
       </div>
-    </div>
+    </Link>
   );
 }
-
-// {selected && (
-//           <Icons.TickCircle
-//             size={"25"}
-//             className="absolute left-[5px] top-5 w-[16px] h-[16px]"
-//             color="#37d67a"
-//           />
-//         )}
-
-// const handleSizeClick = (text) => {
-//   setSelectedSizes((prev) =>
-//     prev.includes(text) ? prev.filter((s) => s !== text) : [...prev, text]
-//   );
-// };
-
-// const handleColorClick = (color) => {
-//   setSelectedColors((prev) =>
-//     prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
-//   );
-// };
-
-// const handleStyleClick = (item) => {
-//   setSelectedStyles((prev) =>
-//     prev.includes(item.title)
-//       ? prev.filter((i) => i !== item.title)
-//       : [...prev, item.title]
-//   );
-// };
-
-// const handleUseCaseClick = (item) => {
-//   setSelectedUseCases((prev) =>
-//     prev.includes(item.title)
-//       ? prev.filter((i) => i !== item.title)
-//       : [...prev, item.title]
-//   );
-// };
-
-//  const [selectedSizes, setSelectedSizes] = useState([]);
-//   const [selectedColors, setSelectedColors] = useState([]);
-//   const [selectedStyles, setSelectedStyles] = useState([]);
-//   const [selectedUseCases, setSelectedUseCases] = useState([]);

@@ -1,6 +1,5 @@
 import React from "react";
 import AllProducts from "@/app/components/templates/AllProducts";
-import { categories, products } from "@/app/dataAllProducts";
 import { fetchAllProducts } from "@/services/allProducts";
 
 export const metadata = () => {

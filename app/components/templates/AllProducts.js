@@ -9,6 +9,7 @@ import ImageDescription from "../Products/ImageDescription";
 import PopFilter from "../module/PopFilter";
 import CategoryFilters from "../Products/CategoryFilters";
 import { useTranslation } from "@/hook/useTranslation";
+import { useSearchParams } from "next/navigation";
 
 export default function AllProducts({ categories, products }) {
   const itemsPerPage = 9;
@@ -22,6 +23,14 @@ export default function AllProducts({ categories, products }) {
   const endIndex = startIndex + itemsPerPage;
   const productsToShow = filteredProducts.slice(startIndex, endIndex);
   const { t } = useTranslation();
+
+  const searchParams = useSearchParams();
+
+  const queryFilterKey = searchParams.get("filterKey");
+  const queryValues = searchParams.get("values")?.split(",") || [];
+
+  console.log(queryFilterKey);
+  console.log(queryValues);
 
   const handleFilterChange = (key, selectedValues) => {
     if (isEmptyCheckBox) {

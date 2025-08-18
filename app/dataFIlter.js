@@ -1,17 +1,17 @@
 export const filter = {
   size: [
-    "7 * 29",
-    "11.5 * 24",
-    "15 * 15",
-    "20 * 20",
-    "25 * 25",
-    "30 * 30",
-    "33 * 33",
-    "40 * 40",
-    "60 * 60",
-    "20 * 120",
-    "60 * 120",
-    "100 * 100",
+    "7*29",
+    "11.5*24",
+    "15*15",
+    "20*20",
+    "25*25",
+    "30*30",
+    "33*33",
+    "40*40",
+    "60*60",
+    "20*120",
+    "60*120",
+    "100*100",
   ],
 
   colors: [
@@ -74,6 +74,5 @@ export const filter = {
     { image: "/images/usecase/commercial.jpg", title: "تجاری و پرتردد" },
     { image: "/images/usecase/residential.png", title: "مسکونی" },
     { image: "/images/usecase/nama 2.jpg", title: "نما" },
-    // { image: "/images/49.jpg", title: "صنعتی" },
   ],
 };

@@ -89,11 +89,14 @@ export default async function page({ params }) {
       </div>
       <div className="border-b-1 border-gray-500" id="gallery">
         <ImagesContainer dataSingleProduct={dataSingleProduct} />
-        <div className=" px-20 md:px-40 lg:px-80  pb-40 pt-30" id="colors">
+        <div className="  pb-40 pt-[40px]" id="colors">
           <Texture textureImage={dataSingleProduct?.Tiles} />
         </div>
       </div>
-      <div className="border-b-1 border-gray-500 flex flex-wrap items-center px-20 md:px-40 lg:px-80 gap-[2rem] md:gap-[3rem] pt-[3rem] pb-[4rem]">
+      <div
+        dir="ltr"
+        className="border-b-1 border-gray-500 flex flex-wrap items-center px-20 md:px-40 lg:px-80 gap-[2rem] md:gap-[3rem] pt-[3rem] pb-[4rem]"
+      >
         {dataSingleProduct?.features?.map((item, i) => (
           <ImageFeature key={i} item={item} />
         ))}

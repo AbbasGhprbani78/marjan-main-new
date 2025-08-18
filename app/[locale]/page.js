@@ -18,6 +18,8 @@ export default async function Home({ params }) {
 
   const dataHome = await fetchhome(locale);
 
+  console.log(dataHome);
+
   return (
     <div className="wrapper w-full h-full font-fa ">
       <HomeSlider data={dataHome?.home?.slides} route={"/products"} />
