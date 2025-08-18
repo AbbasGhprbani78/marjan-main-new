@@ -203,7 +203,7 @@ export default function Texture({ textureImage }) {
                     <div
                       className="relative cursor-pointer"
                       style={getScaledSize(
-                        mainHorizontalTile.size,
+                        mainHorizontalTile?.size,
                         getMaxDimension([mainHorizontalTile, mainVerticalTile]),
                         150
                       )}
@@ -230,7 +230,7 @@ export default function Texture({ textureImage }) {
                       </div>
                     </div>
                   )}
-                  <span className="pt-[10px]">{mainHorizontalTile.size}</span>
+                  <span className="pt-[10px]">{mainHorizontalTile?.size}</span>
                 </div>
                 <div className="flex flex-col">
                   {mainVerticalTile && (
