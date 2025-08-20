@@ -39,7 +39,7 @@ export default function CardItem({ product }) {
         </div>
 
         {product?.tile_variants.length > 0 && (
-          <div className="flex justify-end items-center mt-[15px]">
+          <div dir="ltr" className="flex justify-end items-center mt-[15px]">
             {product?.tile_variants?.map((item, i) => (
               <CirecleProductItem key={i} item={item} index={i} />
             ))}

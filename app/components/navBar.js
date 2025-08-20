@@ -110,8 +110,6 @@ export function NavBar() {
     setIsHovered(false);
   }, [pathname, queryFilterKey, queryValues]);
 
-  console.log(shouldApplyScrolledStyles);
-
   return (
     <header
       className="absolute w-full z-20 bg-gary-black"
