@@ -198,7 +198,7 @@ export default function Texture({ textureImage }) {
             </div>
 
             <div className="col-span-12 order-1 lg:order-1 lg:col-span-4">
-              <div className="flex gap-5 items-end overflow-hidden max-w-full">
+              <div className="flex gap-5 items-end overflow-hidden max-w-full justify-center  ">
                 <div className="flex flex-col">
                   {mainHorizontalTile && (
                     <div

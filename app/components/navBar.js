@@ -747,6 +747,7 @@ function MenuMobile() {
           </li>
 
           {[
+            { label: t("AllProducts"), href: "/products" },
             { label: t("Catalog"), href: "/catalog" },
             { label: t("Representatives"), href: "/representatives" },
             { label: t("About"), href: "/aboutus" },

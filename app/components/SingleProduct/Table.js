@@ -6,7 +6,6 @@ import React from "react";
 export default function Table({ title, thickness, colors, surface, size }) {
   const { t } = useTranslation();
 
-  console.log(colors);
   return (
     <>
       <p className="font-normal text-[30px] font-fa mb-17 text-center pt-[1rem]">

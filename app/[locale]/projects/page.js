@@ -2,6 +2,7 @@ import React from "react";
 import { HomeSlider } from "@/app/components/slider";
 import { projects, categories } from "@/app/dataProjects";
 import Projects from "@/app/components/templates/Projects";
+import { fetchAllProjects } from "@/services/allProjects";
 
 export const metadata = {
   title: "پروژه‌ها | شرکت شما",
@@ -37,7 +38,11 @@ export const metadata = {
   },
 };
 
-export default async function page() {
+export default async function page({ params }) {
+  const { locale } = await params;
+  const dataProjects = await fetchAllProjects(locale);
+
+  console.log(dataProjects);
   return (
     <div className="wrapper">
       <h1 className="sr-only">پروژه ها</h1>

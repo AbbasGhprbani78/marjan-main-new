@@ -64,7 +64,7 @@ function RightArrow({
   );
 }
 
-export function HomeSlider({ data, bgcolor, dotColor, route }) {
+export function HomeSlider({ data, bgcolor, dotColor, route, delay = 3500 }) {
   const { t } = useTranslation();
   let swiper = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -96,7 +96,7 @@ export function HomeSlider({ data, bgcolor, dotColor, route }) {
         ref={swiper}
         loop={true}
         autoplay={{
-          delay: 3500,
+          delay,
           disableOnInteraction: false,
         }}
         speed={800}
@@ -187,8 +187,6 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
     setShowArrows(totalSlidesWidth > containerWidth);
   }, [data, activeButton, viewportWidth]);
 
-  console.log("data =>", data);
-
   return (
     <div className="relative px-20 md:px-40 lg:px-80">
       <div className="relative flex flex-row justify-center gap-[50px] mb-[1rem] mt-[20px] md:mt-[50px] border-b border-gray-300">
@@ -278,7 +276,7 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
 export function CategorySlider({ data }) {
   const { locale } = useParams();
   const swiper = useRef(null);
-  const [activeButton, setActiveButton] = useState(1);
+  const [activeButton, setActiveButton] = useState(data?.[0]?.id || 1);
   const viewportWidth = useViewportWidth();
   const buttonsRef = useRef({});
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
@@ -307,11 +305,32 @@ export function CategorySlider({ data }) {
     const slideWidth = viewportWidth < 768 ? viewportWidth / 2 : 340;
     const gap = viewportWidth < 1024 ? 10 : 28;
 
-    const totalSlidesWidth =
-      (data[activeButton - 1]?.data.length || 0) * (slideWidth + gap);
+    const currentData =
+      data.find((item) => item.id === activeButton)?.data || [];
+    const totalSlidesWidth = currentData.length * (slideWidth + gap);
 
     setShowArrows(totalSlidesWidth > containerWidth);
   }, [data, activeButton, viewportWidth]);
+
+  const currentData = data.find((item) => item.id === activeButton)?.data || [];
+  const parentTitle =
+    data.find((item) => item.id === activeButton)?.title || "";
+
+  const filterKeyMap = {
+    "Use case": "environment",
+    کاربری: "environment",
+    Color: "color",
+    رنگ: "color",
+    Styles: "style",
+    استایل: "style",
+    Size: "size",
+    سایز: "size",
+    Industrial: "industrie",
+    صنعتی: "industrie",
+    سبک: "style",
+  };
+
+  const filterKey = filterKeyMap[parentTitle] || parentTitle.toLowerCase();
 
   return (
     <div className="px-20 md:px-40 lg:px-80">
@@ -353,7 +372,7 @@ export function CategorySlider({ data }) {
         </button>
 
         <button className="text-[17px] font-medium text-black py-2 border-b-2 border-[#000]">
-          {data.find((item) => item.id === activeButton)?.title}
+          {parentTitle}
         </button>
 
         <button
@@ -395,60 +414,41 @@ export function CategorySlider({ data }) {
           modules={[Autoplay]}
           slidesPerView={slidesNumber}
           ref={swiper}
-          loop={true}
+          loop={currentData.length > 1}
           speed={800}
           dir={locale}
-          key={locale}
+          key={locale + activeButton}
         >
-          {data[activeButton - 1]?.data.map((item) => {
-            const parentTitle = data[activeButton - 1].title;
-
-            const filterKeyMap = {
-              "Use case": "environment",
-              کاربری: "environment",
-              Color: "color",
-              رنگ: "color",
-              Styles: "style",
-              استایل: "style",
-              Size: "size",
-              سایز: "size",
-              Industrial: "industrie",
-              صنعتی: "industrie",
-            };
-
-            const filterKey = filterKeyMap[parentTitle] || parentTitle;
-
-            return (
-              <SwiperSlide
-                key={item.key}
-                className="relative group overflow-hidden"
+          {currentData.map((item) => (
+            <SwiperSlide
+              key={`${parentTitle}-${item.title}`}
+              className="relative group overflow-hidden"
+            >
+              <Link
+                href={localizedHref(
+                  parentTitle === "صنعتی" || parentTitle === "Industrial"
+                    ? "/industrial"
+                    : `/products?filterKey=${filterKey}&values=${encodeURIComponent(
+                        item.title
+                      )}`
+                )}
               >
-                <Link
-                  href={localizedHref(
-                    parentTitle === "صنعتی" || parentTitle === "Industrial"
-                      ? "/industrial"
-                      : `/products?filterKey=${filterKey}&values=${encodeURIComponent(
-                          item.title
-                        )}`
-                  )}
-                >
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
-                    alt="Background Image"
-                    className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] md:h-[290px]"
-                    width={500}
-                    height={500}
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <p className="text-white text-[1.2rem] text-center px-4 font-fa">
-                      {item.title}
-                    </p>
-                  </div>
-                </Link>
-              </SwiperSlide>
-            );
-          })}
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
+                  alt={item.title}
+                  className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] md:h-[290px]"
+                  width={500}
+                  height={500}
+                  priority
+                />
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                  <p className="text-white text-[1.2rem] text-center px-4 font-fa">
+                    {item.title}
+                  </p>
+                </div>
+              </Link>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>

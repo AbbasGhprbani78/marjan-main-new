@@ -22,7 +22,11 @@ export default async function Home({ params }) {
 
   return (
     <div className="wrapper w-full h-full font-fa ">
-      <HomeSlider data={dataHome?.home?.slides} route={"/products"} />
+      <HomeSlider
+        data={dataHome?.home?.slides}
+        route={"/products"}
+        delay={dataHome?.delay}
+      />
       <div className=" pt-[25px]  md:pt-[50px] mb-20 lg:mb-60">
         <p className="mb-[1.3rem] md:mb-0 text-center title font-[500] ">
           {t.Categories}

@@ -1,6 +1,7 @@
 import React from "react";
 import Catalog from "@/app/components/templates/Catalog";
 import { catalogs, categories } from "@/app/dataCatalog";
+import { fetchCatalogs } from "@/services/catalogs";
 
 export const metadata = {
   title: "کاتالوگ محصولات | برند شما",
@@ -43,7 +44,12 @@ export const metadata = {
   },
 };
 
-export default function page() {
+export default async function page({ params }) {
+  const { locale } = await params;
+  const dataCatalogs = await fetchCatalogs();
+
+  console.log(dataCatalogs);
+
   return (
     <main className="wrapper ">
       <section className="px-20 md:px-40 lg:px-80 pt-[150px] lg:pt-[200px]">

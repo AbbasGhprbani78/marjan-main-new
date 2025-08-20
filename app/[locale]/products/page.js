@@ -48,7 +48,9 @@ export default async function page({ params }) {
     color: dataProducts.categories.color || [],
     size: dataProducts.categories.size || [],
     industrie: dataProducts.categories.industrie || [],
-    thicknesses: (dataProducts.categories.thicknesses || []).map(String),
+    thicknesses: (dataProducts.categories.thicknesses || [])
+      .map(String)
+      .map((t) => `${t} mm`),
   };
 
   return (

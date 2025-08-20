@@ -26,7 +26,6 @@ export default function FilterHeader({ show, setClose }) {
       );
 
       if (response.status === 200) {
-        console.log(response.data);
         setFilterItems(response.data);
       }
     } catch (error) {
@@ -180,7 +179,7 @@ export default function FilterHeader({ show, setClose }) {
                 <div className="flex items-center justify-between mt-[1rem]">
                   <div className="flex items-center gap-[1.5rem]">
                     <MoreButton
-                      text={t("Products")}
+                      text={t("AllProducts")}
                       width="124"
                       height="40"
                       invert=""
