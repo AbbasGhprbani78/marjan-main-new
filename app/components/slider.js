@@ -70,6 +70,8 @@ export function HomeSlider({ data, bgcolor, dotColor, route, delay = 3500 }) {
   const [isHovered, setIsHovered] = useState(false);
   const { locale } = useParams();
 
+  console.log("data =>", data);
+
   return (
     <div
       className="relative mt-[130px] lg:mt-0"
@@ -427,7 +429,9 @@ export function CategorySlider({ data }) {
               <Link
                 href={localizedHref(
                   parentTitle === "صنعتی" || parentTitle === "Industrial"
-                    ? "/industrial"
+                    ? `/products?filterKey=${filterKey}&values=${encodeURIComponent(
+                        item.title
+                      )}`
                     : `/products?filterKey=${filterKey}&values=${encodeURIComponent(
                         item.title
                       )}`

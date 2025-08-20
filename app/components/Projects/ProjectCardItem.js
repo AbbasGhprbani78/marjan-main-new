@@ -6,11 +6,12 @@ import React from "react";
 
 export default function ProjectCardItem({ project }) {
   const { localizedHref } = useLocalizedLink();
+
   return (
-    <Link href={localizedHref("/projects/1")}>
+    <Link href={localizedHref(`/projects/${project?.id}`)}>
       <div className="relative w-full aspect-[4/2]   mb-[1rem]  overflow-hidden">
         <Image
-          src={project.image}
+          src={`${process.env.NEXT_PUBLIC_API_URL}${project.image}`}
           alt="project image item"
           fill
           className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"

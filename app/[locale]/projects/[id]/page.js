@@ -6,6 +6,7 @@ import Gallery from "@/app/components/Projects/Gallery";
 import Products from "@/app/components/Projects/Products";
 import fa from "@/i18n/fa.json";
 import en from "@/i18n/en.json";
+import { fetchSingleProjects } from "@/services/singleproject";
 
 export const metadata = {
   title: "پروژه‌ها | شرکت شما",
@@ -44,12 +45,15 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = await params;
   const t = locale === "fa" ? fa : en;
+  const { id } = await params;
+  const singleData = await fetchSingleProjects(locale, id);
+
   return (
     <main className="wrapper text-[var(--color-gray-900)] ">
       <h1 className="sr-only"> project name</h1>
       <section className="w-full relative aspect-[3/2] max-h-[550px] wrapper_image flex items-center justify-center mt-[130px] lg:mt-0">
         <Image
-          src={"/images/28.jpg"}
+          src={`${process.env.NEXT_PUBLIC_API_URL}${singleData?.default_image}`}
           fill
           alt="image project"
           className="object-cover"
@@ -59,34 +63,55 @@ export default async function page({ params }) {
           className="absolute inset-0 bg-black/50 z-10"
           style={{ maxHeight: "550px", width: "100%" }}
         />
-        <p className="w-max font-fa text-white font-normal  text-[1.5rem] md:text-[2rem]  z-10">
-          نام پروژه
-        </p>
+        {singleData?.name && (
+          <p className="w-max font-fa text-white font-normal  text-[1.5rem] md:text-[2rem]  z-10">
+            {singleData?.name}
+          </p>
+        )}
       </section>
       <section className="mt-[3rem] px-20 md:px-40 lg:px-80">
         <div className="flex flex-col gap-[1rem]">
-          <p className="font-medium text-[1.1rem]">تجاری نفیس</p>
-          <p className="font-medium text-[1.1rem]">
-            <span>{t.City}: </span>
-            تهران
-          </p>
-          <p className="font-medium text-[1.1rem]">
-            <span>{t.Usage} : </span>
-            ساختمان‌های تجاری
-          </p>
-          <p className="font-medium text-[1.1rem]">
-            <span>{t.Products} : </span>
-            NATURAL CONCRETE / NERO MARQUINA / PACIFIC
-          </p>
+          {singleData?.name && (
+            <p className="font-medium text-[1.1rem]"> {singleData?.name}</p>
+          )}
+          {singleData?.location && (
+            <p className="font-medium text-[1.1rem]">
+              <span>{t.City}: </span>
+              {singleData?.location}
+            </p>
+          )}
+
+          {singleData?.env && (
+            <p className="font-medium text-[1.1rem]">
+              <span>{t.Usage} : </span>
+              {singleData?.env}
+            </p>
+          )}
+
+          {singleData?.products.length > 0 && (
+            <p className="font-medium text-[1.1rem]">
+              <span>{t.Products} : </span>
+              {singleData?.products
+                ?.map((product) => product?.title)
+                .join(" / ")}
+            </p>
+          )}
         </div>
-        <ReadMoreText />
+        {singleData?.descriptions && (
+          <ReadMoreText text={singleData?.descriptions} />
+        )}
       </section>
-      <section className="mt-[2rem] px-20 md:px-40 lg:px-80">
-        <Gallery gallery={data?.gallery} />
-      </section>
-      <section className="mt-[2rem] px-20 md:px-40 lg:px-80 mb-[1.5rem]">
-        <Products products={data?.products} />
-      </section>
+      {singleData?.images.length > 0 && (
+        <section className="mt-[2rem] px-20 md:px-40 lg:px-80">
+          <Gallery gallery={singleData?.images} />
+        </section>
+      )}
+
+      {singleData?.products?.length > 0 && (
+        <section className="mt-[2rem] px-20 md:px-40 lg:px-80 mb-[1.5rem]">
+          <Products products={singleData?.products} />
+        </section>
+      )}
     </main>
   );
 }
