@@ -144,16 +144,11 @@ export default function Texture({ textureImage }) {
             {t("Texture")}
           </p>
 
-          <div className="grid grid-cols-12 gap-[2rem] lg:gap-[1rem] px-20 md:px-40 lg:px-80">
-            <div className="col-span-12 order-2 lg:order-2 lg:col-span-8">
+          <div className="grid grid-cols-12 gap-[2rem] lg:gap-[1rem] px-4 sm:px-8 md:px-16 lg:px-40 xl:px-80">
+            <div className="col-span-12 order-2 md:order-2 lg:col-span-8">
               <div
                 dir="ltr"
-                className="flex flex-wrap gap-5  max-w-full  items-center"
-                style={
-                  locale === "fa"
-                    ? { justifyContent: "start" }
-                    : { justifyContent: "end" }
-                }
+                className="flex flex-wrap gap-4 items-center w-full justify-center sm:justify-start"
               >
                 {(() => {
                   const maxDim = getMaxDimension(tailesToShow);
@@ -169,7 +164,7 @@ export default function Texture({ textureImage }) {
                     return (
                       <div
                         key={index}
-                        className="relative overflow-hidden bg-gray-100"
+                        className="relative overflow-hidden bg-gray-100 w-full sm:w-auto"
                         style={{
                           width: `${width}px`,
                           height: `${height}px`,
@@ -186,7 +181,7 @@ export default function Texture({ textureImage }) {
                             className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
                             onClick={() => setOpen(true)}
                           >
-                            <Icons.More className="text-gray-white w-20 h-20 md:w-35 md:h-35" />
+                            <Icons.More className="text-gray-white w-12 h-12 md:w-20 md:h-20" />
                           </div>
                         )}
                       </div>
