@@ -37,7 +37,6 @@ export function Anchor({ data }) {
     };
   }, [isMobile]);
 
-  // اگر موبایل و به انتهای صفحه رسید، نمایش داده نشود
   if (isMobile && hideOnBottom) return null;
 
   return (
@@ -48,11 +47,12 @@ export function Anchor({ data }) {
           : scrolled
           ? "bottom-[30px]"
           : "bottom-[40dvh] lg:bottom-[calc(30dvh)]"
-      } left-1/2 -translate-x-1/2 w-[95%] md:w-auto bg-gray-900 rounded-[5px] transition-normal duration-400 z-40`}
+      } left-1/2 -translate-x-1/2 w-[95%] md:w-auto bg-gray-900 rounded-[5px] transition-normal duration-400 z-11`}
     >
       <div className="flex my-auto w-full justify-center">
         <AnchorText text={t("Gallery")} targetId="gallery" />
         <AnchorText text={t("color")} targetId="colors" />
+        {/* <AnchorText text={t("szie")} targetId="texture" /> */}
         {data > 0 && <AnchorText text={t("Projects")} targetId="projects" />}
         <AnchorText text={t("Certificates")} targetId="certificates" end />
       </div>

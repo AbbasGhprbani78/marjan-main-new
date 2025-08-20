@@ -1,9 +1,12 @@
 "use client";
 import { useTranslation } from "@/hook/useTranslation";
+import Image from "next/image";
 import React from "react";
 
 export default function Table({ title, thickness, colors, surface, size }) {
   const { t } = useTranslation();
+
+  console.log(colors);
   return (
     <>
       <p className="font-normal text-[30px] font-fa mb-17 text-center pt-[1rem]">
@@ -53,12 +56,23 @@ export default function Table({ title, thickness, colors, surface, size }) {
               </td>
               <td className="px-4 py-3">
                 <div className="flex justify-center gap-[5px]">
-                  {colors?.map((item) => (
-                    <span
+                  {colors?.map((item, index) => (
+                    <div
+                      className={`h-30 w-30 rounded-full overflow-hidden ${
+                        index !== 3 ? "-me-12" : ""
+                      } relative z-[${
+                        10 - index
+                      }] transition-transform duration-300 ease-in-out hover:-translate-y-4`}
                       key={item}
-                      style={{ backgroundColor: item?.color_code }}
-                      className="w-[15px] h-[15px] inline-block rounded-full border"
-                    />
+                    >
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
+                        width={30}
+                        height={30}
+                        alt="product-circle"
+                        className="object-cover overflow-hidden"
+                      />
+                    </div>
                   ))}
                 </div>
               </td>

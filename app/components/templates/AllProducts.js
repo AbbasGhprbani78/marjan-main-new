@@ -29,9 +29,6 @@ export default function AllProducts({ categories, products }) {
   const queryFilterKey = searchParams.get("filterKey");
   const queryValues = searchParams.get("values")?.split(",") || [];
 
-  console.log(queryFilterKey);
-  console.log(queryValues);
-
   const handleFilterChange = (key, selectedValues) => {
     if (isEmptyCheckBox) {
       setEmptycheckBox(false);
@@ -149,6 +146,8 @@ export default function AllProducts({ categories, products }) {
                 handleFilterChange={handleFilterChange}
                 isEmptyCheckBox={isEmptyCheckBox}
                 ismobile={true}
+                queryFilterKey={queryFilterKey}
+                queryValues={queryValues}
               />
             </PopFilter>
           </aside>
@@ -174,6 +173,8 @@ export default function AllProducts({ categories, products }) {
               categories={categories}
               handleFilterChange={handleFilterChange}
               isEmptyCheckBox={isEmptyCheckBox}
+              queryFilterKey={queryFilterKey}
+              queryValues={queryValues}
             />
           </div>
         </aside>

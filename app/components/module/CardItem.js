@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import CirecleProductItem from "../Products/CirecleProductItem";
 import { truncateText, useLocalizedLink } from "@/utils/helper";
 import Link from "next/link";
-import * as Icons from "iconsax-reactjs";
 
 export default function CardItem({ product }) {
   const [isSaved, setIsSaved] = useState(product?.isSave);
@@ -25,10 +24,7 @@ export default function CardItem({ product }) {
             className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
           />
         </div>
-        <div className="relative flex justify-between items-center mt-[20px] ">
-          <h5 className="text-[#292d39] font-bold text-[1.0625rem]">
-            {product?.title}
-          </h5>
+        <div className="relative flex justify-between items-center mt-[10px] ">
           <button onClick={handleSaveToggle} className="cursor-pointer">
             <div className="relative">
               <img
@@ -37,20 +33,18 @@ export default function CardItem({ product }) {
               />
             </div>
           </button>
+          <h5 className="text-[#292d39] font-bold text-[1.0625rem]">
+            {product?.title}
+          </h5>
         </div>
-        {/* <p className="mt-[15px] text-[15px] text-[#919191] text-justify">
-          {truncateText(product?.description, 40)}
-        </p> */}
-        {/* <div className="flex justify-end items-center mt-[15px]">
-          {[
-            "/images/2.png",
-            "/images/2.png",
-            "/images/2.png",
-            "/images/2.png",
-          ].map((src, i) => (
-            <CirecleProductItem key={i} src={src} index={i} />
-          ))}
-        </div> */}
+
+        {product?.tile_variants.length > 0 && (
+          <div className="flex justify-end items-center mt-[15px]">
+            {product?.tile_variants?.map((item, i) => (
+              <CirecleProductItem key={i} item={item} index={i} />
+            ))}
+          </div>
+        )}
       </div>
     </Link>
   );

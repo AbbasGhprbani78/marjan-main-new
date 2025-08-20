@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./ChatBot.css";
 import Message from "./Message/Message";
 import axios from "axios";
+import { useViewportWidth } from "@/hook/useViewportWidth";
 export default function ChatBot({}) {
   const [isShowChatbot, setIsShowChatbot] = useState(false);
   const [message, setMessage] = useState("");
@@ -18,6 +19,8 @@ export default function ChatBot({}) {
   const inputRef = useRef(null);
   const wrapRef = useRef(null);
   const [showChat, setIsShowChat] = useState(false);
+  const viewportWidth = useViewportWidth();
+  const [hideIcon, setHideIcon] = useState(false);
 
   const sendMessage = async () => {
     if (message.trim() === "") return;
@@ -153,6 +156,17 @@ export default function ChatBot({}) {
     };
   }, [isShowChatbot]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const isBottom =
+        window.innerHeight + window.scrollY >= document.body.scrollHeight - 5;
+      setHideIcon(isBottom);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [viewportWidth]);
   return (
     <>
       <div className={`chatbot-container ${isShowChatbot && "activeChat"}`}>
@@ -290,15 +304,17 @@ export default function ChatBot({}) {
         <p className="text-bottom">Powered By Nobin</p>
       </div>
 
-      <div
-        className="chatbot-icon-wrapper"
-        onClick={() => {
-          setIsShowChat(false);
-          setIsShowChatbot((prev) => !prev);
-        }}
-      >
-        <img src="images/iconchat.png" alt="icon" />
-      </div>
+      {!hideIcon && (
+        <div
+          className="chatbot-icon-wrapper"
+          onClick={() => {
+            setIsShowChat(false);
+            setIsShowChatbot((prev) => !prev);
+          }}
+        >
+          <img src="images/iconchat.png" alt="icon" />
+        </div>
+      )}
     </>
   );
 }

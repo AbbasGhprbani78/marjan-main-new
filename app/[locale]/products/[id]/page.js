@@ -29,19 +29,19 @@ export default async function page({ params }) {
       <Image
         src={`${process.env.NEXT_PUBLIC_API_URL}${dataSingleProduct?.mainImage}`}
         alt="Background Image"
-        className="aspect-[4/3] object-cover w-full  md:min-h-[400px] lg:h-[72dvh] mt-[130px] lg:mt-0"
+        className="aspect-[4/3] object-fill lg:object-cover w-full  md:min-h-[400px] lg:h-[72dvh] mt-[130px] lg:mt-0"
         width={1980}
         height={1080}
       />
       <Table
         title={dataSingleProduct?.title}
         thickness={dataSingleProduct?.thickness}
-        colors={dataSingleProduct?.colors}
+        colors={dataSingleProduct?.Tiles}
         surface={dataSingleProduct?.surface}
         size={dataSingleProduct?.size}
       />
 
-      <div className="px-20 md:px-40 lg:px-80 mt-[2rem] pt-35 pb-61  border-b-1 border-t-1 border-gray-500 ">
+      <div className="px-20 md:px-40 lg:px-80 mt-[2rem] pt-35 pb-61  border-b-1 border-t-1 border-[#919191] ">
         <div className="  text-justify " id="catalog">
           {
             <ReadMoreText
@@ -79,6 +79,7 @@ export default async function page({ params }) {
             text={t.CategoryTable}
             icon={"Box"}
             typeModel={"categories"}
+            dataPack={dataSingleProduct?.packing_tables}
           />
           <GuideSection
             text={t.TechnicalSpecsTable}
@@ -87,20 +88,26 @@ export default async function page({ params }) {
           />
         </div>
       </div>
-      <div className="border-b-1 border-gray-500" id="gallery">
-        <ImagesContainer dataSingleProduct={dataSingleProduct} />
+      <div className="border-b-1 border-[#919191]" id="gallery">
+        <ImagesContainer
+          dataSingleProduct={dataSingleProduct}
+          images={dataSingleProduct?.Tiles}
+        />
         <div className="  pb-40 pt-[40px]" id="colors">
           <Texture textureImage={dataSingleProduct?.Tiles} />
         </div>
       </div>
-      <div
-        dir="ltr"
-        className="border-b-1 border-gray-500 flex flex-wrap items-center px-20 md:px-40 lg:px-80 gap-[2rem] md:gap-[3rem] pt-[3rem] pb-[4rem]"
-      >
-        {dataSingleProduct?.features?.map((item, i) => (
-          <ImageFeature key={i} item={item} />
-        ))}
-      </div>
+
+      {dataSingleProduct?.icons.length > 0 && (
+        <div
+          dir="ltr"
+          className="border-b-1 border-[#919191] flex flex-wrap items-center px-20 md:px-40 lg:px-80 gap-[2rem] md:gap-[3rem] pt-[3rem] pb-[4rem]"
+        >
+          {dataSingleProduct?.icons?.map((item, i) => (
+            <ImageFeature key={i} item={item} />
+          ))}
+        </div>
+      )}
 
       {dataSingleProduct.projects.length > 0 && (
         <div id="projects">
@@ -108,15 +115,18 @@ export default async function page({ params }) {
         </div>
       )}
 
-      <div id="certificates">
-        <CertificateContainer data={dataSingleProduct?.certifications} />
-      </div>
+      {dataSingleProduct?.certifications.length > 0 && (
+        <div id="certificates">
+          <CertificateContainer data={dataSingleProduct?.certifications} />
+        </div>
+      )}
+
       {dataSingleProduct?.video && (
         <VideoContainer video={dataSingleProduct?.video} />
       )}
 
       <div className=" flex  items-start pb-40 pt-35  px-20 md:px-40 lg:px-80 gap-[10px]">
-        <div className=" border-2 border-gray-500">
+        <div className=" border-2 border-[#919191]">
           <Icons.Danger size={15} className="m-3" />
         </div>
         <p className="text-gray-900 text-justify">{t.TextSizeInfo}</p>

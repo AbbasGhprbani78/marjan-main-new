@@ -21,6 +21,7 @@ export function MoreButton({
 
   return (
     <Link
+      target={isExternal ? "_blank" : undefined}
       href={linkHref}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

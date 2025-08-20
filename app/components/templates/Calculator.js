@@ -54,8 +54,6 @@ export default function CalculatorT() {
     setIncludeWastage(checked);
   }, []);
 
-  console.log(area);
-
   return (
     <main className="px-20 md:px-40 lg:px-80  mt-[8rem]">
       <section className="mt-[2rem]">

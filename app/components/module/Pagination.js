@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
   const { locale } = useParams();
   const { t } = useTranslation();
+
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
       onPageChange(newPage);
@@ -24,6 +25,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
 
+    // ---- اولین صفحه ----
     if (startPage > 1) {
       pageNumbers.push(
         <button
@@ -35,7 +37,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
               : "text-gray-600 hover:bg-gray-100"
           } sm:px-3 sm:py-1 sm:mx-1`}
         >
-          1
+          {locale === "fa" ? toPersianDigits(1) : 1}
         </button>
       );
       if (startPage > 2) {
@@ -47,6 +49,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       }
     }
 
+    // ---- صفحات میانی ----
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
         <button
@@ -63,6 +66,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       );
     }
 
+    // ---- آخرین صفحه ----
     if (endPage < totalPages) {
       if (endPage < totalPages - 1) {
         pageNumbers.push(
@@ -81,7 +85,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
               : "text-gray-600 hover:bg-gray-100"
           } sm:h-[32px] sm:w-[32px] sm:mx-1`}
         >
-          {totalPages}
+          {locale === "fa" ? toPersianDigits(totalPages) : totalPages}
         </button>
       );
     }
@@ -104,7 +108,9 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         <Icons.ArrowLeft size="16" className="sm:block hidden" />
         {t("Previous")}
       </button>
+
       {renderPageNumbers()}
+
       <button
         aria-label="صفحه بعدی"
         onClick={() => handlePageChange(currentPage + 1)}
@@ -112,7 +118,6 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         className="text-gray-600 hover:text-[#292d32] disabled:text-[#bababa] flex items-center gap-2 sm:gap-7 cursor-pointer me-6 sm:me-8 text-sm sm:text-base"
       >
         {t("Next")}
-
         <Icons.ArrowRight size="16" className="sm:block hidden" />
       </button>
     </nav>

@@ -16,10 +16,10 @@ import { useTranslation } from "@/hook/useTranslation";
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
-  const [showInnerMenu, setShowInnerMenu] = useState(false); //
-  const [isShowSearch, setIsShowSearch] = useState(false); //
-  const [showFilterMenu, setShowFilterMenu] = useState(false); //
-  const [isOpen, setIsOpen] = useState(false); //
+  const [showInnerMenu, setShowInnerMenu] = useState(false);
+  const [isShowSearch, setIsShowSearch] = useState(false);
+  const [showFilterMenu, setShowFilterMenu] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isChangeBg, setIsChangeBg] = useState(false);
   const router = useRouter();
@@ -38,12 +38,11 @@ export function NavBar() {
     }
 
     const newPathname = "/" + segments.join("/");
-    const search = searchParams.toString();
 
     document.cookie = `lang=${newLocale}; path=/; max-age=31536000`;
 
     setIsOpen(false);
-    router.push(newPathname + (search ? "?" + search : ""));
+    router.push(newPathname);
   }
 
   const currentLocale = pathname.split("/")[1] || "fa";
@@ -89,18 +88,25 @@ export function NavBar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > window.innerHeight - 300);
+      setScrolled(window.scrollY > 5);
     };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
+
+  const queryFilterKey = searchParams.get("filterKey");
+  const queryValues = searchParams.get("values");
 
   useEffect(() => {
     setShowFilterMenu(false);
     setIsOpen(false);
     setIsChangeBg(false);
     setIsShowSearch(false);
-  }, [pathname]);
+  }, [pathname, queryFilterKey, queryValues]);
 
   return (
     <header
@@ -239,10 +245,7 @@ export function NavBar() {
         </Link>
 
         <Menu show={showInnerMenu} setShowInnerMenu={setShowInnerMenu} />
-        <FilterHeader
-          show={showFilterMenu}
-          setShowFilterMenu={setShowFilterMenu}
-        />
+        <FilterHeader show={showFilterMenu} setClose={setShowFilterMenu} />
       </div>
       <MenuMobile />
     </header>
@@ -573,6 +576,7 @@ function MenuMobile() {
     assistant: false,
     blog: false,
     collab: false,
+    product: false,
   });
 
   const pathname = usePathname();
@@ -619,6 +623,13 @@ function MenuMobile() {
     setIsOpen(false);
     router.push(newPathname + (search ? "?" + search : ""));
   }
+
+  const queryFilterKey = searchParams.get("filterKey");
+  const queryValues = searchParams.get("values");
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [queryFilterKey, queryValues]);
 
   return (
     <div className="fixed w-full left-0 right-0 z-[9999999]  lg:hidden">
@@ -684,7 +695,6 @@ function MenuMobile() {
           <BoxSearch showBox={isShowSearch} />
         </div>
       </div>
-
       <div
         className={`fixed top-[66.94px] h-[calc(100dvh-66.94px)] pb-[40px] w-full bg-white z-50 transform transition-transform duration-300 overflow-y-auto ${
           isOpen
@@ -706,8 +716,34 @@ function MenuMobile() {
               {t("Home")}
             </MenuLink>
           </li>
+          <li className="w-full font-medium">
+            <div
+              onClick={() => toggleItem("product")}
+              className="flex items-center gap-[10px] cursor-pointer"
+            >
+              {t("Products")}
+              <Icons.ArrowDown2
+                size="20"
+                className={`transition-transform duration-300 ${
+                  openItems.product ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+            <AnimatePresence>
+              {openItems.product && (
+                <motion.ul
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
+                >
+                  <FilterHeader />
+                </motion.ul>
+              )}
+            </AnimatePresence>
+          </li>
 
-          {/* <FilterHeader show={true} /> */}
           {[
             { label: t("Catalog"), href: "/catalog" },
             { label: t("Representatives"), href: "/representatives" },
@@ -873,22 +909,21 @@ function MenuMobile() {
               )}
             </AnimatePresence>
           </li>
-          {[
-            { label: t("Contactus"), href: "/contactus" },
-            { label: t("Industrial"), href: "/industrial" },
-          ].map(({ label, href }) => (
-            <li className="font-medium" key={href}>
-              <MenuLink
-                href={href}
-                onClick={() => setIsOpen(false)}
-                className={`pb-1 ${
-                  isActive(href) ? "border-b-2 border-primary" : ""
-                }`}
-              >
-                {label}
-              </MenuLink>
-            </li>
-          ))}
+          {[{ label: t("Contactus"), href: "/contactus" }].map(
+            ({ label, href }) => (
+              <li className="font-medium" key={href}>
+                <MenuLink
+                  href={href}
+                  onClick={() => setIsOpen(false)}
+                  className={`pb-1 ${
+                    isActive(href) ? "border-b-2 border-primary" : ""
+                  }`}
+                >
+                  {label}
+                </MenuLink>
+              </li>
+            )
+          )}
         </ul>
       </div>
     </div>
@@ -912,31 +947,3 @@ function MenuLink({ href, children, className = "", onClick }) {
     </Link>
   );
 }
-
-{
-  /* <li className="w-full font-medium">
-            <div
-              onClick={() => toggleItem("products")}
-              className="flex items-center gap-[10px] cursor-pointer"
-            >
-              {t("Products")}
-              <Icons.ArrowDown2
-                size="20"
-                className={`transition-transform duration-300`}
-              />
-            </div>
-            <AnimatePresence>
-              <motion.ul
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
-              ></motion.ul>
-            </AnimatePresence>
-          </li> */
-}
-
-// ${
-//                 openItems.assistant ? "rotate-180" : ""
-//               }

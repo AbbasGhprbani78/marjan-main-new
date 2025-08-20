@@ -1,7 +1,8 @@
 "use client";
 import * as Icons from "iconsax-reactjs";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import CheckBox from "../module/CheckBox";
+import { useSearchParams } from "next/navigation";
 
 export default function Accordion({
   itemsCheckBox = [],
@@ -14,9 +15,14 @@ export default function Accordion({
   const [selectedItems, setSelectedItems] = useState([]);
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
-  const toggleAccordion = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const searchParams = useSearchParams();
+  const queryFilterKey = searchParams.get("filterKey");
+  const queryValues = useMemo(
+    () => searchParams.get("values")?.split(",") || [],
+    [searchParams.get("values")]
+  );
+
+  const toggleAccordion = () => setIsOpen((prev) => !prev);
 
   const handleChange = (e) => {
     const value = e.target.name;
@@ -29,10 +35,19 @@ export default function Accordion({
   };
 
   useEffect(() => {
-    if (isEmptyCheckBox) {
-      setSelectedItems([]);
-    }
+    if (isEmptyCheckBox) setSelectedItems([]);
   }, [isEmptyCheckBox]);
+
+  useEffect(() => {
+    if (queryFilterKey === filterKey && queryValues.length > 0) {
+      setSelectedItems(queryValues);
+      onFilterChange(filterKey, queryValues);
+      setIsOpen(true);
+    } else if (queryFilterKey !== filterKey) {
+      setSelectedItems([]);
+      onFilterChange(filterKey, []);
+    }
+  }, [queryFilterKey, queryValues.join(",")]);
 
   return (
     <div className="p-4 max-w-md mx-auto ">

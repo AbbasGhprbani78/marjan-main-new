@@ -84,9 +84,9 @@ button {
   width: 100%;
 }
 
-.wrapper_image {
+/* .wrapper_image {
   height: 45dvh;
-}
+} */
 
 .wrapper_image {
   height: 45dvh;
@@ -160,14 +160,6 @@ button {
     height: 55dvh;
     min-height: 370px;
   }
-
-  .wrapperheader {
-    height: 42dvh;
-  }
-
-  .wrapperheader {
-    min-height: 250px;
-  }
 }
 
 @media (min-width: 1024px) {
@@ -178,11 +170,6 @@ button {
 }
 
 @media (max-width: 640px) {
-  .wrapperheader {
-    height: 70dvh;
-    max-height: 350px;
-  }
-
   .custom-bullet {
     width: 8px !important;
     height: 8px !important;

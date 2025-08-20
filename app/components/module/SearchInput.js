@@ -17,7 +17,7 @@ export default function SearchInput({ searchTerm, onSearchChange }) {
         className="w-full text-[#242021] placeholder-[#242021] outline-none bg-transparent"
         aria-label={t("ProductSearch")}
       />
-      <Icons.SearchNormal size="24" aria-hidden="true" />
+      <Icons.SearchNormal1 size="24" aria-hidden="true" />
     </div>
   );
 }

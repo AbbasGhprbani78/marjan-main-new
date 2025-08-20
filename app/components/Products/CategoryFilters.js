@@ -8,6 +8,8 @@ const CategoryFilters = ({
   handleFilterChange,
   isEmptyCheckBox,
   ismobile = false,
+  queryFilterKey,
+  queryValues,
 }) => {
   const { t } = useTranslation();
 
@@ -22,7 +24,10 @@ const CategoryFilters = ({
             onFilterChange={handleFilterChange}
             title={t(key)}
             isEmptyCheckBox={isEmptyCheckBox}
-            defaultOpen={ismobile ? false : index === 0}
+            defaultOpen={
+              key === queryFilterKey || (ismobile ? false : index === 0)
+            }
+            queryValues={key === queryFilterKey ? queryValues : []}
           />
         );
 

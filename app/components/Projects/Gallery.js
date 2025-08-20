@@ -29,7 +29,7 @@ export default function Gallery({ gallery }) {
           grid={{ rows: 1, fill: "row" }}
           slidesPerView={slidesNumber}
           loop={false}
-          dir="rtl"
+          dir="ltr"
         >
           {gallery?.slice(0, 4).map((item, i, arr) => (
             <SwiperSlide key={i} className="relative group overflow-hidden">
@@ -37,10 +37,10 @@ export default function Gallery({ gallery }) {
                 <GalleryItem image={item} />
                 {i === arr.length - 1 && (
                   <div
-                    className="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
+                    className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
                     onClick={() => setOpen(true)}
                   >
-                    <Icons.More className="m-auto text-gray-white w-20 h-20 md:w-35 md:h-35" />
+                    <Icons.More className="text-gray-white w-20 h-20 md:w-35 md:h-35" />
                   </div>
                 )}
               </div>
@@ -54,10 +54,10 @@ export default function Gallery({ gallery }) {
               <GalleryItem image={item} />
               {i === arr.length - 1 && (
                 <div
-                  className="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
+                  className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
                   onClick={() => setOpen(true)}
                 >
-                  <Icons.More className="m-auto text-gray-white w-20 h-20 md:w-35 md:h-35" />
+                  <Icons.More className="text-gray-white w-20 h-20 md:w-35 md:h-35" />
                 </div>
               )}
             </div>
@@ -65,7 +65,12 @@ export default function Gallery({ gallery }) {
         </div>
       )}
 
-      <PopupGallery open={open} setOpen={setOpen} images={gallery} />
+      <PopupGallery
+        open={open}
+        setOpen={setOpen}
+        images={gallery}
+        isdownload={false}
+      />
     </>
   );
 }

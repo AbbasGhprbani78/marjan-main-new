@@ -126,7 +126,7 @@ export function HomeSlider({ data, bgcolor, dotColor, route }) {
                 height={38}
                 invert={true}
                 className={"m-auto mt-0"}
-                href={`${route}/1`}
+                href={`${route}/${item.id}`}
               />
             </div>
             <Image
@@ -136,7 +136,7 @@ export function HomeSlider({ data, bgcolor, dotColor, route }) {
                   : `${process.env.NEXT_PUBLIC_API_URL}${item.image}`
               }`}
               alt="Background Image"
-              className="aspect-4/3 object-cover w-full    md:min-h-[400px] lg:h-[100dvh]"
+              className="aspect-[4/3] object-cover w-full    md:min-h-[400px] lg:h-[100dvh]"
               width={1980}
               height={1080}
               priority
@@ -289,6 +289,8 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
     setShowArrows(totalSlidesWidth > containerWidth);
   }, [data, activeButton, viewportWidth]);
 
+  console.log("data =>", data);
+
   return (
     <div className="relative px-20 md:px-40 lg:px-80">
       <div className="relative flex flex-row justify-center gap-[50px] mb-[1rem] mt-[20px] md:mt-[50px] border-b border-gray-300">
@@ -312,7 +314,6 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
         />
       </div>
 
-      {/* اسلایدر */}
       <div className="relative w-full">
         {showArrows && (
           <LeftArrow
@@ -434,7 +435,6 @@ export function CategorySlider({ data }) {
         />
       </div>
 
-      {/* موبایل */}
       <div className="md:hidden flex items-center justify-between w-full px-4 mb-2">
         <button
           onClick={() => {
@@ -481,7 +481,6 @@ export function CategorySlider({ data }) {
         </button>
       </div>
 
-      {/* اسلایدر */}
       <div className="relative mt-[30px]">
         {showArrows && (
           <LeftArrow swiper={swiper} className="left-[-18px] lg:left-[-18px]" />
@@ -503,34 +502,55 @@ export function CategorySlider({ data }) {
           dir={locale}
           key={locale}
         >
-          {data[activeButton - 1]?.data.map((item) => (
-            <SwiperSlide
-              key={item.key}
-              className="relative group overflow-hidden"
-            >
-              <Link
-                href={localizedHref(
-                  data[activeButton - 1].title === "صنعتی"
-                    ? "/industrial"
-                    : "/products"
-                )}
+          {data[activeButton - 1]?.data.map((item) => {
+            const parentTitle = data[activeButton - 1].title;
+
+            const filterKeyMap = {
+              "Use case": "environment",
+              کاربری: "environment",
+              Color: "color",
+              رنگ: "color",
+              Styles: "style",
+              استایل: "style",
+              Size: "size",
+              سایز: "size",
+              Industrial: "industrie",
+              صنعتی: "industrie",
+            };
+
+            const filterKey = filterKeyMap[parentTitle] || parentTitle;
+
+            return (
+              <SwiperSlide
+                key={item.key}
+                className="relative group overflow-hidden"
               >
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
-                  alt="Background Image"
-                  className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] md:h-[290px]"
-                  width={500}
-                  height={500}
-                  priority
-                />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                  <p className="text-white text-[1.2rem] text-center px-4 font-fa">
-                    {item.title}
-                  </p>
-                </div>
-              </Link>
-            </SwiperSlide>
-          ))}
+                <Link
+                  href={localizedHref(
+                    parentTitle === "صنعتی" || parentTitle === "Industrial"
+                      ? "/industrial"
+                      : `/products?filterKey=${filterKey}&values=${encodeURIComponent(
+                          item.title
+                        )}`
+                  )}
+                >
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
+                    alt="Background Image"
+                    className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] md:h-[290px]"
+                    width={500}
+                    height={500}
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                    <p className="text-white text-[1.2rem] text-center px-4 font-fa">
+                      {item.title}
+                    </p>
+                  </div>
+                </Link>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </div>
@@ -541,66 +561,51 @@ export function ProjectsSlider({ data, bgcolor }) {
   const { locale } = useParams();
   const swiper = useRef(null);
   const [windowWidth, setWindowWidth] = useState(null);
-  const [showArrows, setShowArrows] = useState(false);
   const { localizedHref } = useLocalizedLink();
   const { t } = useTranslation();
 
   const getSlideWidth = (index) => {
-    if (windowWidth < 768) return "50%";
-    if (windowWidth < 1024) return index % 2 !== 0 ? "50%" : "40%";
-    if (windowWidth < 1400) return index % 2 !== 0 ? "43%" : "33%";
-    return index % 2 !== 0 ? "40%" : "20%";
+    if (windowWidth < 768) return windowWidth / 2; // نصف صفحه
+    if (windowWidth < 1024)
+      return index % 2 !== 0 ? windowWidth * 0.5 : windowWidth * 0.4;
+    if (windowWidth < 1400)
+      return index % 2 !== 0 ? windowWidth * 0.43 : windowWidth * 0.33;
+    return index % 2 !== 0 ? windowWidth * 0.4 : windowWidth * 0.2;
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-
-      if (!data?.length) return;
-
-      const containerPadding = windowWidth >= 1024 ? 160 : 40;
-      const containerWidth = window.innerWidth - containerPadding;
-
-      const totalSlidesWidth = data.reduce((acc, _, index) => {
-        const slideWidthPercent = parseFloat(getSlideWidth(index));
-        const slideWidthPx = (slideWidthPercent / 100) * containerWidth;
-        const gap = windowWidth < 1024 ? 10 : 30;
-        return acc + slideWidthPx + gap;
-      }, 0);
-
-      setShowArrows(totalSlidesWidth > containerWidth);
-    };
-
+    const handleResize = () => setWindowWidth(window.innerWidth);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [data, windowWidth]);
+  }, []);
 
   if (!windowWidth) return null;
 
   return (
     <div className="relative mt-[30px] md:mt-[50px] px-20 md:px-40 lg:px-80">
-      {showArrows && (
-        <LeftArrow swiper={swiper} bgcolor={bgcolor} offsetY="55%" />
-      )}
-      {showArrows && (
-        <RightArrow swiper={swiper} bgcolor={bgcolor} offsetY="55%" />
-      )}
+      <LeftArrow swiper={swiper} bgcolor={bgcolor} offsetY="55%" />
+      <RightArrow swiper={swiper} bgcolor={bgcolor} offsetY="55%" />
 
       <Swiper
         spaceBetween={windowWidth < 1024 ? 10 : 30}
-        modules={[Autoplay]}
         slidesPerView={"auto"}
         ref={swiper}
         loop={true}
         speed={800}
         dir={locale}
         key={locale}
+        watchSlidesProgress={true}
+        loopedSlides={data.length}
+        centeredSlides={false}
       >
         {data.map((item, index) => (
-          <SwiperSlide key={item.key} style={{ width: getSlideWidth(index) }}>
+          <SwiperSlide
+            key={item.key}
+            style={{ width: `${getSlideWidth(index)}px` }}
+          >
             <Link href={localizedHref(`projects/${item.id}`)}>
-              <p className="text-[18px] font-[400] mb-[5px] text-start md:hidden">
+              <p className="text-[.9rem] md:text-[18px] font-[400] mb-[5px] text-start md:hidden">
                 {item.title}
               </p>
               {index % 2 === 0 && (
@@ -637,7 +642,7 @@ export function ProjectsSlider({ data, bgcolor }) {
   );
 }
 
-export function GallerySlider({ data, onClick }) {
+export function GallerySlider({ data, onClick, ispopup = false }) {
   const { locale } = useParams();
   const swiper = useRef(null);
   const [showArrows, setShowArrows] = useState(false);
@@ -714,13 +719,22 @@ export function GallerySlider({ data, onClick }) {
                 key={item.key}
                 className="relative group overflow-hidden"
               >
-                <div className="cursor-pointer">
+                <div className="cursor-pointer relative">
                   {item.link ? (
                     <Link href={item.link} locale={locale}>
                       {image}
                     </Link>
                   ) : (
                     <div onClick={() => onClick(item)}>{image}</div>
+                  )}
+
+                  {ispopup && (
+                    <div
+                      onClick={() => onClick(item)}
+                      className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    >
+                      <Icons.SearchNormal1 size="30" color="#fff" />
+                    </div>
                   )}
                 </div>
               </SwiperSlide>

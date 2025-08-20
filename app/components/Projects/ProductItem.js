@@ -18,11 +18,6 @@ export default function ProductItem({ item }) {
             height={500}
           />
         </div>
-        {item?.text && (
-          <p className="font-medium text-[1rem]  mt-[0.5rem] inline-block">
-            {item.text}
-          </p>
-        )}
       </Link>
     </article>
   );

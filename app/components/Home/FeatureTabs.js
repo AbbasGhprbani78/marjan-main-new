@@ -121,7 +121,7 @@ export default function FeatureTabs({ data }) {
           />
         </div>
 
-        <div className="mb-[2rem] mt-[18px] px-20 md:px-40 lg:px-80">
+        <div className="mb-[2rem] mt-[18px] px-20 md:px-40 lg:px-0">
           <ReadMoreText text={selectedData.text} />
         </div>
 

@@ -65,7 +65,7 @@ export default function Texture({ textureImage }) {
     let max = 0;
     tiles.forEach((tile) => {
       if (!tile?.size) return;
-      const parts = tile.size.split(/[*x]/i).map(Number);
+      const parts = tile.size.split(/[*x×]/i).map(Number);
       if (parts.length === 2) {
         const [h, w] = parts;
         max = Math.max(max, h, w);
@@ -76,7 +76,7 @@ export default function Texture({ textureImage }) {
 
   const getScaledSize = (size, maxDimension, scale = 150) => {
     if (!size) return { width: scale, height: scale };
-    const parts = size.split(/[*x]/i).map(Number);
+    const parts = size.split(/[*x×]/i).map(Number);
     if (parts.length !== 2) return { width: scale, height: scale };
     const [h, w] = parts;
     return {
@@ -87,11 +87,11 @@ export default function Texture({ textureImage }) {
 
   return (
     <div>
-      <p className=" font-[500] title  pb-[30]  px-20 md:px-40 lg:px-80">
+      <p className=" font-[500] text-[1.3rem] md:text-[1.5rem]  pb-[30]  px-20 md:px-40 lg:px-80">
         {t("color")}
       </p>
       <div
-        className="grid justify-center gap-y-[2rem] gap-x-[10px] md:gap-x-[3rem] lg:gap-x-[6rem] border-b-1 border-gray-500 pb-[2rem] px-20 md:px-40 lg:px-80"
+        className="grid justify-center gap-y-[2rem] gap-x-[10px] md:gap-x-[3rem] border-b-1 border-gray-500 pb-[2rem] px-20 md:px-40 lg:px-80"
         style={{
           gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))",
           maxWidth: "100%",
@@ -140,13 +140,16 @@ export default function Texture({ textureImage }) {
 
       {showTexture && (
         <>
-          <p className="font-[500] title py-[2rem] px-20 md:px-40 lg:px-80">
+          <p className="font-[500] text-[1.3rem] md:text-[1.5rem] py-[2rem] px-20 md:px-40 lg:px-80">
             {t("Texture")}
           </p>
 
           <div className="grid grid-cols-12 gap-[2rem] lg:gap-[1rem] px-20 md:px-40 lg:px-80">
-            <div className="col-span-12 order-1 lg:order-2 lg:col-span-8">
-              <div className="flex flex-wrap gap-5 items-end max-w-full lg:justify-end">
+            <div className="col-span-12 order-2 lg:order-2 lg:col-span-8">
+              <div
+                dir="ltr"
+                className="flex flex-wrap gap-5 items-start max-w-full lg:justify-sitems-start"
+              >
                 {(() => {
                   const maxDim = getMaxDimension(tailesToShow);
 
@@ -175,10 +178,10 @@ export default function Texture({ textureImage }) {
                         />
                         {isLast && (
                           <div
-                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer"
+                            className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
                             onClick={() => setOpen(true)}
                           >
-                            <Icons.More className="m-auto text-gray-white w-20 h-20 md:w-35 md:h-35" />
+                            <Icons.More className="text-gray-white w-20 h-20 md:w-35 md:h-35" />
                           </div>
                         )}
                       </div>
@@ -194,7 +197,7 @@ export default function Texture({ textureImage }) {
               </div>
             </div>
 
-            <div className="col-span-12 order-2 lg:order-1 lg:col-span-4">
+            <div className="col-span-12 order-1 lg:order-1 lg:col-span-4">
               <div className="flex gap-5 items-end overflow-hidden max-w-full">
                 <div className="flex flex-col">
                   {mainHorizontalTile && (

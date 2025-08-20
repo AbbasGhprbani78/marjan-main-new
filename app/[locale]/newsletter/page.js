@@ -53,18 +53,19 @@ export default async function page({ params }) {
     <main className="wrapper ">
       <h1 className="sr-only">newsLetter</h1>
       <section
-        className={`relative flex justify-center items-end wrapperheader`}
+        className={`relative flex justify-center items-center w-full wrapper_image  aspect-[3/2] max-h-[550px] mt-[130px] lg:mt-0`}
       >
         <Image
           src="/images/12.png"
           alt="image header news letter"
           fill
-          className="object-cover z-0"
+          className="object-fill md:object-cover z-0 aspect-[4/3]"
+          style={{ maxHeight: "550px", width: "100%" }}
         />
 
         <div className="absolute inset-0 bg-[rgba(80,80,80,0.5)] z-10"></div>
 
-        <div className="flex flex-col justify-center items-center text-white gap-[1rem] z-10 mb-[15%] md:mb-[1.7rem]">
+        <div className="flex flex-col justify-center items-center text-white gap-[1rem] z-10 ">
           <h2 className="font-medium text-[1.7rem] md:text-[2rem]">
             {t.Subscribenewsletter}
           </h2>

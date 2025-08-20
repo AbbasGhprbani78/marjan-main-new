@@ -5,19 +5,20 @@ import IntroductionCard from "./IntroductionCard";
 import { useTranslation } from "@/hook/useTranslation";
 import { GallerySlider } from "../slider";
 
-export default function ImagesContainer({ dataSingleProduct }) {
+export default function ImagesContainer({ dataSingleProduct, images }) {
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const { t } = useTranslation();
 
   return (
     <>
-      <p className="font-[500] title px-20 md:px-40 lg:px-80 pt-30 mb-[30px]">
+      <p className="font-[500] text-[1.3rem] md:text-[1.5rem] px-20 md:px-40 lg:px-80 pt-30 mb-[30px]">
         {t("Images")}
       </p>
 
       <div>
         <GallerySlider
+          ispopup={true}
           data={dataSingleProduct.gallery?.map((item) => ({
             id: item.id,
             image: item.url,
@@ -38,7 +39,7 @@ export default function ImagesContainer({ dataSingleProduct }) {
               title: dataSingleProduct?.title,
               image: selectedImage?.image,
               size: dataSingleProduct?.size,
-              color: dataSingleProduct?.colors,
+              color: images,
               thickness: dataSingleProduct?.thickness,
               surface: dataSingleProduct?.surface,
               products: selectedImage?.products,

@@ -18,6 +18,7 @@ export default function GuideSection({
   href,
   typeModel,
   subjects = [],
+  dataPack = [],
 }) {
   const { localizedHref } = useLocalizedLink();
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ export default function GuideSection({
   return (
     <>
       {isLink ? (
-        <Link href={localizedHref(href)} className="flex gap-5">
+        <Link href={localizedHref(href)} className="flex gap-5" target="_blank">
           <GuideIcon size="24" className="text-gray-700" />
           <p className="my-auto font-[700] text-[14px] text-gray-700">{text}</p>
         </Link>

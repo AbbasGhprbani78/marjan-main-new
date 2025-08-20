@@ -24,7 +24,7 @@ export default function ProjectsContainer({ data }) {
 
   return (
     <div className="  relative">
-      <p className="px-20 md:px-40 lg:px-80 pb-40 pt-30 font-[500] title pb-30">
+      <p className="px-20 md:px-40 lg:px-80  text-[1.3rem]  md:text-[1.5rem] pt-30 font-[500]  pb-30">
         {t("Projects")}
       </p>
 

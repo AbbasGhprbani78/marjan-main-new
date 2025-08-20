@@ -4,14 +4,17 @@ import * as Icons from "iconsax-reactjs";
 export default function AccardionFilter({ title, children }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="">
+    <div className="mt-[1rem]">
       <button
         onClick={() => setOpen(!open)}
         className="flex justify-between w-full py-3 font-medium text-[var(--color-gray-900)]"
       >
-        <span>{title}</span>
+        <span className="ms-[15px]">{title}</span>
         <Icons.ArrowDown2
-          className={`w-5 h-5 transition-transform ${open ? "rotate-180" : ""}`}
+          size="20"
+          className={`transition-transform duration-300  ${
+            open ? "rotate-180" : ""
+          }`}
         />
       </button>
 
