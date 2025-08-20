@@ -106,7 +106,11 @@ export function NavBar() {
     setIsOpen(false);
     setIsChangeBg(false);
     setIsShowSearch(false);
+    setScrolled(false);
+    setIsHovered(false);
   }, [pathname, queryFilterKey, queryValues]);
+
+  console.log(shouldApplyScrolledStyles);
 
   return (
     <header
