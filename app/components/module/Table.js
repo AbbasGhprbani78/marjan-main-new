@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-
-export default function Table({ columns = [], data = {} }) {
+export default function Table({ columns = [], data = [] }) {
   return (
     <div className="w-full overflow-x-auto rounded-lg border border-gray-200 ">
       <table className="min-w-[1200px] border-collapse border border-gray-300 text-sm">
@@ -18,16 +17,18 @@ export default function Table({ columns = [], data = {} }) {
           </tr>
         </thead>
         <tbody className="bg-white">
-          <tr>
-            {columns.map((col) => (
-              <td
-                key={col}
-                className="px-6 py-4 whitespace-nowrap text-center text-gray-700 border border-gray-300"
-              >
-                {data[col] || "-"}
-              </td>
-            ))}
-          </tr>
+          {data.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {columns.map((col) => (
+                <td
+                  key={col}
+                  className="px-6 py-4 whitespace-nowrap text-center text-gray-700 border border-gray-300"
+                >
+                  {row[col] || "-"}
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

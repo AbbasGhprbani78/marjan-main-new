@@ -68,46 +68,56 @@ export default function GuideSection({
             <>
               <Table
                 columns={[
-                  "سایز (cm)",
-                  "تعداد کاشی در هرکارتن",
-                  "متراژ کاشی هر کارتن (m2)",
-                  "وزن تقریبی هر کارتن (kg)",
-                  "تعداد کارتن هر پالت",
-                  "متراژ هر پالت (m2)",
-                  "وزن تقریبی هرپالت (kg)",
+                  t("Size (cm)"),
+                  t("Tiles per Carton"),
+                  t("Tile Area per Carton (m²)"),
+                  t("Approx. Weight per Carton (kg)"),
+                  t("Cartons per Pallet"),
+                  t("Area per Pallet (m²)"),
+                  t("Approx. Weight per Pallet (kg)"),
                 ]}
-                data={{
-                  "سایز (cm)": "30x30",
-                  "تعداد کاشی در هرکارتن": 20,
-                  "متراژ کاشی هر کارتن (m2)": 1.8,
-                  "وزن تقریبی هر کارتن (kg)": 25,
-                  "تعداد کارتن هر پالت": 50,
-                  "متراژ هر پالت (m2)": 90,
-                  "وزن تقریبی هرپالت (kg)": 1200,
-                }}
+                data={dataPack.map((item) => ({
+                  [t("Size (cm)")]: item.size || "-",
+                  [t("Tiles per Carton")]:
+                    item.number_of_tiles_per_carton || "-",
+                  [t("Tile Area per Carton (m²)")]:
+                    item.tile_meters_per_carton || "-",
+                  [t("Approx. Weight per Carton (kg)")]:
+                    item.approximate_weight_of_each_carton || "-",
+                  [t("Cartons per Pallet")]:
+                    item.number_of_cartons_per_pallet || "-",
+                  [t("Area per Pallet (m²)")]: item.area_of_each_pallet || "-",
+                  [t("Approx. Weight per Pallet (kg)")]:
+                    item.approximate_weight_of_each_pallet || "-",
+                }))}
               />
             </>
           ) : typeModel == "properties" ? (
             <>
               <Table
                 columns={[
-                  "سایز (cm)",
-                  "تعداد کاشی در هرکارتن",
-                  "متراژ کاشی هر کارتن (m2)",
-                  "وزن تقریبی هر کارتن (kg)",
-                  "تعداد کارتن هر پالت",
-                  "متراژ هر پالت (m2)",
-                  "وزن تقریبی هرپالت (kg)",
+                  t("Size (cm)"),
+                  t("Tiles per Carton"),
+                  t("Tile Area per Carton (m²)"),
+                  t("Approx. Weight per Carton (kg)"),
+                  t("Cartons per Pallet"),
+                  t("Area per Pallet (m²)"),
+                  t("Approx. Weight per Pallet (kg)"),
                 ]}
-                data={{
-                  "سایز (cm)": "30x30",
-                  "تعداد کاشی در هرکارتن": 20,
-                  "متراژ کاشی هر کارتن (m2)": 1.8,
-                  "وزن تقریبی هر کارتن (kg)": 25,
-                  "تعداد کارتن هر پالت": 50,
-                  "متراژ هر پالت (m2)": 90,
-                  "وزن تقریبی هرپالت (kg)": 1200,
-                }}
+                data={dataPack.map((item) => ({
+                  [t("Size (cm)")]: item.size || "-",
+                  [t("Tiles per Carton")]:
+                    item.number_of_tiles_per_carton || "-",
+                  [t("Tile Area per Carton (m²)")]:
+                    item.tile_meters_per_carton || "-",
+                  [t("Approx. Weight per Carton (kg)")]:
+                    item.approximate_weight_of_each_carton || "-",
+                  [t("Cartons per Pallet")]:
+                    item.number_of_cartons_per_pallet || "-",
+                  [t("Area per Pallet (m²)")]: item.area_of_each_pallet || "-",
+                  [t("Approx. Weight per Pallet (kg)")]:
+                    item.approximate_weight_of_each_pallet || "-",
+                }))}
               />
             </>
           ) : null}

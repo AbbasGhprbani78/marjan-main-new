@@ -55,7 +55,10 @@ export default async function page({ params }) {
           className="object-cover"
           style={{ maxHeight: "550px", width: "100%" }}
         />
-        <div className="absolute inset-0 bg-black/50 z-10" />
+        <div
+          className="absolute inset-0 bg-black/50 z-10"
+          style={{ maxHeight: "550px", width: "100%" }}
+        />
         <p className="w-max font-fa text-white font-normal  text-[1.5rem] md:text-[2rem]  z-10">
           نام پروژه
         </p>

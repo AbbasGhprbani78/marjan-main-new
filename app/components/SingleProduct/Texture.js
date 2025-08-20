@@ -148,7 +148,12 @@ export default function Texture({ textureImage }) {
             <div className="col-span-12 order-2 lg:order-2 lg:col-span-8">
               <div
                 dir="ltr"
-                className="flex flex-wrap gap-5 items-start max-w-full lg:justify-sitems-start"
+                className="flex flex-wrap gap-5  max-w-full  items-center"
+                style={
+                  locale === "fa"
+                    ? { justifyContent: "start" }
+                    : { justifyContent: "end" }
+                }
               >
                 {(() => {
                   const maxDim = getMaxDimension(tailesToShow);

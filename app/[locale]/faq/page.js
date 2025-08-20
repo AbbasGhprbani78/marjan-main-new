@@ -50,7 +50,7 @@ export default async function page() {
     <main className="wrapper ">
       <h className="sr-only">FAQ</h>
       <section
-        className={`relative flex justify-center items-center mt-[130px] lg:mt-0 wrapper_image aspect-[3/2] max-h-[550px]`}
+        className={`relative w-full flex justify-center items-center mt-[130px] lg:mt-0 wrapper_image aspect-[3/2] max-h-[550px] overflow-hidden`}
       >
         <Image
           src="/images/41.jpg"
@@ -60,7 +60,10 @@ export default async function page() {
           style={{ maxHeight: "550px", width: "100%" }}
         />
 
-        <div className="absolute inset-0 bg-[rgba(80,80,80,0.5)] z-10"></div>
+        <div
+          className="absolute inset-0 bg-[rgba(80,80,80,0.5)] z-10"
+          style={{ maxHeight: "550px", width: "100%" }}
+        ></div>
 
         <div className="flex flex-col justify-center items-center text-white gap-[1rem] z-10 ">
           <h2 className="font-medium text-[1.5rem] md:text-[2rem]">

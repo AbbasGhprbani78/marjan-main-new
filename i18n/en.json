@@ -98,5 +98,12 @@
   "Subscribenewsletter": "Subscribe to our newsletter",
   "AddressTitleF": "Address of the head office of Marjan Tile Company",
   "AddressTextF": "Esfahan, Chahar Bagh Bala, Kavian Alley, No. 45",
-  "TextSizeInfo": "Due to differences in display settings, the color of the products may vary slightly from the image shown."
+  "TextSizeInfo": "Due to differences in display settings, the color of the products may vary slightly from the image shown.",
+  "Size (cm)": "Size (cm)",
+  "Tiles per Carton": "Tiles per Carton",
+  "Tile Area per Carton (m²)": "Tile Area per Carton (m²)",
+  "Approx. Weight per Carton (kg)": "Approx. Weight per Carton (kg)",
+  "Cartons per Pallet": "Cartons per Pallet",
+  "Area per Pallet (m²)": "Area per Pallet (m²)",
+  "Approx. Weight per Pallet (kg)": "Approx. Weight per Pallet (kg)"
 }

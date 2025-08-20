@@ -89,10 +89,12 @@ export default async function page({ params }) {
         </div>
       </div>
       <div className="border-b-1 border-[#919191]" id="gallery">
-        <ImagesContainer
-          dataSingleProduct={dataSingleProduct}
-          images={dataSingleProduct?.Tiles}
-        />
+        {dataSingleProduct.gallery.length > 0 && (
+          <ImagesContainer
+            dataSingleProduct={dataSingleProduct}
+            images={dataSingleProduct?.Tiles}
+          />
+        )}
         <div className="  pb-40 pt-[40px]" id="colors">
           <Texture textureImage={dataSingleProduct?.Tiles} />
         </div>

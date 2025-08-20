@@ -12,7 +12,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
   const { localizedHref } = useLocalizedLink();
   const { t } = useTranslation();
   return (
-    <div className="grid grid-cols-12  md:w-[95vw] lg:w-[70vw] mx-auto ">
+    <div className="grid grid-cols-12  md:w-[95vw] lg:w-[70vw] lg:min-h-[510] mx-auto ">
       <div className="col-span-12 md:col-span-6 xl:col-span-5 h-full text-[var(--color-gray-900)] bg-white p-[1.2rem] ">
         <div className="flex items-center justify-between mb-[1rem] md:mb-[2rem]">
           <span className="font-fa text-[1.3rem]">{singleProduct.title}</span>
