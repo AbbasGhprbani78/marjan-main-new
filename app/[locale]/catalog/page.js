@@ -1,6 +1,5 @@
 import React from "react";
 import Catalog from "@/app/components/templates/Catalog";
-import { catalogs, categories } from "@/app/dataCatalog";
 import { fetchCatalogs } from "@/services/catalogs";
 
 export const metadata = {
@@ -46,14 +45,17 @@ export const metadata = {
 
 export default async function page({ params }) {
   const { locale } = await params;
-  const dataCatalogs = await fetchCatalogs();
+  const dataCatalogs = await fetchCatalogs(locale);
 
   console.log(dataCatalogs);
 
   return (
     <main className="wrapper ">
       <section className="px-20 md:px-40 lg:px-80 pt-[150px] lg:pt-[200px]">
-        <Catalog catalogs={catalogs} categories={categories} />
+        <Catalog
+          catalogs={dataCatalogs?.catalogs}
+          categories={dataCatalogs?.categories}
+        />
       </section>
     </main>
   );

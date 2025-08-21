@@ -12,7 +12,11 @@ export default function CheckBox({ label, checked, onChange, value, name }) {
         className="text-[#292d32] focus:ring-0 border-gray-400 rounded"
         value={value || label}
       />
-      <label htmlFor={id} className="text-[#292d32] block px-6 cursor-pointer">
+      <label
+        htmlFor={id}
+        dir="ltr"
+        className="text-[#292d32] block px-6 cursor-pointer"
+      >
         {label}
       </label>
     </div>

@@ -144,11 +144,12 @@ export default function Texture({ textureImage }) {
             {t("Texture")}
           </p>
 
-          <div className="grid grid-cols-12 gap-[2rem] lg:gap-[1rem] px-4 sm:px-8 md:px-16 lg:px-40 xl:px-80">
-            <div className="col-span-12 order-2 md:order-2 lg:col-span-8">
+          <div className="grid grid-cols-12  gap-y-[2rem] px-20 md:px-40 lg:px-80">
+            <div className="col-span-12 order-2 md:order-2 md:col-span-8">
               <div
                 dir="ltr"
-                className="flex flex-wrap gap-4 items-center w-full justify-center sm:justify-start"
+                className={`flex flex-wrap gap-4 items-center w-full justify-center 
+    ${locale === "fa" ? "md:justify-start" : "md:justify-end"}`}
               >
                 {(() => {
                   const maxDim = getMaxDimension(tailesToShow);
@@ -196,9 +197,8 @@ export default function Texture({ textureImage }) {
                 />
               </div>
             </div>
-
-            <div className="col-span-12 order-1 lg:order-1 lg:col-span-4">
-              <div className="flex gap-5 items-end overflow-hidden max-w-full justify-center  ">
+            <div className="col-span-12 order-1 md:order-1 md:col-span-4">
+              <div className="flex gap-5 items-end overflow-hidden max-w-full justify-center md:justify-start">
                 <div className="flex flex-col">
                   {mainHorizontalTile && (
                     <div

@@ -8,10 +8,13 @@ export default function Table({ title, thickness, colors, surface, size }) {
 
   return (
     <>
-      <p className="font-normal text-[30px] font-fa mb-17 text-center pt-[1rem]">
-        {title}
-      </p>
-      <div className="overflow-x-auto w-fit mx-auto w-full max-w-[500px]">
+      {title && (
+        <p className="font-normal text-[30px] font-fa mb-17 text-center pt-[1rem]">
+          {title}
+        </p>
+      )}
+
+      <div className="overflow-x-auto  mx-auto min-w-[250px] max-w-[500px]">
         <table className="w-full max-w-[500px] text-sm  text-center text-black">
           <thead>
             <tr className="text-black border-b border-[#000]">
@@ -38,7 +41,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
 
           <tbody>
             <tr className="text-center">
-              <td className="px-4 py-3 whitespace-nowrap text-center">
+              <td className="px-4 py-3 whitespace-nowrap text-center align-top">
                 {size?.map((item) => (
                   <div className="block mb-5" key={item}>
                     {item}
@@ -46,36 +49,34 @@ export default function Table({ title, thickness, colors, surface, size }) {
                 ))}
               </td>
 
-              <td className="px-4 py-3 whitespace-nowrap text-center h-max">
+              <td className="px-4 py-3 whitespace-nowrap text-center h-max align-top">
                 {surface?.map((item) => (
                   <div className="block mb-5" key={item}>
                     {item}
                   </div>
                 ))}
               </td>
-              <td className="px-4 py-3">
-                <div className="flex justify-center gap-[5px]">
+
+              <td className="px-4 py-3  w-max-[130px] md:w-max-[210px] flex justify-center">
+                <div className="flex flex-wrap max-w-[130px] md:max-w-[210px] ">
                   {colors?.map((item, index) => (
                     <div
-                      className={`h-30 w-30 rounded-full overflow-hidden ${
-                        index !== 3 ? "-me-12" : ""
-                      } relative z-[${
-                        10 - index
-                      }] transition-transform duration-300 ease-in-out hover:-translate-y-4`}
-                      key={item}
+                      key={item.id ?? index}
+                      className="h-[25px] w-[25px] m-[2px] rounded-full overflow-hidden relative transition-transform duration-300 ease-in-out hover:-translate-y-2"
                     >
                       <Image
                         src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
-                        width={30}
-                        height={30}
+                        width={25}
+                        height={25}
                         alt="product-circle"
-                        className="object-cover overflow-hidden"
+                        className="object-cover"
                       />
                     </div>
                   ))}
                 </div>
               </td>
-              <td className="px-4 py-3 whitespace-nowrap text-center [direction:ltr]">
+
+              <td className="px-4 py-3 whitespace-nowrap text-center [direction:ltr] align-top">
                 {thickness} mm
               </td>
             </tr>

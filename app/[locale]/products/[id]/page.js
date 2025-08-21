@@ -95,9 +95,11 @@ export default async function page({ params }) {
             images={dataSingleProduct?.Tiles}
           />
         )}
-        <div className="  pb-40 pt-[40px]" id="colors">
-          <Texture textureImage={dataSingleProduct?.Tiles} />
-        </div>
+        {dataSingleProduct?.Tiles.length > 0 && (
+          <div className="  pb-40 pt-[40px]" id="colors">
+            <Texture textureImage={dataSingleProduct?.Tiles} />
+          </div>
+        )}
       </div>
 
       {dataSingleProduct?.icons.length > 0 && (

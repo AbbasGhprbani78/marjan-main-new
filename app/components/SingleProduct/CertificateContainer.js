@@ -45,14 +45,14 @@ export default function CertificateContainer({ data }) {
           <>
             <button
               onClick={() => scroll("right")}
-              className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-[50%] right-[10px] lg:right-[50px] translate-y-[-50%] z-10 rounded-full backdrop-blur-[4px] cursor-pointer"
+              className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-[60%] right-[10px] lg:right-[50px] translate-y-[-50%] z-10 rounded-full backdrop-blur-[4px] cursor-pointer"
               style={{ backgroundColor: "rgba(31, 41, 55, 0.5)" }}
             >
               <Icons.ArrowRight className="m-auto text-white w-20 h-20 md:w-35 md:h-35" />
             </button>
             <button
               onClick={() => scroll("left")}
-              className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-[50%] left-[10px] lg:left-[50px] translate-y-[-50%] z-10 rounded-full backdrop-blur-[4px] cursor-pointer"
+              className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-[60%] left-[10px] lg:left-[50px] translate-y-[-50%] z-10 rounded-full backdrop-blur-[4px] cursor-pointer"
               style={{ backgroundColor: "rgba(31, 41, 55, 0.5)" }}
             >
               <Icons.ArrowLeft className="m-auto text-white w-20 h-20 md:w-35 md:h-35" />
@@ -65,7 +65,7 @@ export default function CertificateContainer({ data }) {
             {data.map((cert, i) => (
               <div
                 key={i}
-                className="cursor-pointer relative min-w-[120px] md:min-w-[180px] aspect-[2/3]"
+                className="cursor-pointer relative w-[120px] md:w-[180px] aspect-[2/3] flex-shrink-0"
                 onClick={() => {
                   setMainItem(cert);
                   setOpenModal(true);

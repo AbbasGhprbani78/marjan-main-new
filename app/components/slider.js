@@ -70,8 +70,6 @@ export function HomeSlider({ data, bgcolor, dotColor, route, delay = 3500 }) {
   const [isHovered, setIsHovered] = useState(false);
   const { locale } = useParams();
 
-  console.log("data =>", data);
-
   return (
     <div
       className="relative mt-[130px] lg:mt-0"
@@ -83,7 +81,7 @@ export function HomeSlider({ data, bgcolor, dotColor, route, delay = 3500 }) {
       <RightArrow swiper={swiper} bgcolor={bgcolor} offsetY="50%" />
 
       <Swiper
-        className="my-swiper"
+        className="my-swiper "
         pagination={{
           clickable: true,
           bulletClass: "swiper-pagination-bullet custom-bullet",
@@ -162,7 +160,6 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
 
   const buttonsRef = useRef({});
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
-  const [showArrows, setShowArrows] = useState(false);
 
   useEffect(() => {
     const currentButton = buttonsRef.current[activeButton];
@@ -174,20 +171,9 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
     }
   }, [activeButton]);
 
-  useEffect(() => {
-    if (!data?.sections?.length) return;
-
-    const containerPadding = viewportWidth >= 1024 ? 160 : 40;
-    const containerWidth = viewportWidth - containerPadding;
-
-    const slideWidth = viewportWidth < 768 ? viewportWidth / 2 : 340;
-    const gap = viewportWidth < 1024 ? 10 : 28;
-
-    const totalSlidesWidth =
-      (data.sections[activeButton - 1]?.data.length || 0) * (slideWidth + gap);
-
-    setShowArrows(totalSlidesWidth > containerWidth);
-  }, [data, activeButton, viewportWidth]);
+  // بررسی نیاز به نمایش Arrowها
+  const currentSectionItems = data.sections[activeButton - 1]?.data || [];
+  const showArrows = currentSectionItems.length > slidesNumber;
 
   return (
     <div className="relative px-20 md:px-40 lg:px-80">
@@ -214,20 +200,20 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
 
       <div className="relative w-full">
         {showArrows && (
-          <LeftArrow
-            swiper={swiper}
-            bgcolor={bgcolor}
-            className="left-[-18px] lg:left-[-18px]"
-            offsetY="45%"
-          />
-        )}
-        {showArrows && (
-          <RightArrow
-            swiper={swiper}
-            bgcolor={bgcolor}
-            className="right-[-18px] lg:right-[-18px]"
-            offsetY="45%"
-          />
+          <>
+            <LeftArrow
+              swiper={swiper}
+              bgcolor={bgcolor}
+              className="left-[-18px] lg:left-[-18px]"
+              offsetY="45%"
+            />
+            <RightArrow
+              swiper={swiper}
+              bgcolor={bgcolor}
+              className="right-[-18px] lg:right-[-18px]"
+              offsetY="45%"
+            />
+          </>
         )}
 
         <Swiper
@@ -241,7 +227,7 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
           key={locale}
           className="mt-[30px]"
         >
-          {data.sections[activeButton - 1]?.data.map((item) => (
+          {currentSectionItems.map((item) => (
             <SwiperSlide key={item.key}>
               <Link href={localizedHref(`/blogs/${item.id}`)}>
                 <div className="relative w-full aspect-square md:aspect-auto md:h-[290px] overflow-hidden">
@@ -282,7 +268,6 @@ export function CategorySlider({ data }) {
   const viewportWidth = useViewportWidth();
   const buttonsRef = useRef({});
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
-  const [showArrows, setShowArrows] = useState(false);
   const { localizedHref } = useLocalizedLink();
 
   const slidesNumber =
@@ -297,22 +282,6 @@ export function CategorySlider({ data }) {
       });
     }
   }, [activeButton, viewportWidth]);
-
-  useEffect(() => {
-    if (!data?.length) return;
-
-    const containerPadding = viewportWidth >= 1024 ? 160 : 40;
-    const containerWidth = viewportWidth - containerPadding;
-
-    const slideWidth = viewportWidth < 768 ? viewportWidth / 2 : 340;
-    const gap = viewportWidth < 1024 ? 10 : 28;
-
-    const currentData =
-      data.find((item) => item.id === activeButton)?.data || [];
-    const totalSlidesWidth = currentData.length * (slideWidth + gap);
-
-    setShowArrows(totalSlidesWidth > containerWidth);
-  }, [data, activeButton, viewportWidth]);
 
   const currentData = data.find((item) => item.id === activeButton)?.data || [];
   const parentTitle =
@@ -331,11 +300,13 @@ export function CategorySlider({ data }) {
     صنعتی: "industrie",
     سبک: "style",
   };
-
   const filterKey = filterKeyMap[parentTitle] || parentTitle.toLowerCase();
+
+  const showArrows = currentData.length > slidesNumber;
 
   return (
     <div className="px-20 md:px-40 lg:px-80">
+      {/* دکمه‌ها در حالت دسکتاپ */}
       <div className="hidden md:flex flex-row justify-center gap-[50px] mt-[50px] relative border-b border-gray-300">
         {data.map((item) => (
           <button
@@ -347,13 +318,13 @@ export function CategorySlider({ data }) {
             {locale === "fa" ? toPersianDigits(item.title) : item.title}
           </button>
         ))}
-
         <span
           className="absolute bottom-0 h-[2px] bg-black transition-all duration-300"
           style={underlineStyle}
         />
       </div>
 
+      {/* دکمه‌ها در حالت موبایل */}
       <div className="md:hidden flex items-center justify-between w-full px-4 mb-2">
         <button
           onClick={() => {
@@ -400,15 +371,19 @@ export function CategorySlider({ data }) {
         </button>
       </div>
 
+      {/* اسلایدر */}
       <div className="relative mt-[30px]">
         {showArrows && (
-          <LeftArrow swiper={swiper} className="left-[-18px] lg:left-[-18px]" />
-        )}
-        {showArrows && (
-          <RightArrow
-            swiper={swiper}
-            className="right-[-18px] lg:right-[-18px]"
-          />
+          <>
+            <LeftArrow
+              swiper={swiper}
+              className="left-[-18px] lg:left-[-18px]"
+            />
+            <RightArrow
+              swiper={swiper}
+              className="right-[-18px] lg:right-[-18px]"
+            />
+          </>
         )}
 
         <Swiper
@@ -428,13 +403,9 @@ export function CategorySlider({ data }) {
             >
               <Link
                 href={localizedHref(
-                  parentTitle === "صنعتی" || parentTitle === "Industrial"
-                    ? `/products?filterKey=${filterKey}&values=${encodeURIComponent(
-                        item.title
-                      )}`
-                    : `/products?filterKey=${filterKey}&values=${encodeURIComponent(
-                        item.title
-                      )}`
+                  `/products?filterKey=${filterKey}&values=${encodeURIComponent(
+                    item.title
+                  )}`
                 )}
               >
                 <Image
@@ -467,7 +438,7 @@ export function ProjectsSlider({ data, bgcolor }) {
   const { t } = useTranslation();
 
   const getSlideWidth = (index) => {
-    if (windowWidth < 768) return windowWidth / 2; // نصف صفحه
+    if (windowWidth < 768) return windowWidth / 2;
     if (windowWidth < 1024)
       return index % 2 !== 0 ? windowWidth * 0.5 : windowWidth * 0.4;
     if (windowWidth < 1400)
@@ -484,10 +455,20 @@ export function ProjectsSlider({ data, bgcolor }) {
 
   if (!windowWidth) return null;
 
+  const totalSlidesWidth = data.reduce(
+    (sum, _, index) => sum + getSlideWidth(index),
+    0
+  );
+  const showArrows = totalSlidesWidth > windowWidth;
+
   return (
     <div className="relative mt-[30px] md:mt-[50px] px-20 md:px-40 lg:px-80">
-      <LeftArrow swiper={swiper} bgcolor={bgcolor} offsetY="55%" />
-      <RightArrow swiper={swiper} bgcolor={bgcolor} offsetY="55%" />
+      {showArrows && (
+        <LeftArrow swiper={swiper} bgcolor={bgcolor} offsetY="55%" />
+      )}
+      {showArrows && (
+        <RightArrow swiper={swiper} bgcolor={bgcolor} offsetY="55%" />
+      )}
 
       <Swiper
         spaceBetween={windowWidth < 1024 ? 10 : 30}
@@ -547,51 +528,27 @@ export function ProjectsSlider({ data, bgcolor }) {
 export function GallerySlider({ data, onClick, ispopup = false }) {
   const { locale } = useParams();
   const swiper = useRef(null);
-  const [showArrows, setShowArrows] = useState(false);
-
-  const [activeButton, setActiveButton] = useState(1);
   const viewportWidth = useViewportWidth();
-  const buttonsRef = useRef({});
-  const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
 
   const slidesNumber =
     viewportWidth < 768 ? 2 : Math.floor(viewportWidth / 340);
 
-  useEffect(() => {
-    const currentButton = buttonsRef.current[activeButton];
-    if (currentButton) {
-      setUnderlineStyle({
-        left: currentButton.offsetLeft,
-        width: currentButton.offsetWidth,
-      });
-    }
-  }, [activeButton, viewportWidth]);
-
-  useEffect(() => {
-    if (!data?.length) return;
-
-    const containerPadding = viewportWidth >= 1024 ? 160 : 40;
-    const containerWidth = viewportWidth - containerPadding;
-
-    const slideWidth = viewportWidth < 768 ? viewportWidth / 2 : 340;
-    const gap = viewportWidth < 1024 ? 10 : 28;
-
-    const totalSlidesWidth = data.length * (slideWidth + gap);
-
-    setShowArrows(totalSlidesWidth > containerWidth);
-  }, [data, viewportWidth]);
+  const showArrows = data.length > slidesNumber;
 
   return (
     <div className="px-20 md:px-40 lg:px-80">
       <div className="relative">
         {showArrows && (
-          <LeftArrow swiper={swiper} className="left-[-18px] lg:left-[-18px]" />
-        )}
-        {showArrows && (
-          <RightArrow
-            swiper={swiper}
-            className="right-[-18px] lg:right-[-18px]"
-          />
+          <>
+            <LeftArrow
+              swiper={swiper}
+              className="left-[-18px] lg:left-[-18px]"
+            />
+            <RightArrow
+              swiper={swiper}
+              className="right-[-18px] lg:right-[-18px]"
+            />
+          </>
         )}
 
         <Swiper
@@ -599,7 +556,7 @@ export function GallerySlider({ data, onClick, ispopup = false }) {
           modules={[Autoplay]}
           slidesPerView={slidesNumber}
           ref={swiper}
-          loop={true}
+          loop={data.length > 1}
           speed={800}
           dir={locale}
           key={locale}

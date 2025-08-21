@@ -11,7 +11,7 @@ export default function CatalogItem({ catalog }) {
 
   const downloadHandler = () => {
     const link = document.createElement("a");
-    link.href = catalog.pdfSrc;
+    link.href = `${process.env.NEXT_PUBLIC_API_URL}${catalog?.pdfSrc}`;
     link.download = "";
     document.body.appendChild(link);
     link.click();
@@ -25,7 +25,7 @@ export default function CatalogItem({ catalog }) {
         onClick={openPdf}
       >
         <Image
-          src={catalog.coverSrc}
+          src={`${process.env.NEXT_PUBLIC_API_URL}${catalog.coverSrc}`}
           alt=""
           fill
           className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
@@ -45,7 +45,9 @@ export default function CatalogItem({ catalog }) {
             alt="آیکون دانلود"
           />
         </div>
-        <span className="text-[#919191]">5.6MB</span>
+        <span className="text-[#919191]" dir="ltr">
+          {catalog?.fileSize}
+        </span>
       </div>
     </div>
   );

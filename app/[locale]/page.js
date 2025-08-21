@@ -50,7 +50,7 @@ export default async function Home({ params }) {
           <FeatureTabs data={dataHome.tabsData} />
         </div>
       </div>
-      <div className="pt-[45.8px] md:pt-[90px] lg:pt-0 mb-60px text-center border-b border-gray-100">
+      <div className="pt-[45.8px] md:pt-[90px] lg:pt-0 mb-60px text-center ">
         <p className="text-[1.7rem] font-[500]">{t.Projects}</p>
         <ProjectsSlider data={dataHome.desginStory.projects} />
 
@@ -101,9 +101,9 @@ export default async function Home({ params }) {
       <div className="flex flex-col items-center px-[20px] md:px-40 py-[50px]  gap-[28px]">
         <Section
           title={t.Subscribenewsletter}
-          descrption={
-            "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با . . استفاده از طراحان گرافیک است"
-          }
+          // descrption={
+          //   "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با . . استفاده از طراحان گرافیک است"
+          // }
         />
         <MoreButton
           text={t.Becomeamember}
