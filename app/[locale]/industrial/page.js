@@ -8,8 +8,13 @@ import QuestionUs from "@/app/components/Industrial/QuestionUs";
 import Standards from "@/app/components/Industrial/Standards";
 import Customers from "@/app/components/Industrial/Customers";
 import AboutUs from "@/app/components/Industrial/AboutUs";
+import { fetchIndustrial } from "@/services/industrial";
 
 export default async function page() {
+  const dataindustrial = await fetchIndustrial();
+
+  console.log(dataindustrial);
+
   return (
     <main className="wrapper ">
       <h1 className="sr-only">صنعتی</h1>

@@ -1,6 +1,7 @@
 import Input from "../module/Input";
 import React, { useEffect, useState } from "react";
 import MySelect from "./../module/SelectDropDown";
+import * as Icons from "iconsax-reactjs";
 
 const maxWallsByShape = {
   rectangle: 4,
@@ -165,6 +166,23 @@ export default function SelectSurfaceSizeRoom({
   const [inputs, setInputs] = useState({});
   const [wallHeightsCount, setWallHeightsCount] = useState(1);
 
+  const handleAddHeightRow = () => {
+    setWallHeightsCount((prev) => Math.min(prev + 1, maxWalls));
+  };
+
+  const handleRemoveHeightRow = (removeIndex) => {
+    if (removeIndex <= 0) return;
+    setInputs((prev) => {
+      const updated = { ...prev };
+      for (let j = removeIndex + 1; j <= wallHeightsCount; j++) {
+        updated[`height${j - 1}`] = updated[`height${j}`] || "";
+      }
+      delete updated[`height${wallHeightsCount}`];
+      return updated;
+    });
+    setWallHeightsCount((prev) => Math.max(1, prev - 1));
+  };
+
   const shapeInputs = shapes.find((s) => s.value === shape)?.inputs[tab] || [];
 
   useEffect(() => {
@@ -182,7 +200,7 @@ export default function SelectSurfaceSizeRoom({
   return (
     <div>
       <p className="font-[600] text-[1rem] pb-30">نوع سطح و ابعاد اتاق</p>
-      <div className="flex justify-center gap-[4rem]">
+      <div className="flex justify-between md:justify-center  md:gap-[4rem]">
         {TABS.map((t) => (
           <button
             key={t.value}
@@ -191,92 +209,113 @@ export default function SelectSurfaceSizeRoom({
               tab === t.value
                 ? "bg-[#231f20] text-white"
                 : "bg-white text-[#231f20] font-normal"
-            } text-[18px] py-[10px] px-8 cursor-pointer min-w-[100px] transition-all duration-200`}
+            } text-[14px] md:text-[18px] py-[8px] md:py-[10px] px-4 md:px-8 cursor-pointer min-w-[80px] md:min-w-[100px] transition-all duration-200`}
           >
             {t.label}
           </button>
         ))}
       </div>
-      <div className="flex items-start gap-[5rem] mt-[4rem]">
-        <div className="min-w-[320px] bg-[#fafafa] border border-[#eee] rounded-[10px] py-[1.3rem] px-[1rem] shadow-[0px_0px_4px_0px_#00000040]">
-          <MySelect
-            data={shapes.map((s) => ({ id: s.value, name: s.label }))}
-            value={shape}
-            onChange={(selected) => {
-              setShape(selected?.value || null);
-              setInputs({});
-            }}
-            name="shape"
-            isClearable={false}
-          />
+      <div className="mt-[4rem] flex flex-col  lg:flex-row justify-between lg:items-center">
+        <div className="flex flex-col md:flex-row items-start gap-[5rem]">
+          <div className="w-full lg:w-auto   lg:min-w-[320px] bg-[#fafafa] border border-[#eee] rounded-[10px] py-[1.3rem] px-[1rem] shadow-[0px_0px_4px_0px_#00000040]">
+            <MySelect
+              data={shapes.map((s) => ({ id: s.value, name: s.label }))}
+              value={shape}
+              onChange={(selected) => {
+                setShape(selected?.value || null);
+                setInputs({});
+              }}
+              name="shape"
+              isClearable={false}
+            />
 
-          <div className="flex flex-col items-center gap-2 mt-[1rem]">
-            <ShapeSVG shape={shape} />
-          </div>
-        </div>
-
-        <div className="min-w-[350px] mt-10">
-          <div className="font-bold text-[18px] mb-[3rem]">
-            ابعاد{" "}
-            {tab === "floor" ? "کف" : tab === "wall" ? "دیوار" : "کف و دیوار"}
-          </div>
-
-          {shapeInputs.map((input) => (
-            <div key={input.name} className="mb-[4rem]">
-              <Input
-                label={input.label}
-                name={input.name}
-                value={inputs[input.name] || ""}
-                onChange={(e) => {
-                  const raw = e.target.value;
-                  const cleaned = raw.replace(/[^\d.]/g, "");
-                  const parts = cleaned.split(".");
-                  const finalValue =
-                    parts.length <= 2 ? cleaned : parts[0] + "." + parts[1];
-                  setInputs({ ...inputs, [input.name]: finalValue });
-                }}
-                inputMode="numeric"
-              />
+            <div className="flex flex-col items-center gap-2 mt-[1rem]">
+              <ShapeSVG shape={shape} />
             </div>
-          ))}
+          </div>
+          <div className="flex justify-between w-full items-center">
+            <div className="w-full lg:w-auto md:min-w-[250px]  lg:min-w-[230px]  xl:min-w-[350px]">
+              <div className="font-bold text-[18px] mb-[3rem]">
+                ابعاد{" "}
+                {tab === "floor"
+                  ? "کف"
+                  : tab === "wall"
+                  ? "دیوار"
+                  : "کف و دیوار"}
+              </div>
 
-          {tab !== "floor" && shape !== "circle" && (
-            <div className="mt-[2rem]">
-              <div className="font-bold text-[16px] mb-4">ارتفاع دیوارها</div>
-
-              {Array.from({ length: wallHeightsCount }, (_, index) => {
-                const key = `height${index + 1}`;
-                return (
+              {shapeInputs.map((input) => (
+                <div key={input.name} className="mb-[4rem]">
                   <Input
-                    key={key}
-                    label={`ارتفاع دیوار ${index + 1}`}
-                    name={key}
-                    value={inputs[key] || ""}
+                    label={input.label}
+                    name={input.name}
+                    value={inputs[input.name] || ""}
                     onChange={(e) => {
                       const raw = e.target.value;
                       const cleaned = raw.replace(/[^\d.]/g, "");
                       const parts = cleaned.split(".");
                       const finalValue =
                         parts.length <= 2 ? cleaned : parts[0] + "." + parts[1];
-                      setInputs({ ...inputs, [key]: finalValue });
+                      setInputs({ ...inputs, [input.name]: finalValue });
                     }}
                     inputMode="numeric"
-                    className="mb-[1rem]"
                   />
-                );
-              })}
-
-              {wallHeightsCount < maxWalls && (
-                <button
-                  onClick={() => setWallHeightsCount((prev) => prev + 1)}
-                  className="text-blue-500 mt-2"
-                >
-                  + افزودن دیوار
-                </button>
-              )}
+                </div>
+              ))}
             </div>
-          )}
+          </div>
         </div>
+        {tab !== "floor" && shape !== "circle" && (
+          <div className="flex flex-col items-stretch md:min-w-[250px] lg:min-w-[230px]  xl:min-w-[315px]">
+            {Array.from({ length: wallHeightsCount }, (_, index) => {
+              const key = `height${index + 1}`;
+              return (
+                <div key={key} className="flex items-end  mb-[2rem]">
+                  <div className="flex-1">
+                    <Input
+                      label={`ارتفاع دیوار ${index + 1}`}
+                      name={key}
+                      value={inputs[key] || ""}
+                      onChange={(e) => {
+                        const raw = e.target.value;
+                        const cleaned = raw.replace(/[^\d.]/g, "");
+                        const parts = cleaned.split(".");
+                        const finalValue =
+                          parts.length <= 2
+                            ? cleaned
+                            : parts[0] + "." + parts[1];
+                        setInputs({ ...inputs, [key]: finalValue });
+                      }}
+                      inputMode="numeric"
+                      className="w-full"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={
+                      index === 0
+                        ? handleAddHeightRow
+                        : () => handleRemoveHeightRow(index)
+                    }
+                    className="  flex items-center justify-center "
+                    disabled={
+                      index === 0
+                        ? wallHeightsCount >= maxWalls
+                        : wallHeightsCount <= 1
+                    }
+                    aria-label={index === 0 ? "add" : "remove"}
+                  >
+                    {index === 0 ? (
+                      <Icons.AddCircle size="20" />
+                    ) : (
+                      <Icons.MinusCirlce size="20" />
+                    )}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -562,22 +601,23 @@ function calculateArea({ shape, inputs, tab, wallHeightsCount }) {
     return sum + (isNaN(wall) ? 0 : wall);
   }, 0);
 
+  if (tab === "wall") {
+    const hasAnyHeight = Array.from({ length: wallHeightsCount }).some(
+      (_, i) => {
+        const h = toNumber(inputs[`height${i + 1}`]);
+        return h > 0;
+      }
+    );
+    if (!hasAnyHeight) {
+      error = "برای محاسبه دیوار، وارد کردن حداقل یک ارتفاع الزامی است.";
+    }
+  }
+
   return {
     floorArea: floorArea.toFixed(2),
     wallArea: wallArea.toFixed(2),
     totalArea: (floorArea + wallArea).toFixed(2),
     walls: wallDetails,
+    error,
   };
-}
-
-{
-  /* {area && tab === "both" ? (
-        <div>
-          <p>مساحت کف: {area.floorArea} متر مربع</p>
-          <p>مساحت دیوار: {area.wallArea} متر مربع</p>
-          <p>مجموع: {area.totalArea} متر مربع</p>
-        </div>
-      ) : (
-        area && <p>مساحت: {area} متر مربع</p>
-      )} */
 }
