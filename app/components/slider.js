@@ -171,7 +171,6 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
     }
   }, [activeButton]);
 
-  // بررسی نیاز به نمایش Arrowها
   const currentSectionItems = data.sections[activeButton - 1]?.data || [];
   const showArrows = currentSectionItems.length > slidesNumber;
 
@@ -306,7 +305,6 @@ export function CategorySlider({ data }) {
 
   return (
     <div className="px-20 md:px-40 lg:px-80">
-      {/* دکمه‌ها در حالت دسکتاپ */}
       <div className="hidden md:flex flex-row justify-center gap-[50px] mt-[50px] relative border-b border-gray-300">
         {data.map((item) => (
           <button
@@ -324,7 +322,6 @@ export function CategorySlider({ data }) {
         />
       </div>
 
-      {/* دکمه‌ها در حالت موبایل */}
       <div className="md:hidden flex items-center justify-between w-full px-4 mb-2">
         <button
           onClick={() => {
@@ -371,7 +368,6 @@ export function CategorySlider({ data }) {
         </button>
       </div>
 
-      {/* اسلایدر */}
       <div className="relative mt-[30px]">
         {showArrows && (
           <>

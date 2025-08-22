@@ -9,7 +9,7 @@ import ImageDescription from "../Products/ImageDescription";
 import PopFilter from "../module/PopFilter";
 import CategoryFilters from "../Products/CategoryFilters";
 import { useTranslation } from "@/hook/useTranslation";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function AllProducts({ categories, products }) {
   const itemsPerPage = 9;
@@ -25,6 +25,8 @@ export default function AllProducts({ categories, products }) {
   const { t } = useTranslation();
 
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const queryFilterKey = searchParams.get("filterKey");
   const queryValues = searchParams.get("values")?.split(",") || [];
@@ -33,13 +35,35 @@ export default function AllProducts({ categories, products }) {
     if (isEmptyCheckBox) {
       setEmptycheckBox(false);
     }
-    setFilters((prev) => ({ ...prev, [key]: selectedValues }));
+
+    setFilters((prev) => {
+      const newFilters = { ...prev, [key]: selectedValues };
+
+      const query = new URLSearchParams();
+      Object.entries(newFilters).forEach(([k, vals]) => {
+        if (vals && vals.length > 0) {
+          query.set("filterKey", k);
+          query.set("values", vals.join(","));
+        }
+      });
+
+      const newUrl = `${pathname}?${query.toString()}`;
+      const currentUrl = `${pathname}?${searchParams.toString()}`;
+
+      if (newUrl !== currentUrl) {
+        router.push(newUrl);
+      }
+
+      return newFilters;
+    });
+
     setCurrentPage(1);
   };
 
   const clearFilter = () => {
     setEmptycheckBox(true);
     setFilters({});
+    router.push(pathname);
   };
 
   const filterKeyMap = {

@@ -11,7 +11,12 @@ export default function AboutUs({ data }) {
     <div className="relative px-20 md:px-40 lg:px-80 pt-[3rem]  min-h-[380px] pb-[2rem]">
       <div className="absolute bg-[#00000080] md:bg-[#292D32CC] inset-0 z-10 w-full md:w-1/2"></div>
       <div className="absolute inset-0 z-0">
-        <Image src={data?.image} alt="fill" fill className="object-cover" />
+        <Image
+          src={`${process.env.NEXT_PUBLIC_API_URL}${data?.image}`}
+          alt="fill"
+          fill
+          className="object-cover"
+        />
       </div>
 
       <div className="relative z-10 text-white w-full md:w-1/2">

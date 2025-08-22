@@ -40,8 +40,6 @@ export default async function page({ params }) {
   const { locale } = await params;
   const dataProducts = await fetchAllProducts(locale);
 
-  console.log(dataProducts);
-
   const cleanedCategories = {
     environment: dataProducts.categories.environment || [],
     style: dataProducts.categories.style || [],

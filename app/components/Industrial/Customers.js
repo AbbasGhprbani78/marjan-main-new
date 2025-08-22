@@ -24,7 +24,7 @@ export default function Customers({ data }) {
               style={{ "--marquee-item-index": i + 1 }}
             >
               <Image
-                src={item}
+                src={`${process.env.NEXT_PUBLIC_API_URL}${item}`}
                 alt="Customer logos"
                 fill
                 loading={i === 0 ? "eager" : "lazy"}

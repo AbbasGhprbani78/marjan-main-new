@@ -4,11 +4,14 @@ import Tab from "../module/Tab";
 import Image from "next/image";
 import { useTranslation } from "@/hook/useTranslation";
 import { MoreButton } from "../moreButton";
+import Link from "next/link";
+import { useLocalizedLink } from "@/utils/helper";
 
 export default function Categories({ data }) {
   const [selected, setSelected] = useState(data[0]?.value ?? "");
   const selectedCategory = data.find((cat) => cat.value === selected);
   const { t } = useTranslation();
+  const { localizedHref } = useLocalizedLink();
 
   return (
     <>
@@ -25,16 +28,22 @@ export default function Categories({ data }) {
       />
 
       {selectedCategory && (
-        <div className="mt-[30px]">
-          <div className="relative w-full aspect-[3/1] min-h-[200px] overflow-hidden">
+        <Link
+          href={localizedHref(
+            `/products?filterKey=industrie&values=${encodeURIComponent(
+              selectedCategory?.value
+            )}`
+          )}
+        >
+          <div className="relative w-full aspect-[3/1] min-h-[200px] overflow-hidden mt-[30px]">
             <Image
-              src={selectedCategory.image}
+              src={`${process.env.NEXT_PUBLIC_API_URL}${selectedCategory.image}`}
               alt={selectedCategory.value}
               fill
               className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
             />
           </div>
-        </div>
+        </Link>
       )}
 
       <div className="mt-[1rem] flex justify-center">

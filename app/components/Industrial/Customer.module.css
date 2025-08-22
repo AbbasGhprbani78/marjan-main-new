@@ -18,7 +18,7 @@
 
 .marquee__8 {
   --marquee-item-width: 100px;
-  --marquee-item-height: 90px;
+  --marquee-item-height: 120px;
   --marquee-duration: 36s;
   --marquee-items: var(--dynamic-items, 8);
 }
