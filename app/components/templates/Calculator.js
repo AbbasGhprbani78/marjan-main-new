@@ -39,7 +39,8 @@ export default function CalculatorT() {
   const [perResults, setPerResults] = useState([]);
 
   const onDeductChange = (deductValue) => {
-    setDeductArea(parseFloat(deductValue) || 0);
+    const value = parseFloat(deductValue) || 0;
+    setDeductArea(value);
   };
 
   const handleCalculate = () => {
@@ -144,6 +145,10 @@ export default function CalculatorT() {
   };
 
   const restartHandler = () => {
+    // First reset isClean to false to trigger cleanup
+    setIsClean(false);
+
+    // Reset all state values
     setUnitMeasurement(1);
     setArea({
       floorArea: "0.00",
@@ -154,10 +159,15 @@ export default function CalculatorT() {
     setDeductArea(0);
     setIncludeWastage(false);
     setSize({ mode: "same", all: "", floor: "", walls: {} });
-    setIsClean(true);
     setTotalArea(0);
     setNumberOfTiles(0);
     setPerResults([]);
+    setTab("floor");
+
+    // Set isClean to true after a small delay to trigger reset in child components
+    setTimeout(() => {
+      setIsClean(true);
+    }, 50);
   };
 
   const handleWastageChange = useCallback((checked) => {
@@ -190,7 +200,7 @@ export default function CalculatorT() {
         />
       </section>
       <section className="mt-[2rem]">
-        <PrecentageWastage onChange={handleWastageChange} />
+        <PrecentageWastage onChange={handleWastageChange} isClean={isClean} />
       </section>
       <section className="mt-[4rem]">
         <TileSize
@@ -198,6 +208,7 @@ export default function CalculatorT() {
           onChange={setSize}
           tab={tab}
           walls={area.walls}
+          isClean={isClean}
         />
       </section>
       <section className="flex  flex-col items-center  mt-[4rem] pb-[3rem] gap-[2rem]">
@@ -216,20 +227,24 @@ export default function CalculatorT() {
           />
         </div>
         <div className="flex flex-col items-start w-1/2 gap-[1rem]">
-          {deductArea > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="flex items-center gap-4 p-3 bg-red-50 rounded-lg border border-red-200"
-            >
-              <span className="font-bold text-red-700">مساحت کسر شده:</span>
-              <span className="text-red-600">
-                {deductArea.toFixed(2)}{" "}
-                {uniMeasurement === 1 ? "متر مربع" : "فوت مربع"}
-              </span>
-            </motion.div>
-          )}
+          <AnimatePresence>
+            {deductArea > 0 && (
+              <motion.div
+                key="deduct"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.4 }}
+                className="flex items-center gap-4 p-3 bg-red-50 rounded-lg border border-red-200"
+              >
+                <span className="font-bold text-red-700">مساحت کسر شده:</span>
+                <span className="text-red-600">
+                  {deductArea.toFixed(2)}{" "}
+                  {uniMeasurement === 1 ? "متر مربع" : "فوت مربع"}
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <AnimatePresence>
             {totalArea && (

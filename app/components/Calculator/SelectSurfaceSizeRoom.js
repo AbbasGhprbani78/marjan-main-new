@@ -166,6 +166,23 @@ export default function SelectSurfaceSizeRoom({
   const [inputs, setInputs] = useState({});
   const [wallHeightsCount, setWallHeightsCount] = useState(1);
 
+  // Reset inputs when isClean changes
+  useEffect(() => {
+    if (isClean) {
+      setInputs({});
+      setShape("rectangle");
+      setWallHeightsCount(1);
+
+      // Reset area to initial state
+      setArea({
+        floorArea: "0.00",
+        wallArea: "0.00",
+        totalArea: "0.00",
+        walls: [],
+      });
+    }
+  }, [isClean, setArea]);
+
   const handleAddHeightRow = () => {
     setWallHeightsCount((prev) => Math.min(prev + 1, maxWalls));
   };
@@ -195,7 +212,7 @@ export default function SelectSurfaceSizeRoom({
     const result = calculateArea({ shape, inputs, tab, wallHeightsCount });
 
     setArea(result);
-  }, [shape, inputs, tab, wallHeightsCount, setArea]);
+  }, [shape, inputs, tab, wallHeightsCount, setArea, isClean]);
 
   return (
     <div>

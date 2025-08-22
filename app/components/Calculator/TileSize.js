@@ -17,7 +17,13 @@ const dimensions = [
   { id: "100 * 100", name: "100 * 100" },
 ];
 
-export default function TileSize({ value, onChange, tab, walls = [] }) {
+export default function TileSize({
+  value,
+  onChange,
+  tab,
+  walls = [],
+  isClean,
+}) {
   const [isSameSize, setIsSameSize] = useState(false);
   const [allSize, setAllSize] = useState("");
   const [floorSize, setFloorSize] = useState("");
@@ -38,6 +44,16 @@ export default function TileSize({ value, onChange, tab, walls = [] }) {
     setFloorSize("");
     setWallSizes({});
   }, [tab]);
+
+  useEffect(() => {
+    // Reset all sizes when isClean changes
+    if (isClean) {
+      setIsSameSize(false);
+      setAllSize("");
+      setFloorSize("");
+      setWallSizes({});
+    }
+  }, [isClean]);
 
   return (
     <div>

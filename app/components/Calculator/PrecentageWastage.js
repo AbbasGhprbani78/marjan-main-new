@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CheckBox from "../module/CheckBox";
 import { useTranslation } from "@/hook/useTranslation";
 
-export default function PrecentageWastage({ onChange }) {
+export default function PrecentageWastage({ onChange, isClean }) {
   const [isChecked, setIsChecked] = useState(false);
   const { locale } = useTranslation();
 
@@ -11,7 +11,12 @@ export default function PrecentageWastage({ onChange }) {
       onChange(isChecked);
     }
   }, [isChecked, onChange]);
-  console.log(locale);
+
+  useEffect(() => {
+    if (isClean) {
+      setIsChecked(false);
+    }
+  }, [isClean]);
 
   return (
     <div className="flex flex-col">

@@ -109,7 +109,14 @@ export default function Deduction({
     if (onDeductAreaChange) {
       onDeductAreaChange(totalDeductArea.toFixed(2));
     }
-  }, [tabRows, deductions, floorRects, uniMeasurement, onDeductAreaChange]);
+  }, [
+    tabRows,
+    deductions,
+    floorRects,
+    uniMeasurement,
+    onDeductAreaChange,
+    isClean,
+  ]);
 
   useEffect(() => {
     if (isClean) {
@@ -120,8 +127,26 @@ export default function Deduction({
       );
       setIsDeduction(false);
       setSelectedTab("door");
+      setActiveWall("wall1");
+      setActiveTab("door");
+      setShowDoorInputs(false);
+      setFloorRects([{ width: "", height: "" }]);
+      setDeductions({
+        wall1: {
+          door: [],
+          cabinet: [],
+          window: [],
+          closet: [],
+          other: [],
+        },
+      });
+
+      // Reset deduct area when cleaning
+      if (onDeductAreaChange) {
+        onDeductAreaChange("0");
+      }
     }
-  }, [isClean]);
+  }, [isClean, onDeductAreaChange]);
 
   const handleAddItem = () => {
     setDeductions((prev) => {
