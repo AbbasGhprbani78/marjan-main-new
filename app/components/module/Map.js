@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useMap } from "react-leaflet";
 import {
   MapContainer,
   TileLayer,
@@ -18,7 +19,7 @@ const customIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-export default function Map({ targetLocation = [35.6892, 51.389] }) {
+export default function Map({ reps = [] }) {
   const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {
@@ -28,29 +29,62 @@ export default function Map({ targetLocation = [35.6892, 51.389] }) {
     });
   }, []);
 
-  const path = userLocation ? [userLocation, targetLocation] : [];
+  const defaultCenter = [35.6892, 51.389];
+
+  const firstValidRep = reps.find(
+    (rep) =>
+      rep.x !== null &&
+      rep.x !== undefined &&
+      rep.y !== null &&
+      rep.y !== undefined
+  );
+
+  const center = firstValidRep
+    ? [firstValidRep.x, firstValidRep.y]
+    : defaultCenter;
 
   return (
-    <div className="h-full w-full ">
-      <MapContainer center={targetLocation} zoom={13} className="h-full w-full">
-        {/* <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" /> */}
+    <div className="lg:min-h-[400px] h-full w-full">
+      <MapContainer center={center} zoom={6} className="h-full w-full">
         <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
-        {/* <TileLayer url="https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png" /> */}
-        {/* <TileLayer url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg" /> */}
 
-        <Marker position={targetLocation} icon={customIcon}>
-          <Popup>موقعیت مقصد</Popup>
-        </Marker>
+        {/* هر بار center تغییر کنه، نقشه آپدیت میشه */}
+        <MapCenter center={center} />
+
+        {reps.map(
+          (rep) =>
+            rep.x &&
+            rep.y && (
+              <Marker key={rep.id} position={[rep.x, rep.y]} icon={customIcon}>
+                <Popup>
+                  <strong>{rep.store_name}</strong>
+                  <br />
+                  {rep.address}
+                  <br />
+                  {rep.phone}
+                </Popup>
+              </Marker>
+            )
+        )}
 
         {userLocation && (
-          <>
-            <Marker position={userLocation}>
-              <Popup>موقعیت من</Popup>
-            </Marker>
-            <Polyline positions={path} color="blue" />
-          </>
+          <Marker position={userLocation}>
+            <Popup>موقعیت من</Popup>
+          </Marker>
         )}
       </MapContainer>
     </div>
   );
+}
+
+function MapCenter({ center }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (center) {
+      map.setView(center, 13, { animate: true });
+    }
+  }, [center, map]);
+
+  return null;
 }

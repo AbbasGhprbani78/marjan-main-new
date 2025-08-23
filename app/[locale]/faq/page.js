@@ -69,10 +69,10 @@ export default async function page() {
           <h2 className="font-medium text-[1.5rem] md:text-[2rem]">
             پرسش های متداول
           </h2>
-          <p className="w-3/4 md:w-full text-[.9rem] md:text-[1rem] font-normal text-center">
+          {/* <p className="w-3/4 md:w-full text-[.9rem] md:text-[1rem] font-normal text-center">
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
             استفاده از طراحان گرافیک است.
-          </p>
+          </p> */}
         </div>
       </section>
       <section className=" px-20 md:px-40 lg:px-80 mt-[2.5rem] mb-[2rem]">

@@ -16,7 +16,7 @@ const TABS = [
   { label: "دیوار", value: "wall" },
   { label: "کف و دیوار", value: "both" },
 ];
-export default function CalculatorT() {
+export default function CalculatorT({ dataSizes }) {
   const [uniMeasurement, setUnitMeasurement] = useState(1);
   const [area, setArea] = useState({
     floorArea: "0.00",
@@ -145,10 +145,8 @@ export default function CalculatorT() {
   };
 
   const restartHandler = () => {
-    // First reset isClean to false to trigger cleanup
     setIsClean(false);
 
-    // Reset all state values
     setUnitMeasurement(1);
     setArea({
       floorArea: "0.00",
@@ -164,7 +162,6 @@ export default function CalculatorT() {
     setPerResults([]);
     setTab("floor");
 
-    // Set isClean to true after a small delay to trigger reset in child components
     setTimeout(() => {
       setIsClean(true);
     }, 50);
@@ -209,6 +206,7 @@ export default function CalculatorT() {
           tab={tab}
           walls={area.walls}
           isClean={isClean}
+          dataSizes={dataSizes}
         />
       </section>
       <section className="flex  flex-col items-center  mt-[4rem] pb-[3rem] gap-[2rem]">

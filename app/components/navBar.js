@@ -13,6 +13,7 @@ import {
 } from "next/navigation";
 import FilterHeader from "./module/FilterHeader";
 import { useTranslation } from "@/hook/useTranslation";
+import axios from "axios";
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -505,63 +506,92 @@ function HamburgerButton({ isOpen, onClick, scrolled, isSpecialPage }) {
   );
 }
 
-function BoxSearch({ showBox }) {
-  const { t } = useTranslation();
+export default function BoxSearch({ showBox }) {
+  const { t, locale } = useTranslation();
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      if (query.length >= 3) {
+        searchProducts(query);
+      } else {
+        setResults([]);
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounce);
+  }, [query]);
+
+  const searchProducts = async (q) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/product/api/products/search/`,
+        {
+          params: { query: q },
+          headers: {
+            "Accept-Language": locale,
+          },
+        }
+      );
+      if (response.status === 200) {
+        setResults(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div
-      className={`
-  bg-[#eeedec] px-[20px] pb-[10px] pt-[20px] absolute z-30 text-[var(--color-gray-900)]
-  rounded-[4px] transition-all duration-700 ease-in-out
-  top-[120%]
-  inset-x-[20px]
-  md:inset-x-auto md:w-[355px]
-  rtl:md:right-0 rtl:md:left-auto
-  ltr:md:left-0 ltr:md:right-auto
-
-  ${showBox ? "opacity-100 visible" : "opacity-0 invisible"}
-`}
+      className={`bg-[#eeedec] px-[20px] pb-[10px] pt-[20px] absolute z-30 text-[var(--color-gray-900)] rounded-[4px] transition-all duration-700 ease-in-out top-[120%] inset-x-[20px] md:inset-x-auto md:w-[355px] rtl:md:right-0 rtl:md:left-auto ltr:md:left-0 ltr:md:right-auto ${
+        showBox ? "opacity-100 visible" : "opacity-0 invisible"
+      }`}
     >
       <div className="bg-white rounded-[50px] py-[7px] px-[15px] flex items-center justify-between">
         <input
           type="text"
           autoComplete="off"
           maxLength={50}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
           className="bg-transparent w-full h-full text-[.9rem]"
           placeholder={t("Search")}
         />
-        <Icons.SearchNormal1 size="20" className=" cursor-pointer" />
+        <Icons.SearchNormal1 size="20" className="cursor-pointer" />
       </div>
+
       <div className="flex flex-col items-center max-h-[300px] overflow-y-auto pt-[20px] hide-scrollbar">
-        {Array(10)
-          .fill(0)
-          .map((item, i) => (
-            <SearchItem key={i} />
-          ))}
+        {results.length > 0 ? (
+          results.map((item) => <SearchItem key={item.id} item={item} />)
+        ) : query.length >= 3 ? (
+          <span className="text-sm text-gray-500">{t("No results found")}</span>
+        ) : null}
       </div>
     </div>
   );
 }
 
-function SearchItem() {
+function SearchItem({ item }) {
   const { t } = useTranslation();
   return (
     <div className="flex items-center justify-between w-full mb-[20px]">
       <div className="flex items-center gap-[10px] ">
         <div className=" aspect-[1/1] w-[65px] relative overflow-hidden">
           <Image
-            src={"/images/38.png"}
+            src={`${process.env.NEXT_PUBLIC_API_URL}${item?.main_image}`}
             alt="image item search"
             className="object-cover rounded-[2px]"
             fill
           />
         </div>
-        <span className="font-en">Titan20</span>
+        <span className="font-en">{item?.title}</span>
       </div>
       <MoreButton
         text={t("View")}
         width={100}
         height={40}
-        href={"/products/1"}
+        href={`/products/${item?.id}`}
       />
     </div>
   );

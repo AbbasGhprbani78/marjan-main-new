@@ -106,5 +106,7 @@
   "Cartons per Pallet": "Cartons per Pallet",
   "Area per Pallet (m²)": "Area per Pallet (m²)",
   "Approx. Weight per Pallet (kg)": "Approx. Weight per Pallet (kg)",
-  "AllProducts": "All Products"
+  "AllProducts": "All Products",
+  "No results found": "No results found",
+  "FormSubmittedSuccessfully": " Form submitted successfully"
 }

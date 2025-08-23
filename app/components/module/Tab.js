@@ -38,6 +38,8 @@ export default function Tab({ itemsFilter, selected, setSelected }) {
     }
   };
 
+  console.log(itemsFilter);
+
   return (
     <div className="w-full">
       <div className="md:hidden flex items-center justify-between w-full px-4 mb-2">
@@ -58,7 +60,7 @@ export default function Tab({ itemsFilter, selected, setSelected }) {
           ref={(el) => (buttonsRef.current[selected] = el)}
           className="text-[17px] font-medium text-black py-2 border-b-2 border-amber-300"
         >
-          {itemsFilter[activeIndex].label}
+          {itemsFilter[activeIndex]?.label}
         </button>
 
         <button

@@ -4,8 +4,9 @@ import Input from "../module/Input";
 import Button2 from "../module/Button2";
 import SelectDropDown from "../module/SelectDropDown";
 import { useTranslation } from "@/hook/useTranslation";
+import { successMessage, ToastContainerCustom } from "../module/Toast";
 
-export default function Form() {
+export default function Form({ dataTypeOfActivity }) {
   const [form, setForm] = useState({
     expertise: "",
     firstName: "",
@@ -28,8 +29,9 @@ export default function Form() {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const newErrors = {};
     if (!form.expertise) {
@@ -55,15 +57,23 @@ export default function Form() {
     }
 
     try {
-      const response = fetch("https://api.example.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+      const formData = new FormData();
+      formData.append("field_of_activity", form.expertise);
+      formData.append("first_name", form.firstName);
+      formData.append("last_name", form.lastName);
+      formData.append("email", form.email);
+      formData.append("phone", form.phone || "");
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/app/api/newsletters/`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (response.ok) {
+        successMessage(t("FormSubmittedSuccessfully"));
         setErrors({});
         setForm({
           expertise: "",
@@ -72,9 +82,13 @@ export default function Form() {
           email: "",
           phone: "",
         });
+      } else {
+        console.log("Failed to submit form:", response.status);
       }
     } catch (error) {
       console.log("Error submitting form:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,18 +100,10 @@ export default function Form() {
             <SelectDropDown
               label={t("Fieldofactivity")}
               name={"expertise"}
-              data={[
-                {
-                  id: 1,
-                  name: "معماری",
-                },
-                { id: 2, name: "مصرف کننده" },
-                { id: 3, name: "پیمانکار ساختمانی" },
-                { id: 4, name: "فروشنده‌ی کاشی" },
-                { id: 5, name: "صادر کننده" },
-                { id: 6, name: "تحقیقات" },
-                { id: 8, name: "سایر" },
-              ]}
+              data={dataTypeOfActivity.map((item) => ({
+                id: item.id,
+                name: item.title,
+              }))}
               value={form.expertise}
               onChange={(e) =>
                 setForm((prev) => ({
@@ -179,6 +185,7 @@ export default function Form() {
           />
         </div>
       </form>
+      <ToastContainerCustom />
     </>
   );
 }

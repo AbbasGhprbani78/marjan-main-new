@@ -2,27 +2,13 @@ import React, { useState, useEffect } from "react";
 import Options from "../module/Options";
 import SelectDropDown from "@/app/components/module/SelectDropDown";
 
-const dimensions = [
-  { id: "7 * 29", name: "7 * 29" },
-  { id: "11.5 * 24", name: "11.5 * 24" },
-  { id: "15 * 15", name: "15 * 15" },
-  { id: "20 * 20", name: "20 * 20" },
-  { id: "25 * 25", name: "25 * 25" },
-  { id: "30 * 30", name: "30 * 30" },
-  { id: "33 * 33", name: "33 * 33" },
-  { id: "40 * 40", name: "40 * 40" },
-  { id: "60 * 60", name: "60 * 60" },
-  { id: "20 * 120", name: "20 * 120" },
-  { id: "60 * 120", name: "60 * 120" },
-  { id: "100 * 100", name: "100 * 100" },
-];
-
 export default function TileSize({
   value,
   onChange,
   tab,
   walls = [],
   isClean,
+  dataSizes,
 }) {
   const [isSameSize, setIsSameSize] = useState(false);
   const [allSize, setAllSize] = useState("");
@@ -39,14 +25,12 @@ export default function TileSize({
   }, [isSameSize, allSize, floorSize, wallSizes, onChange]);
 
   useEffect(() => {
-    // Reset sizes when tab changes (optional)
     setAllSize("");
     setFloorSize("");
     setWallSizes({});
   }, [tab]);
 
   useEffect(() => {
-    // Reset all sizes when isClean changes
     if (isClean) {
       setIsSameSize(false);
       setAllSize("");
@@ -79,7 +63,7 @@ export default function TileSize({
               </span>
               <div className="flex-1 md:max-w-[300px]">
                 <SelectDropDown
-                  data={dimensions}
+                  data={dataSizes}
                   label={"cm"}
                   value={allSize}
                   onChange={(selectedOption) =>
@@ -95,7 +79,7 @@ export default function TileSize({
                   <span className="font-bold"> کف : </span>
                   <div className="flex-1 md:max-w-[300px]">
                     <SelectDropDown
-                      data={dimensions}
+                      data={dataSizes}
                       label={"cm"}
                       value={floorSize}
                       onChange={(selectedOption) =>
@@ -116,7 +100,7 @@ export default function TileSize({
                       <span className="font-bold">{w.label}:</span>
                       <div className="flex-1 md:max-w-[300px]">
                         <SelectDropDown
-                          data={dimensions}
+                          data={dataSizes}
                           label={"cm"}
                           value={wallSizes[w.label] || ""}
                           onChange={(selectedOption) =>

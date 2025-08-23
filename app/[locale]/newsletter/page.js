@@ -3,6 +3,7 @@ import React from "react";
 import Form from "@/app/components/NewsLetter/Form";
 import fa from "@/i18n/fa.json";
 import en from "@/i18n/en.json";
+import { fetchTypeofActivity } from "@/services/newsLetter";
 
 export const metadata = {
   title: "عضویت در خبرنامه | وب‌سایت ما",
@@ -49,6 +50,8 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = await params;
   const t = locale === "fa" ? fa : en;
+
+  const dataTypeOfActivity = await fetchTypeofActivity(locale);
   return (
     <main className="wrapper ">
       <h1 className="sr-only">newsLetter</h1>
@@ -72,15 +75,15 @@ export default async function page({ params }) {
           <h2 className="font-medium text-[1.7rem] md:text-[2rem]">
             {t.Subscribenewsletter}
           </h2>
-          <p className="w-3/4 md:w-full text-[.9rem] md:text-[1rem] font-normal text-center">
+          {/* <p className="w-3/4 md:w-full text-[.9rem] md:text-[1rem] font-normal text-center">
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
             استفاده از طراحان گرافیک است.
-          </p>
+          </p> */}
         </div>
       </section>
 
       <section className="px-20 md:px-40 lg:px-80 py-20  mb-20 lg:mb-0  lg:py-40 w-full  md:w-8/12">
-        <Form />
+        <Form dataTypeOfActivity={dataTypeOfActivity} />
       </section>
     </main>
   );

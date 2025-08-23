@@ -107,5 +107,7 @@
   "Cartons per Pallet": "تعداد کارتن هر پالت",
   "Area per Pallet (m²)": "متراژ هر پالت (m²)",
   "Approx. Weight per Pallet (kg)": "وزن تقریبی هرپالت (kg)",
-  "AllProducts": "همه محصولات"
+  "AllProducts": "همه محصولات",
+  "No results found": "محصولی یافت نشد",
+  "FormSubmittedSuccessfully": " فرم با موفقیت ارسال شد"
 }

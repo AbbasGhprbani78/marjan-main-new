@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardItem from "../module/CardItem";
 import * as Icons from "iconsax-reactjs";
 import Pagination from "../module/Pagination";
@@ -8,15 +8,32 @@ export default function SavedList({ products }) {
   const { t } = useTranslation();
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
+  const [savedProducts, setSavedProducts] = useState(products);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const productsToShow = products.slice(startIndex, endIndex);
+  const productsCards = savedProducts.map((item) => ({
+    ...item.product,
+    image: item.product.main_image,
+    is_save: true,
+  }));
+  const productsToShow = productsCards.slice(startIndex, endIndex);
+
+  const handleUnSave = (productId) => {
+    setSavedProducts((prev) =>
+      prev.filter((item) => item.product.id !== productId)
+    );
+  };
+
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-[20px]">
         {productsToShow.length > 0 ? (
-          productsToShow.map((product, i) => (
-            <CardItem key={i} product={product} />
+          productsToShow.map((product) => (
+            <CardItem
+              key={product.id}
+              product={product}
+              setProductIdUnSave={handleUnSave}
+            />
           ))
         ) : (
           <div

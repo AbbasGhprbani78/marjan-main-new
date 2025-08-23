@@ -4,7 +4,11 @@ import RepresentationItem from "@/app/components/Representatives/RepresentationI
 import styles from "./contactus.module.css";
 import Button2 from "@/app/components/module/Button2";
 import ContactusItem from "@/app/components/ContactUs/ContactusItem";
-export default async function page() {
+import { fetchContactUs } from "@/services/contactus";
+export default async function page({ params }) {
+  const { locale } = params;
+  // const contactusData = await fetchContactUs(locale);
+
   return (
     <main className="wrapper">
       <h1 className="sr-only">تماس با ما</h1>

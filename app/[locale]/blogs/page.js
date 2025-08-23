@@ -2,6 +2,7 @@ import React from "react";
 import { HomeSlider } from "@/app/components/slider";
 import { data } from "@/app/dataBlogs";
 import Blogs from "@/app/components/templates/Blogs";
+import { fetchBlogs } from "@/services/blogs";
 
 export const metadata = {
   title: "بلاگ - مقالات آموزشی، معرفی تکنولوژی و نکات فنی",
@@ -35,7 +36,13 @@ export const metadata = {
     images: ["/images/38.png"],
   },
 };
-export default async function page() {
+export default async function page({ params }) {
+  const { locale } = params;
+
+  const blogsData = await fetchBlogs(locale);
+
+  console.log(blogsData);
+
   return (
     <main className="wrapper ">
       <h1 className="sr-only">وبلاگ</h1>
