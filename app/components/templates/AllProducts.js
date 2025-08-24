@@ -13,6 +13,7 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function AllProducts({ categories, products }) {
   const itemsPerPage = 9;
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [filters, setFilters] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -31,7 +32,7 @@ export default function AllProducts({ categories, products }) {
   const queryFilterKey = searchParams.get("filterKey");
   const queryValues = searchParams.get("values")?.split(",") || [];
 
-  const handleFilterChange = (key, selectedValues) => {
+  const handleFilterChange = (key, selectedValues, pushUrl = true) => {
     if (isEmptyCheckBox) {
       setEmptycheckBox(false);
     }
@@ -39,19 +40,21 @@ export default function AllProducts({ categories, products }) {
     setFilters((prev) => {
       const newFilters = { ...prev, [key]: selectedValues };
 
-      const query = new URLSearchParams();
-      Object.entries(newFilters).forEach(([k, vals]) => {
-        if (vals && vals.length > 0) {
-          query.set("filterKey", k);
-          query.set("values", vals.join(","));
+      if (pushUrl) {
+        const query = new URLSearchParams();
+        Object.entries(newFilters).forEach(([k, vals]) => {
+          if (vals && vals.length > 0) {
+            query.set("filterKey", k);
+            query.set("values", vals.join(","));
+          }
+        });
+
+        const newUrl = `${pathname}?${query.toString()}`;
+        const currentUrl = `${pathname}?${searchParams.toString()}`;
+
+        if (newUrl !== currentUrl) {
+          router.push(newUrl);
         }
-      });
-
-      const newUrl = `${pathname}?${query.toString()}`;
-      const currentUrl = `${pathname}?${searchParams.toString()}`;
-
-      if (newUrl !== currentUrl) {
-        router.push(newUrl);
       }
 
       return newFilters;
@@ -128,6 +131,15 @@ export default function AllProducts({ categories, products }) {
     setFilteredProducts(temp);
     setCurrentPage(1);
   }, [filters, searchTerm, products]);
+
+  useEffect(() => {
+    if (isInitialLoad && queryFilterKey && queryValues.length > 0) {
+      setFilters({ [queryFilterKey]: queryValues });
+      setCurrentPage(1);
+      setIsInitialLoad(false);
+    }
+  }, [queryFilterKey, queryValues.join(","), isInitialLoad]);
+
   const isLtr = false;
 
   return (
@@ -224,3 +236,6 @@ export default function AllProducts({ categories, products }) {
     </main>
   );
 }
+
+//http://localhost:3000/fa/products?filterKey=industrie&values=%D9%82%D8%B7%D8%B9%D8%A7%D8%AA+%D8%B5%D9%86%D8%B9%D8%AA%DB%8C
+//http://localhost:3000/fa/products?filterKey=industrie&values=%D9%82%D8%B7%D8%B9%D8%A7%D8%AA%20%D8%B5%D9%86%D8%B9%D8%AA%DB%8C

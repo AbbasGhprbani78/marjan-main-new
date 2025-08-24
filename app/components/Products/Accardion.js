@@ -14,6 +14,7 @@ export default function Accordion({
 }) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [isOpen, setIsOpen] = useState(defaultOpen);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const searchParams = useSearchParams();
   const queryFilterKey = searchParams.get("filterKey");
@@ -34,29 +35,33 @@ export default function Accordion({
     onFilterChange(filterKey, newSelectedItems);
   };
 
+  // Reset selected items when filters are cleared
   useEffect(() => {
     if (isEmptyCheckBox) setSelectedItems([]);
   }, [isEmptyCheckBox]);
 
+  // Initial load from URL query
   useEffect(() => {
-    if (queryFilterKey === filterKey && queryValues.length > 0) {
+    if (
+      isInitialLoad &&
+      queryFilterKey === filterKey &&
+      queryValues.length > 0
+    ) {
       setSelectedItems(queryValues);
-      onFilterChange(filterKey, queryValues);
+      onFilterChange(filterKey, queryValues, false); // false: do not push URL
       setIsOpen(true);
-    } else if (queryFilterKey !== filterKey) {
-      setSelectedItems([]);
-      onFilterChange(filterKey, []);
+      setIsInitialLoad(false);
     }
-  }, [queryFilterKey, queryValues.join(",")]);
+  }, [queryFilterKey, queryValues.join(","), filterKey, isInitialLoad]);
 
   return (
-    <div className="p-4 max-w-md mx-auto ">
+    <div className="p-4 max-w-md mx-auto">
       <button
         aria-expanded={isOpen}
         onClick={toggleAccordion}
-        className="w-full flex justify-between items-center p-2 text-[#292d32] mb-[.8rem] cursor-pointer "
+        className="w-full flex justify-between items-center p-2 text-[#292d32] mb-[.8rem] cursor-pointer"
       >
-        <span className="font-medium">. {title}</span>
+        <span className="font-medium">{title}</span>
         <span
           className={`transform transition-transform ${
             isOpen ? "rotate-180" : ""

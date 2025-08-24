@@ -66,8 +66,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
                     >
                       <Image
                         src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
-                        width={25}
-                        height={25}
+                        fill
                         alt="product-circle"
                         className="object-cover"
                       />
