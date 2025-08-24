@@ -85,7 +85,7 @@ export default function Products({ products }) {
       <PopupGallery
         open={open}
         setOpen={setOpen}
-        images={products.map((product) => product.image)}
+        media={products.map((product) => product.image)}
         isdownload={false}
       />
     </>

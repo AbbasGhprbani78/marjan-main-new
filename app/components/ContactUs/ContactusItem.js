@@ -5,7 +5,7 @@ import { useTranslation } from "@/hook/useTranslation";
 import { useParams } from "next/navigation";
 import { toPersianDigits } from "@/utils/helper";
 
-export default function ContactusItem() {
+export default function ContactusItem({ info }) {
   const { t } = useTranslation();
   const { locale } = useParams();
   return (
@@ -15,7 +15,7 @@ export default function ContactusItem() {
       itemType="https://schema.org/LocalBusiness"
     >
       <h2 className="font-medium text-[1.2rem] mb-[1.2rem]" itemProp="address">
-        دفتر مرکزی
+        {info.name}
       </h2>
 
       <div
@@ -26,25 +26,28 @@ export default function ContactusItem() {
         <p className="font-normal text-[.9rem]">
           <span className="font-medium text-[1rem]">{t("PhoneNumber")} : </span>
           <span itemProp="name">
-            {locale ? toPersianDigits("09151231234") : "09151231234"}
+            {locale ? toPersianDigits(info.phone) : info.phone}
           </span>
         </p>
 
         <p className="font-normal text-[.9rem]">
           <span className="font-medium text-[1rem]">{t("Email")} : </span>
-          info@marjantileco.com
+          {info.email}
         </p>
 
         <p className="font-normal text-[.9rem]">
           <span className="font-medium text-[1rem]">{t("Address")} : </span>
-          <span itemProp="streetAddress">
-            اصفهان، کمربندی شمالی نجف آباد، شهرک صنعتی منتظریه (ویلا شهر)، شرکت
-            کاشی مرجان
-          </span>
+          <span itemProp="streetAddress">{info.address}</span>
         </p>
       </div>
       <div className="w-full md:w-[202px]">
-        <Button2 text={t("Routing")} width={202} height={42} bgblack={"#000"} />
+        <Button2
+          text={t("Routing")}
+          width={202}
+          height={42}
+          bgblack={"#000"}
+          onClick={() => window.open(info.link, "_blank")}
+        />
       </div>
     </article>
   );

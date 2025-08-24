@@ -6,7 +6,7 @@ import { useTranslation } from "@/hook/useTranslation";
 
 export default function PopupGallery({
   open,
-  images,
+  media = [],
   setOpen,
   isdownload = true,
 }) {
@@ -14,16 +14,16 @@ export default function PopupGallery({
   const { t, locale } = useTranslation();
 
   const prevImage = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));
   };
 
   const nextImage = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1));
   };
 
   const downloadImage = () => {
     const link = document.createElement("a");
-    link.href = images[currentIndex];
+    link.href = media[currentIndex];
     link.download = `image-${currentIndex + 1}.jpg`;
     link.click();
   };
@@ -41,6 +41,7 @@ export default function PopupGallery({
           aria-modal="true"
           role="dialog"
         >
+          {/* Close button */}
           <button
             className="absolute top-[30px] right-[50px] text-[24px] bg-transparent text-white cursor-pointer"
             onClick={() => setOpen(false)}
@@ -53,51 +54,75 @@ export default function PopupGallery({
             <button
               onClick={prevImage}
               className="absolute left-[-5vw] text-white cursor-pointer rounded-full backdrop-blur-[4px] w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-[background:#24202180]"
-              aria-label="Previous Image"
+              aria-label="Previous Media"
             >
               <Icons.ArrowLeft className="m-auto text-gray-white w-20 h-20 md:w-35 md:h-35" />
             </button>
 
-            <img
-              // src={`${process.env.NEXT_PUBLIC_API_URL}${images[currentIndex]}`}
-              src={`${images[currentIndex]}`}
-              alt={`Image ${currentIndex + 1}`}
-              className="h-[50dvh] md:h-[60dvh] max-w-[80vw] object-contain"
-              draggable={false}
-            />
+            {/\.(mp4|webm|ogg|mkv)$/i.test(media[currentIndex]) ? (
+              <video
+                src={`${process.env.NEXT_PUBLIC_API_URL}${media[currentIndex]}`}
+                controls
+                className="h-[50dvh] md:h-[60dvh] max-w-[80vw] object-contain"
+              />
+            ) : (
+              <img
+                src={`${process.env.NEXT_PUBLIC_API_URL}${media[currentIndex]}`}
+                alt={`Media ${currentIndex + 1}`}
+                className="h-[50dvh] md:h-[60dvh] max-w-[80vw] object-contain"
+                draggable={false}
+              />
+            )}
 
             <button
               onClick={nextImage}
               className="absolute right-[-5vw] text-white cursor-pointer rounded-full backdrop-blur-[4px] w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-[background:#24202180]"
-              aria-label="Next Image"
+              aria-label="Next Media"
             >
               <Icons.ArrowRight className="m-auto text-gray-white w-20 h-20 md:w-35 md:h-35" />
             </button>
           </div>
 
           <div
-            dir={"ltr"}
+            dir="ltr"
             className="flex gap-[10px] overflow-x-auto max-w-[80vw] mb-[20px]"
           >
-            {images.map((img, i) => (
-              <img
-                key={i}
-                // src={`${process.env.NEXT_PUBLIC_API_URL}${img}`}
-                src={`${img}`}
-                alt={`Thumbnail ${i + 1}`}
-                onClick={() => setCurrentIndex(i)}
-                className="w-100 h-100 object-cover cursor-pointer"
-                style={{
-                  border:
-                    i === currentIndex ? "3px solid #fff" : "2px solid #888",
-                  opacity: i === currentIndex ? 1 : 0.6,
-                  userSelect: "none",
-                }}
-                draggable={false}
-              />
-            ))}
+            {media.map((item, i) => {
+              const isVideo = /\.(mp4|webm|ogg|mkv)$/i.test(item);
+              return isVideo ? (
+                <video
+                  key={i}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${item}`}
+                  onClick={() => setCurrentIndex(i)}
+                  className="w-100 h-100 object-cover cursor-pointer"
+                  style={{
+                    border:
+                      i === currentIndex ? "3px solid #fff" : "2px solid #888",
+                    opacity: i === currentIndex ? 1 : 0.6,
+                    userSelect: "none",
+                  }}
+                  muted
+                />
+              ) : (
+                <img
+                  key={i}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${item}`}
+                  alt={`Thumbnail ${i + 1}`}
+                  onClick={() => setCurrentIndex(i)}
+                  className="w-100 h-100 object-cover cursor-pointer"
+                  style={{
+                    border:
+                      i === currentIndex ? "3px solid #fff" : "2px solid #888",
+                    opacity: i === currentIndex ? 1 : 0.6,
+                    userSelect: "none",
+                  }}
+                  draggable={false}
+                />
+              );
+            })}
           </div>
 
+          {/* Download button */}
           {isdownload && (
             <button
               onClick={downloadImage}

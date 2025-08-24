@@ -4,12 +4,16 @@ import Image from "next/image";
 import React from "react";
 
 export default function Table({ title, thickness, colors, surface, size }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   return (
     <>
       {title && (
-        <p className="font-normal text-[30px] font-fa mb-17 text-center pt-[1rem]">
+        <p
+          className={`font-normal text-[30px] mb-17 text-center pt-[1rem] ${
+            locale === "fa" ? "font-fa" : "font-en"
+          }`}
+        >
           {title}
         </p>
       )}

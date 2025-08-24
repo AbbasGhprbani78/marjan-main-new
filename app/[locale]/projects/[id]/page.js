@@ -64,7 +64,11 @@ export default async function page({ params }) {
           style={{ maxHeight: "550px", width: "100%" }}
         />
         {singleData?.name && (
-          <p className="w-max font-fa text-white font-normal  text-[1.5rem] md:text-[2rem]  z-10">
+          <p
+            className={`w-max text-white font-normal text-[1.5rem] md:text-[2rem] z-10 ${
+              locale === "fa" ? "font-fa" : "font-en"
+            }`}
+          >
             {singleData?.name}
           </p>
         )}

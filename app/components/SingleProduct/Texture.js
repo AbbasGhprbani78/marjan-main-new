@@ -191,7 +191,7 @@ export default function Texture({ textureImage }) {
                 })()}
 
                 <PopupGallery
-                  images={fullTiles.map((tile) => tile?.image)}
+                  media={fullTiles.map((tile) => tile?.image)}
                   open={open}
                   setOpen={setOpen}
                 />

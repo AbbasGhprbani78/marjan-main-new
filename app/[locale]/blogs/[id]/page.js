@@ -46,100 +46,72 @@ export const metadata = {
   },
 };
 
-const aboutText = `
-لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و بالورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-            استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در
-            ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و
-            کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.لورم ایپسوم
-            متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-            گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان
-            که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع
-            با هدف بهبود ابزارهای کاربردی می باشد. لورم ایپسوم متن ساختگی با
-            تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-            برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-            ابزارهای کاربردی می باشد. لورم ایپسوم متن ساختگی با تولید سادگی
-            نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و
-            متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
-            شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-            ابزارهای کاربردی می باشد. لورم ایپسوم متن ساختگی با تولید سادگی
-            نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و
-          
-`;
-
-<ReadMoreText text={aboutText} />;
-
-const gallery = [
-  "/images/1.png",
-  "/images/2.png",
-  "/images/3.png",
-  "/images/4.png",
-  "/images/5.png",
-  "/images/6.png",
-  "/images/7.png",
-  "/images/8.png",
-  "/images/9.png",
-  "/images/10.png",
-];
-
 export default async function page({ params }) {
   const { locale } = await params;
-  // const { id } = await params;
-  // const singleBlog = await fetchSingleBlog(locale, 1);
+  const { id } = await params;
+  const singleBlog = await fetchSingleBlog(locale, id);
 
   return (
     <main className="wrapper ">
       <h1 className="sr-only">وبلاگ</h1>
       <article>
         <section className="w-full relative wrapper_image flex items-center justify-center mt-[130px] lg:mt-0 ">
-          <Image src={"/images/10.png"} fill alt="image project" className="" />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog?.image}`}
+            fill
+            alt="image project"
+            className=""
+          />
           <div className="absolute inset-0 bg-black/50 z-10" />
-          <p className="w-max font-en text-white font-normal  text-[1.2rem] md:text-[2rem]  z-30">
-            اسم مقاله
+          <p
+            className={`w-max text-white font-normal text-[1.2rem] md:text-[2rem] z-30 ${
+              locale === "fa" ? "font-fa" : "font-en"
+            }`}
+          >
+            {singleBlog?.title}
           </p>
         </section>
         <section className="mt-[2rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)] font-normal text-justify pb-[2rem]">
-          <div className="leading-[30px] mb-[1rem] lg:mb-[2rem]">
-            <ReadMoreText text={aboutText} />
-          </div>
-          <GallerySingleBlog media={gallery} />
-          <div className="leading-[30px]  mt-[1rem] mb-[1rem] lg:mt-[2rem] lg:mb-[2rem]">
-            <ReadMoreText text={aboutText} />
-          </div>
-          <div className="relative w-full  aspect-[3/2]  md:aspect-auto  md:w-2/3 md:mx-auto m lg:h-[331px]">
-            <Image
-              src="/images/40.png"
-              fill
-              alt="image project"
-              className="object-cover "
-            />
-          </div>
+          {singleBlog.text && (
+            <div className="leading-[30px] ">
+              <ReadMoreText text={singleBlog?.text} />
+            </div>
+          )}
+
+          {singleBlog?.media_files.length > 0 && (
+            <div className="mt-[1rem] lg:mt-[2rem] w-full">
+              <GallerySingleBlog
+                media={singleBlog?.media_files?.map((media) => media.url)}
+              />
+            </div>
+          )}
+
+          {singleBlog?.text_two && (
+            <div className="leading-[30px]  mt-[1rem]  lg:mt-[2rem] ">
+              <ReadMoreText text={singleBlog?.text_two} />
+            </div>
+          )}
+
+          {singleBlog?.media && (
+            <div className="relative w-full aspect-[3/2] md:aspect-auto md:w-2/3 md:mx-auto lg:h-[331px] mt-[1rem] lg:mt-[2rem]">
+              {/\.(mp4|webm|ogg|mkv)$/i.test(singleBlog.media) ? (
+                <video
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog.media}`}
+                  controls
+                  className="object-cover w-full h-full "
+                />
+              ) : (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog.media}`}
+                  fill
+                  alt="blog media"
+                  className="object-cover "
+                />
+              )}
+            </div>
+          )}
         </section>
       </article>
     </main>
   );
 }
-
-// متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
-//           شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-//           ابزارهای کاربردی می باشد. لورم ایپسوم متن ساختگی با تولید سادگی
-//           نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و
-//           متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
-//           شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-//           ابزارهای کاربردی می باشد.لورم ایپسوم متن ساختگی با تولید سادگی
-//           نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و
-//           متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
-//           شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-//           ابزارهای کاربردی می باشد. لورم ایپسوم متن ساختگی با تولید سادگی
-//           نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و
-//           متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
-//           شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-//           ابزارهای کاربردی می باشد. لورم ایپسوم متن ساختگی با تولید سادگی
-//           نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و
-//           متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
-//           شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-//           ابزارهای کاربردی می باشد. لورم ایپسوم متن ساختگی با تولید سادگی
-//           نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و
-//           متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
-//           شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
-//           ابزارهای کاربردی می باشد.

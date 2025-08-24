@@ -583,7 +583,7 @@ export default function BoxSearch({ showBox }) {
 }
 
 function SearchItem({ item }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   return (
     <div className="flex items-center justify-between w-full mb-[20px]">
       <div className="flex items-center gap-[10px] ">
@@ -595,7 +595,9 @@ function SearchItem({ item }) {
             fill
           />
         </div>
-        <span className="font-en">{item?.title}</span>
+        <span className={locale === "fa" ? "font-fa" : "font-en"}>
+          {item?.title}
+        </span>
       </div>
       <MoreButton
         text={t("View")}

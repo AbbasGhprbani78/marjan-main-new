@@ -17,7 +17,7 @@ export default async function RootLayout({ children, params }) {
 
   return (
     <html lang={locale} dir={dir}>
-      <body className={locale === "fa" ? "font-fa" : ""}>
+      <body className={locale === "fa" ? "font-fa" : "font-en"}>
         <div className="page-container">
           <NavBar />
           <main className="content">{children}</main>

@@ -23,7 +23,7 @@ export default function AllProducts({ categories, products }) {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const productsToShow = filteredProducts.slice(startIndex, endIndex);
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -144,7 +144,11 @@ export default function AllProducts({ categories, products }) {
 
   return (
     <main className="px-20 md:px-40 lg:px-80">
-      <section className="w-full h-full font-fa pt-[150px] lg:pt-[120px]">
+      <section
+        className={`w-full h-full pt-[150px] lg:pt-[120px] ${
+          locale === "fa" ? "font-fa" : "font-en"
+        }`}
+      >
         <div className="grid grid-cols-1 gap-y-[30px] md:grid-cols-3 md:gap-x-[3rem] md:gap-y-0 items-center relative ">
           <div className="w-full md:col-span-1 lg:hidden">
             <Button

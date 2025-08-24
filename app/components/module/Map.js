@@ -20,6 +20,7 @@ const customIcon = L.icon({
 });
 
 export default function Map({ reps = [] }) {
+  console.log(reps);
   const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {
@@ -48,7 +49,6 @@ export default function Map({ reps = [] }) {
       <MapContainer center={center} zoom={6} className="h-full w-full">
         <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
 
-        {/* هر بار center تغییر کنه، نقشه آپدیت میشه */}
         <MapCenter center={center} />
 
         {reps.map(

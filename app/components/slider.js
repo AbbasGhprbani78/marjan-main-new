@@ -109,7 +109,11 @@ export function HomeSlider({ data, bgcolor, dotColor, route, delay = 3500 }) {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <p className="font-fa text-[30px] md:text-[40px] font-[400] text-gray-white">
+                <p
+                  className={`text-[30px] md:text-[40px] font-[400] text-gray-white ${
+                    locale === "fa" ? "font-fa" : "font-en"
+                  }`}
+                >
                   {locale === "fa" ? toPersianDigits(item.title) : item.title}
                 </p>
                 <div
@@ -245,7 +249,9 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
 
                 <div className="flex flex-col mt-[10px]">
                   <p
-                    className="font-fa text-[.9rem] font-[500]"
+                    className={`text-[.9rem] font-[500] ${
+                      locale === "fa" ? "font-fa" : "font-en"
+                    }`}
                     dir={locale === "fa" ? "rtl" : "ltr"}
                   >
                     {truncateText(item.title, 25)}
@@ -413,7 +419,11 @@ export function CategorySlider({ data }) {
                   priority
                 />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                  <p className="text-white text-[1.2rem] text-center px-4 font-fa">
+                  <p
+                    className={`text-white text-[1.2rem] text-center px-4 ${
+                      locale === "fa" ? "font-fa" : "font-en"
+                    }`}
+                  >
                     {item.title}
                   </p>
                 </div>

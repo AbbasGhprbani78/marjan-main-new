@@ -10,14 +10,20 @@ import { useTranslation } from "@/hook/useTranslation";
 export default function IntroductionCard({ setOpenModal, singleProduct }) {
   const router = useRouter();
   const { localizedHref } = useLocalizedLink();
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const [flipped, setFlipped] = useState(false);
   return (
     <>
       <div className="hidden md:grid grid-cols-12  md:w-[95vw] lg:w-[70vw] lg:min-h-[510] mx-auto ">
         <div className="col-span-12 md:col-span-6 xl:col-span-5 h-full text-[var(--color-gray-900)] bg-white p-[1.2rem] ">
           <div className="flex items-center justify-between mb-[1rem] md:mb-[2rem]">
-            <span className="font-fa text-[1.3rem]">{singleProduct.title}</span>
+            <span
+              className={`text-[1.3rem] ${
+                locale === "fa" ? "font-fa" : "font-en"
+              }`}
+            >
+              {singleProduct.title}
+            </span>
             <Icons.CloseCircle
               size={25}
               className="cursor-pointer hidden md:block"
@@ -150,7 +156,11 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
         >
           <div className="absolute w-full h-full backface-hidden bg-white p-[20px] flex flex-col  shadow-lg rounded-xl">
             <div className="flex items-center justify-between mb-[1rem]">
-              <span className="font-fa text-[1.3rem]">
+              <span
+                className={`text-[1.3rem] ${
+                  locale === "fa" ? "font-fa" : "font-en"
+                }`}
+              >
                 {singleProduct.title}
               </span>
               <Icons.CloseCircle

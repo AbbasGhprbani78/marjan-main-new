@@ -1,6 +1,5 @@
 import React from "react";
 import MapWrapper from "@/app/components/module/MapWrapper";
-import RepresentationItem from "@/app/components/Representatives/RepresentationItem";
 import styles from "./contactus.module.css";
 import Button2 from "@/app/components/module/Button2";
 import ContactusItem from "@/app/components/ContactUs/ContactusItem";
@@ -8,6 +7,41 @@ import { fetchContactUs } from "@/services/contactus";
 export default async function page({ params }) {
   const { locale } = params;
   // const contactusData = await fetchContactUs(locale);
+
+  const province = {
+    name: "اصفهان",
+    cities: [
+      {
+        name: "دفتر مرکزی",
+        phone: "03136248019",
+        email: "info@marjantileco.com",
+        address: "اصفهان، چهارباغ بالا، کوچه کاویان، پلاک 45",
+        x: 32.654232,
+        y: 51.667491,
+        link: `https://www.google.com/maps?q=32.654232,51.667491`,
+      },
+      {
+        name: "کارخانه واحد 2",
+        phone: "03142290470",
+        email: "info@marjantileco.com",
+        address:
+          "اصفهان، کمربندی شمالی نجف آباد، شهرک صنعتی منتظریه (ویلا شهر)، شرکت کاشی مرجان",
+        x: 32.654232,
+        y: 51.667491,
+        link: `https://www.google.com/maps?q=32.654232,51.667491`,
+      },
+      {
+        name: "کارخانه واحد 1",
+        phone: "03142290477",
+        email: "info@marjantileco.com",
+        address:
+          "اصفهان، کمربندی شمالی نجف آباد، شهرک صنعتی منتظریه (ویلا شهر)، شرکت کاشی مرجان",
+        x: 32.654232,
+        y: 51.667491,
+        link: `https://www.google.com/maps?q=32.654232,51.667491`,
+      },
+    ],
+  };
 
   return (
     <main className="wrapper">
@@ -19,14 +53,14 @@ export default async function page({ params }) {
             className={`block lg:hidden lg:col-span-8 xl:col-span-9 lg:h-full inset-0 z-0  mb-[1rem] ${styles.mapContainer}`}
             aria-label="نقشه دفاتر ما"
           >
-            <MapWrapper />
+            <MapWrapper province={province} />
           </section>
           <div
             className={`overflow-y-auto flex-1 ${styles.wrapperRepresentation}`}
             aria-label="لیست دفاتر"
           >
-            {[...Array(7)].map((_, i) => (
-              <ContactusItem key={i} />
+            {province?.cities?.map((info, i) => (
+              <ContactusItem key={i} info={info} />
             ))}
           </div>
         </aside>
@@ -34,7 +68,7 @@ export default async function page({ params }) {
           className={`hidden lg:block lg:col-span-8 xl:col-span-9 lg:h-full inset-0 z-0  ${styles.mapContainer}`}
           aria-label="نقشه دفاتر ما"
         >
-          <MapWrapper />
+          <MapWrapper province={""} />
         </section>
       </div>
     </main>

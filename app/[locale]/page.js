@@ -18,10 +18,12 @@ export default async function Home({ params }) {
 
   const dataHome = await fetchhome(locale);
 
-  console.log(dataHome);
-
   return (
-    <div className="wrapper w-full h-full font-fa ">
+    <div
+      className={`wrapper w-full h-full ${
+        locale === "fa" ? "font-fa" : "font-en"
+      }`}
+    >
       <HomeSlider
         data={dataHome?.home?.slides}
         route={"/products"}
@@ -100,6 +102,7 @@ export default async function Home({ params }) {
       </div>
       <div className="flex flex-col items-center px-[20px] md:px-40 py-[50px]  gap-[28px]">
         <Section
+          locale={locale}
           title={t.Subscribenewsletter}
           // descrption={
           //   "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با . . استفاده از طراحان گرافیک است"
@@ -117,10 +120,14 @@ export default async function Home({ params }) {
   );
 }
 
-function Section({ title, descrption }) {
+function Section({ title, descrption, locale }) {
   return (
     <div className="flex flex-col text-center">
-      <h1 className="title font-[500] mb-[10px] font-fa leading-[50px] ">
+      <h1
+        className={`title font-[500] mb-[10px] leading-[50px] ${
+          locale === "fa" ? "font-fa" : "font-en"
+        }`}
+      >
         {title}
       </h1>
       <p className="text-[16px] font-[400] ">{descrption}</p>

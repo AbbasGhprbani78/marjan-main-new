@@ -33,7 +33,7 @@ export default function GallerySingleBlog({ media }) {
           {media?.slice(0, 4).map((item, i, arr) => (
             <SwiperSlide key={i} className="relative group overflow-hidden">
               <div className="relative">
-                <GalleryItem image={item} />
+                <GalleryItem media={item} />
                 {i === arr.length - 1 && (
                   <div
                     className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
@@ -50,7 +50,7 @@ export default function GallerySingleBlog({ media }) {
         <div dir="ltr" className="grid grid-cols-2 gap-10">
           {media?.slice(0, 4).map((item, i, arr) => (
             <div key={i} className="relative group overflow-hidden">
-              <GalleryItem image={item} />
+              <GalleryItem media={item} />
               {i === arr.length - 1 && (
                 <div
                   className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
@@ -67,7 +67,7 @@ export default function GallerySingleBlog({ media }) {
       <PopupGallery
         open={open}
         setOpen={setOpen}
-        images={media}
+        media={media}
         isdownload={false}
       />
     </>
