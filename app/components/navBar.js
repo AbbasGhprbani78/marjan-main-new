@@ -376,15 +376,25 @@ function Menu({ show, setShowInnerMenu }) {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm text-black"
                 >
-                  {[t("Articles"), t("Videos"), t("News")].map((label, i) => (
-                    <li key={i} className="py-[10px] ">
+                  {[
+                    { label: t("Articles"), category: "articles" },
+                    { label: t("Videos"), category: "videos" },
+                    { label: t("News"), category: "news" },
+                  ].map((item, i) => (
+                    <li key={i} className="py-[10px]">
                       <Link
-                        href={localizedPath("/blogs")}
+                        href={localizedPath(
+                          `/blogs?tab=2&category=${item.label.toLowerCase()}`
+                        )}
                         className={`custom-link ${
-                          isActivePath("/blogs") ? "active" : ""
+                          isActivePath(
+                            `/blogs?tab=2&label=${item.category.toLowerCase()}`
+                          )
+                            ? "active"
+                            : ""
                         }`}
                       >
-                        {label}
+                        {item.label}
                       </Link>
                     </li>
                   ))}
@@ -614,6 +624,8 @@ function MenuMobile() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const localizedPath = (path) => `/${locale}${path}`;
+
   const toggleItem = (key) => {
     setOpenItems((prev) => ({
       ...prev,
@@ -661,7 +673,7 @@ function MenuMobile() {
 
   useEffect(() => {
     setIsOpen(false);
-  }, [queryFilterKey, queryValues]);
+  }, [queryFilterKey, queryValues, pathname]);
 
   return (
     <div className="fixed w-full left-0 right-0 z-[9999999]  lg:hidden">
@@ -825,7 +837,7 @@ function MenuMobile() {
                     },
                     {
                       label: t("Tile Area Estimator"),
-                      href: "#",
+                      href: "/calculator",
                     },
                   ].map(({ label, href }, i) => (
                     <li className="py-[10px]" key={i}>
@@ -865,17 +877,26 @@ function MenuMobile() {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
                 >
-                  {[t("Articles"), t("Videos"), t("News")].map((label, i) => (
-                    <li className="py-[10px]" key={i}>
-                      <MenuLink
-                        href="/blogs"
-                        onClick={() => setIsOpen(false)}
-                        className={`ms-[15px] custom-link pb-1 ${
-                          isActive("/blogs") ? "border-b-2 border-primary" : ""
+                  {[
+                    { label: t("Articles"), category: "articles" },
+                    { label: t("Videos"), category: "videos" },
+                    { label: t("News"), category: "news" },
+                  ].map((item, i) => (
+                    <li key={i} className="py-[10px]">
+                      <Link
+                        href={localizedPath(
+                          `/blogs?tab=2&category=${item.label.toLowerCase()}`
+                        )}
+                        className={`custom-link ${
+                          isActive(
+                            `/blogs?tab=2&label=${item.category.toLowerCase()}`
+                          )
+                            ? "active"
+                            : ""
                         }`}
                       >
-                        {label}
-                      </MenuLink>
+                        {item.label}
+                      </Link>
                     </li>
                   ))}
                 </motion.ul>

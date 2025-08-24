@@ -47,8 +47,6 @@ export default async function page({ params }) {
   const { locale } = await params;
   const dataCatalogs = await fetchCatalogs(locale);
 
-  console.log(dataCatalogs);
-
   return (
     <main className="wrapper ">
       <section className="px-20 md:px-40 lg:px-80 pt-[150px] lg:pt-[200px]">

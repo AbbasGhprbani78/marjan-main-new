@@ -59,7 +59,8 @@ export default function PopupGallery({
             </button>
 
             <img
-              src={`${process.env.NEXT_PUBLIC_API_URL}${images[currentIndex]}`}
+              // src={`${process.env.NEXT_PUBLIC_API_URL}${images[currentIndex]}`}
+              src={`${images[currentIndex]}`}
               alt={`Image ${currentIndex + 1}`}
               className="h-[50dvh] md:h-[60dvh] max-w-[80vw] object-contain"
               draggable={false}
@@ -81,7 +82,8 @@ export default function PopupGallery({
             {images.map((img, i) => (
               <img
                 key={i}
-                src={`${process.env.NEXT_PUBLIC_API_URL}${img}`}
+                // src={`${process.env.NEXT_PUBLIC_API_URL}${img}`}
+                src={`${img}`}
                 alt={`Thumbnail ${i + 1}`}
                 onClick={() => setCurrentIndex(i)}
                 className="w-100 h-100 object-cover cursor-pointer"

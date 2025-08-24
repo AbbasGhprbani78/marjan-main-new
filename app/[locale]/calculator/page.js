@@ -4,7 +4,7 @@ import { fetchSizesCalculator } from "@/services/sizesCalculator";
 import React from "react";
 
 export default async function page({ params }) {
-  const { locale } = params;
+  const { locale } = await params;
 
   const dataSizes = await fetchSizesCalculator(locale);
   return (

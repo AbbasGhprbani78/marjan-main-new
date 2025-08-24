@@ -1,6 +1,5 @@
 import React from "react";
 import { HomeSlider } from "@/app/components/slider";
-import { data } from "@/app/dataBlogs";
 import Blogs from "@/app/components/templates/Blogs";
 import { fetchBlogs } from "@/services/blogs";
 
@@ -37,8 +36,7 @@ export const metadata = {
   },
 };
 export default async function page({ params }) {
-  const { locale } = params;
-
+  const { locale } = await params;
   const blogsData = await fetchBlogs(locale);
 
   console.log(blogsData);
@@ -47,13 +45,13 @@ export default async function page({ params }) {
     <main className="wrapper ">
       <h1 className="sr-only">وبلاگ</h1>
       <section>
-        <HomeSlider data={data.slides} route={"/blogs"} />
+        <HomeSlider data={blogsData?.slides} route={"/blogs"} />
       </section>
       <section className="mt-[2.5rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)]">
         <Blogs
-          blogs={data.blogs}
-          categories={data.categories}
-          filters={data.filters}
+          blogs={blogsData.blogs}
+          categories={blogsData.categories}
+          filters={blogsData.filters}
         />
       </section>
     </main>

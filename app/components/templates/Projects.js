@@ -7,9 +7,11 @@ import CheckBox from "../module/CheckBox";
 import Button from "../module/Button";
 import PopFilter from "../module/PopFilter";
 import { useTranslation } from "@/hook/useTranslation";
+import { useSearchParams } from "next/navigation";
 
 export default function Projects({ data, categories }) {
   const { t } = useTranslation();
+  const searchParams = useSearchParams();
   const itemsPerPage = 12;
   const [currentPage, setCurrentPage] = useState(1);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -29,11 +31,27 @@ export default function Projects({ data, categories }) {
     const checked = event.target.checked;
 
     setFilters((prev) => {
+      let newValue;
       if (checked) {
-        return { ...prev, [key]: value };
+        newValue = value;
       } else {
-        return { ...prev, [key]: "" };
+        newValue = "";
       }
+
+      const newFilters = { ...prev, [key]: newValue };
+
+      const params = new URLSearchParams(window.location.search);
+
+      params.delete(key);
+
+      if (newValue) {
+        params.set(key, newValue);
+      }
+
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, "", newUrl);
+
+      return newFilters;
     });
 
     setCurrentPage(1);
@@ -57,6 +75,14 @@ export default function Projects({ data, categories }) {
     setFilteredProducts(temp);
     setCurrentPage(1);
   }, [filters, data.projects]);
+
+  useEffect(() => {
+    const urlFilters = searchParams.getAll("category");
+    setFilters((prev) => ({
+      ...prev,
+      category: urlFilters[0] || "",
+    }));
+  }, [searchParams]);
 
   return (
     <main className="">

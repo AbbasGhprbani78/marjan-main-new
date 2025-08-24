@@ -12,14 +12,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { truncateText, useLocalizedLink } from "@/utils/helper";
 import { useTranslation } from "@/hook/useTranslation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Blogs({ blogs, categories, filters }) {
-  const [tab, setTab] = useState(1);
+  const searchParams = useSearchParams();
+  const [tab, setTab] = useState(Number(searchParams.get("tab")) || 1);
   const itemsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("articles");
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchParams.get("category") || categories[0]?.value
+  );
   const [filterList, setFilterList] = useState([]);
-  const [activeFilters, setActiveFilters] = useState([]);
+
+  const [activeFilters, setActiveFilters] = useState(
+    searchParams.getAll("filter") || []
+  );
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
@@ -27,6 +35,42 @@ export default function Blogs({ blogs, categories, filters }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { t } = useTranslation();
   const { localizedHref } = useLocalizedLink();
+  const [showArrows, setShowArrows] = useState(false);
+
+  useEffect(() => {
+    const urlTab = Number(searchParams.get("tab"));
+    if (urlTab && urlTab !== tab) setTab(urlTab);
+
+    const urlCategory = searchParams.get("category");
+    if (urlCategory && urlCategory !== selectedCategory) {
+      setSelectedCategory(urlCategory);
+    }
+
+    const urlFilters = searchParams.getAll("filter");
+    if (JSON.stringify(urlFilters) !== JSON.stringify(activeFilters)) {
+      setActiveFilters(urlFilters);
+    }
+  }, [searchParams]);
+
+  const updateQuery = (newTab, category, filtersArr) => {
+    const params = new URLSearchParams(window.location.search);
+
+    params.set("tab", newTab);
+    if (category) params.set("category", category);
+    params.delete("filter");
+    if (filtersArr?.length)
+      filtersArr.forEach((f) => params.append("filter", f));
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+
+    window.history.replaceState({}, "", newUrl);
+  };
+
+  const handleTabChange = (newTab, category = selectedCategory) => {
+    setTab(newTab);
+    setSelectedCategory(category);
+    updateQuery(newTab, category, activeFilters);
+  };
 
   const productsToShow = useMemo(() => {
     const selectedData = blogs[selectedCategory] || [];
@@ -53,10 +97,23 @@ export default function Blogs({ blogs, categories, filters }) {
     });
   };
 
+  const normalizeValue = (value) => {
+    if (/^[A-Za-z]/.test(value)) {
+      return value
+        .split(" ")
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(" ");
+    }
+    return value;
+  };
+
   const chnageHndler = (e) => {
-    const value = e.target.value;
+    const value = normalizeValue(e.target.value);
     setSelectedCategory(value);
     setCurrentPage(1);
+    updateQuery(tab, value, activeFilters);
   };
 
   const tabTitle = () => {
@@ -81,7 +138,20 @@ export default function Blogs({ blogs, categories, filters }) {
   };
 
   const toggleFilter = (value) => {
-    setActiveFilters((prev) => (prev.includes(value) ? [] : [value]));
+    setActiveFilters((prev) => {
+      const newFilters = prev.includes(value) ? [] : [value];
+
+      const params = new URLSearchParams(window.location.search);
+
+      params.delete("filter");
+
+      newFilters.forEach((f) => params.append("filter", f));
+
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, "", newUrl);
+
+      return newFilters;
+    });
   };
 
   useEffect(() => {
@@ -93,6 +163,25 @@ export default function Blogs({ blogs, categories, filters }) {
     setFilterList(filters[selectedCategory]);
     setActiveFilters([]);
   }, [selectedCategory, filters]);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (scrollRef.current) {
+        const { scrollWidth, clientWidth } = scrollRef.current;
+        setShowArrows(scrollWidth > clientWidth);
+      }
+    };
+
+    checkScroll();
+    window.addEventListener("resize", checkScroll);
+
+    return () => window.removeEventListener("resize", checkScroll);
+  }, [productsToShow]);
+
+  useEffect(() => {
+    const urlFilters = searchParams.getAll("filter");
+    setActiveFilters(urlFilters);
+  }, [searchParams]);
 
   return (
     <>
@@ -114,8 +203,12 @@ export default function Blogs({ blogs, categories, filters }) {
               aria-controls={`panel-${cat.value}`}
               id={`tab-${cat.value}`}
               onClick={() => {
-                setSelectedCategory(cat.value);
-                setCurrentPage(1);
+                if (tab === 1) {
+                  setSelectedCategory(cat.value);
+                  setCurrentPage(1);
+                } else {
+                  handleTabChange(2, cat.value);
+                }
               }}
               className={`text-[1rem] relative px-4 pt-2 pb-[.5rem] transition-all duration-300 ${
                 selectedCategory === cat.value
@@ -176,56 +269,50 @@ export default function Blogs({ blogs, categories, filters }) {
       {tab === 1 ? (
         <>
           <div className="hidden md:block pt-[1rem]">
-            <ArticlesRow
-              blogsItems={blogs?.articles?.slice(0, 4)}
-              setTab={setTab}
-              setSelectedCategory={setSelectedCategory}
-              category={"articles"}
-              name={t("Articles")}
-            />
-            <ArticlesRow
-              blogsItems={blogs?.videos?.slice(0, 4)}
-              setTab={setTab}
-              setSelectedCategory={setSelectedCategory}
-              category={"videos"}
-              name={t("Videos")}
-            />
-            <ArticlesRow
-              blogsItems={blogs?.news?.slice(0, 4)}
-              setTab={setTab}
-              setSelectedCategory={setSelectedCategory}
-              category={"news"}
-              name={t("News")}
-            />
+            {Object.entries(blogs).map((key, value) => (
+              <ArticlesRow
+                blogsItems={key[1].slice(0, 4)}
+                handleTabChange={handleTabChange}
+                setSelectedCategory={setSelectedCategory}
+                category={key[0]}
+                name={key[0]}
+                key={key}
+              />
+            ))}
           </div>
           <div className="relative md:hidden">
-            <button
-              onClick={() => scroll("right")}
-              className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-[50%] right-[-10px] md:right-[-20px] translate-y-[-80%] z-10 rounded-full backdrop-blur-[4px] cursor-pointer"
-              style={{ backgroundColor: "rgba(31, 41, 55, 0.5)" }}
-            >
-              <Icons.ArrowRight className="m-auto text-white w-20 h-20 md:w-35 md:h-35 " />
-            </button>
-            <button
-              onClick={() => scroll("left")}
-              className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-[50%] left-[-10px] md:left-[-20px] translate-y-[-80%] z-10 rounded-full backdrop-blur-[4px] cursor-pointer"
-              style={{ backgroundColor: "rgba(31, 41, 55, 0.5)" }}
-            >
-              <Icons.ArrowLeft className="m-auto text-white w-20 h-20 md:w-35 md:h-35 " />
-            </button>
+            {showArrows && (
+              <>
+                <button
+                  onClick={() => scroll("right")}
+                  className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-[50%] right-[-10px] md:right-[-20px] translate-y-[-80%] z-10 rounded-full backdrop-blur-[4px] cursor-pointer"
+                  style={{ backgroundColor: "rgba(31, 41, 55, 0.5)" }}
+                >
+                  <Icons.ArrowRight className="m-auto text-white w-20 h-20 md:w-35 md:h-35 " />
+                </button>
+                <button
+                  onClick={() => scroll("left")}
+                  className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-[50%] left-[-10px] md:left-[-20px] translate-y-[-80%] z-10 rounded-full backdrop-blur-[4px] cursor-pointer"
+                  style={{ backgroundColor: "rgba(31, 41, 55, 0.5)" }}
+                >
+                  <Icons.ArrowLeft className="m-auto text-white w-20 h-20 md:w-35 md:h-35 " />
+                </button>
+              </>
+            )}
+
             <div
               ref={scrollRef}
               className="flex items-center flex-nowrap  gap-[1rem] overflow-x-auto max-w-[500px] md:hidden scroll-smooth border-b border-[#c4c4c4] pb-10 hide-scrollbar "
             >
               {productsToShow.slice(0, 4).map((item, i) => (
                 <Link
-                  href={localizedHref("/blogs/1")}
+                  href={localizedHref(`/blogs/${item?.id}`)}
                   key={i}
                   className="flex flex-col gap-10 min-w-full shrink-0 "
                 >
                   <div className="relative aspect-square w-full">
                     <Image
-                      src={item.image}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
                       alt="blog item image"
                       fill
                       className="object-cover"
@@ -238,7 +325,10 @@ export default function Blogs({ blogs, categories, filters }) {
           </div>
           <div className="flex justify-center w-full pt-[2rem] md:hidden">
             <div className="w-[137px]">
-              <Button2 text={t("More")} onClick={() => setTab(2)} />
+              <Button2
+                text={t("More")}
+                onClick={() => handleTabChange(2, selectedCategory)}
+              />
             </div>
           </div>
         </>
@@ -250,24 +340,15 @@ export default function Blogs({ blogs, categories, filters }) {
                 {t("Categories")}
               </span>
               <div className="flex flex-col mt-[1rem] gap-[.8rem]">
-                <CheckBox
-                  label={t("Articles")}
-                  checked={selectedCategory === "articles"}
-                  onChange={chnageHndler}
-                  value={"articles"}
-                />
-                <CheckBox
-                  label={t("Videos")}
-                  checked={selectedCategory === "videos"}
-                  onChange={chnageHndler}
-                  value={"videos"}
-                />
-                <CheckBox
-                  label={t("News")}
-                  checked={selectedCategory === "news"}
-                  onChange={chnageHndler}
-                  value={"news"}
-                />
+                {categories.map((category) => (
+                  <CheckBox
+                    label={category.value}
+                    checked={selectedCategory === category.value}
+                    onChange={chnageHndler}
+                    value={category.value}
+                    key={category.value}
+                  />
+                ))}
               </div>
               <div className="border-b border-[#b7b7b7] flex justify-between items-center  pb-[1rem] mt-[2rem]">
                 <h2 className="font-medium">{t("Filters")}</h2>
@@ -293,14 +374,6 @@ export default function Blogs({ blogs, categories, filters }) {
                   />
                 ))}
               </div>
-              {activeFilters.length > 0 && (
-                <p className="font-medium text-[1.1rem] border-b border-[var(--color-gray-900)] pb-[.5rem] mb-[.9rem]">
-                  {
-                    filterList.find((item) => item.value === activeFilters[0])
-                      ?.label
-                  }
-                </p>
-              )}
             </div>
             <div className="col-span-12 md:col-span-8 lg:col-span-9">
               {activeFilters.length > 0 && (
@@ -356,13 +429,7 @@ export default function Blogs({ blogs, categories, filters }) {
   );
 }
 
-function ArticlesRow({
-  blogsItems,
-  setTab,
-  setSelectedCategory,
-  category,
-  name,
-}) {
+function ArticlesRow({ blogsItems, handleTabChange, category, name }) {
   const { t } = useTranslation();
   return (
     <div className=" pb-[4rem]">
@@ -374,8 +441,7 @@ function ArticlesRow({
           <Button2
             text={t("More")}
             onClick={() => {
-              setTab(2);
-              setSelectedCategory(category);
+              handleTabChange(2, category);
             }}
           />
         </div>
@@ -390,4 +456,15 @@ function ArticlesRow({
       </div>
     </div>
   );
+}
+
+{
+  /* {activeFilters.length > 0 && (
+                <p className="font-medium text-[1.1rem] border-b border-[var(--color-gray-900)] pb-[.5rem] mb-[.9rem]">
+                  {
+                    filterList.find((item) => item.value === activeFilters[0])
+                      ?.label
+                  }
+                </p>
+              )} */
 }

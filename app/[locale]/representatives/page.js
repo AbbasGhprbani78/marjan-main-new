@@ -42,7 +42,7 @@ export const metadata = {
 };
 
 export default async function page({ params }) {
-  const { locale } = params;
+  const { locale } = await params;
   const representatives = await fetchRepresentatives(locale);
 
   return <Representatives representatives={representatives} />;
