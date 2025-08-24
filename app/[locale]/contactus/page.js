@@ -68,7 +68,7 @@ export default async function page({ params }) {
           className={`hidden lg:block lg:col-span-8 xl:col-span-9 lg:h-full inset-0 z-0  ${styles.mapContainer}`}
           aria-label="نقشه دفاتر ما"
         >
-          <MapWrapper province={""} />
+          <MapWrapper province={province} />
         </section>
       </div>
     </main>
