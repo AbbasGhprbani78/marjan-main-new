@@ -2,7 +2,8 @@ import Image from "next/image";
 import React from "react";
 import FaqItem from "@/app/components/Faq/FaqItem";
 import { data } from "@/app/dataFaq";
-
+import fa from "@/i18n/fa.json";
+import en from "@/i18n/en.json";
 export const metadata = {
   title: "سوالات متداول | برند شما",
   description:
@@ -45,7 +46,11 @@ export const metadata = {
   },
 };
 
-export default async function page() {
+export default async function page({ params }) {
+  const { locale } = params;
+
+  const t = locale === "fa" ? fa : en;
+
   return (
     <main className="wrapper ">
       <h className="sr-only">FAQ</h>
@@ -67,7 +72,7 @@ export default async function page() {
 
         <div className="flex flex-col justify-center items-center text-white gap-[1rem] z-10 ">
           <h2 className="font-medium text-[1.5rem] md:text-[2rem]">
-            پرسش های متداول
+            {t.Frequentlyaskedquestions}
           </h2>
           {/* <p className="w-3/4 md:w-full text-[.9rem] md:text-[1rem] font-normal text-center">
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با

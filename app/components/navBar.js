@@ -296,9 +296,16 @@ function Menu({ show, setShowInnerMenu }) {
       />
 
       <div
-        className={`w-full fixed top-[102px] left-0 right-0 z-50 transition-all duration-700 ease-in-out bottom-0 ${
-          show ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`w-full fixed top-[102px] left-0 right-0 z-50 transition-all duration-700 ease-in-out bottom-0
+    ${
+      show
+        ? locale === "fa"
+          ? "translate-x-0"
+          : "translate-x-0"
+        : locale === "fa"
+        ? "translate-x-full"
+        : "-translate-x-full"
+    }`}
       >
         <ul className="flex flex-col items-start gap-[2.5rem] text-[var(--color-gray-900)] h-full overflow-y-auto  hide-scrollbar w-[53%] bg-white lg:px-80 pb-[2rem] pt-10 ">
           <li className="w-full">
@@ -792,6 +799,7 @@ function MenuMobile() {
 
           {[
             { label: t("AllProducts"), href: "/products" },
+            { label: t("Industrial"), href: "/industrial" },
             { label: t("Catalog"), href: "/catalog" },
             { label: t("Representatives"), href: "/representatives" },
             { label: t("About"), href: "/aboutus" },

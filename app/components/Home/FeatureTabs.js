@@ -26,6 +26,8 @@ export default function FeatureTabs({ data }) {
     setSelectedData(mainData);
   }, [activeButton, data]);
 
+  console.log(data);
+
   return (
     <div className="grid lg:grid-cols-2  lg:gap-[52px] h-full  lg:items-center xl:items-start">
       <div className="lg:hidden flex items-start md:justify-center justify-between   gap-0 md:gap-[1rem]  w-full px-[20px] mb-[1.5rem]">
@@ -79,7 +81,7 @@ export default function FeatureTabs({ data }) {
       {selectedData?.image && selectedData.image.trim() !== "" && (
         <div className="block lg:hidden">
           <Image
-            src={`${process.env.NEXT_PUBLIC_API_URL}${selectedData.image}`}
+            src={`${process.env.NEXT_PUBLIC_API_URL}${selectedData?.image}`}
             alt="Background Image"
             className="w-full h-auto object-cover aspect-[16/9]"
             width={1000}
@@ -96,21 +98,21 @@ export default function FeatureTabs({ data }) {
             className="h-[45px] font-[500] cursor-pointer pb-[5px] transition-all duration-300 "
             onClick={() => setActiveButton(1)}
           >
-            {t("Digital Assistant")}
+            {data[0]?.title}
           </button>
           <button
             ref={(el) => (buttonsRef.current[2] = el)}
             className="h-[45px] font-[500] cursor-pointer pb-[5px] transition-all duration-300 "
             onClick={() => setActiveButton(2)}
           >
-            {t("Tile Area Estimator")}
+            {data[1]?.title}
           </button>
           <button
             ref={(el) => (buttonsRef.current[3] = el)}
             className="h-[45px] font-[500] cursor-pointer pb-[5px] transition-all duration-300 "
             onClick={() => setActiveButton(3)}
           >
-            {t("Artificialintelligencechatbot")}
+            {data[2]?.title}
           </button>
           <span
             className="absolute bottom-0 h-[2px] bg-black transition-all duration-300"
@@ -122,7 +124,7 @@ export default function FeatureTabs({ data }) {
         </div>
 
         <div className="mb-[2rem] mt-[18px] px-20 md:px-40 lg:px-0">
-          <ReadMoreText text={selectedData.text} />
+          <ReadMoreText text={selectedData?.text} />
         </div>
 
         <MoreButton
@@ -137,7 +139,7 @@ export default function FeatureTabs({ data }) {
       {selectedData?.image && selectedData.image.trim() !== "" && (
         <div className="hidden lg:block relative aspect-[4/3] w-full">
           <Image
-            src={`${process.env.NEXT_PUBLIC_API_URL}${selectedData.image}`}
+            src={`${process.env.NEXT_PUBLIC_API_URL}${selectedData?.image}`}
             alt="Background Image"
             className="max-h-[409px] object-cover w-full"
             fill

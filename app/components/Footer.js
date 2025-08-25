@@ -23,9 +23,9 @@ export default function Footer() {
             }`}
           />
 
-          <p className="text-[14px] underline underline-offset-4 cursor-pointer">
+          {/* <p className="text-[14px] underline underline-offset-4 cursor-pointer">
             {t("conditions of sales and purchase")}
-          </p>
+          </p> */}
         </div>
         <div className="flex items-center justify-between mt-[1.3rem]">
           <TextRow
@@ -144,9 +144,9 @@ export default function Footer() {
           />
         </div>
         <div className="flex flex-col gap-[2rem] mt-[3rem] items-center pb-[1.5rem]">
-          <p className="text-[14px] underline underline-offset-4 cursor-pointer">
+          {/* <p className="text-[14px] underline underline-offset-4 cursor-pointer">
             {t("conditions of sales and purchase")}
-          </p>
+          </p> */}
           <div className="flex gap-[20px] items-center">
             <a href="https://www.pinterest.com/marjantileco/" target="_blank">
               <Image
@@ -222,5 +222,3 @@ function TextRow({ text, icon }) {
     </div>
   );
 }
-
-//اپارات
