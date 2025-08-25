@@ -39,8 +39,6 @@ export default async function page({ params }) {
   const { locale } = await params;
   const blogsData = await fetchBlogs(locale);
 
-  console.log(blogsData);
-
   return (
     <main className="wrapper ">
       <h1 className="sr-only">وبلاگ</h1>

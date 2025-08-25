@@ -1,9 +1,10 @@
 import Image from "next/image";
 import React from "react";
 import FaqItem from "@/app/components/Faq/FaqItem";
-import { data } from "@/app/dataFaq";
 import fa from "@/i18n/fa.json";
 import en from "@/i18n/en.json";
+import { datafaq } from "@/app/dataFaq";
+import { fetchFaq } from "@/services/faq";
 export const metadata = {
   title: "سوالات متداول | برند شما",
   description:
@@ -51,6 +52,10 @@ export default async function page({ params }) {
 
   const t = locale === "fa" ? fa : en;
 
+  const dataFaq = await fetchFaq(locale);
+
+  console.log(dataFaq);
+
   return (
     <main className="wrapper ">
       <h className="sr-only">FAQ</h>
@@ -81,7 +86,7 @@ export default async function page({ params }) {
         </div>
       </section>
       <section className=" px-20 md:px-40 lg:px-80 mt-[2.5rem] mb-[2rem]">
-        {data.map((item, i) => (
+        {dataFaq.map((item, i) => (
           <FaqItem key={i} item={item} />
         ))}
       </section>

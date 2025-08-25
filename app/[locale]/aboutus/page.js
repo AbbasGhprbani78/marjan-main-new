@@ -7,6 +7,7 @@ import AboutEnvironment from "@/app/components/About/AboutEnvironment";
 import { data } from "@/app/dataAboutus";
 import BusinessPartners from "@/app/components/About/BusinessPartners";
 import ReadMoreText from "@/app/components/module/ReadMoreText";
+import { fetchAboutUs } from "@/services/aboutus";
 
 export const metadata = {
   title: "درباره ما | شرکت ما",
@@ -53,6 +54,11 @@ export const metadata = {
 // const dict = params.locale === "fa" ? fa : en;
 
 export default async function page({ params }) {
+  const { locale } = params;
+  const dataAboutus = await fetchAboutUs(locale);
+
+  console.log(dataAboutus);
+
   return (
     <main className="wrapper w-full">
       <h1 className="sr-only">درباه ما</h1>

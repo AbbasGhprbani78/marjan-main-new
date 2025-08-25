@@ -79,7 +79,8 @@ export default function CalculatorT({ dataSizes }) {
 
     const getTileAreaInMeter = (sizeStr) => {
       if (!sizeStr) return 0;
-      const [w, h] = sizeStr.split("*").map((v) => parseFloat(v.trim()));
+      const fixedStr = sizeStr.replace("x", "*");
+      const [w, h] = fixedStr.split("*").map((v) => parseFloat(v.trim()));
       if (!w || !h) return 0;
       return (w / 100) * (h / 100);
     };
@@ -224,7 +225,7 @@ export default function CalculatorT({ dataSizes }) {
             bgblack={"#000"}
           />
         </div>
-        <div className="flex flex-col items-start w-1/2 gap-[1rem]">
+        <div className="flex flex-col items-start w-full lg:w-1/2 gap-[1rem]">
           <AnimatePresence>
             {deductArea > 0 && (
               <motion.div
@@ -252,7 +253,7 @@ export default function CalculatorT({ dataSizes }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.4 }}
-                className="flex items-center flex-row gap-4 p-3 bg-green-50 rounded-lg border border-green-200"
+                className="flex items-center flex-row gap-4 p-3 bg-green-50 rounded-lg border border-green-200 w-full"
               >
                 <span className="font-bold text-green-700">
                   متراژ نهایی کاشی مورد نیاز:
@@ -270,7 +271,7 @@ export default function CalculatorT({ dataSizes }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
                 transition={{ duration: 0.4 }}
-                className="flex items-center flex-row gap-4 p-3 bg-blue-50 rounded-lg border border-blue-200"
+                className="flex items-center flex-row gap-4 p-3 bg-blue-50 rounded-lg border border-blue-200 w-full"
               >
                 <span className="font-bold text-blue-700">
                   تعداد کاشی مورد نیاز:
@@ -281,7 +282,7 @@ export default function CalculatorT({ dataSizes }) {
           </AnimatePresence>
 
           {perResults.length > 0 && (
-            <div className="w-full mt-2 p-3 rounded-lg border border-gray-200 bg-white">
+            <div className="w-full mt-2 p-10 rounded-lg border border-gray-200 bg-white">
               <p className="font-bold mb-2">جزئیات هر سطح</p>
               <div className="flex flex-col gap-2">
                 {perResults.map((r) => (

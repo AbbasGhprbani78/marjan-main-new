@@ -39,6 +39,8 @@ export default function TileSize({
     }
   }, [isClean]);
 
+  console.log(allSize, floorSize);
+
   return (
     <div>
       <p className=" font-[600] text-[1rem] pb-30">سایز کاشی</p>
@@ -66,9 +68,9 @@ export default function TileSize({
                   data={dataSizes}
                   label={"cm"}
                   value={allSize}
-                  onChange={(selectedOption) =>
-                    setAllSize(selectedOption?.value)
-                  }
+                  onChange={(selectedOption) => {
+                    setAllSize(selectedOption?.value);
+                  }}
                 />
               </div>
             </div>

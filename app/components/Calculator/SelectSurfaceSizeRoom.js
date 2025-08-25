@@ -1,7 +1,9 @@
+"use client";
 import Input from "../module/Input";
 import React, { useEffect, useState } from "react";
 import MySelect from "./../module/SelectDropDown";
 import * as Icons from "iconsax-reactjs";
+import { useTranslation } from "@/hook/useTranslation";
 
 const maxWallsByShape = {
   rectangle: 4,
@@ -165,15 +167,14 @@ export default function SelectSurfaceSizeRoom({
   const [shape, setShape] = useState("rectangle");
   const [inputs, setInputs] = useState({});
   const [wallHeightsCount, setWallHeightsCount] = useState(1);
+  const { t } = useTranslation();
 
-  // Reset inputs when isClean changes
   useEffect(() => {
     if (isClean) {
       setInputs({});
       setShape("rectangle");
       setWallHeightsCount(1);
 
-      // Reset area to initial state
       setArea({
         floorArea: "0.00",
         wallArea: "0.00",
@@ -216,7 +217,9 @@ export default function SelectSurfaceSizeRoom({
 
   return (
     <div>
-      <p className="font-[600] text-[1rem] pb-30">نوع سطح و ابعاد اتاق</p>
+      <p className="font-[600] text-[1rem] pb-30">
+        {t("Surfacetypeandroomdimensions")}
+      </p>
       <div className="flex justify-between md:justify-center  md:gap-[4rem]">
         {TABS.map((t) => (
           <button
@@ -253,12 +256,12 @@ export default function SelectSurfaceSizeRoom({
           <div className="flex justify-between w-full items-center">
             <div className="w-full lg:w-auto md:min-w-[250px]  lg:min-w-[230px]  xl:min-w-[350px]">
               <div className="font-bold text-[18px] mb-[3rem]">
-                ابعاد{" "}
+                {t("Dimensions")}{" "}
                 {tab === "floor"
-                  ? "کف"
-                  : tab === "wall"
-                  ? "دیوار"
-                  : "کف و دیوار"}
+                  ? t("Floor")
+                  : tab === t("Wall")
+                  ? t("Wall")
+                  : t("ّFloorWall")}{" "}
               </div>
 
               {shapeInputs.map((input) => (

@@ -18,6 +18,8 @@ export default async function Home({ params }) {
 
   const dataHome = await fetchhome(locale);
 
+  console.log(dataHome);
+
   return (
     <div
       className={`wrapper w-full h-full ${
@@ -81,11 +83,16 @@ export default async function Home({ params }) {
         </div>
       </div>
       <div>
-        <div className="flex flex-col  min-h-[422px] h-auto w-full py-[50px] px-20 md:px-40 lg:px-[80px] pe-auto bg-[linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),url('/images/65.jpg')] bg-cover bg-center">
+        <div
+          className="flex flex-col min-h-[422px] h-auto w-full py-[50px] px-20 md:px-40 lg:px-[80px] pe-auto bg-cover bg-center"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url(${process.env.NEXT_PUBLIC_API_URL}${dataHome?.about?.image})`,
+          }}
+        >
           <p className="text-center md:text-start title font-[500] text-gray-white mb-[40px]">
             {dataHome?.about?.title}
           </p>
-          <div className=" w-full  md:w-[73dvw] lg:w-[57dvw]  text-justify ">
+          <div className="w-full md:w-[73dvw] lg:w-[57dvw] text-justify">
             <p className="text-[16px] font-[400] text-gray-white mb-[35px] md:mb-[20px]">
               {dataHome.about.description}
             </p>
@@ -93,9 +100,9 @@ export default async function Home({ params }) {
               text={t.MoreDetails}
               width={263}
               height={46}
-              className="mx-auto py-[10px] md:mx-0 "
+              className="mx-auto py-[10px] md:mx-0"
               invert={true}
-              href={"/aboutus"}
+              href="/aboutus"
             />
           </div>
         </div>

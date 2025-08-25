@@ -19,15 +19,19 @@
 .marquee__8 {
   --marquee-item-width: 100px;
   --marquee-item-height: 120px;
-  --marquee-duration: 36s;
+  --marquee-duration: 50s;
   --marquee-items: var(--dynamic-items, 8);
+  --marquee-gap: 80px;
 }
 
 .marquee__item {
   --marquee-item-offset: max(
-    calc(var(--marquee-item-width) * var(--marquee-items)),
-    calc(100% + var(--marquee-item-width))
+    calc(
+      (var(--marquee-item-width) + var(--marquee-gap)) * var(--marquee-items)
+    ),
+    calc(100% + var(--marquee-item-width) + var(--marquee-gap))
   );
+
   --marquee-delay: calc(
     var(--marquee-duration) / var(--marquee-items) *
       (var(--marquee-items) - var(--marquee-item-index)) * -1
@@ -36,14 +40,15 @@
   inset-inline-start: var(--marquee-item-offset);
   transform: translateX(-50%);
   animation: go linear var(--marquee-duration) var(--marquee-delay, 0s) infinite;
-  width: 117px;
-  height: 117px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   overflow: hidden;
 }
 
 .marquee__item img {
   transition: filter 0.3s ease-in-out;
+  object-fit: contain;
 }
 
 .marquee:hover .marquee__item {

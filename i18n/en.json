@@ -109,5 +109,12 @@
   "AllProducts": "All Products",
   "No results found": "No results found",
   "FormSubmittedSuccessfully": " Form submitted successfully",
-  "Frequentlyaskedquestions": "Frequently asked questions"
+  "Frequentlyaskedquestions": "Frequently asked questions",
+  "Tacttafitdb": "To accurately calculate the tile area, fill in the details below.",
+  "Unitofmeasurement": "Unitofmeasurement",
+  "Surfacetypeandroomdimensions": "Surface type and room dimensions",
+  "Floor": "Floor",
+  "Wall": "Wall",
+  "ّFloorWall": "Floor & Wall",
+  "Dimensions": "Dimensions"
 }

@@ -9,11 +9,11 @@ export const fetchhome = async (lang) => {
   if (!res.ok) {
     try {
       const errorData = await res.json();
-      console.error("Server error:", errorData); // لاگ خطای سرور
+      console.error("Server error:", errorData);
       throw new Error(errorData.message || "خطای ناشناخته از سرور");
     } catch {
       const errorText = await res.text();
-      console.error("Server error (text):", errorText); // لاگ خطا به صورت متن ساده
+      console.error("Server error (text):", errorText);
       throw new Error(errorText || "خطای ناشناخته از سرور");
     }
   }

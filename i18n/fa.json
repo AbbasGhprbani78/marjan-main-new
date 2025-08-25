@@ -110,5 +110,12 @@
   "AllProducts": "همه محصولات",
   "No results found": "محصولی یافت نشد",
   "FormSubmittedSuccessfully": " فرم با موفقیت ارسال شد",
-  "Frequentlyaskedquestions": "پرسش های متداول"
+  "Frequentlyaskedquestions": "پرسش های متداول",
+  "Tacttafitdb": "برای محاسبه دقیق متراژ کاشی، جزئیات زیر را پر کنید.",
+  "Unitofmeasurement": "واحد اندازه‌گیری",
+  "Surfacetypeandroomdimensions": "نوع سطح و ابعاد اتاق",
+  "Floor": "کف",
+  "Wall": "دیوار",
+  "ّFloorWall": "کف و دیوار",
+  "Dimensions": " ابعاد"
 }

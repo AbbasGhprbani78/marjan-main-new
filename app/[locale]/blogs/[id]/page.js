@@ -5,9 +5,8 @@ import Image from "next/image";
 import React from "react";
 
 export const metadata = {
-  title: "آموزش کامل استفاده از React در پروژه‌های واقعی",
-  description:
-    "در این مقاله با کاربردهای عملی React در پروژه‌های واقعی آشنا می‌شوید و تکنیک‌هایی برای توسعه مؤثرتر یاد می‌گیرید.",
+  title: "مقاله",
+  description: "مقاله",
   keywords: [
     "آموزش React",
     "پروژه واقعی",
@@ -20,9 +19,8 @@ export const metadata = {
     canonical: "https://yourdomain.com/blogs/my-post",
   },
   openGraph: {
-    title: "آموزش کاربردی React در پروژه واقعی",
-    description:
-      "تجربه استفاده از React در پروژه‌های واقعی همراه با نکات حرفه‌ای برای توسعه‌دهندگان.",
+    title: "مقاله",
+    description: "مقاله",
     url: "https://yourdomain.com/blogs/my-post",
     siteName: "YourSiteName",
     type: "article",
@@ -33,7 +31,7 @@ export const metadata = {
         url: "/images/38.png",
         width: 1200,
         height: 630,
-        alt: "React در پروژه واقعی",
+        alt: "مقاله",
       },
     ],
   },
@@ -64,7 +62,7 @@ export default async function page({ params }) {
           />
           <div className="absolute inset-0 bg-black/50 z-10" />
           <p
-            className={`w-max text-white font-normal text-[1.2rem] md:text-[2rem] z-30 ${
+            className={`w-max text-white font-normal text-[1.2rem] md:text-[2rem] z-5 ${
               locale === "fa" ? "font-fa" : "font-en"
             }`}
           >

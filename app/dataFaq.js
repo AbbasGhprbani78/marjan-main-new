@@ -1,4 +1,4 @@
-export const data = [
+export const datafaq = [
   {
     title: "اصول نصب کاشی",
     accardionItems: [
