@@ -5,12 +5,15 @@ import Image from "next/image";
 import * as Icons from "iconsax-reactjs";
 import { useTranslation } from "@/hook/useTranslation";
 import ReadMoreText from "../module/ReadMoreText";
+
 export default function FeatureTabs({ data }) {
   const { t } = useTranslation();
-  const [activeButton, setActiveButton] = useState(1);
+
+  const [activeButton, setActiveButton] = useState(data?.[0]?.id || null);
   const [selectedData, setSelectedData] = useState(data?.[0] || {});
   const buttonsRef = useRef({});
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
+
   useEffect(() => {
     const currentButton = buttonsRef.current[activeButton];
     if (currentButton) {
@@ -22,15 +25,13 @@ export default function FeatureTabs({ data }) {
   }, [activeButton]);
 
   useEffect(() => {
-    const mainData = data?.find((item) => item.id == activeButton);
+    const mainData = data?.find((item) => item.id === activeButton);
     setSelectedData(mainData);
   }, [activeButton, data]);
 
-  console.log(data);
-
   return (
-    <div className="grid lg:grid-cols-2  lg:gap-[52px] h-full  lg:items-center xl:items-start">
-      <div className="lg:hidden flex items-start md:justify-center justify-between   gap-0 md:gap-[1rem]  w-full px-[20px] mb-[1.5rem]">
+    <div className="grid lg:grid-cols-2 lg:gap-[52px] h-full lg:items-center xl:items-start">
+      <div className="lg:hidden flex items-start md:justify-center justify-between gap-0 md:gap-[1rem] w-full px-[20px] mb-[1.5rem]">
         <button
           onClick={() => {
             const currentIndex = data.findIndex(
@@ -52,7 +53,7 @@ export default function FeatureTabs({ data }) {
         </button>
 
         <button className="text-[17px] font-medium text-black py-2 border-b-2 border-[#000]">
-          {data.find((item) => item.id === activeButton)?.title}
+          {selectedData?.title}
         </button>
 
         <button
@@ -78,11 +79,12 @@ export default function FeatureTabs({ data }) {
           />
         </button>
       </div>
+
       {selectedData?.image && selectedData.image.trim() !== "" && (
         <div className="block lg:hidden">
           <Image
             src={`${process.env.NEXT_PUBLIC_API_URL}${selectedData?.image}`}
-            alt="Background Image"
+            alt={selectedData?.title || "Background Image"}
             className="w-full h-auto object-cover aspect-[16/9]"
             width={1000}
             height={1000}
@@ -92,28 +94,19 @@ export default function FeatureTabs({ data }) {
       )}
 
       <div className="w-full flex flex-col ps-[0px] lg:ps-[80px] order-2 md:order-none">
-        <div className="hidden lg:flex flex-row justify-center gap-[50px]   relative border-b border-gray-300 lg:text-[.9rem] xl:text-[1rem]">
-          <button
-            ref={(el) => (buttonsRef.current[1] = el)}
-            className="h-[45px] font-[500] cursor-pointer pb-[5px] transition-all duration-300 "
-            onClick={() => setActiveButton(1)}
-          >
-            {data[0]?.title}
-          </button>
-          <button
-            ref={(el) => (buttonsRef.current[2] = el)}
-            className="h-[45px] font-[500] cursor-pointer pb-[5px] transition-all duration-300 "
-            onClick={() => setActiveButton(2)}
-          >
-            {data[1]?.title}
-          </button>
-          <button
-            ref={(el) => (buttonsRef.current[3] = el)}
-            className="h-[45px] font-[500] cursor-pointer pb-[5px] transition-all duration-300 "
-            onClick={() => setActiveButton(3)}
-          >
-            {data[2]?.title}
-          </button>
+        <div className="hidden lg:flex flex-row justify-center gap-[50px] relative border-b border-gray-300 lg:text-[.9rem] xl:text-[1rem]">
+          {data.map((item) => (
+            <button
+              key={item.id}
+              ref={(el) => (buttonsRef.current[item.id] = el)}
+              className={`h-[45px] font-[500] cursor-pointer pb-[5px] transition-all duration-300 ${
+                activeButton === item.id ? "text-black" : "text-gray-500"
+              }`}
+              onClick={() => setActiveButton(item.id)}
+            >
+              {item.title}
+            </button>
+          ))}
           <span
             className="absolute bottom-0 h-[2px] bg-black transition-all duration-300"
             style={{
@@ -132,7 +125,9 @@ export default function FeatureTabs({ data }) {
           width={263}
           height={46}
           className="mx-auto lg:mx-0 my-[15px] md:my-0"
-          href={activeButton == 1 ? "https://marjan.ariisco.com" : "/"}
+          href={
+            activeButton === data[0]?.id ? "https://marjan.ariisco.com" : "/"
+          }
         />
       </div>
 
@@ -140,7 +135,7 @@ export default function FeatureTabs({ data }) {
         <div className="hidden lg:block relative aspect-[4/3] w-full">
           <Image
             src={`${process.env.NEXT_PUBLIC_API_URL}${selectedData?.image}`}
-            alt="Background Image"
+            alt={selectedData?.title || "Background Image"}
             className="max-h-[409px] object-cover w-full"
             fill
           />
