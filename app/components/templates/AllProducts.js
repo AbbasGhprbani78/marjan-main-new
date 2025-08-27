@@ -28,7 +28,7 @@ export default function AllProducts({ categories, products }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-
+  const queryPage = Number(searchParams.get("page")) || 1;
   const queryFilterKey = searchParams.get("filterKey");
   const queryValues = searchParams.get("values")?.split(",") || [];
 
@@ -87,6 +87,12 @@ export default function AllProducts({ categories, products }) {
     return Number.isFinite(n) ? n : NaN;
   };
 
+  const handlePageChange = (newPage) => {
+    const query = new URLSearchParams(searchParams.toString());
+    query.set("page", newPage.toString());
+    router.push(`${pathname}?${query.toString()}`);
+  };
+
   useEffect(() => {
     let temp = [...products];
 
@@ -139,6 +145,13 @@ export default function AllProducts({ categories, products }) {
       setIsInitialLoad(false);
     }
   }, [queryFilterKey, queryValues.join(","), isInitialLoad]);
+
+  useEffect(() => {
+    const pageFromQuery = Number(searchParams.get("page")) || 1;
+    if (pageFromQuery !== currentPage) {
+      setCurrentPage(pageFromQuery);
+    }
+  }, [searchParams]);
 
   const isLtr = false;
 
@@ -224,7 +237,7 @@ export default function AllProducts({ categories, products }) {
           <Pagination
             currentPage={currentPage}
             totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
-            onPageChange={setCurrentPage}
+            onPageChange={handlePageChange}
           />
         </section>
       </section>
@@ -240,6 +253,3 @@ export default function AllProducts({ categories, products }) {
     </main>
   );
 }
-
-//http://localhost:3000/fa/products?filterKey=industrie&values=%D9%82%D8%B7%D8%B9%D8%A7%D8%AA+%D8%B5%D9%86%D8%B9%D8%AA%DB%8C
-//http://localhost:3000/fa/products?filterKey=industrie&values=%D9%82%D8%B7%D8%B9%D8%A7%D8%AA%20%D8%B5%D9%86%D8%B9%D8%AA%DB%8C

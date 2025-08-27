@@ -18,7 +18,7 @@ export default function Input({
         value={value}
         onChange={onChange}
         type={type}
-        className="peer w-full placeholder-transparent focus:outline-none bg-transparent text-[.9rem]"
+        className="peer w-full placeholder-transparent focus:outline-none bg-transparent text-[.9rem] input"
         placeholder={label}
         maxLength={100}
         autoComplete="off"

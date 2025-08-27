@@ -25,7 +25,6 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
 
-    // ---- اولین صفحه ----
     if (startPage > 1) {
       pageNumbers.push(
         <button
@@ -49,7 +48,6 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       }
     }
 
-    // ---- صفحات میانی ----
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
         <button
@@ -66,7 +64,6 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       );
     }
 
-    // ---- آخرین صفحه ----
     if (endPage < totalPages) {
       if (endPage < totalPages - 1) {
         pageNumbers.push(

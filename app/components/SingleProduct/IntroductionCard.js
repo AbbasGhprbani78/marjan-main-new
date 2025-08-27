@@ -179,7 +179,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                   e.stopPropagation();
                   router.push("/representatives");
                 }}
-                className="flex-1 py-2 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md"
+                className="flex-1 py-7 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md"
               >
                 {t("WhereToBuy")}
                 <Icons.Location size={15} />
@@ -189,7 +189,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                   e.stopPropagation();
                   router.push("https://marjan.ariisco.com");
                 }}
-                className="flex-1 py-2 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md"
+                className="flex-1 py-7 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md"
               >
                 {t("SmartLayout")}
                 <Icons.Box2 size={15} />

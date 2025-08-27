@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import ProductItem from "./ProductItem";
-import * as Icons from "iconsax-reactjs";
 import PopupGallery from "../module/PopupGallery";
 import { useTranslation } from "@/hook/useTranslation";
 import { useViewportWidth } from "@/hook/useViewportWidth";
@@ -29,22 +28,13 @@ export default function Products({ products }) {
           modules={[Grid]}
           grid={{ rows: 1, fill: "row" }}
           slidesPerView={slidesNumber}
-          loop={false}
+          loop={true}
           dir="ltr"
         >
-          {products?.slice(0, 4).map((item, i, arr) => (
+          {products?.map((item, i, arr) => (
             <SwiperSlide key={i} className="relative">
               <div className="relative">
                 <ProductItem item={item} />
-
-                {i === arr.length - 1 && (
-                  <div
-                    className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
-                    onClick={() => setOpen(true)}
-                  >
-                    <Icons.More className="text-gray-white w-20 h-20 md:w-35 md:h-35" />
-                  </div>
-                )}
               </div>
 
               {item?.text && (
@@ -57,19 +47,10 @@ export default function Products({ products }) {
         </Swiper>
       ) : (
         <div className="grid grid-cols-2 gap-10">
-          {products?.slice(0, 4).map((item, i, arr) => (
+          {products?.map((item, i, arr) => (
             <div key={i} className="relative group overflow-hidden">
               <div className="relative">
                 <ProductItem item={item} />
-
-                {i === arr.length - 1 && (
-                  <div
-                    className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
-                    onClick={() => setOpen(true)}
-                  >
-                    <Icons.More className="text-gray-white w-20 h-20 md:w-35 md:h-35" />
-                  </div>
-                )}
               </div>
 
               {item?.text && (

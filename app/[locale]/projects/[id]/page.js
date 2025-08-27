@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { data } from "@/app/dataPorjectDetail";
 import ReadMoreText from "@/app/components/Projects/ReadMoreText";
 import Gallery from "@/app/components/Projects/Gallery";
 import Products from "@/app/components/Projects/Products";

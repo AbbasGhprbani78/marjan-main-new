@@ -46,7 +46,7 @@ export default function AboutDetail({ aboutDetail }) {
 
 function ImageContent({ url }) {
   return (
-    <Image src={url} fill className="object-cover " alt="image about item" />
+    <Image src={url} fill className="object-cover" alt="image about item" />
   );
 }
 

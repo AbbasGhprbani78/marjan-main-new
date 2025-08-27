@@ -11,6 +11,7 @@ export function MoreButton({
   invert,
   className = "",
   href,
+  onClick,
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const { locale } = useParams();
@@ -23,6 +24,10 @@ export function MoreButton({
     <Link
       target={isExternal ? "_blank" : undefined}
       href={linkHref}
+      onClick={(e) => {
+        if (!href || href === "#") e.preventDefault();
+        if (onClick) onClick();
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`flex cursor-pointer button ${

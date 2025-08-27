@@ -5,9 +5,11 @@ import Image from "next/image";
 import * as Icons from "iconsax-reactjs";
 import { useTranslation } from "@/hook/useTranslation";
 import ReadMoreText from "../module/ReadMoreText";
+import { useToggle } from "@/app/context/context";
 
 export default function FeatureTabs({ data }) {
   const { t } = useTranslation();
+  const { isShowChatbot, setIsShowChatbot } = useToggle();
 
   const [activeButton, setActiveButton] = useState(data?.[0]?.id || null);
   const [selectedData, setSelectedData] = useState(data?.[0] || {});
@@ -29,6 +31,11 @@ export default function FeatureTabs({ data }) {
     setSelectedData(mainData);
   }, [activeButton, data]);
 
+  const tabLinks = {
+    [data[0]?.id]: "https://marjan.ariisco.com",
+    [data[1]?.id]: "/calculator",
+    [data[2]?.id]: null,
+  };
   return (
     <div className="grid lg:grid-cols-2 lg:gap-[52px] h-full lg:items-center xl:items-start">
       <div className="lg:hidden flex items-start md:justify-center justify-between gap-0 md:gap-[1rem] w-full px-[20px] mb-[1.5rem]">
@@ -125,9 +132,12 @@ export default function FeatureTabs({ data }) {
           width={263}
           height={46}
           className="mx-auto lg:mx-0 my-[15px] md:my-0"
-          href={
-            activeButton === data[0]?.id ? "https://marjan.ariisco.com" : "/"
-          }
+          href={tabLinks[activeButton] || "#"}
+          onClick={() => {
+            if (activeButton === data[2]?.id) {
+              setIsShowChatbot(true);
+            }
+          }}
         />
       </div>
 

@@ -8,22 +8,38 @@ import Button from "../module/Button";
 import PopFilter from "../module/PopFilter";
 import { useTranslation } from "@/hook/useTranslation";
 import { useSearchParams } from "next/navigation";
-
 export default function Projects({ data, categories }) {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
-  const itemsPerPage = 12;
-  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
+
+  const queryPage = Number(searchParams.get("page")) || 1;
+  const [currentPage, setCurrentPage] = useState(queryPage);
+
+  const [filteredProducts, setFilteredProducts] = useState(data.projects);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const [filteredProducts, setFilteredProducts] = useState(data.projects);
   const productsToShow = filteredProducts?.slice(startIndex, endIndex);
+
   const [filters, setFilters] = useState({});
   const [isEmptyCheckBox, setEmptycheckBox] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  useEffect(() => {
+    const pageFromQuery = Number(searchParams.get("page")) || 1;
+    if (pageFromQuery !== currentPage) {
+      setCurrentPage(pageFromQuery);
+    }
+  }, [searchParams]);
+
   const clearFilter = () => {
     setEmptycheckBox(true);
     setFilters({});
+    const params = new URLSearchParams(window.location.search);
+    params.delete("category");
+    params.delete("page");
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, "", newUrl);
   };
 
   const handleCheckboxChange = (key, event) => {
@@ -31,18 +47,13 @@ export default function Projects({ data, categories }) {
     const checked = event.target.checked;
 
     setFilters((prev) => {
-      let newValue;
-      if (checked) {
-        newValue = value;
-      } else {
-        newValue = "";
-      }
+      let newValue = checked ? value : "";
 
       const newFilters = { ...prev, [key]: newValue };
 
       const params = new URLSearchParams(window.location.search);
-
       params.delete(key);
+      params.delete("page"); // 📌 ریست صفحه هنگام تغییر فیلتر
 
       if (newValue) {
         params.set(key, newValue);
@@ -56,7 +67,6 @@ export default function Projects({ data, categories }) {
 
     setCurrentPage(1);
   };
-
   useEffect(() => {
     let temp = [...data.projects];
 
@@ -73,8 +83,10 @@ export default function Projects({ data, categories }) {
     });
 
     setFilteredProducts(temp);
-    setCurrentPage(1);
-  }, [filters, data.projects]);
+
+    const pageFromQuery = Number(searchParams.get("page")) || 1;
+    setCurrentPage(pageFromQuery);
+  }, [filters, data.projects, searchParams]);
 
   useEffect(() => {
     const urlFilters = searchParams.getAll("category");
@@ -84,8 +96,20 @@ export default function Projects({ data, categories }) {
     }));
   }, [searchParams]);
 
+  const handlePageChange = (newPage) => {
+    if (newPage < 1) return;
+
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", newPage.toString());
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, "", newUrl);
+
+    setCurrentPage(newPage);
+  };
+
   return (
-    <main className="">
+    <main>
       <section
         className="mt-[3rem] grid grid-cols-12 gap-[1.3rem] px-20 md:px-40 lg:px-80"
         aria-label="لیست پروژه‌ها"
@@ -117,7 +141,7 @@ export default function Projects({ data, categories }) {
           </div>
         </div>
 
-        <div className="relative mb-[1rem]  col-span-12 lg:hidden">
+        <div className="relative mb-[1rem] col-span-12 lg:hidden">
           <Button
             text={isFilterOpen ? t("Applyfilter") : t("Filters")}
             onClick={() => setIsFilterOpen((prev) => !prev)}
@@ -150,6 +174,7 @@ export default function Projects({ data, categories }) {
             </div>
           </PopFilter>
         </div>
+
         <div className="col-span-12 lg:col-span-9">
           {filters.category && (
             <p className="font-medium text-[1.1rem] border-b border-[var(--color-gray-900)] pb-[.5rem] mb-[.9rem]">
@@ -160,7 +185,6 @@ export default function Projects({ data, categories }) {
             {productsToShow?.map((project, index) => (
               <article
                 key={index}
-                className=""
                 itemScope
                 itemType="https://schema.org/CreativeWork"
               >
@@ -176,8 +200,8 @@ export default function Projects({ data, categories }) {
           >
             <Pagination
               currentPage={currentPage}
-              totalPages={Math.ceil(data.projects.length / itemsPerPage)}
-              onPageChange={setCurrentPage}
+              totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
+              onPageChange={handlePageChange}
             />
           </nav>
         </div>

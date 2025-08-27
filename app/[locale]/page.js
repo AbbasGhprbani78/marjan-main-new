@@ -10,15 +10,12 @@ import en from "@/i18n/en.json";
 import FeatureTabs from "@/app/components/Home/FeatureTabs";
 import { MoreButton } from "@/app/components/moreButton";
 import { fetchhome } from "@/services/home";
-import ChatBot from "../components/module/ChatBot/ChatBot";
 
 export default async function Home({ params }) {
   const { locale } = await params;
   const t = locale === "fa" ? fa : en;
 
   const dataHome = await fetchhome(locale);
-
-  console.log(dataHome);
 
   return (
     <div
@@ -86,7 +83,10 @@ export default async function Home({ params }) {
         <div
           className="flex flex-col min-h-[422px] h-auto w-full py-[50px] px-20 md:px-40 lg:px-[80px] pe-auto bg-cover bg-center"
           style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url(${process.env.NEXT_PUBLIC_API_URL}${dataHome?.about?.image})`,
+            backgroundImage: `
+      linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+      url(${process.env.NEXT_PUBLIC_API_URL}${dataHome?.about?.image})
+    `,
           }}
         >
           <p className="text-center md:text-start title font-[500] text-gray-white mb-[40px]">
@@ -122,7 +122,6 @@ export default async function Home({ params }) {
           href={"/newsletter"}
         />
       </div>
-      <ChatBot />
     </div>
   );
 }

@@ -3,7 +3,6 @@ import React from "react";
 import FaqItem from "@/app/components/Faq/FaqItem";
 import fa from "@/i18n/fa.json";
 import en from "@/i18n/en.json";
-import { datafaq } from "@/app/dataFaq";
 import { fetchFaq } from "@/services/faq";
 export const metadata = {
   title: "سوالات متداول | برند شما",

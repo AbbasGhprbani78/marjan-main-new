@@ -65,7 +65,7 @@ export default async function page({ params }) {
 
       <section className="w-full relative mt-[130px] lg:mt-0 aspect-[3/2] max-h-[550px]">
         <Image
-          src={data?.imageHeader}
+          src={`${process.env.NEXT_PUBLIC_API_URL}${dataAboutus?.imageHeader}`}
           fill
           alt="about us-picture"
           className="object-cover"
@@ -76,16 +76,16 @@ export default async function page({ params }) {
 
       <section className=" mt-[40px] px-20 md:px-40 lg:px-80 mb-[4rem] md:mb-[7rem] ">
         <h2 className="title text-[var(--color-gray-900)] font-[500] mb-[18px]">
-          داستان ما
+          {dataAboutus?.aboutDetail[0]?.title}
         </h2>
         <ReadMoreText
-          text={data.aboutText}
+          text={dataAboutus?.aboutDetail[0]?.text}
           fontSize="text-[1rem]"
           fontweight="font-medium"
         />
       </section>
       <section className=" mb-[4rem] md:mb-0">
-        <AboutDetail aboutDetail={data.aboutDetail} />
+        <AboutDetail aboutDetail={data?.aboutDetail} />
       </section>
       <section className=" mb-[4rem] md:mb-[5rem] md:px-40 lg:px-80">
         <AboutEnvironment environment={data.environment} />
@@ -101,16 +101,4 @@ export default async function page({ params }) {
       </section>
     </main>
   );
-}
-
-{
-  /* <section className="w-full relative wrapper_image aspect-[4/3] mt-[130px] lg:mt-0">
-        <Image
-          src={data?.imageHeader}
-          fill
-          alt="about us-picture"
-          className="object-cover "
-        />
-        <div className="absolute inset-0 bg-black/30 z-10" />
-      </section> */
 }

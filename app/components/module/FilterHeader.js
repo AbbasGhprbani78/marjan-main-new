@@ -298,7 +298,7 @@ function ItemFilterBox({ text, type, item, setClose }) {
       href={`/products?filterKey=${filterKey}&values=${encodeURIComponent(
         filterValue
       )}`}
-      className="relative flex items-center justify-between px-20  lg:px-2 lg:justify-around h-[46px]  bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer"
+      className="relative flex items-center justify-between px-20    h-[46px]  bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer"
     >
       <span className="font-medium">{displayText}</span>
       <div>

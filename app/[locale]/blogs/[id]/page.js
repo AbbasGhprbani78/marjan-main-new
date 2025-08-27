@@ -1,3 +1,4 @@
+import BlogVideo from "@/app/components/Blogs/BlogVideo";
 import GallerySingleBlog from "@/app/components/Blogs/GallerySingleBlog";
 import ReadMoreText from "@/app/components/module/ReadMoreText";
 import { fetchSingleBlog } from "@/services/singleBlog";
@@ -49,6 +50,8 @@ export default async function page({ params }) {
   const { id } = await params;
   const singleBlog = await fetchSingleBlog(locale, id);
 
+  console.log("singleBlog", singleBlog);
+
   return (
     <main className="wrapper ">
       <h1 className="sr-only">وبلاگ</h1>
@@ -62,7 +65,7 @@ export default async function page({ params }) {
           />
           <div className="absolute inset-0 bg-black/50 z-10" />
           <p
-            className={`w-max text-white font-normal text-[1.2rem] md:text-[2rem] z-5 ${
+            className={`w-max text-white font-normal text-[1.2rem] md:text-[2rem] z-[11] ${
               locale === "fa" ? "font-fa" : "font-en"
             }`}
           >
@@ -90,24 +93,7 @@ export default async function page({ params }) {
             </div>
           )}
 
-          {singleBlog?.media && (
-            <div className="relative w-full aspect-[3/2] md:aspect-auto md:w-2/3 md:mx-auto lg:h-[331px] mt-[1rem] lg:mt-[2rem]">
-              {/\.(mp4|webm|ogg|mkv)$/i.test(singleBlog.media) ? (
-                <video
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog.media}`}
-                  controls
-                  className="object-cover w-full h-full "
-                />
-              ) : (
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog.media}`}
-                  fill
-                  alt="blog media"
-                  className="object-cover "
-                />
-              )}
-            </div>
-          )}
+          <BlogVideo singleBlog={singleBlog} />
         </section>
       </article>
     </main>

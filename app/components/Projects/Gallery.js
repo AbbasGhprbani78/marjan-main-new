@@ -31,11 +31,11 @@ export default function Gallery({ gallery }) {
           loop={false}
           dir="ltr"
         >
-          {gallery?.slice(0, 4).map((item, i, arr) => (
+          {gallery?.slice(0, 4).map((item, i) => (
             <SwiperSlide key={i} className="relative group overflow-hidden">
               <div className="relative">
-                <GalleryItem media={item} />
-                {i === arr.length - 1 && (
+                <GalleryItem media={item} onClick={() => setOpen(true)} />
+                {gallery.length > 4 && i === 3 && (
                   <div
                     className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
                     onClick={() => setOpen(true)}
@@ -49,10 +49,10 @@ export default function Gallery({ gallery }) {
         </Swiper>
       ) : (
         <div className="grid grid-cols-2 gap-10">
-          {gallery?.slice(0, 4).map((item, i, arr) => (
+          {gallery?.slice(0, 4).map((item, i) => (
             <div key={i} className="relative group overflow-hidden">
-              <GalleryItem media={item} />
-              {i === arr.length - 1 && (
+              <GalleryItem media={item} onClick={() => setOpen(true)} />
+              {gallery.length > 4 && i === 3 && (
                 <div
                   className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
                   onClick={() => setOpen(true)}

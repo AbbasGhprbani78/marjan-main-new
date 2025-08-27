@@ -15,6 +15,7 @@ export default function Texture({ textureImage }) {
   const [fullTiles, setFullTiles] = useState([]);
   const [open, setOpen] = useState(false);
   const { t, locale } = useTranslation();
+
   useEffect(() => {
     if (textureImage.length > 0) {
       showImages(textureImage[0]);
@@ -160,16 +161,18 @@ export default function Texture({ textureImage }) {
                       maxDim,
                       150
                     );
-                    const isLast = index === tailesToShow.length - 1;
+                    const showMore =
+                      fullTiles.length > 4 && index === tailesToShow.length - 1;
 
                     return (
                       <div
                         key={index}
-                        className="relative overflow-hidden bg-gray-100 w-full sm:w-auto"
+                        className="relative overflow-hidden bg-gray-100 w-full sm:w-auto cursor-pointer"
                         style={{
                           width: `${width}px`,
                           height: `${height}px`,
                         }}
+                        onClick={() => setOpen(true)}
                       >
                         <Image
                           src={`${process.env.NEXT_PUBLIC_API_URL}${tile?.image}`}
@@ -177,7 +180,8 @@ export default function Texture({ textureImage }) {
                           className="object-cover"
                           fill
                         />
-                        {isLast && (
+
+                        {showMore && (
                           <div
                             className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
                             onClick={() => setOpen(true)}

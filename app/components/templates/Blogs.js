@@ -18,7 +18,8 @@ export default function Blogs({ blogs, categories, filters }) {
   const searchParams = useSearchParams();
   const [tab, setTab] = useState(Number(searchParams.get("tab")) || 1);
   const itemsPerPage = 9;
-  const [currentPage, setCurrentPage] = useState(1);
+  const queryPage = Number(searchParams.get("page")) || 1;
+  const [currentPage, setCurrentPage] = useState(queryPage);
   const [selectedCategory, setSelectedCategory] = useState(
     searchParams.get("category") || categories[0]?.value
   );
@@ -135,6 +136,14 @@ export default function Blogs({ blogs, categories, filters }) {
 
   const clearFilter = () => {
     setActiveFilters([]);
+    setCurrentPage(1);
+
+    const params = new URLSearchParams(window.location.search);
+    params.delete("filter");
+    params.set("page", "1");
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, "", newUrl);
   };
 
   const toggleFilter = (value) => {
@@ -144,14 +153,33 @@ export default function Blogs({ blogs, categories, filters }) {
       const params = new URLSearchParams(window.location.search);
 
       params.delete("filter");
-
       newFilters.forEach((f) => params.append("filter", f));
+
+      params.set("page", "1");
 
       const newUrl = `${window.location.pathname}?${params.toString()}`;
       window.history.replaceState({}, "", newUrl);
 
+      setCurrentPage(1);
       return newFilters;
     });
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage < 1) return;
+
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", newPage.toString());
+
+    params.set("tab", tab.toString());
+    if (selectedCategory) params.set("category", selectedCategory);
+    params.delete("filter");
+    activeFilters.forEach((f) => params.append("filter", f));
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, "", newUrl);
+
+    setCurrentPage(newPage);
   };
 
   useEffect(() => {
@@ -181,6 +209,13 @@ export default function Blogs({ blogs, categories, filters }) {
   useEffect(() => {
     const urlFilters = searchParams.getAll("filter");
     setActiveFilters(urlFilters);
+  }, [searchParams]);
+
+  useEffect(() => {
+    const pageFromQuery = Number(searchParams.get("page")) || 1;
+    if (pageFromQuery !== currentPage) {
+      setCurrentPage(pageFromQuery);
+    }
   }, [searchParams]);
 
   return (
@@ -269,16 +304,18 @@ export default function Blogs({ blogs, categories, filters }) {
       {tab === 1 ? (
         <>
           <div className="hidden md:block pt-[1rem]">
-            {Object.entries(blogs).map((key, value) => (
-              <ArticlesRow
-                blogsItems={key[1].slice(0, 4)}
-                handleTabChange={handleTabChange}
-                setSelectedCategory={setSelectedCategory}
-                category={key[0]}
-                name={key[0]}
-                key={key}
-              />
-            ))}
+            {Object.entries(blogs).map(([categoryName, items]) =>
+              items.length > 0 ? (
+                <ArticlesRow
+                  blogsItems={items.slice(0, 4)}
+                  handleTabChange={handleTabChange}
+                  setSelectedCategory={setSelectedCategory}
+                  category={categoryName}
+                  name={categoryName}
+                  key={categoryName}
+                />
+              ) : null
+            )}
           </div>
           <div className="relative md:hidden">
             {showArrows && (
@@ -418,7 +455,7 @@ export default function Blogs({ blogs, categories, filters }) {
                   totalPages={Math.ceil(
                     blogs[selectedCategory]?.length / itemsPerPage
                   )}
-                  onPageChange={setCurrentPage}
+                  onPageChange={handlePageChange}
                 />
               </div>
             </div>
@@ -456,15 +493,4 @@ function ArticlesRow({ blogsItems, handleTabChange, category, name }) {
       </div>
     </div>
   );
-}
-
-{
-  /* {activeFilters.length > 0 && (
-                <p className="font-medium text-[1.1rem] border-b border-[var(--color-gray-900)] pb-[.5rem] mb-[.9rem]">
-                  {
-                    filterList.find((item) => item.value === activeFilters[0])
-                      ?.label
-                  }
-                </p>
-              )} */
 }

@@ -8,7 +8,7 @@ export default function CircleItem({ url }) {
         src={`${process.env.NEXT_PUBLIC_API_URL}${url}`}
         alt="standard image item"
         fill
-        className="object-cover"
+        className="object-contain"
       />
     </div>
   );

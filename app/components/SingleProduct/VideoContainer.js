@@ -1,31 +1,42 @@
-import React from "react";
+"use client";
+import React, { useRef, useMemo } from "react";
 
 export default function VideoContainer({ video }) {
+  const iframeRef = useRef(null);
+
+  // استخراج hash ویدیو از استرینگ embed آپارات
+  const videoHash = useMemo(() => {
+    if (!video) return null;
+    const match = video.match(/aparat\.com\/embed\/([^?]+)/);
+    return match ? match[1] : null;
+  }, [video]);
+
+  const handleFullScreen = () => {
+    const iframe = iframeRef.current;
+    if (iframe) {
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.mozRequestFullScreen) {
+        iframe.mozRequestFullScreen();
+      } else if (iframe.webkitRequestFullscreen) {
+        iframe.webkitRequestFullscreen();
+      } else if (iframe.msRequestFullscreen) {
+        iframe.msRequestFullscreen();
+      }
+    }
+  };
+
+  if (!videoHash) return null;
+
   return (
-    <div
-      className="w-full  h-[50dvh]  lg:h-[70dvh] "
-      style={{
-        backgroundBlendMode: "multiply",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-      }}
-    >
-      <video
-        controls
-        playsInline
-        muted
-        width="100%"
-        preload="metadata"
-        className="h-full object-cover"
-      >
-        <source
-          src={`${process.env.NEXT_PUBLIC_API_URL}${video}`}
-          type="video/mp4"
-        />
-        {/* <source src="/video/1.webm" type="video/mp4" />
-        <source src="/video/1.webm" type="video/webm" />
-        <source src="/video/1.ogv" type="video/ogg" /> */}
-        {/* مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند. */}
-      </video>
+    <div className="overflow-hidden">
+      <iframe
+        ref={iframeRef}
+        src={`https://www.aparat.com/video/video/embed/videohash/${videoHash}/vt/frame`}
+        allowFullScreen
+        className="w-full h-[220px] lg:h-[500px] cursor-pointer"
+        onClick={handleFullScreen}
+      ></iframe>
     </div>
   );
 }

@@ -125,8 +125,8 @@ export default async function page({ params }) {
         </div>
       )}
 
-      {dataSingleProduct?.video && (
-        <VideoContainer video={dataSingleProduct?.video} />
+      {dataSingleProduct?.aparat_video && (
+        <VideoContainer video={dataSingleProduct?.aparat_video} />
       )}
 
       <div className=" flex  items-start pb-40 pt-35  px-20 md:px-40 lg:px-80 gap-[10px]">

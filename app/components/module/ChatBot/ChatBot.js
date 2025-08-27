@@ -4,8 +4,8 @@ import "./ChatBot.css";
 import Message from "./Message/Message";
 import axios from "axios";
 import { useViewportWidth } from "@/hook/useViewportWidth";
+import { useChat, useToggle } from "@/app/context/context";
 export default function ChatBot({}) {
-  const [isShowChatbot, setIsShowChatbot] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [sessioId, setSessionId] = useState("");
@@ -21,6 +21,7 @@ export default function ChatBot({}) {
   const [showChat, setIsShowChat] = useState(false);
   const viewportWidth = useViewportWidth();
   const [hideIcon, setHideIcon] = useState(false);
+  const { isShowChatbot, setIsShowChatbot } = useToggle();
 
   const sendMessage = async () => {
     if (message.trim() === "") return;
@@ -172,7 +173,7 @@ export default function ChatBot({}) {
       <div className={`chatbot-container ${isShowChatbot && "activeChat"}`}>
         <div className="chatbot-header">
           <div className="chatbot-logo-wrapper">
-            <img src="images/logo2.png" alt="logo" />
+            <img src="/images/logo2.png" alt="logo" />
           </div>
           {showChat ? (
             <svg
@@ -228,7 +229,7 @@ export default function ChatBot({}) {
                 {isEmpty && (
                   <div className="logo-content">
                     <div className="img-wrapper">
-                      <img src="images/logo2.png" alt="logo" />
+                      <img src="/images/logo2.png" alt="logo" />
                     </div>
                   </div>
                 )}
@@ -312,7 +313,7 @@ export default function ChatBot({}) {
             setIsShowChatbot((prev) => !prev);
           }}
         >
-          <img src="images/iconchat.png" alt="icon" />
+          <img src="/images/iconchat.png" alt="icon" />
         </div>
       )}
     </>

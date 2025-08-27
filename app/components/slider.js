@@ -495,31 +495,35 @@ export function ProjectsSlider({ data, bgcolor }) {
           >
             <Link href={localizedHref(`projects/${item.id}`)}>
               <p className="text-[.9rem] md:text-[18px] font-[400] mb-[5px] text-start md:hidden">
-                {item.title}
+                {item?.title}
               </p>
               {index % 2 === 0 && (
                 <div className="hidden md:flex">
                   <p className="text-[18px] font-[400] mb-[5px] me-auto">
-                    {item.title}
+                    {item?.title}
                   </p>
                 </div>
               )}
               <div className="relative w-full aspect-square md:aspect-auto md:h-[370px] overflow-hidden">
-                <Image
-                  src={`${
-                    item.image.startsWith("/images")
-                      ? item.image
-                      : `${process.env.NEXT_PUBLIC_API_URL}${item.image}`
-                  }`}
-                  alt="Background Image"
-                  className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
-                  fill
-                />
+                {item?.image && (
+                  <Image
+                    src={
+                      item?.image.startsWith("/images")
+                        ? item?.image
+                        : `${process.env.NEXT_PUBLIC_API_URL}${item?.image}`
+                    }
+                    alt={item?.title || "Image"}
+                    className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
+                    fill
+                  />
+                )}
               </div>
               {index % 2 !== 0 && (
                 <div className="hidden md:flex">
                   <p className="text-[18px] font-[400] mt-[5px] me-auto">
-                    {locale === "fa" ? toPersianDigits(item.title) : item.title}
+                    {locale === "fa"
+                      ? toPersianDigits(item?.title)
+                      : item?.title}
                   </p>
                 </div>
               )}
@@ -567,10 +571,10 @@ export function GallerySlider({ data, onClick, ispopup = false }) {
           dir={locale}
           key={locale}
         >
-          {data.map((item) => {
+          {data?.map((item) => {
             const image = (
               <Image
-                src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
                 alt="Background Image"
                 className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] md:h-[290px]"
                 width={500}
@@ -585,7 +589,7 @@ export function GallerySlider({ data, onClick, ispopup = false }) {
                 className="relative group overflow-hidden"
               >
                 <div className="cursor-pointer relative">
-                  {item.link ? (
+                  {item?.link ? (
                     <Link href={item.link} locale={locale}>
                       {image}
                     </Link>

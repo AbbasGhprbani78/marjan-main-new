@@ -14,6 +14,7 @@ import {
 import FilterHeader from "./module/FilterHeader";
 import { useTranslation } from "@/hook/useTranslation";
 import axios from "axios";
+import { useToggle } from "../context/context";
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -56,6 +57,7 @@ export function NavBar() {
     cleanPathname === "/representatives" ||
     cleanPathname === "/contactus" ||
     cleanPathname === "/calculator" ||
+    cleanPathname === "/employment" ||
     cleanPathname === "/saved";
 
   const shouldApplyScrolledStyles =
@@ -257,7 +259,7 @@ export function NavBar() {
 
 function Menu({ show, setShowInnerMenu }) {
   const { locale } = useParams();
-
+  const { setIsShowChatbot } = useToggle();
   const { t } = useTranslation();
   const [openItems, setOpenItems] = useState({
     assistant: false,
@@ -330,13 +332,14 @@ function Menu({ show, setShowInnerMenu }) {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm text-black"
                 >
-                  <li className="py-[10px] ">
-                    <Link
-                      href={localizedPath("/chatbot")}
-                      className="custom-link"
-                    >
-                      {t("Chatbot")}
-                    </Link>
+                  <li
+                    className="py-[10px]"
+                    onClick={() => {
+                      setIsShowChatbot(true);
+                      setShowInnerMenu(false);
+                    }}
+                  >
+                    <span className="custom-link">{t("Chatbot")}</span>
                   </li>
                   <li className="py-[10px] ">
                     <Link
@@ -460,7 +463,7 @@ function Menu({ show, setShowInnerMenu }) {
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm text-black"
                 >
                   <li className="py-[10px] ">
-                    <Link href="#" className="custom-link">
+                    <Link href="/employment" className="custom-link">
                       {t("Employment")}
                     </Link>
                   </li>
@@ -632,6 +635,7 @@ function MenuMobile() {
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { setIsShowChatbot } = useToggle();
 
   const localizedPath = (path) => `/${locale}${path}`;
 
@@ -840,7 +844,12 @@ function MenuMobile() {
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
                 >
                   {[
-                    { label: t("Chatbot"), href: "#" },
+                    {
+                      label: t("Chatbot"),
+                      action: () => {
+                        setIsShowChatbot(true);
+                      },
+                    },
                     {
                       label: t("Smart Layout Software"),
                       href: "https://marjan.ariisco.com",
@@ -849,15 +858,27 @@ function MenuMobile() {
                       label: t("Tile Area Estimator"),
                       href: "/calculator",
                     },
-                  ].map(({ label, href }, i) => (
+                  ].map(({ label, href, action }, i) => (
                     <li className="py-[10px]" key={i}>
-                      <MenuLink
-                        href={href}
-                        onClick={() => setIsOpen(false)}
-                        className="ms-[15px] custom-link"
-                      >
-                        {label}
-                      </MenuLink>
+                      {href ? (
+                        <MenuLink
+                          href={href}
+                          onClick={() => setIsOpen(false)}
+                          className="ms-[15px] custom-link"
+                        >
+                          {label}
+                        </MenuLink>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            action?.();
+                            setIsOpen(false);
+                          }}
+                          className="ms-[15px] custom-link"
+                        >
+                          {label}
+                        </button>
+                      )}
                     </li>
                   ))}
                 </motion.ul>
