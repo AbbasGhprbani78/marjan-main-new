@@ -5,12 +5,16 @@ import React, { useRef, useMemo } from "react";
 export default function BlogVideo({ singleBlog }) {
   const iframeRef = useRef(null);
 
-  // گرفتن hash ویدیو از URL کامل Aparat
   const videoHash = useMemo(() => {
     if (!singleBlog?.aparat_video) return null;
     const match = singleBlog.aparat_video.match(/aparat\.com\/embed\/([^?]+)/);
     return match ? match[1] : null;
   }, [singleBlog?.aparat_video]);
+
+  const isVideo = useMemo(() => {
+    if (!singleBlog?.media) return false;
+    return /\.(mp4|webm|ogg|mkv)$/i.test(singleBlog.media);
+  }, [singleBlog?.media]);
 
   const handleFullScreen = () => {
     const iframe = iframeRef.current;
@@ -35,12 +39,20 @@ export default function BlogVideo({ singleBlog }) {
         </div>
       ) : singleBlog?.media ? (
         <div className="w-full aspect-[3/2] relative overflow-hidden">
-          <Image
-            src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog.media}`}
-            fill
-            alt="blog media"
-            className="object-cover"
-          />
+          {isVideo ? (
+            <video
+              src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog.media}`}
+              controls
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <Image
+              src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog.media}`}
+              fill
+              alt="blog media"
+              className="object-cover "
+            />
+          )}
         </div>
       ) : null}
     </div>

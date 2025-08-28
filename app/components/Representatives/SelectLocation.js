@@ -63,28 +63,26 @@ export default function SelectLocation({ locations, onProvinceSelect }) {
   // }, [locations, onProvinceSelect]);
 
   useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        const res = await fetch("http://ip-api.com/json");
-        const data = await res.json();
-        console.log("موقعیت کاربر از IP:", data);
-        const nearest = findNearestCity(locations, data.lat, data.lon);
-        if (nearest) {
-          setCountryId(nearest.countryId);
-          setProvinceId(nearest.provinceId);
-          if (onProvinceSelect) {
-            const prov = locations
-              .find((c) => c.id === nearest.countryId)
-              ?.provinces.find((p) => p.id === nearest.provinceId);
-            onProvinceSelect(prov || null);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          console.log("مختصات کاربر:", latitude, longitude);
+          const nearest = findNearestCity(locations, latitude, longitude);
+          if (nearest) {
+            setCountryId(nearest.countryId);
+            setProvinceId(nearest.provinceId);
+            if (onProvinceSelect) {
+              const prov = locations
+                .find((c) => c.id === nearest.countryId)
+                ?.provinces.find((p) => p.id === nearest.provinceId);
+              onProvinceSelect(prov || null);
+            }
           }
-        }
-      } catch (err) {
-        console.error("مشکل در دریافت موقعیت کاربر:", err);
-      }
-    };
-
-    fetchLocation();
+        },
+        (err) => console.error("کاربر اجازه دسترسی به GPS را نداد", err)
+      );
+    }
   }, [locations, onProvinceSelect]);
 
   return (
