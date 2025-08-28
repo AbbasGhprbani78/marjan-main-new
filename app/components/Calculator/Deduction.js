@@ -22,6 +22,30 @@ export default function Deduction({
   walls,
 }) {
   const [isDeduction, setIsDeduction] = useState(false);
+
+  useEffect(() => {
+    if (!isDeduction) {
+      // Reset all deduction-related states when deduction is disabled
+      setTabRows(
+        deductionItems.map((item) =>
+          item.key === "window" ? [{ width: "" }] : [{ width: "", height: "" }]
+        )
+      );
+      setFloorRects([{ width: "", height: "" }]);
+      setDeductions({
+        wall1: {
+          door: [],
+          cabinet: [],
+          window: [],
+          closet: [],
+          other: [],
+        },
+      });
+      if (onDeductAreaChange) {
+        onDeductAreaChange(false);
+      }
+    }
+  }, [isDeduction, onDeductAreaChange]);
   const [selectedTab, setSelectedTab] = useState("door");
   const [floorRects, setFloorRects] = useState([{ width: "", height: "" }]);
   const [showDoorInputs, setShowDoorInputs] = useState(false);
@@ -117,36 +141,6 @@ export default function Deduction({
     onDeductAreaChange,
     isClean,
   ]);
-
-  useEffect(() => {
-    if (isClean) {
-      setTabRows(
-        deductionItems.map((item) =>
-          item.key === "window" ? [{ width: "" }] : [{ width: "", height: "" }]
-        )
-      );
-      setIsDeduction(false);
-      setSelectedTab("door");
-      setActiveWall("wall1");
-      setActiveTab("door");
-      setShowDoorInputs(false);
-      setFloorRects([{ width: "", height: "" }]);
-      setDeductions({
-        wall1: {
-          door: [],
-          cabinet: [],
-          window: [],
-          closet: [],
-          other: [],
-        },
-      });
-
-      // Reset deduct area when cleaning
-      if (onDeductAreaChange) {
-        onDeductAreaChange("0");
-      }
-    }
-  }, [isClean, onDeductAreaChange]);
 
   const handleAddItem = () => {
     setDeductions((prev) => {

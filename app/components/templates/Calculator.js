@@ -39,6 +39,10 @@ export default function CalculatorT({ dataSizes }) {
   const [perResults, setPerResults] = useState([]);
 
   const onDeductChange = (deductValue) => {
+    if (deductValue === false) {
+      setDeductArea(0);
+      return;
+    }
     const value = parseFloat(deductValue) || 0;
     setDeductArea(value);
   };
@@ -79,7 +83,7 @@ export default function CalculatorT({ dataSizes }) {
 
     const getTileAreaInMeter = (sizeStr) => {
       if (!sizeStr) return 0;
-      const fixedStr = sizeStr.replace("x", "*");
+      const fixedStr = sizeStr.replace(/[x×]/gi, "*");
       const [w, h] = fixedStr.split("*").map((v) => parseFloat(v.trim()));
       if (!w || !h) return 0;
       return (w / 100) * (h / 100);
@@ -123,6 +127,7 @@ export default function CalculatorT({ dataSizes }) {
       const effArea = (s.area || 0) * factor;
       const effAreaWithWaste = includeWastage ? effArea * 1.05 : effArea;
       const tArea = getTileAreaInMeter(s.tile);
+
       if (!tArea || tArea <= 0) {
         warningMessage("لطفاً اندازه کاشی هر سطح را کامل انتخاب کنید.");
         return;
@@ -172,6 +177,7 @@ export default function CalculatorT({ dataSizes }) {
     setIncludeWastage(checked);
   }, []);
 
+  console.log(deductArea);
   return (
     <main className="px-20 md:px-40 lg:px-80  mt-[145px] lg:mt-[8rem]">
       <section className="mt-[2rem]">
@@ -227,7 +233,7 @@ export default function CalculatorT({ dataSizes }) {
         </div>
         <div className="flex flex-col items-start w-full lg:w-1/2 gap-[1rem]">
           <AnimatePresence>
-            {deductArea > 0 && (
+            {deductArea > 0 && typeof deductArea === "number" && (
               <motion.div
                 key="deduct"
                 initial={{ opacity: 0, y: 10 }}
