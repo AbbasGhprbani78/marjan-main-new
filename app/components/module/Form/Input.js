@@ -5,7 +5,7 @@ export default function Input({
   type = "text",
   value = "",
   onChange,
-  maxLength = 200,
+  maxLength = 256,
   onlyPersian = false,
   onlyNumber = false,
 }) {

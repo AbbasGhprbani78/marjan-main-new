@@ -62,28 +62,28 @@ export default function SelectLocation({ locations, onProvinceSelect }) {
   //   }
   // }, [locations, onProvinceSelect]);
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          console.log("مختصات کاربر:", latitude, longitude);
-          const nearest = findNearestCity(locations, latitude, longitude);
-          if (nearest) {
-            setCountryId(nearest.countryId);
-            setProvinceId(nearest.provinceId);
-            if (onProvinceSelect) {
-              const prov = locations
-                .find((c) => c.id === nearest.countryId)
-                ?.provinces.find((p) => p.id === nearest.provinceId);
-              onProvinceSelect(prov || null);
-            }
-          }
-        },
-        (err) => console.error("کاربر اجازه دسترسی به GPS را نداد", err)
-      );
-    }
-  }, [locations, onProvinceSelect]);
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const { latitude, longitude } = position.coords;
+  //         console.log("مختصات کاربر:", latitude, longitude);
+  //         const nearest = findNearestCity(locations, latitude, longitude);
+  //         if (nearest) {
+  //           setCountryId(nearest.countryId);
+  //           setProvinceId(nearest.provinceId);
+  //           if (onProvinceSelect) {
+  //             const prov = locations
+  //               .find((c) => c.id === nearest.countryId)
+  //               ?.provinces.find((p) => p.id === nearest.provinceId);
+  //             onProvinceSelect(prov || null);
+  //           }
+  //         }
+  //       },
+  //       (err) => console.error("کاربر اجازه دسترسی به GPS را نداد", err)
+  //     );
+  //   }
+  // }, [locations, onProvinceSelect]);
 
   return (
     <div>

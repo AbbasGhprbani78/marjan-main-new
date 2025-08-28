@@ -60,7 +60,7 @@ export default function Employment() {
             مراحل ثبت اطلاعات را تا دریافت کد پیگیری ادامه دهید.
           </h2>
         </div>
-        <div className="mt-[1rem]">
+        <div className="mt-[1rem] ">
           {tab === 1 && <Form1 />}
           {tab === 2 && <Form2 />}
           {tab === 3 && <Form3 />}
