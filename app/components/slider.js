@@ -202,65 +202,73 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
       </div>
 
       <div className="relative w-full">
-        {showArrows && (
+        {currentSectionItems.length === 0 ? (
+          <div className="flex justify-center items-center h-[200px] text-gray-500">
+            {locale === "fa" ? "موردی وجود ندارد" : "No items available"}
+          </div>
+        ) : (
           <>
-            <LeftArrow
-              swiper={swiper}
-              bgcolor={bgcolor}
-              className="left-[-18px] lg:left-[-18px]"
-              offsetY="45%"
-            />
-            <RightArrow
-              swiper={swiper}
-              bgcolor={bgcolor}
-              className="right-[-18px] lg:right-[-18px]"
-              offsetY="45%"
-            />
+            {showArrows && (
+              <>
+                <LeftArrow
+                  swiper={swiper}
+                  bgcolor={bgcolor}
+                  className="left-[-18px] lg:left-[-18px]"
+                  offsetY="45%"
+                />
+                <RightArrow
+                  swiper={swiper}
+                  bgcolor={bgcolor}
+                  className="right-[-18px] lg:right-[-18px]"
+                  offsetY="45%"
+                />
+              </>
+            )}
+
+            <Swiper
+              spaceBetween={viewportWidth < 1024 ? 10 : 28}
+              modules={[Autoplay]}
+              slidesPerView={slidesNumber}
+              ref={swiper}
+              loop={true}
+              speed={800}
+              dir={locale}
+              key={locale}
+              className="mt-[30px]"
+            >
+              {currentSectionItems.map((item) => (
+                <SwiperSlide key={item.key}>
+                  <Link href={localizedHref(`/blogs/${item.id}`)}>
+                    <div className="relative w-full aspect-square md:aspect-auto md:h-[290px] overflow-hidden">
+                      <Image
+                        src={`${
+                          item.image.startsWith("/images")
+                            ? item.image
+                            : `${process.env.NEXT_PUBLIC_API_URL}${item.image}`
+                        }`}
+                        alt="Background Image"
+                        className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
+                        fill
+                        priority
+                      />
+                    </div>
+
+                    <div className="flex flex-col mt-[10px]">
+                      <p
+                        className={`text-[.9rem] font-[500] ${
+                          locale === "fa" ? "font-fa" : "font-en"
+                        }`}
+                        dir={locale === "fa" ? "rtl" : "ltr"}
+                      >
+                        {truncateText(item.title, 25)}
+                      </p>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </>
         )}
-
-        <Swiper
-          spaceBetween={viewportWidth < 1024 ? 10 : 28}
-          modules={[Autoplay]}
-          slidesPerView={slidesNumber}
-          ref={swiper}
-          loop={true}
-          speed={800}
-          dir={locale}
-          key={locale}
-          className="mt-[30px]"
-        >
-          {currentSectionItems.map((item) => (
-            <SwiperSlide key={item.key}>
-              <Link href={localizedHref(`/blogs/${item.id}`)}>
-                <div className="relative w-full aspect-square md:aspect-auto md:h-[290px] overflow-hidden">
-                  <Image
-                    src={`${
-                      item.image.startsWith("/images")
-                        ? item.image
-                        : `${process.env.NEXT_PUBLIC_API_URL}${item.image}`
-                    }`}
-                    alt="Background Image"
-                    className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
-                    fill
-                    priority
-                  />
-                </div>
-
-                <div className="flex flex-col mt-[10px]">
-                  <p
-                    className={`text-[.9rem] font-[500] ${
-                      locale === "fa" ? "font-fa" : "font-en"
-                    }`}
-                    dir={locale === "fa" ? "rtl" : "ltr"}
-                  >
-                    {truncateText(item.title, 25)}
-                  </p>
-                </div>
-              </Link>
-            </SwiperSlide>
-          ))}
-        </Swiper>
       </div>
     </div>
   );

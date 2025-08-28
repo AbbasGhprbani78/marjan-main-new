@@ -318,17 +318,31 @@ function ItemFilterBox({ text, type, item, setClose }) {
           />
         ) : (
           <div className="relative w-[40px] h-[30px]">
-            {[0, 1, 2].map((i) => (
-              <span
-                key={i}
-                className="absolute h-[21px] w-[21px] rounded-full"
-                style={{
-                  backgroundColor: item.code,
-                  left: `${i === 0 ? 7 : i === 1 ? 0 : 10}px`,
-                  bottom: `${i === 0 ? 6 : i === 1 ? 0 : -4}px`,
-                }}
-              />
-            ))}
+            {item.code === "Mix" ||
+            item.title === "Mix" ||
+            item.title === "میکس"
+              ? ["#DC354580", "#28A74580", "#E6D8AD80"].map((color, i) => (
+                  <span
+                    key={i}
+                    className="absolute h-[21px] w-[21px] rounded-full"
+                    style={{
+                      backgroundColor: color,
+                      left: `${i === 0 ? 7 : i === 1 ? 0 : 10}px`,
+                      bottom: `${i === 0 ? 6 : i === 1 ? 0 : -4}px`,
+                    }}
+                  />
+                ))
+              : [0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    className="absolute h-[21px] w-[21px] rounded-full"
+                    style={{
+                      backgroundColor: item.code,
+                      left: `${i === 0 ? 7 : i === 1 ? 0 : 10}px`,
+                      bottom: `${i === 0 ? 6 : i === 1 ? 0 : -4}px`,
+                    }}
+                  />
+                ))}
           </div>
         )}
       </div>

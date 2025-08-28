@@ -38,8 +38,6 @@ export default function Tab({ itemsFilter, selected, setSelected }) {
     }
   };
 
-  console.log(itemsFilter);
-
   return (
     <div className="w-full">
       <div className="md:hidden flex items-center justify-between w-full px-4 mb-2">

@@ -1,7 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import SelectDropDown from "../module/SelectDropDown";
+import { useState, useEffect } from "react";
+import SelectDropDown from "../../components/module/SelectDropDown";
 import { useTranslation } from "@/hook/useTranslation";
+
 export default function SelectLocation({ locations, onProvinceSelect }) {
   const [countryId, setCountryId] = useState("");
   const [provinceId, setProvinceId] = useState("");
@@ -9,8 +10,28 @@ export default function SelectLocation({ locations, onProvinceSelect }) {
 
   const selectedCountry = locations.find((c) => c.id === countryId);
   const provinces = selectedCountry?.provinces || [];
-
   const selectedProvince = provinces.find((p) => p.id === provinceId);
+
+  useEffect(() => {
+    fetch("/api/ip")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("IP Info:", data);
+        if (data.x && data.y) {
+          const nearest = findNearestCity(locations, data.x, data.y);
+          if (nearest) {
+            setCountryId(nearest.countryId);
+            setProvinceId(nearest.provinceId);
+            if (onProvinceSelect) {
+              const prov = locations
+                .find((c) => c.id === nearest.countryId)
+                ?.provinces.find((p) => p.id === nearest.provinceId);
+              onProvinceSelect(prov || null);
+            }
+          }
+        }
+      });
+  }, [locations, onProvinceSelect]);
 
   useEffect(() => {
     if (onProvinceSelect) {
@@ -44,4 +65,33 @@ export default function SelectLocation({ locations, onProvinceSelect }) {
       </div>
     </div>
   );
+}
+
+function distance(lat1, lon1, lat2, lon2) {
+  const dLat = lat2 - lat1;
+  const dLon = lon2 - lon1;
+  return Math.sqrt(dLat * dLat + dLon * dLon);
+}
+
+function findNearestCity(countries, userX, userY) {
+  let nearestCity = null;
+  let minDist = Infinity;
+
+  countries.forEach((country) => {
+    country.provinces.forEach((province) => {
+      province.cities.forEach((city) => {
+        const dist = distance(userX, userY, city.x, city.y);
+        if (dist < minDist) {
+          minDist = dist;
+          nearestCity = {
+            countryId: country.id,
+            provinceId: province.id,
+            cityId: city.id,
+          };
+        }
+      });
+    });
+  });
+
+  return nearestCity;
 }

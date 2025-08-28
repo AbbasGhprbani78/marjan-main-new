@@ -20,7 +20,6 @@ const customIcon = L.icon({
 });
 
 export default function Map({ reps = [] }) {
-  console.log(reps);
   const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {

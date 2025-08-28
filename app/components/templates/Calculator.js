@@ -177,7 +177,6 @@ export default function CalculatorT({ dataSizes }) {
     setIncludeWastage(checked);
   }, []);
 
-  console.log(deductArea);
   return (
     <main className="px-20 md:px-40 lg:px-80  mt-[145px] lg:mt-[8rem]">
       <section className="mt-[2rem]">
