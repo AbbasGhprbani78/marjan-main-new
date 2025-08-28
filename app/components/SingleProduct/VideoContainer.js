@@ -4,7 +4,6 @@ import React, { useRef, useMemo } from "react";
 export default function VideoContainer({ video }) {
   const iframeRef = useRef(null);
 
-  // استخراج hash ویدیو از استرینگ embed آپارات
   const videoHash = useMemo(() => {
     if (!video) return null;
     const match = video.match(/aparat\.com\/embed\/([^?]+)/);

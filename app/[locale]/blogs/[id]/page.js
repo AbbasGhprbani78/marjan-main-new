@@ -93,7 +93,9 @@ export default async function page({ params }) {
             </div>
           )}
 
-          <BlogVideo singleBlog={singleBlog} />
+          {(singleBlog.aparat_video || singleBlog.media) && (
+            <BlogVideo singleBlog={singleBlog} />
+          )}
         </section>
       </article>
     </main>
