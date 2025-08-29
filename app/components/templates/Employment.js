@@ -52,14 +52,7 @@ export default function Employment() {
             جزییات درخواست
           </p>
         </div>
-        <div>
-          <h2 className="mt-[1rem] text-[1.1rem] font-bold bg-indigo-400 p-5">
-            لطفا اعداد را به انگلیسی تایپ کنید.
-          </h2>
-          <h2 className="mt-[1rem] text-[1.1rem] font-bold bg-amber-200 p-5">
-            مراحل ثبت اطلاعات را تا دریافت کد پیگیری ادامه دهید.
-          </h2>
-        </div>
+
         <div className="mt-[1rem] ">
           {tab === 1 && <Form1 />}
           {tab === 2 && <Form2 />}
