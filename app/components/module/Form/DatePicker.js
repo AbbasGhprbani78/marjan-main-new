@@ -6,7 +6,7 @@ const isLeapYear = (year) => {
   return ((mod + 38) * 682) % 2816 < 682;
 };
 
-const DatePicker = ({ startYear, endYear, onChange }) => {
+const DatePicker = ({ startYear, endYear, onChange, error = "" }) => {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
@@ -53,34 +53,35 @@ const DatePicker = ({ startYear, endYear, onChange }) => {
   };
 
   return (
-    <div className="grid grid-cols-12 gap-[1rem]">
-      <div className="col-span-4">
-        <DropDown
-          label="روز"
-          options={days}
-          value={day}
-          onChange={(e) => handleChange("day", e.target.value)}
-        />
+    <>
+      <div className="grid grid-cols-12 gap-[1rem]">
+        <div className="col-span-4">
+          <DropDown
+            label="روز"
+            options={days}
+            value={day}
+            onChange={(e) => handleChange("day", e.target.value)}
+          />
+        </div>
+        <div className="col-span-4">
+          <DropDown
+            label="ماه"
+            options={months}
+            value={month}
+            onChange={(e) => handleChange("month", e.target.value)}
+          />
+        </div>
+        <div className="col-span-4">
+          <DropDown
+            label="سال"
+            options={years}
+            value={year}
+            onChange={(e) => handleChange("year", e.target.value)}
+          />
+        </div>
       </div>
-
-      <div className="col-span-4">
-        <DropDown
-          label="ماه"
-          options={months}
-          value={month}
-          onChange={(e) => handleChange("month", e.target.value)}
-        />
-      </div>
-
-      <div className="col-span-4">
-        <DropDown
-          label="سال"
-          options={years}
-          value={year}
-          onChange={(e) => handleChange("year", e.target.value)}
-        />
-      </div>
-    </div>
+      {error && <span className="text-red-500 text-sm">{error}</span>}
+    </>
   );
 };
 

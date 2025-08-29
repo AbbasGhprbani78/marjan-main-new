@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Upload({ label, onChange }) {
+export default function Upload({ label = "", onChange, error = "" }) {
   return (
     <div className="flex flex-col gap-[.3rem] w-full">
       {label && <label className="text-sm font-bold">{label}</label>}
@@ -35,6 +35,7 @@ export default function Upload({ label, onChange }) {
           }
         }}
       />
+      {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>
   );
 }

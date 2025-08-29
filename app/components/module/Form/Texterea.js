@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Texterea({ value, onChange, maxLength, label }) {
+export default function Texterea({ value, onChange, maxLength, label, error }) {
   const [isFocused, setIsFocused] = useState(false);
   return (
     <div className="flex flex-col gap-[.3rem]">
@@ -15,6 +15,7 @@ export default function Texterea({ value, onChange, maxLength, label }) {
           isFocused ? "border-blue-500" : "border-gray-500"
         }`}
       />
+      {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>
   );
 }

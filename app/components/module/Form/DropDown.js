@@ -5,6 +5,7 @@ export default function DropDown({
   options = [],
   onChange,
   value = "",
+  error = "",
 }) {
   return (
     <div className="flex flex-col gap-[.3rem]">
@@ -21,6 +22,7 @@ export default function DropDown({
           <option>4</option>
         </select>
       </div>
+      {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>
   );
 }

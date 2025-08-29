@@ -4,7 +4,7 @@ import Input from "../module/Form/Input";
 import AddRemoveForm from "../module/Form/AddRemoveForm";
 import Texterea from "../module/Form/Texterea";
 
-export default function Form2() {
+export default function Form2({ data, setData, onSuccess, onPrev }) {
   return (
     <form className="w-full">
       <p className="text-[.8rem] font-bold">
@@ -13,13 +13,13 @@ export default function Form2() {
         }
       </p>
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <DropDown value="" onChange={""} options={[]} label="مقطع" />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <DropDown value="" onChange={""} options={[]} label="رشته" />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <Input
             value={""}
             onChange={""}
@@ -31,10 +31,10 @@ export default function Form2() {
         </div>
       </div>
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <DropDown value="" onChange={""} options={[]} label="معدل" />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <Input
             value={""}
             onChange={""}
@@ -44,7 +44,7 @@ export default function Form2() {
             onlyPersian={true}
           />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <Input
             value={""}
             onChange={""}
@@ -56,45 +56,20 @@ export default function Form2() {
         </div>
       </div>
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
-        <div className="col-span-4">
-          <DropDown value="" onChange={""} options={[]} label="معدل" />
-        </div>
-        <div className="col-span-4">
-          <Input
-            value={""}
-            onChange={""}
-            type={"text"}
-            maxLength={256}
-            label={"موسسه آموزشی"}
-            onlyPersian={true}
-          />
-        </div>
-        <div className="col-span-4">
-          <Input
-            value={""}
-            onChange={""}
-            type={"text"}
-            maxLength={256}
-            label={"استان / شهر"}
-            onlyPersian={true}
-          />
-        </div>
-      </div>
-      <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
-        <div className="col-span-3">
+        <div className="col-span-6 md:col-span-3">
           <DropDown value="" onChange={""} options={[]} label="سال شروع" />
         </div>
-        <div className="col-span-3">
+        <div className="col-span-6 md:col-span-3">
           <DropDown value="" onChange={""} options={[]} label="ماه شروع" />
         </div>
-        <div className="col-span-3">
+        <div className="col-span-6 md:col-span-3">
           <DropDown value="" onChange={""} options={[]} label="سال پایان" />
         </div>
-        <div className="col-span-3">
+        <div className="col-span-6 md:col-span-3">
           <DropDown value="" onChange={""} options={[]} label="ماه پایان" />
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
+      <div className=" w-full mt-[1rem]">
         <AddRemoveForm addForm={""} removeForm={""} />
       </div>
       <p className="text-[.8rem] font-bold mt-[1rem]">
@@ -102,7 +77,7 @@ export default function Form2() {
         تحصیلتان را بنویسید.
       </p>
       <div className="grid grid-cols-12 gap-[1rem] w-full ">
-        <div className="col-span-3">
+        <div className="col-span-12 md:col-span-6 lg:col-span-3">
           <Input
             value={""}
             onChange={""}
@@ -126,22 +101,22 @@ export default function Form2() {
         </div>
       </div>
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
-        <div className="col-span-2">
+        <div className="col-span-6 md:col-span-4 lg:col-span-2">
           <DropDown value="" onChange={""} options={[]} label="زبان" />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-6 md:col-span-4 lg:col-span-2">
           <DropDown value="" onChange={""} options={[]} label="سطح مکالمه" />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-6 md:col-span-4 lg:col-span-2">
           <DropDown value="" onChange={""} options={[]} label="سطح ترجمه" />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-6 md:col-span-4 lg:col-span-2">
           <DropDown value="" onChange={""} options={[]} label="سطح نوشتن" />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-6 md:col-span-4 lg:col-span-2">
           <DropDown value="" onChange={""} options={[]} label="سطح درک مطلب" />
         </div>
-        <div className="col-span-2">
+        <div className="col-span-6 md:col-span-4 lg:col-span-2">
           <Input
             value={""}
             onChange={""}
@@ -151,7 +126,7 @@ export default function Form2() {
           />
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
+      <div className=" w-full mt-[1rem]">
         <AddRemoveForm addForm={""} removeForm={""} />
       </div>
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">

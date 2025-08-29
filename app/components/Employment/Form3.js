@@ -2,11 +2,11 @@ import React from "react";
 import Input from "../module/Form/Input";
 import AddRemoveForm from "../module/Form/AddRemoveForm";
 
-export default function Form3() {
+export default function Form3({ data, setData, onSuccess, onPrev }) {
   return (
     <form>
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <Input
             value={""}
             onChange={""}
@@ -16,7 +16,7 @@ export default function Form3() {
             onlyPersian={true}
           />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <Input
             value={""}
             onChange={""}
@@ -26,7 +26,7 @@ export default function Form3() {
             onlyPersian={true}
           />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <Input
             value={""}
             onChange={""}
@@ -49,7 +49,7 @@ export default function Form3() {
           />
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
+      <div className="w-full mt-[1rem]">
         <AddRemoveForm addForm={""} removeForm={""} />
       </div>
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">

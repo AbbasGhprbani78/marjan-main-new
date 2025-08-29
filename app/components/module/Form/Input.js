@@ -8,6 +8,7 @@ export default function Input({
   maxLength = 256,
   onlyPersian = false,
   onlyNumber = false,
+  error = "",
 }) {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -40,6 +41,7 @@ export default function Input({
           isFocused ? "border-blue-500" : "border-gray-500"
         }`}
       />
+      {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>
   );
 }

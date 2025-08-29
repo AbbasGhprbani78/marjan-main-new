@@ -3,14 +3,14 @@ import DropDown from "../module/Form/DropDown";
 import Input from "../module/Form/Input";
 import DatePicker from "../module/Form/DatePicker";
 import Upload from "../module/Form/Upload";
-export default function Form4() {
+export default function Form4({ data, setData, onSuccess, onPrev }) {
   return (
     <form className="w-full">
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
-        <div className="col-span-6">
+        <div className="col-span-12 md:col-span-6">
           <DropDown value="" onChange={""} options={[]} label="شغل درخواستی" />
         </div>
-        <div className="col-span-6">
+        <div className="col-span-12 md:col-span-6">
           <Input
             value={""}
             onChange={""}
@@ -33,13 +33,13 @@ export default function Form4() {
         به چه مشاغلی علاقه مند هستید ؟
       </p>
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <DropDown value="" onChange={""} options={[]} label="اولویت 1" />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <DropDown value="" onChange={""} options={[]} label="اولویت 2" />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <DropDown value="" onChange={""} options={[]} label="اولویت 3" />
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function Form4() {
         کامل بنویسد.
       </p>
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <Input
             value={""}
             onChange={""}
@@ -68,7 +68,7 @@ export default function Form4() {
             onlyPersian={"true"}
           />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <Input
             value={""}
             onChange={""}
@@ -78,7 +78,7 @@ export default function Form4() {
             onlyPersian={"true"}
           />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12 md:col-span-4">
           <Input
             value={""}
             onChange={""}
@@ -90,7 +90,7 @@ export default function Form4() {
         </div>
       </div>
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
-        <div className="col-span-9">
+        <div className="col-span-12 md:col-span-9">
           <Input
             value={""}
             onChange={""}
@@ -99,7 +99,7 @@ export default function Form4() {
             label={"آدرس"}
           />
         </div>
-        <div className="col-span-3">
+        <div className="col-span-12 md:col-span-3">
           <Input
             value={""}
             onChange={""}
