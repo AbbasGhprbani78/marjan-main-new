@@ -5,6 +5,7 @@ import {
   validateIranianPhone,
 } from "./validators";
 
+const toDate = (str) => (str ? new Date(str.replace(/\//g, "-")) : null);
 export const validateForm1 = (data, setErrors) => {
   const newErrors = {};
 
@@ -55,20 +56,29 @@ export const validateForm1 = (data, setErrors) => {
   if (data.service_deficit_amount && !data.type_of_service_deficit) {
     newErrors.type_of_service_deficit = " توع کسری خدمت الزامی است";
   }
-  if (
-    data.gender === "male" &&
-    ["End of service", "Other cases"].includes(data.duty_status) &&
-    !data.service_start_date
-  ) {
-    newErrors.service_start_date = "تاریخ شروع خدمت الزامی است";
-  }
 
-  if (
+  const needsServiceDates =
     data.gender === "male" &&
-    ["End of service", "Other cases"].includes(data.duty_status) &&
-    !data.service_end_date
-  ) {
-    newErrors.service_end_date = "تاریخ پایان خدمت الزامی است";
+    ["End of service", "Other cases"].includes(data.duty_status);
+
+  if (needsServiceDates) {
+    if (!data.service_start_date) {
+      newErrors.service_start_date = "تاریخ شروع خدمت الزامی است";
+    }
+
+    if (!data.service_end_date) {
+      newErrors.service_end_date = "تاریخ پایان خدمت الزامی است";
+    }
+
+    if (data.service_start_date && data.service_end_date) {
+      const start = toDate(data.service_start_date);
+      const end = toDate(data.service_end_date);
+
+      if (end < start) {
+        newErrors.service_end_date =
+          "تاریخ پایان خدمت نمی‌تواند قبل از تاریخ شروع باشد";
+      }
+    }
   }
 
   if (

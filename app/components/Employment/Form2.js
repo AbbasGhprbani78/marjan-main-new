@@ -50,12 +50,14 @@ export default function Form2({
     const newArr = [...data.educational_background];
     newArr[index][field] = value;
     setData({ ...data, educational_background: newArr });
+    setErrors((prev) => ({ ...prev, [`${field}_${index}`]: "" }));
   };
 
   const handleLangChange = (index, field, value) => {
     const newArr = [...data.other_languages];
     newArr[index][field] = value;
     setData({ ...data, other_languages: newArr });
+    setErrors((prev) => ({ ...prev, [`${field}_${index}`]: "" }));
   };
 
   const addLang = () => {
@@ -123,7 +125,6 @@ export default function Form2({
 
     setLoading(true);
 
-    // console.log(JSON.stringify(data));
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/app/educational-background/`,
@@ -140,6 +141,7 @@ export default function Form2({
     }
   };
 
+  console.log(data);
   return (
     <form
       className="w-full"

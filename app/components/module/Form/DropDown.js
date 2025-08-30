@@ -6,6 +6,7 @@ export default function DropDown({
   options = [],
   onChange,
   error = "",
+  hideError = "",
 }) {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -22,9 +23,15 @@ export default function DropDown({
         onChange={handleChange}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        className={`h-[34px] px-5 text-[.8rem] border w-full ${
-          isFocused ? "border-blue-500" : "border-gray-500"
-        }`}
+        className={`h-[34px] px-5 text-[.8rem] border w-full rounded
+    ${
+      error
+        ? "border-red-500"
+        : isFocused
+        ? "border-blue-500"
+        : "border-gray-500"
+    }
+  `}
       >
         <option value="" disabled>
           انتخاب کنید...
@@ -35,7 +42,9 @@ export default function DropDown({
           </option>
         ))}
       </select>
-      {error && <span className="text-red-500 text-sm">{error}</span>}
+      {!hideError && error && (
+        <span className="text-red-500 text-sm">{error}</span>
+      )}
     </div>
   );
 }

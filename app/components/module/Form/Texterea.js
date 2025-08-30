@@ -23,9 +23,15 @@ export default function Texterea({
         maxLength={maxLength}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        className={`p-5 w-full h-[100px] text-[.8rem] resize-none outline-none border ${
-          isFocused ? "border-blue-500" : "border-gray-500"
-        }`}
+        className={`p-5 w-full h-[100px] text-[.8rem] resize-none outline-none border rounded 
+    ${
+      error
+        ? "border-red-500"
+        : isFocused
+        ? "border-blue-500"
+        : "border-gray-500"
+    }
+  `}
       />
       {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>

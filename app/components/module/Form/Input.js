@@ -37,9 +37,15 @@ export default function Input({
         autoComplete="off"
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        className={`h-[34px] px-5 text-[.8rem] border w-full ${
-          isFocused ? "border-blue-500" : "border-gray-500"
-        }`}
+        className={`h-[34px] px-5 text-[.8rem] border w-full rounded 
+    ${
+      error
+        ? "border-red-500"
+        : isFocused
+        ? "border-blue-500"
+        : "border-gray-500"
+    }
+  `}
       />
       {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>

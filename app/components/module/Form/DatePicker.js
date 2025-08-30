@@ -45,8 +45,18 @@ const DatePicker = ({
     return 31;
   }, [month, year]);
 
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  const daysInMonthFor = (m, y) => {
+    const month = parseInt(m);
+    const year = parseInt(y);
 
+    if (!month) return 31;
+    if (month >= 1 && month <= 6) return 31;
+    if (month >= 7 && month <= 11) return 30;
+    if (month === 12) return year && isLeapYear(year) ? 30 : 29;
+    return 31;
+  };
+
+  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
   const handleChange = (type, val) => {
     let newDay = day;
     let newMonth = month;
@@ -55,11 +65,15 @@ const DatePicker = ({
     if (type === "day") newDay = val;
     if (type === "month") {
       newMonth = val;
-      newDay = "";
+      if (newDay && parseInt(newDay) > daysInMonthFor(val, newYear)) {
+        newDay = "";
+      }
     }
     if (type === "year") {
       newYear = val;
-      newDay = "";
+      if (newDay && parseInt(newDay) > daysInMonthFor(newMonth, val)) {
+        newDay = "";
+      }
     }
 
     setDay(newDay);
@@ -86,6 +100,8 @@ const DatePicker = ({
             options={days.map((d) => ({ id: d, value: d }))}
             value={day}
             onChange={(val) => handleChange("day", val)}
+            error={error}
+            hideError="true"
           />
         </div>
         <div className="col-span-4">
@@ -94,6 +110,8 @@ const DatePicker = ({
             options={months.map((m) => ({ id: m, value: m }))}
             value={month}
             onChange={(val) => handleChange("month", val)}
+            error={error}
+            hideError="true"
           />
         </div>
         <div className="col-span-4">
@@ -102,6 +120,8 @@ const DatePicker = ({
             options={years.map((y) => ({ id: y, value: y }))}
             value={year}
             onChange={(val) => handleChange("year", val)}
+            error={error}
+            hideError="true"
           />
         </div>
       </div>

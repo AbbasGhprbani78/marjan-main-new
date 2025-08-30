@@ -5,7 +5,7 @@ import DatePicker from "../module/Form/DatePicker";
 import Upload from "../module/Form/Upload";
 import axios from "axios";
 import { validateForm4 } from "@/validation/form4Validate";
-import { FolderMinus } from "iconsax-reactjs";
+
 export default function Form4({
   data,
   setData,
@@ -62,7 +62,10 @@ export default function Form4({
         <div className="col-span-12 md:col-span-6">
           <DropDown
             value={data.job_application}
-            onChange={(val) => setData({ ...data, job_application: val })}
+            onChange={(val) => {
+              setData({ ...data, job_application: val });
+              setErrors((prev) => ({ ...prev, job_application: "" }));
+            }}
             options={dataJobs.map((item) => ({ id: item.id, value: item.job }))}
             label="شغل درخواستی"
             error={errors.job_application}
@@ -71,7 +74,10 @@ export default function Form4({
         <div className="col-span-12 md:col-span-6">
           <Input
             value={data.requested_rights}
-            onChange={(val) => setData({ ...data, requested_rights: val })}
+            onChange={(val) => {
+              setData({ ...data, requested_rights: val });
+              setErrors((prev) => ({ ...prev, requested_rights: "" }));
+            }}
             type="text"
             maxLength={256}
             label="حقوق درخواستی (تومان)"
@@ -88,7 +94,10 @@ export default function Form4({
         <div className="col-span-12">
           <DatePicker
             value={data.been_working_since}
-            onChange={(val) => setData({ ...data, been_working_since: val })}
+            onChange={(val) => {
+              setData({ ...data, been_working_since: val });
+              setErrors((prev) => ({ ...prev, been_working_since: "" }));
+            }}
             startYear={1404}
             endYear={1490}
             error={errors.been_working_since}
@@ -103,7 +112,10 @@ export default function Form4({
         <div className="col-span-12 md:col-span-4">
           <DropDown
             value={data.fav_job_one}
-            onChange={(val) => setData({ ...data, fav_job_one: val })}
+            onChange={(val) => {
+              setData({ ...data, fav_job_one: val });
+              setErrors((prev) => ({ ...prev, fav_job_one: "" }));
+            }}
             options={dataJobs.map((item) => ({ id: item.id, value: item.job }))}
             label="اولویت 1"
             error={errors.fav_job_one}
@@ -112,7 +124,10 @@ export default function Form4({
         <div className="col-span-12 md:col-span-4">
           <DropDown
             value={data.fav_job_two}
-            onChange={(val) => setData({ ...data, fav_job_two: val })}
+            onChange={(val) => {
+              setData({ ...data, fav_job_two: val });
+              setErrors((prev) => ({ ...prev, fav_job_two: "" }));
+            }}
             options={dataJobs.map((item) => ({ id: item.id, value: item.job }))}
             label="اولویت 2"
             error={errors.fav_job_two}
@@ -121,7 +136,10 @@ export default function Form4({
         <div className="col-span-12 md:col-span-4">
           <DropDown
             value={data.fav_job_three}
-            onChange={(val) => setData({ ...data, fav_job_three: val })}
+            onChange={(val) => {
+              setData({ ...data, fav_job_three: val });
+              setErrors((prev) => ({ ...prev, fav_job_three: "" }));
+            }}
             options={dataJobs.map((item) => ({ id: item.id, value: item.job }))}
             label="اولویت 3"
             error={errors.fav_job_three}
@@ -155,36 +173,46 @@ export default function Form4({
         <div className="col-span-12 md:col-span-4">
           <Input
             value={data.reagent_full_name}
-            onChange={(val) => setData({ ...data, reagent_full_name: val })}
+            onChange={(val) => {
+              setData({ ...data, reagent_full_name: val });
+              setErrors((prev) => ({ ...prev, reagent_full_name: "" }));
+            }}
             type="text"
             maxLength={256}
             label="نام و نام خانوادگی"
             onlyPersian={true}
-            error=""
+            error={errors.reagent_full_name}
           />
         </div>
         <div className="col-span-12 md:col-span-4">
           <Input
             value={data.reagent_job}
-            onChange={(val) => setData({ ...data, reagent_job: val })}
+            onChange={(val) => {
+              setData({ ...data, reagent_job: val });
+              setErrors((prev) => ({ ...prev, reagent_job: "" }));
+            }}
             type="text"
             maxLength={256}
             label="شغل"
             onlyPersian={true}
-            error=""
+            error={errors.reagent_job}
           />
         </div>
         <div className="col-span-12 md:col-span-4">
           <Input
             value={data.reagent_type_of_acquaintance}
-            onChange={(val) =>
-              setData({ ...data, reagent_type_of_acquaintance: val })
-            }
+            onChange={(val) => {
+              setData({ ...data, reagent_type_of_acquaintance: val });
+              setErrors((prev) => ({
+                ...prev,
+                reagent_type_of_acquaintance: "",
+              }));
+            }}
             type="text"
             maxLength={256}
             label="نوع آشنایی"
             onlyPersian={true}
-            error=""
+            error={errors.reagent_type_of_acquaintance}
           />
         </div>
       </div>
@@ -193,17 +221,23 @@ export default function Form4({
         <div className="col-span-12 md:col-span-9">
           <Input
             value={data.reagent_address}
-            onChange={(val) => setData({ ...data, reagent_address: val })}
+            onChange={(val) => {
+              setData({ ...data, reagent_address: val });
+              setErrors((prev) => ({ ...prev, reagent_address: "" }));
+            }}
             type="text"
             maxLength={256}
             label="آدرس"
-            error=""
+            error={errors.reagent_address}
           />
         </div>
         <div className="col-span-12 md:col-span-3">
           <Input
             value={data.reagent_phone}
-            onChange={(val) => setData({ ...data, reagent_phone: val })}
+            onChange={(val) => {
+              setData({ ...data, reagent_phone: val });
+              setErrors((prev) => ({ ...prev, reagent_phone: "" }));
+            }}
             type="text"
             maxLength={256}
             label="تلفن"
@@ -217,10 +251,14 @@ export default function Form4({
         <div className="col-span-12">
           <Input
             value={data.specific_disease}
-            onChange={(val) => setData({ ...data, specific_disease: val })}
+            onChange={(val) => {
+              setData({ ...data, specific_disease: val });
+              setErrors((prev) => ({ ...prev, specific_disease: "" }));
+            }}
             type="text"
             maxLength={256}
             label="در صورت داشتن بیماری خاص یا سابقه جراحی نام آن یا نوع عمل جراحی را ثبت فرمایید."
+            error={errors.specific_disease}
           />
         </div>
       </div>
@@ -229,7 +267,10 @@ export default function Form4({
         <div className="col-span-12">
           <DropDown
             value={data.way_of_acquaintance}
-            onChange={(val) => setData({ ...data, way_of_acquaintance: val })}
+            onChange={(val) => {
+              setData({ ...data, way_of_acquaintance: val });
+              setErrors((prev) => ({ ...prev, way_of_acquaintance: "" }));
+            }}
             options={dataWaysofacquaintance.map((item) => ({
               id: item.id,
               value: item.way,
@@ -245,7 +286,10 @@ export default function Form4({
           <Upload
             label="تصویر پرسنلی (با فرمت jpg)"
             value={data.personal_image}
-            onChange={(val) => setData({ ...data, personal_image: val })}
+            onChange={(val) => {
+              setData({ ...data, personal_image: val });
+              setErrors((prev) => ({ ...prev, personal_image: "" }));
+            }}
             error={errors.personal_image}
           />
         </div>
@@ -255,7 +299,10 @@ export default function Form4({
         <input
           type="checkbox"
           checked={data.confirmation || false}
-          onChange={(e) => setData({ ...data, confirmation: e.target.checked })}
+          onChange={(e) => {
+            setData({ ...data, confirmation: e.target.checked });
+            setErrors((prev) => ({ ...prev, confirmation: "" }));
+          }}
           className="mt-4"
         />
         <p className="text-[.8rem] font-bold">

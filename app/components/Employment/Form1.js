@@ -7,7 +7,14 @@ import Texterea from "../module/Form/Texterea";
 import axios from "axios";
 import { validateForm1 } from "@/validation/form1Validate";
 
-export default function Form1({ data, setData, onSuccess, onPrev, states }) {
+export default function Form1({
+  data,
+  setData,
+  onSuccess,
+  onPrev,
+  states,
+  setIdForm,
+}) {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +29,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
       );
       if (response.status === 201) {
         console.log(response.data);
+        setIdForm(response.data.id);
         onSuccess();
       }
     } catch (error) {
@@ -29,6 +37,11 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleFieldChange = (field, value) => {
+    setData({ ...data, [field]: value });
+    setErrors({ ...errors, [field]: "" });
   };
 
   return (
@@ -52,10 +65,10 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12 md:col-span-4">
           <DropDown
             value={data.gender}
-            onChange={(val) => setData({ ...data, gender: val })}
+            onChange={(val) => handleFieldChange("gender", val)}
             options={[
-              { id: "Male", value: "مرد" },
-              { id: "Female", value: "زن" },
+              { id: "male", value: "مرد" },
+              { id: "female", value: "زن" },
             ]}
             label="جنسیت"
             error={errors.gender}
@@ -64,7 +77,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12 md:col-span-4">
           <Input
             value={data.first_name}
-            onChange={(val) => setData({ ...data, first_name: val })}
+            onChange={(val) => handleFieldChange("first_name", val)}
             type="text"
             maxLength={256}
             label="نام"
@@ -75,7 +88,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12 md:col-span-4">
           <Input
             value={data.last_name}
-            onChange={(val) => setData({ ...data, last_name: val })}
+            onChange={(val) => handleFieldChange("last_name", val)}
             type="text"
             maxLength={256}
             label="نام خانوادگی"
@@ -89,7 +102,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12 md:col-span-4">
           <Input
             value={data.father_name}
-            onChange={(val) => setData({ ...data, father_name: val })}
+            onChange={(val) => handleFieldChange("father_name", val)}
             type="text"
             maxLength={256}
             label="نام پدر"
@@ -100,7 +113,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12 md:col-span-4">
           <Input
             value={data.certificate_number}
-            onChange={(val) => setData({ ...data, certificate_number: val })}
+            onChange={(val) => handleFieldChange("certificate_number", val)}
             type="text"
             maxLength={256}
             label="شماره شناسنامه"
@@ -111,7 +124,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12 md:col-span-4">
           <Input
             value={data.national_code}
-            onChange={(val) => setData({ ...data, national_code: val })}
+            onChange={(val) => handleFieldChange("national_code", val)}
             type="text"
             maxLength={256}
             label="کد ملی"
@@ -125,7 +138,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12">
           <Texterea
             value={data.short_biography}
-            onChange={(val) => setData({ ...data, short_biography: val })}
+            onChange={(val) => handleFieldChange("short_biography", val)}
             maxLength={1000}
             label="بیوگرافی کوتاه"
             error={errors.short_biography}
@@ -140,7 +153,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
             startYear={1330}
             endYear={1390}
             value={data.birth_date}
-            onChange={(val) => setData({ ...data, birth_date: val })}
+            onChange={(val) => handleFieldChange("birth_date", val)}
             error={errors.birth_date}
           />
         </div>
@@ -150,7 +163,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-6 md:col-span-3">
           <Input
             value={data.birth_location}
-            onChange={(val) => setData({ ...data, birth_location: val })}
+            onChange={(val) => handleFieldChange("birth_location", val)}
             type="text"
             maxLength={256}
             label="محل تولد"
@@ -161,7 +174,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-6 md:col-span-3">
           <Input
             value={data.religion}
-            onChange={(val) => setData({ ...data, religion: val })}
+            onChange={(val) => handleFieldChange("religion", val)}
             type="text"
             maxLength={256}
             label="دین و مذهب"
@@ -172,10 +185,10 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-6 md:col-span-3">
           <DropDown
             value={data.marital_status}
-            onChange={(val) => setData({ ...data, marital_status: val })}
+            onChange={(val) => handleFieldChange("marital_status", val)}
             options={[
-              { id: "Single", value: "مجرد" },
-              { id: "Married", value: "متاهل" },
+              { id: "single", value: "مجرد" },
+              { id: "married", value: "متاهل" },
             ]}
             label="وضعیت تاهل"
             error={errors.marital_status}
@@ -185,7 +198,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
           <div className="col-span-6 md:col-span-3">
             <Input
               value={data.spouse_job}
-              onChange={(val) => setData({ ...data, spouse_job: val })}
+              onChange={(val) => handleFieldChange("spouse_job", val)}
               type="text"
               maxLength={256}
               label="شغل همسر"
@@ -200,7 +213,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-6 md:col-span-3">
           <Input
             value={data.fother_job}
-            onChange={(val) => setData({ ...data, fother_job: val })}
+            onChange={(val) => handleFieldChange("fother_job", val)}
             type="text"
             maxLength={256}
             label="شغل پدر"
@@ -211,7 +224,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-6 md:col-span-3">
           <Input
             value={data.mother_job}
-            onChange={(val) => setData({ ...data, mother_job: val })}
+            onChange={(val) => handleFieldChange("mother_job", val)}
             type="text"
             maxLength={256}
             label="شغل مادر"
@@ -222,7 +235,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-6 md:col-span-3">
           <Input
             value={data.dependents}
-            onChange={(val) => setData({ ...data, dependents: val })}
+            onChange={(val) => handleFieldChange("dependents", val)}
             type="text"
             maxLength={256}
             label="افراد تحت تکفل"
@@ -233,7 +246,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-6 md:col-span-3">
           <Input
             value={data.height}
-            onChange={(val) => setData({ ...data, height: val })}
+            onChange={(val) => handleFieldChange("height", val)}
             type="text"
             maxLength={256}
             label="قد (سانتی متر)"
@@ -247,7 +260,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12 md:col-span-6 lg:col-span-3">
           <Input
             value={data.weight}
-            onChange={(val) => setData({ ...data, weight: val })}
+            onChange={(val) => handleFieldChange("weight", val)}
             type="text"
             maxLength={256}
             label="وزن (کیلوگرم)"
@@ -259,7 +272,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
           <div className="col-span-12 md:col-span-6 lg:col-span-3">
             <DropDown
               value={data.duty_status}
-              onChange={(val) => setData({ ...data, duty_status: val })}
+              onChange={(val) => handleFieldChange("duty_status", val)}
               options={[
                 { id: "End of service", value: "پایان خدمت" },
                 { id: "Included", value: "مشمول" },
@@ -277,10 +290,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
           <Input
             value={data.history_of_service_in__the_basij}
             onChange={(val) =>
-              setData({
-                ...data,
-                history_of_service_in__the_basij: val,
-              })
+              handleFieldChange("history_of_service_in__the_basij", val)
             }
             type="text"
             maxLength={256}
@@ -296,10 +306,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
             <Input
               value={data.service_deficit_amount}
               onChange={(val) =>
-                setData({
-                  ...data,
-                  service_deficit_amount: val,
-                })
+                handleFieldChange("service_deficit_amount", val)
               }
               type="text"
               maxLength={256}
@@ -311,10 +318,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
             <Input
               value={data.type_of_service_deficit}
               onChange={(val) =>
-                setData({
-                  ...data,
-                  type_of_service_deficit: val,
-                })
+                handleFieldChange("type_of_service_deficit", val)
               }
               type="text"
               maxLength={256}
@@ -334,10 +338,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
             <Input
               value={data.explanation_of_the_duty_system}
               onChange={(val) =>
-                setData({
-                  ...data,
-                  explanation_of_the_duty_system: val,
-                })
+                handleFieldChange("explanation_of_the_duty_system", val)
               }
               type="text"
               maxLength={256}
@@ -357,7 +358,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
               startYear={1330}
               endYear={1490}
               value={data.service_start_date}
-              onChange={(val) => setData({ ...data, service_start_date: val })}
+              onChange={(val) => handleFieldChange("service_start_date", val)}
               error={errors.service_start_date}
             />
           </div>
@@ -367,7 +368,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
               startYear={1330}
               endYear={1490}
               value={data.service_end_date}
-              onChange={(val) => setData({ ...data, service_end_date: val })}
+              onChange={(val) => handleFieldChange("service_end_date", val)}
               error={errors.service_end_date}
             />
           </div>
@@ -378,7 +379,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12 md:col-span-4">
           <DropDown
             value={data.state}
-            onChange={(val) => setData({ ...data, state: val })}
+            onChange={(val) => handleFieldChange("state", val)}
             options={states.map((state) => ({
               id: state?.id,
               value: state?.name,
@@ -390,7 +391,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12 md:col-span-4">
           <Input
             value={data.landline}
-            onChange={(val) => setData({ ...data, landline: val })}
+            onChange={(val) => handleFieldChange("landline", val)}
             type="text"
             maxLength={256}
             label="تلفن ثابت (به همراه کد شهر)"
@@ -400,7 +401,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12 md:col-span-4">
           <Input
             value={data.mobile}
-            onChange={(val) => setData({ ...data, mobile: val })}
+            onChange={(val) => handleFieldChange("mobile", val)}
             type="text"
             maxLength={256}
             label="تلفن همراه"
@@ -414,7 +415,7 @@ export default function Form1({ data, setData, onSuccess, onPrev, states }) {
         <div className="col-span-12">
           <Input
             value={data.address}
-            onChange={(val) => setData({ ...data, address: val })}
+            onChange={(val) => handleFieldChange("address", val)}
             type="text"
             maxLength={256}
             label="آدرس"

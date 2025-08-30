@@ -15,7 +15,7 @@ export default function Employment({
 }) {
   const [tab, setTab] = useState(4);
   const { t, locale } = useTranslation();
-
+  const [idForm, setIdForm] = useState("");
   const [formData, setFormData] = useState({
     form1: {
       gender: "",
@@ -48,7 +48,7 @@ export default function Employment({
       address: "",
     },
     form2: {
-      personal_detail: "1",
+      personal_detail: idForm,
       educational_background: [
         {
           section: "",
@@ -79,7 +79,7 @@ export default function Employment({
     },
     form3: [
       {
-        personal_detail: 1,
+        personal_detail: idForm,
         job_title: "",
         company: "",
         duration_of_cooperation: "",
@@ -87,7 +87,7 @@ export default function Employment({
       },
     ],
     form4: {
-      personal_detail: 1,
+      personal_detail: idForm,
       job_application: "",
       requested_rights: "",
       been_working_since: "",
@@ -117,34 +117,28 @@ export default function Employment({
     >
       <div className="flex items-center border-b overflow-x-auto whitespace-nowrap hide-scrollbar">
         <p
-          className={`cursor-pointer p-8 text-[.85rem] ${
-            tab === 1 && "border-l-1 font-bold"
-          }`}
-          onClick={() => setTab(1)}
+          className={`p-8 text-[.85rem] ${tab === 1 && "border-l-1 font-bold"}`}
         >
           مشخصات فنی
         </p>
         <p
-          className={`cursor-pointer p-8 text-[.85rem] ${
+          className={`p-8 text-[.85rem] ${
             tab === 2 && "border-l border-r border-gray-500 font-bold"
           }`}
-          onClick={() => setTab(2)}
         >
           سوابق آموزشی
         </p>
         <p
-          className={`cursor-pointer p-8 text-[.85rem] ${
+          className={`p-8 text-[.85rem] ${
             tab === 3 && "border-l border-r border-gray-500 font-bold"
           }`}
-          onClick={() => setTab(3)}
         >
           سوابق شغلی
         </p>
         <p
-          className={`cursor-pointer p-8 text-[.85rem] ${
+          className={`p-8 text-[.85rem] ${
             tab === 4 && "border-l border-r border-gray-500 font-bold"
           }`}
-          onClick={() => setTab(4)}
         >
           جزییات درخواست
         </p>
@@ -158,6 +152,7 @@ export default function Employment({
             onSuccess={handleNext}
             onPrev={handlePrev}
             states={states}
+            setIdForm={setIdForm}
           />
         )}
         {tab === 2 && (
