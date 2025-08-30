@@ -26,11 +26,6 @@ export default function Upload({ label = "", onChange, error = "" }) {
         onChange={(e) => {
           const file = e.target.files[0];
           if (file) {
-            if (file.size < 5 * 1024 * 1024) {
-              alert("حجم فایل باید حداقل 5 مگابایت باشد!");
-              e.target.value = "";
-              return;
-            }
             onChange(file);
           }
         }}

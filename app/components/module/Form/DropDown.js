@@ -1,27 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function DropDown({
   label = "",
+  value = "",
   options = [],
   onChange,
-  value = "",
   error = "",
 }) {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    onChange?.(newValue);
+  };
+
   return (
     <div className="flex flex-col gap-[.3rem]">
       <label className="text-[.7rem] font-bold">{label}</label>
-      <div className="border w-full py-3 px-5 focus-within:border-blue-500">
-        <select
-          value={value}
-          onChange={onChange}
-          className="border-none outline-0 w-full"
-        >
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-        </select>
-      </div>
+      <select
+        value={value}
+        onChange={handleChange}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        className={`h-[34px] px-5 text-[.8rem] border w-full ${
+          isFocused ? "border-blue-500" : "border-gray-500"
+        }`}
+      >
+        <option value="" disabled>
+          انتخاب کنید...
+        </option>
+        {options.map((opt, index) => (
+          <option key={opt.id ?? index} value={opt.id}>
+            {opt.value}
+          </option>
+        ))}
+      </select>
       {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>
   );

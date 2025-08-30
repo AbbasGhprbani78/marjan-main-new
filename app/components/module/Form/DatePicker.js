@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import DropDown from "./DropDown";
 
 const isLeapYear = (year) => {
@@ -6,10 +6,25 @@ const isLeapYear = (year) => {
   return ((mod + 38) * 682) % 2816 < 682;
 };
 
-const DatePicker = ({ startYear, endYear, onChange, error = "" }) => {
+const DatePicker = ({
+  startYear,
+  endYear,
+  value = "",
+  onChange,
+  error = "",
+}) => {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
+
+  useEffect(() => {
+    if (value) {
+      const [y, m, d] = value.split("/");
+      setYear(y || "");
+      setMonth(m || "");
+      setDay(d || "");
+    }
+  }, [value]);
 
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
   const years = Array.from(
@@ -32,23 +47,33 @@ const DatePicker = ({ startYear, endYear, onChange, error = "" }) => {
 
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
-  const handleChange = (type, value) => {
-    if (type === "day") setDay(value);
+  const handleChange = (type, val) => {
+    let newDay = day;
+    let newMonth = month;
+    let newYear = year;
+
+    if (type === "day") newDay = val;
     if (type === "month") {
-      setMonth(value);
-      setDay("");
+      newMonth = val;
+      newDay = "";
     }
     if (type === "year") {
-      setYear(value);
-      setDay("");
+      newYear = val;
+      newDay = "";
     }
 
+    setDay(newDay);
+    setMonth(newMonth);
+    setYear(newYear);
+
     if (onChange) {
-      onChange({
-        day: type === "day" ? value : day,
-        month: type === "month" ? value : month,
-        year: type === "year" ? value : year,
-      });
+      const formatted =
+        newYear && newMonth && newDay
+          ? `${newYear}/${String(newMonth).padStart(2, "0")}/${String(
+              newDay
+            ).padStart(2, "0")}`
+          : "";
+      onChange(formatted);
     }
   };
 
@@ -58,25 +83,25 @@ const DatePicker = ({ startYear, endYear, onChange, error = "" }) => {
         <div className="col-span-4">
           <DropDown
             label="روز"
-            options={days}
+            options={days.map((d) => ({ id: d, value: d }))}
             value={day}
-            onChange={(e) => handleChange("day", e.target.value)}
+            onChange={(val) => handleChange("day", val)}
           />
         </div>
         <div className="col-span-4">
           <DropDown
             label="ماه"
-            options={months}
+            options={months.map((m) => ({ id: m, value: m }))}
             value={month}
-            onChange={(e) => handleChange("month", e.target.value)}
+            onChange={(val) => handleChange("month", val)}
           />
         </div>
         <div className="col-span-4">
           <DropDown
             label="سال"
-            options={years}
+            options={years.map((y) => ({ id: y, value: y }))}
             value={year}
-            onChange={(e) => handleChange("year", e.target.value)}
+            onChange={(val) => handleChange("year", val)}
           />
         </div>
       </div>
