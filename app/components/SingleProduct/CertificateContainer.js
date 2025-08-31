@@ -9,30 +9,31 @@ export default function CertificateContainer({ data }) {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const [mainItem, setMainItem] = useState(null);
-  const scrollRef = useRef(null);
-  const [canScroll, setCanScroll] = useState(false);
+  const containerRef = useRef(null);
+  const [showArrows, setShowArrows] = useState(false);
 
-  const scroll = (direction) => {
-    if (!scrollRef.current) return;
-    const container = scrollRef.current;
-    const scrollAmount = 300;
-    container.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
-      behavior: "smooth",
-    });
+  const checkScroll = () => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    setShowArrows(el.scrollWidth > el.clientWidth);
   };
 
   useEffect(() => {
-    const checkScrollable = () => {
-      const el = scrollRef.current;
-      if (!el) return;
-      setCanScroll(el.scrollWidth > el.clientWidth);
+    checkScroll();
+    const el = containerRef.current;
+    if (!el) return;
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      window.removeEventListener("resize", checkScroll);
     };
+  }, []);
 
-    checkScrollable();
-    window.addEventListener("resize", checkScrollable);
-    return () => window.removeEventListener("resize", checkScrollable);
-  }, [data]);
+  const scrollByX = (amount) => {
+    if (containerRef.current) {
+      containerRef.current.scrollBy({ left: amount, behavior: "smooth" });
+    }
+  };
 
   return (
     <>
@@ -40,51 +41,54 @@ export default function CertificateContainer({ data }) {
         <p className="text-gray-white font-[500] title pb-30">
           {t("CertificatesAndStandards")}
         </p>
-
-        {canScroll && (
-          <>
-            <button
-              onClick={() => scroll("right")}
-              className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-[60%] right-[10px] lg:right-[50px] translate-y-[-50%] z-10 rounded-full backdrop-blur-[4px] cursor-pointer"
-              style={{ backgroundColor: "rgba(31, 41, 55, 0.5)" }}
-            >
-              <Icons.ArrowRight className="m-auto text-white w-20 h-20 md:w-35 md:h-35" />
-            </button>
-            <button
-              onClick={() => scroll("left")}
-              className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-[60%] left-[10px] lg:left-[50px] translate-y-[-50%] z-10 rounded-full backdrop-blur-[4px] cursor-pointer"
-              style={{ backgroundColor: "rgba(31, 41, 55, 0.5)" }}
-            >
-              <Icons.ArrowLeft className="m-auto text-white w-20 h-20 md:w-35 md:h-35" />
-            </button>
-          </>
-        )}
-
-        <div className="overflow-x-auto hide-scrollbar" ref={scrollRef}>
-          <div className="flex justify-center gap-[2rem] lg:gap-82 flex-nowrap w-max px-4 py-2 mx-auto">
+        <div className="relative w-full bg-gray-800 py-10">
+          <div
+            ref={containerRef}
+            className="w-full flex justify-evenly items-center overflow-x-auto overflow-y-hidden whitespace-nowrap hide-scrollbar gap-x-6 px-6"
+          >
             {data.map((cert, i) => (
               <div
                 key={i}
-                className="cursor-pointer relative w-[120px] md:w-[180px] aspect-[2/3] flex-shrink-0"
+                className="flex flex-col items-center gap-y-[10px] flex-shrink-0"
                 onClick={() => {
                   setMainItem(cert);
                   setOpenModal(true);
                 }}
               >
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}${cert.image}`}
-                  alt="certificate image"
-                  fill
-                  className="object-cover select-none"
-                  onContextMenu={(e) => e.preventDefault()}
-                  draggable={false}
-                />
-                <p className="text-gray-white pt-4 text-center text-xs md:text-sm">
+                <div className="relative h-[270px] w-[180px] md:h-[300px] md:w-[200px] cursor-pointer">
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL}${cert.image}`}
+                    alt="certificate image"
+                    className="select-none object-cover"
+                    fill
+                    onContextMenu={(e) => e.preventDefault()}
+                    draggable={false}
+                  />
+                </div>
+                <p className="text-gray-200 pt-4 text-center text-xs md:text-sm">
                   {cert.title}
                 </p>
               </div>
             ))}
           </div>
+
+          {showArrows && (
+            <>
+              <button
+                onClick={() => scrollByX(-250)}
+                className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-1/2 left-2 -translate-y-1/2 z-10 rounded-full backdrop-blur bg-gray-700/50 flex items-center justify-center"
+              >
+                <Icons.ArrowLeft className="m-auto text-gray-white w-20 h-20 md:w-35 md:h-35" />
+              </button>
+
+              <button
+                onClick={() => scrollByX(250)}
+                className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] absolute top-1/2 right-2 -translate-y-1/2 z-10 rounded-full backdrop-blur bg-gray-700/50 flex items-center justify-center"
+              >
+                <Icons.ArrowRight className="m-auto text-gray-white w-20 h-20 md:w-35 md:h-35" />
+              </button>
+            </>
+          )}
         </div>
       </div>
 

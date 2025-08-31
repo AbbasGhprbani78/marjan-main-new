@@ -139,12 +139,16 @@ export default function AllProducts({ categories, products }) {
   }, [filters, searchTerm, products]);
 
   useEffect(() => {
-    if (isInitialLoad && queryFilterKey && queryValues.length > 0) {
-      setFilters({ [queryFilterKey]: queryValues });
+    if (queryFilterKey && queryValues.length > 0) {
+      const decodedValues = queryValues.map((v) => decodeURIComponent(v));
+      setFilters({ [queryFilterKey]: decodedValues });
       setCurrentPage(1);
-      setIsInitialLoad(false);
+      setEmptycheckBox(false);
+    } else {
+      setFilters({});
+      setEmptycheckBox(true);
     }
-  }, [queryFilterKey, queryValues.join(","), isInitialLoad]);
+  }, [queryFilterKey, queryValues.join(",")]);
 
   useEffect(() => {
     const pageFromQuery = Number(searchParams.get("page")) || 1;
@@ -152,6 +156,14 @@ export default function AllProducts({ categories, products }) {
       setCurrentPage(pageFromQuery);
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    if (!queryFilterKey && queryValues.length === 0) {
+      setEmptycheckBox(true);
+      setFilters({});
+      setCurrentPage(1);
+    }
+  }, [queryFilterKey, queryValues.join(",")]);
 
   const isLtr = false;
 
@@ -201,6 +213,7 @@ export default function AllProducts({ categories, products }) {
                 ismobile={true}
                 queryFilterKey={queryFilterKey}
                 queryValues={queryValues}
+                filters={filters}
               />
             </PopFilter>
           </aside>
@@ -228,6 +241,7 @@ export default function AllProducts({ categories, products }) {
               isEmptyCheckBox={isEmptyCheckBox}
               queryFilterKey={queryFilterKey}
               queryValues={queryValues}
+              filters={filters}
             />
           </div>
         </aside>

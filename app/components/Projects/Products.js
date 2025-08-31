@@ -37,9 +37,9 @@ export default function Products({ products }) {
                 <ProductItem item={item} />
               </div>
 
-              {item?.text && (
+              {item?.title && (
                 <p className="font-medium text-[1rem] mt-[0.5rem] inline-block">
-                  {item.text}
+                  {item.title}
                 </p>
               )}
             </SwiperSlide>
@@ -53,9 +53,9 @@ export default function Products({ products }) {
                 <ProductItem item={item} />
               </div>
 
-              {item?.text && (
+              {item?.title && (
                 <p className="font-medium text-[1rem] mt-[0.5rem] inline-block">
-                  {item.text}
+                  {item.title}
                 </p>
               )}
             </div>

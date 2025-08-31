@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import DropDown from "./DropDown";
+import jalaali from "jalaali-js";
 
 const isLeapYear = (year) => {
   const mod = ((year - (year > 0 ? 474 : 473)) % 2820) + 474;
@@ -26,9 +27,13 @@ const DatePicker = ({
     }
   }, [value]);
 
+  // محاسبه سال جاری شمسی
+  const currentJalaliYear = jalaali.toJalaali(new Date()).jy;
+  const lastYear = endYear || currentJalaliYear + 1;
+
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
   const years = Array.from(
-    { length: endYear - startYear + 1 },
+    { length: lastYear - startYear + 1 },
     (_, i) => startYear + i
   );
 
@@ -57,6 +62,7 @@ const DatePicker = ({
   };
 
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
   const handleChange = (type, val) => {
     let newDay = day;
     let newMonth = month;

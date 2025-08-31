@@ -412,7 +412,7 @@ export default function Blogs({ blogs, categories, filters }) {
                 ))}
               </div>
             </div>
-            <div className="col-span-12 md:col-span-8 lg:col-span-9">
+            <div className="col-span-12 md:col-span-8 lg:col-span-9 pt-[2rem]">
               {activeFilters.length > 0 && (
                 <p className="font-medium text-[1.1rem] border-b border-[var(--color-gray-900)] pb-[.5rem] mb-[.9rem]">
                   {
@@ -449,7 +449,7 @@ export default function Blogs({ blogs, categories, filters }) {
                 </div>
               )}
 
-              <div className="mt-[4rem]">
+              <div className="pt-[2rem] lg:pt-0">
                 <Pagination
                   currentPage={currentPage}
                   totalPages={Math.ceil(

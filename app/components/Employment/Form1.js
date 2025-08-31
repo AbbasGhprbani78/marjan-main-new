@@ -14,6 +14,9 @@ export default function Form1({
   onPrev,
   states,
   setIdForm,
+  savedSteps,
+  setSavedSteps,
+  idForm,
 }) {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -23,14 +26,33 @@ export default function Form1({
 
     setLoading(true);
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/app/work-with-us/`,
-        data
-      );
-      if (response.status === 201) {
-        console.log(response.data);
-        setIdForm(response.data.id);
-        onSuccess();
+      let response;
+
+      if (!savedSteps.form1.isSaved) {
+        response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/app/work-with-us/`,
+          data
+        );
+
+        if (response.status === 201) {
+          console.log(response.data);
+          setIdForm(response.data.id);
+          setSavedSteps((prev) => ({
+            ...prev,
+            form1: { isSaved: true, id: response.data.id },
+          }));
+
+          onSuccess();
+        }
+      } else {
+        response = await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/app/work-with-us/${idForm}`,
+          data
+        );
+
+        if (response.status === 200) {
+          onSuccess();
+        }
       }
     } catch (error) {
       console.log(error);
@@ -147,6 +169,7 @@ export default function Form1({
       </div>
 
       <span className="font-bold mt-[1rem] block">تاریخ تولد</span>
+
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[.5rem]">
         <div className="col-span-12 md:col-span-6 lg:col-span-4">
           <DatePicker
@@ -356,7 +379,7 @@ export default function Form1({
             <span className="font-bold block mb-[1rem]">تاریخ شروع خدمت</span>
             <DatePicker
               startYear={1330}
-              endYear={1490}
+              endYear={""}
               value={data.service_start_date}
               onChange={(val) => handleFieldChange("service_start_date", val)}
               error={errors.service_start_date}
@@ -366,7 +389,7 @@ export default function Form1({
             <span className="font-bold block mb-[1rem]">تاریخ پایان خدمت</span>
             <DatePicker
               startYear={1330}
-              endYear={1490}
+              endYear={""}
               value={data.service_end_date}
               onChange={(val) => handleFieldChange("service_end_date", val)}
               error={errors.service_end_date}
@@ -396,6 +419,7 @@ export default function Form1({
             maxLength={256}
             label="تلفن ثابت (به همراه کد شهر)"
             onlyNumber={"true"}
+            error={errors.landline}
           />
         </div>
         <div className="col-span-12 md:col-span-4">

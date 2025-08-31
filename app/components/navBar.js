@@ -250,7 +250,10 @@ export function NavBar() {
         </Link>
 
         <Menu show={showInnerMenu} setShowInnerMenu={setShowInnerMenu} />
-        <FilterHeader show={showFilterMenu} setClose={setShowFilterMenu} />
+        <FilterHeader
+          show={showFilterMenu}
+          setShowFilterMenu={setShowFilterMenu}
+        />
       </div>
       <MenuMobile />
     </header>
@@ -681,12 +684,13 @@ function MenuMobile() {
     router.push(newPathname + (search ? "?" + search : ""));
   }
 
-  const queryFilterKey = searchParams.get("filterKey");
-  const queryValues = searchParams.get("values");
+  // const queryFilterKey = searchParams.get("filterKey");
+  // const queryValues = searchParams.get("values");
+  const queryString = searchParams.toString();
 
   useEffect(() => {
     setIsOpen(false);
-  }, [queryFilterKey, queryValues, pathname]);
+  }, [queryString, pathname]);
 
   return (
     <div className="fixed w-full left-0 right-0 z-[9999999]  lg:hidden">
@@ -795,7 +799,7 @@ function MenuMobile() {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
                 >
-                  <FilterHeader />
+                  <FilterHeader show={isOpen} setShowFilterMenu={setIsOpen} />
                 </motion.ul>
               )}
             </AnimatePresence>
@@ -846,9 +850,7 @@ function MenuMobile() {
                   {[
                     {
                       label: t("Chatbot"),
-                      action: () => {
-                        setIsShowChatbot(true);
-                      },
+                      action: () => setIsShowChatbot(true),
                     },
                     {
                       label: t("Smart Layout Software"),
@@ -861,13 +863,27 @@ function MenuMobile() {
                   ].map(({ label, href, action }, i) => (
                     <li className="py-[10px]" key={i}>
                       {href ? (
-                        <MenuLink
-                          href={href}
-                          onClick={() => setIsOpen(false)}
-                          className="ms-[15px] custom-link"
-                        >
-                          {label}
-                        </MenuLink>
+                        href.startsWith("http") ? (
+                          // لینک خارجی
+                          <a
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setIsOpen(false)}
+                            className="ms-[15px] custom-link"
+                          >
+                            {label}
+                          </a>
+                        ) : (
+                          // لینک داخلی
+                          <MenuLink
+                            href={href}
+                            onClick={() => setIsOpen(false)}
+                            className="ms-[15px] custom-link"
+                          >
+                            {label}
+                          </MenuLink>
+                        )
                       ) : (
                         <button
                           onClick={() => {

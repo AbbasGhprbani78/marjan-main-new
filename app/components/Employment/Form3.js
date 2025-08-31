@@ -4,7 +4,14 @@ import AddRemoveForm from "../module/Form/AddRemoveForm";
 import axios from "axios";
 import { ToastContainerCustom, warningMessage } from "../module/Toast";
 
-export default function Form3({ data, setData, onSuccess, onPrev }) {
+export default function Form3({
+  data,
+  setData,
+  onSuccess,
+  onPrev,
+  savedSteps,
+  setSavedSteps,
+}) {
   const [loading, setLoading] = useState(false);
   const handleChange = (index, field, value) => {
     const updated = [...data];
@@ -31,10 +38,10 @@ export default function Form3({ data, setData, onSuccess, onPrev }) {
       ...data,
       {
         personal_detail: 1,
-        job_title: "",
-        company: "",
-        duration_of_cooperation: "",
-        insurance_history: "",
+        job_title: null,
+        company: null,
+        duration_of_cooperation: null,
+        insurance_history: null,
       },
     ]);
   };
@@ -80,13 +87,30 @@ export default function Form3({ data, setData, onSuccess, onPrev }) {
     }
 
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/app/career-history/`,
-        payload
-      );
-      if (response.status === 201) {
-        console.log(response.data);
-        onSuccess();
+      let response;
+      if (!savedSteps.form3.isSaved) {
+        response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/app/career-history/`,
+          payload
+        );
+
+        if (response.status === 201) {
+          console.log(response.data);
+          setSavedSteps((prev) => ({
+            ...prev,
+            form3: { isSaved: true, id: response.data.id },
+          }));
+          onSuccess();
+        }
+      } else {
+        response = await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/app/career-history/${savedSteps.form3.id}/`,
+          payload
+        );
+
+        if (response.status === 200) {
+          onSuccess();
+        }
       }
     } catch (error) {
       console.log(error);

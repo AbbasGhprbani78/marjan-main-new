@@ -2,7 +2,6 @@
 import React, { useEffect } from "react";
 
 export default function Page({ video }) {
-  console.log(video);
   useEffect(() => {
     const script = document.createElement("script");
     script.src =

@@ -33,7 +33,7 @@ export default function DropDown({
     }
   `}
       >
-        <option value="" disabled>
+        <option value="" disabled selected={true}>
           انتخاب کنید...
         </option>
         {options.map((opt, index) => (

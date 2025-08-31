@@ -13,6 +13,8 @@ export default function Form4({
   onPrev,
   dataJobs,
   dataWaysofacquaintance,
+  savedSteps,
+  setSavedSteps,
 }) {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -32,16 +34,32 @@ export default function Form4({
         }
       });
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/app/request-details/`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      let response;
 
-      if (response.status === 201) {
-        console.log(response.data);
+      if (!savedSteps.form4.isSaved) {
+        response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/app/request-details/`,
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+
+        if (response.status === 201) {
+          console.log(response.data);
+          setSavedSteps((prev) => ({
+            ...prev,
+            form4: { isSaved: true, id: response.data.id },
+          }));
+        }
+      } else {
+        response = await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/app/request-details/${savedSteps.form4.id}/`,
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+
+        if (response.status === 200) {
+          console.log("Updated:", response.data);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -99,7 +117,7 @@ export default function Form4({
               setErrors((prev) => ({ ...prev, been_working_since: "" }));
             }}
             startYear={1404}
-            endYear={1490}
+            endYear={""}
             error={errors.been_working_since}
           />
         </div>
@@ -159,7 +177,7 @@ export default function Form4({
               setData({ ...data, previous_job_application_date: val })
             }
             startYear={1372}
-            endYear={1490}
+            endYear={""}
           />
         </div>
       </div>

@@ -13,6 +13,8 @@ export default function Form2({
   onPrev,
   studyData,
   dataLanguages,
+  savedSteps,
+  setSavedSteps,
 }) {
   const addSection = () => {
     if (data.educational_background.length < 5) {
@@ -21,17 +23,17 @@ export default function Form2({
         educational_background: [
           ...data.educational_background,
           {
-            section: "",
-            field_of_study: "",
-            field_orientation: "",
-            gpa: "",
-            educational_institution: "",
-            state: "",
-            start_year: "",
-            start_month: "",
-            end_year: "",
-            end_month: "",
-            number_of_months_remaining: "",
+            section: null,
+            field_of_study: null,
+            field_orientation: null,
+            gpa: null,
+            educational_institution: null,
+            state: null,
+            start_year: null,
+            start_month: null,
+            end_year: null,
+            end_month: null,
+            number_of_months_remaining: null,
           },
         ],
       });
@@ -67,12 +69,12 @@ export default function Form2({
         other_languages: [
           ...data.other_languages,
           {
-            languages: "",
-            conversation_level: "",
-            translation_level: "",
-            writing_level: "",
-            comprehension_level: "",
-            description: "",
+            languages: null,
+            conversation_level: null,
+            translation_level: null,
+            writing_level: null,
+            comprehension_level: null,
+            description: null,
           },
         ],
       });
@@ -126,13 +128,32 @@ export default function Form2({
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/app/educational-background/`,
-        data
-      );
-      if (response.status === 201) {
-        console.log(response.data);
-        onSuccess();
+      let response;
+
+      if (!savedSteps.form2.isSaved) {
+        response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/app/educational-background/`,
+          data
+        );
+
+        if (response.status === 201) {
+          console.log(response.data);
+          setSavedSteps((prev) => ({
+            ...prev,
+            form2: { isSaved: true, id: response.data.personal_detail_id },
+          }));
+
+          onSuccess();
+        }
+      } else {
+        response = await axios.put(
+          `${process.env.NEXT_PUBLIC_API_URL}/app/educational-background/${savedSteps.form2.id}/`,
+          data
+        );
+
+        if (response.status === 200) {
+          onSuccess();
+        }
       }
     } catch (error) {
       console.log(error);
@@ -142,6 +163,7 @@ export default function Form2({
   };
 
   console.log(data);
+
   return (
     <form
       className="w-full"
@@ -426,6 +448,7 @@ export default function Form2({
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
         <div className="col-span-6">
           <button
+            onClick={onPrev}
             type="button"
             className="w-full flex justify-center items-center h-[34px] bg-gray-500 text-white"
           >

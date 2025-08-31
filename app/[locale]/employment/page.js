@@ -16,7 +16,6 @@ export default async function page({ params }) {
   const dataJobs = await fetchJobs(locale);
   const dataWaysofacquaintance = await fetchWaysofacquaintance(locale);
 
-  console.log(dataJobs, dataWaysofacquaintance);
   return (
     <>
       <Employment

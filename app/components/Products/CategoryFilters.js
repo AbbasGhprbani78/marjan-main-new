@@ -10,6 +10,7 @@ const CategoryFilters = ({
   ismobile = false,
   queryFilterKey,
   queryValues,
+  filters,
 }) => {
   const { t } = useTranslation();
 
@@ -28,6 +29,7 @@ const CategoryFilters = ({
               key === queryFilterKey || (ismobile ? false : index === 0)
             }
             queryValues={key === queryFilterKey ? queryValues : []}
+            filters={filters}
           />
         );
 

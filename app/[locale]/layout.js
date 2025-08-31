@@ -3,6 +3,7 @@ import Footer from "@/app/components/Footer";
 import { NavBar } from "@/app/components/navBar";
 import { ToggleProvider } from "../context/context";
 import ChatBot from "../components/module/ChatBot/ChatBot";
+import ImageLoadingWrapper from "../components/ImageLoadingWrapper";
 
 export const metadata = {
   title: "Marjan",
@@ -21,12 +22,14 @@ export default async function RootLayout({ children, params }) {
     <html lang={locale} dir={dir}>
       <ToggleProvider>
         <body className={locale === "fa" ? "font-fa" : "font-en"}>
-          <div className="page-container">
-            <NavBar />
-            <main className="content">{children}</main>
-            <Footer />
-          </div>
-          <ChatBot />
+          <ImageLoadingWrapper>
+            <div className="page-container">
+              <NavBar />
+              <main className="content">{children}</main>
+              <Footer />
+            </div>
+            <ChatBot />
+          </ImageLoadingWrapper>
         </body>
       </ToggleProvider>
     </html>

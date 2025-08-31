@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import AccardionFilter from "./AccardionFilter";
 import { useViewportWidth } from "@/hook/useViewportWidth";
 
-export default function FilterHeader({ show, setClose }) {
+export default function FilterHeader({ show, setShowFilterMenu }) {
   const { t, locale } = useTranslation();
   const [filterItems, setFilterItems] = useState({});
   const width = useViewportWidth();
@@ -47,7 +47,7 @@ export default function FilterHeader({ show, setClose }) {
                 key={i}
                 text={item}
                 type="size"
-                setClose={setClose}
+                setShowFilterMenu={setShowFilterMenu}
               />
             ))}
           </div>
@@ -59,7 +59,7 @@ export default function FilterHeader({ show, setClose }) {
                 key={i}
                 item={item}
                 type="color"
-                setClose={setClose}
+                setShowFilterMenu={setShowFilterMenu}
               />
             ))}
           </div>
@@ -67,7 +67,11 @@ export default function FilterHeader({ show, setClose }) {
         <AccardionFilter title={t("style")}>
           <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
             {filterItems?.styles?.map((item, i) => (
-              <ItemStyle key={i} item={item} setClose={setClose} />
+              <ItemStyle
+                key={i}
+                item={item}
+                setShowFilterMenu={setShowFilterMenu}
+              />
             ))}
           </div>
         </AccardionFilter>
@@ -75,7 +79,11 @@ export default function FilterHeader({ show, setClose }) {
         <AccardionFilter title={t("Usage")}>
           <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
             {filterItems?.environments?.map((item, i) => (
-              <UseCase key={i} item={item} setClose={setClose} />
+              <UseCase
+                key={i}
+                item={item}
+                setShowFilterMenu={setShowFilterMenu}
+              />
             ))}
             <Link
               href={"/industrial"}
@@ -119,7 +127,7 @@ export default function FilterHeader({ show, setClose }) {
                           key={i}
                           text={item}
                           type="size"
-                          setClose={setClose}
+                          setShowFilterMenu={setShowFilterMenu}
                         />
                       ))}
                     </div>
@@ -134,7 +142,7 @@ export default function FilterHeader({ show, setClose }) {
                           key={i}
                           item={item}
                           type="color"
-                          setClose={setClose}
+                          setShowFilterMenu={setShowFilterMenu}
                         />
                       ))}
                     </div>
@@ -145,7 +153,11 @@ export default function FilterHeader({ show, setClose }) {
                     </span>
                     <div className="grid grid-cols-3 gap-[10px] mt-[1rem]">
                       {filterItems?.styles?.map((item, i) => (
-                        <ItemStyle key={i} item={item} setClose={setClose} />
+                        <ItemStyle
+                          key={i}
+                          item={item}
+                          setShowFilterMenu={setShowFilterMenu}
+                        />
                       ))}
                     </div>
                   </div>
@@ -155,7 +167,11 @@ export default function FilterHeader({ show, setClose }) {
                     </span>
                     <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
                       {filterItems?.environments?.map((item, i) => (
-                        <UseCase key={i} item={item} setClose={setClose} />
+                        <UseCase
+                          key={i}
+                          item={item}
+                          setShowFilterMenu={setShowFilterMenu}
+                        />
                       ))}
                       <Link
                         href={"/industrial"}
@@ -269,7 +285,7 @@ export default function FilterHeader({ show, setClose }) {
   );
 }
 
-function ItemFilterBox({ text, type, item, setClose }) {
+function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
   const { t } = useTranslation();
 
   let width = 0;
@@ -298,6 +314,7 @@ function ItemFilterBox({ text, type, item, setClose }) {
       href={`/products?filterKey=${filterKey}&values=${encodeURIComponent(
         filterValue
       )}`}
+      onClick={() => setShowFilterMenu(false)}
       className="relative flex items-center justify-between px-20    h-[46px]  bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer"
     >
       <span className="font-medium">{displayText}</span>
@@ -350,12 +367,13 @@ function ItemFilterBox({ text, type, item, setClose }) {
   );
 }
 
-function ItemStyle({ item, setClose }) {
+function ItemStyle({ item, setShowFilterMenu }) {
   return (
     <Link
       href={`/products?filterKey=style&values=${encodeURIComponent(
         item.title
       )}`}
+      onClick={() => setShowFilterMenu(false)}
       className="relative flex flex-col gap-[2px] cursor-pointer"
     >
       <div className="relative aspect-square">
@@ -373,12 +391,13 @@ function ItemStyle({ item, setClose }) {
   );
 }
 
-function UseCase({ item, setClose }) {
+function UseCase({ item, setShowFilterMenu }) {
   return (
     <Link
       href={`/products?filterKey=environment&values=${encodeURIComponent(
         item.title
       )}`}
+      onClick={() => setShowFilterMenu(false)}
       className="relative aspect-[3/2] cursor-pointer"
     >
       <Image

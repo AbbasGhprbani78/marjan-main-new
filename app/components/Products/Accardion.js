@@ -11,48 +11,21 @@ export default function Accordion({
   filterKey,
   isEmptyCheckBox,
   defaultOpen = false,
+  filters,
 }) {
-  const [selectedItems, setSelectedItems] = useState([]);
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-
-  const searchParams = useSearchParams();
-  const queryFilterKey = searchParams.get("filterKey");
-  const queryValues = useMemo(
-    () => searchParams.get("values")?.split(",") || [],
-    [searchParams.get("values")]
-  );
 
   const toggleAccordion = () => setIsOpen((prev) => !prev);
 
+  const selectedItems = filters[filterKey] || [];
   const handleChange = (e) => {
     const value = e.target.name;
     const newSelectedItems = selectedItems.includes(value)
       ? selectedItems.filter((item) => item !== value)
       : [...selectedItems, value];
 
-    setSelectedItems(newSelectedItems);
     onFilterChange(filterKey, newSelectedItems);
   };
-
-  // Reset selected items when filters are cleared
-  useEffect(() => {
-    if (isEmptyCheckBox) setSelectedItems([]);
-  }, [isEmptyCheckBox]);
-
-  // Initial load from URL query
-  useEffect(() => {
-    if (
-      isInitialLoad &&
-      queryFilterKey === filterKey &&
-      queryValues.length > 0
-    ) {
-      setSelectedItems(queryValues);
-      onFilterChange(filterKey, queryValues, false); // false: do not push URL
-      setIsOpen(true);
-      setIsInitialLoad(false);
-    }
-  }, [queryFilterKey, queryValues.join(","), filterKey, isInitialLoad]);
 
   return (
     <div className="p-4 max-w-md mx-auto">
@@ -80,6 +53,7 @@ export default function Accordion({
             <CheckBox
               key={idx}
               label={item}
+              name={item}
               checked={selectedItems.includes(item)}
               onChange={handleChange}
             />
