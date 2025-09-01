@@ -83,6 +83,7 @@ export default async function page({ params }) {
             text={t.TechnicalSpecsTable}
             icon={"InfoCircle"}
             typeModel={"properties"}
+            dataTechnical={dataSingleProduct?.technical_specifications}
           />
         </div>
       </div>

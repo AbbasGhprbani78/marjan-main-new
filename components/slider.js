@@ -110,11 +110,9 @@ export function HomeSlider({ data, bgcolor, dotColor, route, delay = 3500 }) {
                 onMouseLeave={() => setIsHovered(false)}
               >
                 <p
-                  className={`text-[30px] md:text-[40px] font-[400] text-gray-white ${
-                    locale === "fa" ? "font-fa" : "font-en"
-                  }`}
+                  className={`text-[30px] md:text-[40px] font-[400] text-gray-white font-en`}
                 >
-                  {locale === "fa" ? toPersianDigits(item.title) : item.title}
+                  {item.title}
                 </p>
                 <div
                   className={`absolute bottom-8 left-20 w-5 h-3 bg-gradient-to-r from-gray-white/0 via-gray-white/100 to-gray-white/0 rounded-full transition-all duration-600 opacity-0 invisible ${

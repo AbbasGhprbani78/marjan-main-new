@@ -67,7 +67,7 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
             />
           </div>
         </button>
-        <h5 className="text-[#292d39] font-bold text-[1.0625rem]">
+        <h5 className="text-[#292d39] font-bold text-[1.0625rem] font-en">
           {product?.title}
         </h5>
       </div>

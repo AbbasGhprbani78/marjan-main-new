@@ -19,6 +19,7 @@ export default function GuideSection({
   typeModel,
   subjects = [],
   dataPack = [],
+  dataTechnical = [],
 }) {
   const { localizedHref } = useLocalizedLink();
   const { t } = useTranslation();
@@ -96,27 +97,58 @@ export default function GuideSection({
             <>
               <Table
                 columns={[
-                  t("Size (cm)"),
-                  t("Tiles per Carton"),
-                  t("Tile Area per Carton (m²)"),
-                  t("Approx. Weight per Carton (kg)"),
-                  t("Cartons per Pallet"),
-                  t("Area per Pallet (m²)"),
-                  t("Approx. Weight per Pallet (kg)"),
+                  t("Size"),
+                  t("Abrasion Resistance"),
+                  t("Breaking Strength"),
+                  t("Chemical Resistance"),
+                  t("Crazing Resistance"),
+                  t("Friction Class"),
+                  t("Frost Resistance"),
+                  t("Impact Resistance"),
+                  t("Linear Thermal Expansion Coefficient"),
+                  t("Modulus of Rupture"),
+                  t("Rectangularity"),
+                  t("Stain Resistance"),
+                  t("Straightness of Sides"),
+                  t("Surface Flatness"),
+                  t("Thermal Shock Resistance"),
+                  t("Thickness"),
+                  t("Water Absorption"),
                 ]}
-                data={dataPack.map((item) => ({
-                  [t("Size (cm)")]: item.size || "-",
-                  [t("Tiles per Carton")]:
-                    item.number_of_tiles_per_carton || "-",
-                  [t("Tile Area per Carton (m²)")]:
-                    item.tile_meters_per_carton || "-",
-                  [t("Approx. Weight per Carton (kg)")]:
-                    item.approximate_weight_of_each_carton || "-",
-                  [t("Cartons per Pallet")]:
-                    item.number_of_cartons_per_pallet || "-",
-                  [t("Area per Pallet (m²)")]: item.area_of_each_pallet || "-",
-                  [t("Approx. Weight per Pallet (kg)")]:
-                    item.approximate_weight_of_each_pallet || "-",
+                data={dataTechnical.map((item) => ({
+                  [t("Size")]: item.size || "-",
+                  [t("Abrasion Resistance")]:
+                    item.specifications?.abrasion_resistance || "-",
+                  [t("Breaking Strength")]:
+                    item.specifications?.breaking_strength || "-",
+                  [t("Chemical Resistance")]:
+                    item.specifications?.chemical_resistance || "-",
+                  [t("Crazing Resistance")]:
+                    item.specifications?.crazing_resistance || "-",
+                  [t("Friction Class")]:
+                    item.specifications?.friction_class || "-",
+                  [t("Frost Resistance")]:
+                    item.specifications?.frost_resistance || "-",
+                  [t("Impact Resistance")]:
+                    item.specifications?.impact_resistance || "-",
+                  [t("Linear Thermal Expansion Coefficient")]:
+                    item.specifications?.linear_thermal_expansion_coefficient ||
+                    "-",
+                  [t("Modulus of Rupture")]:
+                    item.specifications?.modulus_of_rupture || "-",
+                  [t("Rectangularity")]:
+                    item.specifications?.rectangularity || "-",
+                  [t("Stain Resistance")]:
+                    item.specifications?.stain_resistance || "-",
+                  [t("Straightness of Sides")]:
+                    item.specifications?.straightness_of_sides || "-",
+                  [t("Surface Flatness")]:
+                    item.specifications?.surface_flatness || "-",
+                  [t("Thermal Shock Resistance")]:
+                    item.specifications?.thermal_shock_resistance || "-",
+                  [t("Thickness")]: item.specifications?.thickness || "-",
+                  [t("Water Absorption")]:
+                    item.specifications?.water_absorption || "-",
                 }))}
               />
             </>

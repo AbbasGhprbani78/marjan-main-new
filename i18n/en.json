@@ -116,5 +116,21 @@
   "Floor": "Floor",
   "Wall": "Wall",
   "ّFloorWall": "Floor & Wall",
-  "Dimensions": "Dimensions"
+  "Dimensions": "Dimensions",
+  "Abrasion Resistance": "Abrasion Resistance",
+  "Breaking Strength": "Breaking Strength",
+  "Chemical Resistance": "Chemical Resistance",
+  "Crazing Resistance": "Crazing Resistance",
+  "Friction Class": "Friction Class",
+  "Frost Resistance": "Frost Resistance",
+  "Impact Resistance": "Impact Resistance",
+  "Linear Thermal Expansion Coefficient": "Linear Thermal Expansion Coefficient",
+  "Modulus of Rupture": "Modulus of Rupture",
+  "Rectangularity": "Rectangularity",
+  "Stain Resistance": "Stain Resistance",
+  "Straightness of Sides": "Straightness of Sides",
+  "Surface Flatness": "Surface Flatness",
+  "Thermal Shock Resistance": "Thermal Shock Resistance",
+  "Thickness": "Thickness",
+  "Water Absorption": "Water Absorption"
 }

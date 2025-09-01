@@ -16,9 +16,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
     <>
       {title && (
         <p
-          className={`font-normal text-[30px] mb-17 text-center pt-[1rem] ${
-            locale === "fa" ? "font-fa" : "font-en"
-          }`}
+          className={`font-normal text-[30px] mb-17 text-center pt-[1rem] font-en`}
         >
           {title}
         </p>

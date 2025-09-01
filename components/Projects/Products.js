@@ -42,7 +42,7 @@ export default function Products({ products }) {
               </div>
 
               {item?.title && (
-                <p className="font-medium text-[1rem] mt-[0.5rem] inline-block">
+                <p className="font-medium text-[1rem] mt-[0.5rem] inline-block font-en">
                   {item.title}
                 </p>
               )}
@@ -58,7 +58,7 @@ export default function Products({ products }) {
               </div>
 
               {item?.title && (
-                <p className="font-medium text-[1rem] mt-[0.5rem] inline-block">
+                <p className="font-medium text-[1rem] mt-[0.5rem] inline-block font-en">
                   {item.title}
                 </p>
               )}

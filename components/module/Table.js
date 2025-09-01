@@ -7,12 +7,13 @@ export default function Table({ columns = [], data = [] }) {
 
   return (
     <>
-      <div className="hidden md:block w-full max-h-[250px] overflow-y-auto hide-scrollbar border border-gray-200 rounded-lg">
+      <div className="hidden md:block w-full max-w-[90vw] max-h-[250px] overflow-y-auto hide-scrollbar border border-gray-200 rounded-lg">
         <table className="min-w-[1200px] border-collapse border border-gray-300 text-sm w-full">
           <thead className="bg-[#b3b3bd] sticky top-0 z-10">
             <tr>
               {columns.map((col) => (
                 <th
+                  style={{ minWidth: 120 }}
                   key={col}
                   className="px-6 py-3 text-center font-medium text-gray-800 uppercase tracking-wider border border-gray-300"
                 >

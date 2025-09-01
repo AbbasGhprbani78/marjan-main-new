@@ -117,5 +117,21 @@
   "Floor": "کف",
   "Wall": "دیوار",
   "ّFloorWall": "کف و دیوار",
-  "Dimensions": " ابعاد"
+  "Dimensions": " ابعاد",
+  "Abrasion Resistance": "مقاومت سایشی",
+  "Breaking Strength": "مقاومت شکست",
+  "Chemical Resistance": "مقاومت شیمیایی",
+  "Crazing Resistance": "مقاومت ترک‌خوردگی",
+  "Friction Class": "کلاس اصطکاک",
+  "Frost Resistance": "مقاومت در برابر یخ‌زدگی",
+  "Impact Resistance": "مقاومت ضربه",
+  "Linear Thermal Expansion Coefficient": "ضریب انبساط حرارتی خطی",
+  "Modulus of Rupture": "مدول گسیختگی",
+  "Rectangularity": "مستطیلی بودن",
+  "Stain Resistance": "مقاومت در برابر لکه",
+  "Straightness of Sides": "راست بودن لبه‌ها",
+  "Surface Flatness": "صافی سطح",
+  "Thermal Shock Resistance": "مقاومت در برابر شوک حرارتی",
+  "Thickness": "ضخامت",
+  "Water Absorption": "جذب آب"
 }

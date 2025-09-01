@@ -609,9 +609,7 @@ function SearchItem({ item }) {
             fill
           />
         </div>
-        <span className={locale === "fa" ? "font-fa" : "font-en"}>
-          {item?.title}
-        </span>
+        <span className={"font-en"}>{item?.title}</span>
       </div>
       <MoreButton
         text={t("View")}
