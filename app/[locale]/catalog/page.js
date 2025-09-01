@@ -1,5 +1,5 @@
 import React from "react";
-import Catalog from "@/app/components/templates/Catalog";
+import Catalog from "@/components/templates/Catalog";
 import { fetchCatalogs } from "@/services/catalogs";
 
 export const metadata = {

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Form from "@/app/components/NewsLetter/Form";
+import Form from "@/components/NewsLetter/Form";
 import fa from "@/i18n/fa.json";
 import en from "@/i18n/en.json";
 import { fetchTypeofActivity } from "@/services/newsLetter";

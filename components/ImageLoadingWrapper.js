@@ -1,7 +1,6 @@
-// components/ImageLoadingWrapper.tsx
 "use client";
+import Loading from "@/app/loading";
 import { useState, useEffect } from "react";
-import Loading from "../loading";
 
 export default function ImageLoadingWrapper({ children }) {
   const [loading, setLoading] = useState(true);

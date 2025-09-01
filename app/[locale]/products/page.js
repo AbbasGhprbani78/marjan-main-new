@@ -1,5 +1,5 @@
 import React from "react";
-import AllProducts from "@/app/components/templates/AllProducts";
+import AllProducts from "@/components/templates/AllProducts";
 import { fetchAllProducts } from "@/services/allProducts";
 
 export const metadata = () => {

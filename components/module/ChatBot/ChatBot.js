@@ -4,7 +4,7 @@ import "./ChatBot.css";
 import Message from "./Message/Message";
 import axios from "axios";
 import { useViewportWidth } from "@/hook/useViewportWidth";
-import { useChat, useToggle } from "@/app/context/context";
+import { useChat, useToggle } from "@/context/context";
 export default function ChatBot({}) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);

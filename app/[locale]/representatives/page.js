@@ -1,6 +1,6 @@
 import React from "react";
 import { fetchRepresentatives } from "@/services/representatives";
-import Representatives from "@/app/components/templates/Representatives";
+import Representatives from "@/components/templates/Representatives";
 
 export const metadata = {
   title: "نمایندگان ما در سراسر جهان | شرکت ما",

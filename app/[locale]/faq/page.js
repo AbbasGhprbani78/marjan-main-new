@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import FaqItem from "@/app/components/Faq/FaqItem";
+import FaqItem from "@/components/Faq/FaqItem";
 import fa from "@/i18n/fa.json";
 import en from "@/i18n/en.json";
 import { fetchFaq } from "@/services/faq";
@@ -57,7 +57,7 @@ export default async function page({ params }) {
 
   return (
     <main className="wrapper ">
-      <h className="sr-only">FAQ</h>
+      <h1 className="sr-only">FAQ</h1>
       <section
         className={`relative w-full flex justify-center items-center mt-[130px] lg:mt-0 wrapper_image aspect-[3/2] max-h-[550px] overflow-hidden`}
       >

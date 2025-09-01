@@ -493,7 +493,6 @@ export function ProjectsSlider({ data, bgcolor }) {
         dir={locale}
         key={locale}
         watchSlidesProgress={true}
-        loopedSlides={data.length}
         centeredSlides={false}
       >
         {data.map((item, index) => (

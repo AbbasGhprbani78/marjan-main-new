@@ -1,4 +1,4 @@
-import Employment from "@/app/components/templates/Employment";
+import Employment from "@/components/templates/Employment";
 import {
   fetchJobs,
   fetchLanguages,

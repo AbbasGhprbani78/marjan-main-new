@@ -1,13 +1,13 @@
 import React from "react";
-import { HomeSlider } from "@/app/components/slider";
+import { HomeSlider } from "@/components/slider";
 import { industrial } from "@/app/dataindustrial";
-import Categories from "@/app/components/Industrial/Categories";
-import Project from "@/app/components/Industrial/Project";
-import Blogs from "@/app/components/Industrial/Blogs";
-import QuestionUs from "@/app/components/Industrial/QuestionUs";
-import Standards from "@/app/components/Industrial/Standards";
-import Customers from "@/app/components/Industrial/Customers";
-import AboutUs from "@/app/components/Industrial/AboutUs";
+import Categories from "@/components/Industrial/Categories";
+import Project from "@/components/Industrial/Project";
+import Blogs from "@/components/Industrial/Blogs";
+import QuestionUs from "@/components/Industrial/QuestionUs";
+import Standards from "@/components/Industrial/Standards";
+import Customers from "@/components/Industrial/Customers";
+import AboutUs from "@/components/Industrial/AboutUs";
 import { fetchIndustrial } from "@/services/industrial";
 
 export default async function page({ params }) {

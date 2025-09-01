@@ -5,7 +5,7 @@ import Image from "next/image";
 import * as Icons from "iconsax-reactjs";
 import { useTranslation } from "@/hook/useTranslation";
 import ReadMoreText from "../module/ReadMoreText";
-import { useToggle } from "@/app/context/context";
+import { useToggle } from "@/context/context";
 
 export default function FeatureTabs({ data }) {
   const { t } = useTranslation();

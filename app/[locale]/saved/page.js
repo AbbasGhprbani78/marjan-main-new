@@ -1,6 +1,6 @@
 import React from "react";
 import { products } from "@/app/dataAllProducts";
-import SavedList from "@/app/components/SavedList/SavedList";
+import SavedList from "@/components/SavedList/SavedList";
 import { fetchAllSaveProducts } from "@/services/allSaveProducts";
 
 export default async function page({ params }) {

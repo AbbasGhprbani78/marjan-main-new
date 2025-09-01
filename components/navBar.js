@@ -14,9 +14,9 @@ import {
 import FilterHeader from "./module/FilterHeader";
 import { useTranslation } from "@/hook/useTranslation";
 import axios from "axios";
-import { useToggle } from "../context/context";
+import { useToggle } from "@/context/context";
 
-export function NavBar() {
+export function NavBar({ dataHeader }) {
   const [scrolled, setScrolled] = useState(false);
   const [showInnerMenu, setShowInnerMenu] = useState(false);
   const [isShowSearch, setIsShowSearch] = useState(false);
@@ -253,9 +253,10 @@ export function NavBar() {
         <FilterHeader
           show={showFilterMenu}
           setShowFilterMenu={setShowFilterMenu}
+          dataHeader={dataHeader}
         />
       </div>
-      <MenuMobile />
+      <MenuMobile dataHeader={dataHeader} />
     </header>
   );
 }
@@ -622,7 +623,7 @@ function SearchItem({ item }) {
   );
 }
 
-function MenuMobile() {
+function MenuMobile({ dataHeader }) {
   const { locale } = useParams();
   const { t } = useTranslation();
   const [isOpenLanguage, setIsOpenLanguage] = useState(false);
@@ -799,7 +800,11 @@ function MenuMobile() {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
                 >
-                  <FilterHeader show={isOpen} setShowFilterMenu={setIsOpen} />
+                  <FilterHeader
+                    show={isOpen}
+                    setShowFilterMenu={setIsOpen}
+                    dataHeader={dataHeader}
+                  />
                 </motion.ul>
               )}
             </AnimatePresence>

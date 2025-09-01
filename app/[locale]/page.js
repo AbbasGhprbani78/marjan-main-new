@@ -3,12 +3,12 @@ import {
   CategorySlider,
   ProjectsSlider,
   HomeSlider,
-} from "@/app/components/slider";
+} from "@/components/slider";
 import fa from "@/i18n/fa.json";
 import en from "@/i18n/en.json";
 
-import FeatureTabs from "@/app/components/Home/FeatureTabs";
-import { MoreButton } from "@/app/components/moreButton";
+import FeatureTabs from "@/components/Home/FeatureTabs";
+import { MoreButton } from "@/components/moreButton";
 import { fetchhome } from "@/services/home";
 
 export default async function Home({ params }) {

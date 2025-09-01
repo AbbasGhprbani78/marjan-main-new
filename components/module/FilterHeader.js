@@ -4,45 +4,19 @@ import { MoreButton } from "../moreButton";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/hook/useTranslation";
 import Link from "next/link";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import AccardionFilter from "./AccardionFilter";
 import { useViewportWidth } from "@/hook/useViewportWidth";
 
-export default function FilterHeader({ show, setShowFilterMenu }) {
-  const { t, locale } = useTranslation();
-  const [filterItems, setFilterItems] = useState({});
+export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
+  const { t } = useTranslation();
   const width = useViewportWidth();
-
-  const getFilterHeader = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/product/product-catalog/`,
-        {
-          headers: {
-            "Accept-Language": locale,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        setFilterItems(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getFilterHeader();
-  }, []);
 
   return (
     <>
       <div className="block lg:hidden">
         <AccardionFilter title={t("size")}>
           <div className="grid grid-cols-1 gap-[10px] mt-[1rem]">
-            {filterItems?.sizes?.map((item, i) => (
+            {dataHeader?.sizes?.map((item, i) => (
               <ItemFilterBox
                 key={i}
                 text={item}
@@ -54,7 +28,7 @@ export default function FilterHeader({ show, setShowFilterMenu }) {
         </AccardionFilter>
         <AccardionFilter title={t("color")}>
           <div className="grid grid-cols-1 gap-[10px] mt-[1rem]">
-            {filterItems?.colors?.map((item, i) => (
+            {dataHeader?.colors?.map((item, i) => (
               <ItemFilterBox
                 key={i}
                 item={item}
@@ -66,7 +40,7 @@ export default function FilterHeader({ show, setShowFilterMenu }) {
         </AccardionFilter>
         <AccardionFilter title={t("style")}>
           <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
-            {filterItems?.styles?.map((item, i) => (
+            {dataHeader?.styles?.map((item, i) => (
               <ItemStyle
                 key={i}
                 item={item}
@@ -78,7 +52,7 @@ export default function FilterHeader({ show, setShowFilterMenu }) {
 
         <AccardionFilter title={t("Usage")}>
           <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
-            {filterItems?.environments?.map((item, i) => (
+            {dataHeader?.environments?.map((item, i) => (
               <UseCase
                 key={i}
                 item={item}
@@ -122,7 +96,7 @@ export default function FilterHeader({ show, setShowFilterMenu }) {
                       {t("size")}
                     </span>
                     <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
-                      {filterItems?.sizes?.map((item, i) => (
+                      {dataHeader?.sizes?.map((item, i) => (
                         <ItemFilterBox
                           key={i}
                           text={item}
@@ -137,7 +111,7 @@ export default function FilterHeader({ show, setShowFilterMenu }) {
                       {t("color")}
                     </span>
                     <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
-                      {filterItems?.colors?.map((item, i) => (
+                      {dataHeader?.colors?.map((item, i) => (
                         <ItemFilterBox
                           key={i}
                           item={item}
@@ -152,7 +126,7 @@ export default function FilterHeader({ show, setShowFilterMenu }) {
                       {t("style")}
                     </span>
                     <div className="grid grid-cols-3 gap-[10px] mt-[1rem]">
-                      {filterItems?.styles?.map((item, i) => (
+                      {dataHeader?.styles?.map((item, i) => (
                         <ItemStyle
                           key={i}
                           item={item}
@@ -166,7 +140,7 @@ export default function FilterHeader({ show, setShowFilterMenu }) {
                       {t("Usage")}
                     </span>
                     <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
-                      {filterItems?.environments?.map((item, i) => (
+                      {dataHeader?.environments?.map((item, i) => (
                         <UseCase
                           key={i}
                           item={item}
@@ -414,3 +388,27 @@ function UseCase({ item, setShowFilterMenu }) {
     </Link>
   );
 }
+
+// const [dataHeader, setdataHeader] = useState({});
+// const getFilterHeader = async () => {
+//   try {
+//     const response = await axios.get(
+//       `${process.env.NEXT_PUBLIC_API_URL}/product/product-catalog/`,
+//       {
+//         headers: {
+//           "Accept-Language": locale,
+//         },
+//       }
+//     );
+
+//     if (response.status === 200) {
+//       setdataHeader(response.data);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// useEffect(() => {
+//   getFilterHeader();
+// }, []);

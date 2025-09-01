@@ -1,6 +1,6 @@
 import React from "react";
-import { HomeSlider } from "@/app/components/slider";
-import Blogs from "@/app/components/templates/Blogs";
+import { HomeSlider } from "@/components/slider";
+import Blogs from "@/components/templates/Blogs";
 import { fetchBlogs } from "@/services/blogs";
 
 export const metadata = {

@@ -1,6 +1,6 @@
-import BlogVideo from "@/app/components/Blogs/BlogVideo";
-import GallerySingleBlog from "@/app/components/Blogs/GallerySingleBlog";
-import ReadMoreText from "@/app/components/module/ReadMoreText";
+import BlogVideo from "@/components/Blogs/BlogVideo";
+import GallerySingleBlog from "@/components/Blogs/GallerySingleBlog";
+import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchSingleBlog } from "@/services/singleBlog";
 import Image from "next/image";
 import React from "react";

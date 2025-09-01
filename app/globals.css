@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "./fonts/font.css";
+@import "../public/fonts/font.css";
 @import "leaflet/dist/leaflet.css";
 
 @theme {
@@ -89,10 +89,6 @@ button {
   margin: 0 auto;
   width: 100%;
 }
-
-/* .wrapper_image {
-  height: 45dvh;
-} */
 
 .wrapper_image {
   height: 45dvh;
@@ -231,12 +227,4 @@ button {
   height: 100%;
   object-fit: cover;
   border-radius: 12px;
-}
-
-/* Tailwind */
-.scroll-container {
-  @apply overflow-x-auto flex gap-8 px-4 py-2 snap-x snap-mandatory;
-}
-.scroll-item {
-  @apply flex-shrink-0 w-[120px] md:w-[180px] aspect-[2/3] snap-start;
 }

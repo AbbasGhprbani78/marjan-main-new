@@ -1,4 +1,4 @@
-import CalculatorT from "@/app/components/templates/Calculator";
+import CalculatorT from "@/components/templates/Calculator";
 import { fetchSizesCalculator } from "@/services/sizesCalculator";
 
 import React from "react";

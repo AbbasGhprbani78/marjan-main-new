@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import ReadMoreText from "@/app/components/Projects/ReadMoreText";
-import Gallery from "@/app/components/Projects/Gallery";
-import Products from "@/app/components/Projects/Products";
+import ReadMoreText from "@/components/Projects/ReadMoreText";
+import Gallery from "@/components/Projects/Gallery";
+import Products from "@/components/Projects/Products";
 import fa from "@/i18n/fa.json";
 import en from "@/i18n/en.json";
 import { fetchSingleProjects } from "@/services/singleproject";

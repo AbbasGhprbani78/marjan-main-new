@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SelectLocation from "../Representatives/SelectLocation";
 import MapWrapper from "../module/MapWrapper";
 import RepresentationItem from "../Representatives/RepresentationItem";
-import styles from "../../[locale]/representatives/representatives.module.css";
+import styles from "../../app/[locale]/representatives/representatives.module.css";
 
 export default function Representatives({ representatives }) {
   const [selectedProvince, setSelectedProvince] = useState(null);

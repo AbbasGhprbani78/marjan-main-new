@@ -1,18 +1,18 @@
-import { Anchor } from "@/app/components/SingleProduct/anchor";
+import { Anchor } from "@/components/SingleProduct/anchor";
 import Image from "next/image";
 import React from "react";
 import * as Icons from "iconsax-reactjs";
-import Table from "@/app/components/SingleProduct/Table";
-import ImageFeature from "@/app/components/SingleProduct/ImageFeature";
-import Texture from "@/app/components/SingleProduct/Texture";
-import ImagesContainer from "@/app/components/SingleProduct/ImagesContainer";
-import CertificateContainer from "@/app/components/SingleProduct/CertificateContainer";
-import GuideSection from "@/app/components/SingleProduct/GuideSection";
-import VideoContainer from "@/app/components/SingleProduct/VideoContainer";
-import ProjectsContainer from "@/app/components/SingleProduct/ProjectsContainer";
+import Table from "@/components/SingleProduct/Table";
+import ImageFeature from "@/components/SingleProduct/ImageFeature";
+import Texture from "@/components/SingleProduct/Texture";
+import ImagesContainer from "@/components/SingleProduct/ImagesContainer";
+import CertificateContainer from "@/components/SingleProduct/CertificateContainer";
+import GuideSection from "@/components/SingleProduct/GuideSection";
+import VideoContainer from "@/components/SingleProduct/VideoContainer";
+import ProjectsContainer from "@/components/SingleProduct/ProjectsContainer";
 import fa from "@/i18n/fa.json";
 import en from "@/i18n/en.json";
-import ReadMoreText from "@/app/components/module/ReadMoreText";
+import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchSingleProduct, getSubjects } from "@/services/singleProduct";
 export default async function page({ params }) {
   const { id } = await params;

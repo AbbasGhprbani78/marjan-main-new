@@ -1,12 +1,12 @@
 import Image from "next/image";
 import React from "react";
-import AboutDetail from "@/app/components/About/AboutDetail";
-import AwardSlider from "@/app/components/About/AwardSlider";
-import AboutHistory from "@/app/components/About/AboutHistory";
-import AboutEnvironment from "@/app/components/About/AboutEnvironment";
+import AboutDetail from "@/components/About/AboutDetail";
+import AwardSlider from "@/components/About/AwardSlider";
+import AboutHistory from "@/components/About/AboutHistory";
+import AboutEnvironment from "@/components/About/AboutEnvironment";
 import { data } from "@/app/dataAboutus";
-import BusinessPartners from "@/app/components/About/BusinessPartners";
-import ReadMoreText from "@/app/components/module/ReadMoreText";
+import BusinessPartners from "@/components/About/BusinessPartners";
+import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchAboutUs } from "@/services/aboutus";
 
 export const metadata = {

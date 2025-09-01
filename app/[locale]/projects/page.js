@@ -1,6 +1,6 @@
 import React from "react";
-import { HomeSlider } from "@/app/components/slider";
-import Projects from "@/app/components/templates/Projects";
+import { HomeSlider } from "@/components/slider";
+import Projects from "@/components/templates/Projects";
 import { fetchAllProjects } from "@/services/allProjects";
 
 export const metadata = {

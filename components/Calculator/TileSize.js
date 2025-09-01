@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Options from "../module/Options";
-import SelectDropDown from "@/app/components/module/SelectDropDown";
+import SelectDropDown from "@/components/module/SelectDropDown";
 
 export default function TileSize({
   value,

@@ -1,5 +1,4 @@
-// Form1.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "../module/Form/DatePicker";
 import Input from "../module/Form/Input";
 import DropDown from "../module/Form/DropDown";
@@ -65,6 +64,47 @@ export default function Form1({
     setData({ ...data, [field]: value });
     setErrors({ ...errors, [field]: "" });
   };
+
+  useEffect(() => {
+    if (data.marital_status !== "married" && data.spouse_job) {
+      handleFieldChange("spouse_job", null);
+    }
+  }, [data.marital_status]);
+
+  useEffect(() => {
+    if (data.gender !== "male") {
+      handleFieldChange("duty_status", null);
+      handleFieldChange("explanation_of_the_duty_system", null);
+      handleFieldChange("service_start_date", null);
+      handleFieldChange("service_end_date", null);
+      handleFieldChange("type_of_service_deficit", null);
+      handleFieldChange("service_deficit_amount", null);
+    }
+  }, [data.gender]);
+
+  useEffect(() => {
+    if (data.duty_status !== "End of service") {
+      handleFieldChange("service_deficit_amount", null);
+      handleFieldChange("type_of_service_deficit", null);
+    }
+  }, [data.duty_status]);
+
+  useEffect(() => {
+    if (
+      data.duty_status !== "Medical exemption" &&
+      data.duty_status !== "Bail waiver" &&
+      data.duty_status !== "Other cases"
+    ) {
+      handleFieldChange("explanation_of_the_duty_system", null);
+    }
+  }, [data.duty_status]);
+
+  useEffect(() => {
+    if (!["End of service", "Other cases"].includes(data.duty_status)) {
+      handleFieldChange("service_start_date", null);
+      handleFieldChange("service_end_date", null);
+    }
+  }, [data.duty_status]);
 
   return (
     <form
