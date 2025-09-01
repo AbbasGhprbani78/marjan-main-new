@@ -19,6 +19,8 @@ export default async function RootLayout({ children, params }) {
   const dir = locale === "fa" ? "rtl" : "ltr";
   const dataHeader = await fetchHeaderFilter(locale);
 
+  console.log(dataHeader);
+
   return (
     <html lang={locale} dir={dir}>
       <body className={locale === "fa" ? "font-fa" : "font-en"}>

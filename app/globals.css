@@ -166,7 +166,6 @@ button {
 @media (min-width: 1024px) {
   .wrapper_image {
     height: 80dvh;
-    max-height: 1000px;
   }
 }
 

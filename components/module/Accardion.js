@@ -1,10 +1,13 @@
 "use client";
 import React, { useState, useRef } from "react";
 import * as Icons from "iconsax-reactjs";
+import { useTranslation } from "@/hook/useTranslation";
+import { toPersianDigits } from "@/utils/helper";
 
 const Accordion = ({ accardionItem }) => {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef(null);
+  const { locale } = useTranslation();
 
   return (
     <div className="w-full border-b  border-[#eaeaea] text-[var(--color-gray-900)]">
@@ -34,7 +37,10 @@ const Accordion = ({ accardionItem }) => {
         className="overflow-hidden transition-all duration-300 ease-in-out"
       >
         <p className="px-4 pb-[2.5rem] font-normal text-[15.5px] text-justify">
-          {accardionItem.answer}
+          {locale === "fa"
+            ? toPersianDigits(accardionItem.answer)
+            : accardionItem.answer}
+          {}
         </p>
       </div>
     </div>

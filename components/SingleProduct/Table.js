@@ -1,5 +1,6 @@
 "use client";
 import { useTranslation } from "@/hook/useTranslation";
+import { toPersianDigits } from "@/utils/helper";
 import Image from "next/image";
 import React from "react";
 
@@ -100,7 +101,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
 
               {hasThickness && (
                 <td className="px-4 py-3 whitespace-nowrap text-center [direction:ltr] align-top">
-                  {thickness} mm
+                  {locale === "fa" ? toPersianDigits(thickness) : thickness} mm
                 </td>
               )}
             </tr>

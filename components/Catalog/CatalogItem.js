@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "@/hook/useTranslation";
+import { toPersianDigits } from "@/utils/helper";
 import Image from "next/image";
 import React from "react";
 
@@ -17,6 +19,8 @@ export default function CatalogItem({ catalog }) {
     link.click();
     document.body.removeChild(link);
   };
+
+  const { locale } = useTranslation();
 
   return (
     <div>
@@ -46,7 +50,9 @@ export default function CatalogItem({ catalog }) {
           />
         </div>
         <span className="text-[#919191]" dir="ltr">
-          {catalog?.fileSize}
+          {locale === "fa"
+            ? toPersianDigits(catalog?.fileSize)
+            : catalog?.fileSize}
         </span>
       </div>
     </div>

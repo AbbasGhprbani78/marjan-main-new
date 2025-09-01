@@ -92,7 +92,7 @@ export default async function Home({ params }) {
           <p className="text-center md:text-start title font-[500] text-gray-white mb-[40px]">
             {dataHome?.about?.title}
           </p>
-          <div className="w-full md:w-[73dvw] lg:w-[57dvw] text-justify">
+          <div className="w-full md:w-[38dvw] text-justify">
             <p className="text-[16px] font-[400] text-gray-white mb-[35px] md:mb-[20px]">
               {dataHome.about.description}
             </p>

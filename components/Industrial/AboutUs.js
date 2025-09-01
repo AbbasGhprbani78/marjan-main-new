@@ -4,9 +4,10 @@ import React from "react";
 import LinkButton from "../module/LinkButton";
 import { useTranslation } from "@/hook/useTranslation";
 import { MoreButton } from "../moreButton";
+import { toPersianDigits } from "@/utils/helper";
 
 export default function AboutUs({ data }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   return (
     <div className="relative px-20 md:px-40 lg:px-80 pt-[3rem]  min-h-[380px] pb-[2rem]">
       <div className="absolute bg-[#00000080] md:bg-[#292D32CC] inset-0 z-10 w-full md:w-1/2"></div>
@@ -24,7 +25,7 @@ export default function AboutUs({ data }) {
           {data.title}
         </h3>
         <p className="text-justify w-full md:w-7/8 leading-[30px]">
-          {data.text}
+          {locale === "fa" ? toPersianDigits(data.text) : data.text}
         </p>
         <div className="w-[250px] mt-[1rem] mx-auto md:mx-0">
           <MoreButton

@@ -47,13 +47,15 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
               <Icons.Box2 size={15} />
             </button>
           </div>
-          <Table
-            title={""}
-            thickness={singleProduct.thickness}
-            colors={singleProduct.color}
-            surface={singleProduct.surface}
-            size={singleProduct.size}
-          />
+          <div className="w-full mt-[1rem]">
+            <Table
+              title={""}
+              thickness={singleProduct.thickness}
+              colors={singleProduct.color}
+              surface={singleProduct.surface}
+              size={singleProduct.size}
+            />
+          </div>
           <div className="flex flex-col gap-[20px] max-h-[200] overflow-y-auto  hide-scrollbar mt-[2rem] md:mt-[3rem]">
             {singleProduct?.products.map((item) => (
               <ItemOther

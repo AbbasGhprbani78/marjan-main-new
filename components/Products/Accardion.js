@@ -1,9 +1,7 @@
 "use client";
 import * as Icons from "iconsax-reactjs";
-import { useEffect, useState, useMemo } from "react";
+import { useState } from "react";
 import CheckBox from "../module/CheckBox";
-import { useSearchParams } from "next/navigation";
-
 export default function Accordion({
   itemsCheckBox = [],
   title,

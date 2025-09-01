@@ -228,7 +228,11 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
             <Swiper
               spaceBetween={viewportWidth < 1024 ? 10 : 28}
               modules={[Autoplay]}
-              slidesPerView={slidesNumber}
+              breakpoints={{
+                0: { slidesPerView: 2 },
+                768: { slidesPerView: 3 },
+                1025: { slidesPerView: 4 },
+              }}
               ref={swiper}
               loop={true}
               speed={800}
@@ -239,7 +243,7 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
               {currentSectionItems.map((item) => (
                 <SwiperSlide key={item.key}>
                   <Link href={localizedHref(`/blogs/${item.id}`)}>
-                    <div className="relative w-full aspect-square md:aspect-auto md:h-[290px] overflow-hidden">
+                    <div className="relative w-full aspect-square overflow-hidden">
                       <Image
                         src={`${
                           item.image.startsWith("/images")
@@ -399,12 +403,16 @@ export function CategorySlider({ data }) {
         <Swiper
           spaceBetween={viewportWidth < 1024 ? 10 : 28}
           modules={[Autoplay]}
-          slidesPerView={slidesNumber}
           ref={swiper}
           loop={currentData.length > 1}
           speed={800}
           dir={locale}
           key={locale + activeButton}
+          breakpoints={{
+            0: { slidesPerView: 2 },
+            768: { slidesPerView: 3 },
+            1025: { slidesPerView: 4 },
+          }}
         >
           {currentData.map((item) => (
             <SwiperSlide
@@ -421,7 +429,7 @@ export function CategorySlider({ data }) {
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
                   alt={item.title}
-                  className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] md:h-[290px]"
+                  className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] "
                   width={500}
                   height={500}
                   priority
@@ -577,13 +585,18 @@ export function GallerySlider({ data, onClick, ispopup = false }) {
           speed={800}
           dir={locale}
           key={locale}
+          breakpoints={{
+            0: { slidesPerView: 2 },
+            768: { slidesPerView: 3 },
+            1025: { slidesPerView: 4 },
+          }}
         >
           {data?.map((item) => {
             const image = (
               <Image
                 src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
                 alt="Background Image"
-                className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] md:h-[290px]"
+                className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] "
                 width={500}
                 height={500}
                 priority

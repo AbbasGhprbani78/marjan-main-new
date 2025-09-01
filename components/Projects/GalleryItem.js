@@ -10,14 +10,16 @@ export default function GalleryItem({ media, onClick }) {
       onClick={onClick}
       src={`${process.env.NEXT_PUBLIC_API_URL}${media}`}
       controls
-      className="cursor-pointer aspect-square object-cover w-full transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] md:h-[290px]"
+      className="cursor-pointer aspect-square object-cover w-full transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15]"
+      width={500}
+      height={500}
     />
   ) : (
     <Image
       onClick={onClick}
       alt="gallery item image"
       src={`${process.env.NEXT_PUBLIC_API_URL}${media}`}
-      className="cursor-pointer aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] md:h-[290px]"
+      className="cursor-pointer aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15]"
       width={500}
       height={500}
     />

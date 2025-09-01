@@ -1,4 +1,6 @@
 "use client";
+import { useTranslation } from "@/hook/useTranslation";
+import { toPersianDigits } from "@/utils/helper";
 import React, { useEffect, useRef, useState } from "react";
 
 export default function AboutHistory({ history }) {
@@ -38,6 +40,7 @@ const HistoryComponent = ({ item, start }) => {
   const prefix = valueText.split(numberMatch?.[0])[0] || "";
   const targetValue = numberMatch ? parseInt(numberMatch[0], 10) : 0;
   const duration = 2000;
+  const { locale } = useTranslation();
 
   useEffect(() => {
     if (!start || !targetValue) return;
@@ -63,7 +66,7 @@ const HistoryComponent = ({ item, start }) => {
       <div className="flex items-end gap-3 justify-center">
         <p className="font-[600] text-[1.2rem] mt-[1.1rem]">
           {prefix}
-          {count}
+          {locale === "fa" ? toPersianDigits(count) : count}
         </p>
         <span className="text-[.9rem] font-[500]">{item.unit}</span>
       </div>

@@ -27,7 +27,11 @@ export default function Products({ products }) {
           spaceBetween={28}
           modules={[Grid]}
           grid={{ rows: 1, fill: "row" }}
-          slidesPerView={slidesNumber}
+          breakpoints={{
+            0: { slidesPerView: 2 },
+            768: { slidesPerView: 4 },
+            1025: { slidesPerView: 4 },
+          }}
           loop={true}
           dir="ltr"
         >

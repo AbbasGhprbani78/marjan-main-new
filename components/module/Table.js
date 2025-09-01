@@ -1,6 +1,10 @@
 "use client";
+import { useTranslation } from "@/hook/useTranslation";
+import { toPersianDigits } from "@/utils/helper";
 import React from "react";
 export default function Table({ columns = [], data = [] }) {
+  const { locale } = useTranslation();
+
   return (
     <>
       <div className="hidden md:block w-full max-h-[250px] overflow-y-auto hide-scrollbar border border-gray-200 rounded-lg">
@@ -25,7 +29,9 @@ export default function Table({ columns = [], data = [] }) {
                     key={col}
                     className="px-6 py-4 whitespace-nowrap text-center text-gray-700 border border-gray-300"
                   >
-                    {row[col] || "-"}
+                    {locale === "fa"
+                      ? toPersianDigits(row[col] || "-")
+                      : row[col] || "-"}
                   </td>
                 ))}
               </tr>
@@ -61,7 +67,9 @@ export default function Table({ columns = [], data = [] }) {
                       data-label={col}
                     >
                       <span className="md:hidden font-medium">{col}: </span>
-                      {row[col] || "-"}
+                      {locale === "fa"
+                        ? toPersianDigits(row[col] || "-")
+                        : row[col] || "-"}
                     </td>
                   ))}
                 </tr>

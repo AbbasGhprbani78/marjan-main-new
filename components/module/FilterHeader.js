@@ -266,7 +266,7 @@ function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
   let height = 0;
 
   if (text) {
-    const parts = text.split(/[*x]/i);
+    const parts = text.split(/[*xX×]/i);
     if (parts.length === 2) {
       const [h, w] = parts.map((n) => parseInt(n.trim(), 10));
       height = h || 0;
