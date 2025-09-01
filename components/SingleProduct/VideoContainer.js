@@ -28,13 +28,17 @@ export default function VideoContainer({ video }) {
   if (!videoHash) return null;
 
   return (
-    <div className="overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto">
       <iframe
         ref={iframeRef}
         src={`https://www.aparat.com/video/video/embed/videohash/${videoHash}/vt/frame`}
         allowFullScreen
-        className="w-full h-[220px] lg:h-[500px] cursor-pointer"
-        onClick={handleFullScreen}
+        webkitAllowFullScreen
+        mozAllowFullScreen
+        className="w-full h-[220px] sm:h-[300px] md:h-[400px] lg:h-[500px] "
+        style={{
+          display: "block",
+        }}
       ></iframe>
     </div>
   );

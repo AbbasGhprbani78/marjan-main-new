@@ -44,7 +44,7 @@ export default function CertificateContainer({ data }) {
         <div className="relative w-full bg-gray-800 py-10">
           <div
             ref={containerRef}
-            className="w-full flex justify-evenly items-center overflow-x-auto overflow-y-hidden whitespace-nowrap hide-scrollbar "
+            className="w-full flex justify-evenly items- overflow-x-auto overflow-y-hidden whitespace-nowrap hide-scrollbar gap-[1rem]"
           >
             {data.map((cert, i) => (
               <div
@@ -65,7 +65,7 @@ export default function CertificateContainer({ data }) {
                     draggable={false}
                   />
                 </div>
-                <p className="text-gray-200 pt-4 text-center text-xs md:text-sm">
+                <p className="text-gray-200 pt-4  text-xs md:text-sm w-[180px] md:w-[200px] text-center whitespace-pre-wrap">
                   {cert.title}
                 </p>
               </div>

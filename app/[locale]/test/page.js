@@ -1,18 +1,19 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 
-export default function Page({ video }) {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src =
-      "https://www.aparat.com/embed/wiu74j6?data[rnddiv]=37667025165&data[responsive]=yes";
-    script.async = true;
-    document.getElementById("37667025165")?.appendChild(script);
-  }, []);
-
+export default function VideoAparat() {
   return (
-    <div className="mt-[100px] w-full h-[5vh]">
-      <div id="37667025165" className="w-full h-full"></div>
+    <div className="w-full max-w-4xl mx-auto ">
+      <iframe
+        src="https://www.aparat.com/video/video/embed/videohash/wiu74j6/vt/frame"
+        allowFullScreen
+        webkitAllowFullScreen
+        mozAllowFullScreen
+        className="w-full h-[220px] sm:h-[300px] md:h-[400px] lg:h-[500px] "
+        style={{
+          display: "block",
+        }}
+      ></iframe>
     </div>
   );
 }
