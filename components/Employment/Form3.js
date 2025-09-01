@@ -96,15 +96,22 @@ export default function Form3({
 
         if (response.status === 201) {
           console.log(response.data);
+          const ids = response.data.career_history_ids || [];
+          const updatedData = data.map((item, index) => ({
+            ...item,
+            id: ids[index] || null,
+          }));
+
+          setData(updatedData);
           setSavedSteps((prev) => ({
             ...prev,
-            form3: { isSaved: true, id: response.data.id },
+            form3: { isSaved: true },
           }));
           onSuccess();
         }
       } else {
         response = await axios.put(
-          `${process.env.NEXT_PUBLIC_API_URL}/app/career-history/${savedSteps.form3.id}/`,
+          `${process.env.NEXT_PUBLIC_API_URL}/app/career-history/`,
           payload
         );
 

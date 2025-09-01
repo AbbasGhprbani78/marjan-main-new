@@ -10,7 +10,6 @@ export default function Form1({
   data,
   setData,
   onSuccess,
-  onPrev,
   states,
   setIdForm,
   savedSteps,
@@ -38,15 +37,17 @@ export default function Form1({
           setIdForm(response.data.id);
           setSavedSteps((prev) => ({
             ...prev,
-            form1: { isSaved: true, id: response.data.id },
+            form1: { isSaved: true },
           }));
 
           onSuccess();
         }
       } else {
+        const updatedData = { ...data, id: idForm };
+
         response = await axios.put(
-          `${process.env.NEXT_PUBLIC_API_URL}/app/work-with-us/${idForm}`,
-          data
+          `${process.env.NEXT_PUBLIC_API_URL}/app/work-with-us/`,
+          updatedData
         );
 
         if (response.status === 200) {

@@ -107,10 +107,10 @@ export default function Employment({
   });
 
   const [savedSteps, setSavedSteps] = useState({
-    form1: { isSaved: false, id: "" },
-    form2: { isSaved: false, id: "" },
-    form3: { isSaved: false, id: "" },
-    form4: { isSaved: false, id: "" },
+    form1: { isSaved: false },
+    form2: { isSaved: false },
+    form3: { isSaved: false },
+    form4: { isSaved: false },
   });
 
   const handleNext = () => setTab((prev) => (prev < 4 ? prev + 1 : prev));
@@ -166,7 +166,6 @@ export default function Employment({
             data={formData.form1}
             setData={(newData) => setFormData({ ...formData, form1: newData })}
             onSuccess={handleNext}
-            onPrev={handlePrev}
             states={states}
             setIdForm={setIdForm}
             idForm={idForm}

@@ -5,6 +5,7 @@ import DatePicker from "../module/Form/DatePicker";
 import Upload from "../module/Form/Upload";
 import axios from "axios";
 import { validateForm4 } from "@/validation/form4Validate";
+import { successMessage, ToastContainerCustom } from "../module/Toast";
 
 export default function Form4({
   data,
@@ -18,6 +19,7 @@ export default function Form4({
 }) {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [idForm4, setIdForm4] = useState("");
 
   const handleSubmit = async () => {
     if (!validateForm4(data, setErrors)) return;
@@ -34,6 +36,9 @@ export default function Form4({
         }
       });
 
+      if (idForm4) {
+        formData.append("id", idForm4);
+      }
       let response;
 
       if (!savedSteps.form4.isSaved) {
@@ -44,21 +49,23 @@ export default function Form4({
         );
 
         if (response.status === 201) {
-          console.log(response.data);
+          setIdForm4(response.data.id);
           setSavedSteps((prev) => ({
             ...prev,
-            form4: { isSaved: true, id: response.data.id },
+            form4: { isSaved: true },
           }));
+          successMessage("فرم با موفقیت تکمیل شد");
         }
       } else {
         response = await axios.put(
-          `${process.env.NEXT_PUBLIC_API_URL}/app/request-details/${savedSteps.form4.id}/`,
+          `${process.env.NEXT_PUBLIC_API_URL}/app/request-details/${idForm4}/`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
 
         if (response.status === 200) {
           console.log("Updated:", response.data);
+          successMessage("فرم با موفقیت تکمیل شد");
         }
       }
     } catch (error) {
@@ -178,6 +185,7 @@ export default function Form4({
             }
             startYear={1372}
             endYear={""}
+            useCurrentYearAsEnd={true}
           />
         </div>
       </div>
@@ -358,6 +366,7 @@ export default function Form4({
           </button>
         </div>
       </div>
+      <ToastContainerCustom />
     </form>
   );
 }

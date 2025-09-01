@@ -89,7 +89,7 @@ export default function Form2({
     }
   };
 
-  const yearOptions = Array.from({ length: 1490 - 1330 + 1 }, (_, i) => {
+  const yearOptions = Array.from({ length: 1410 - 1330 + 1 }, (_, i) => {
     const year = 1330 + i;
     return { id: year, value: year };
   });
@@ -124,7 +124,6 @@ export default function Form2({
         };
       }
     }
-
     setLoading(true);
 
     try {
@@ -140,14 +139,44 @@ export default function Form2({
           console.log(response.data);
           setSavedSteps((prev) => ({
             ...prev,
-            form2: { isSaved: true, id: response.data.personal_detail_id },
+            form2: { isSaved: true },
+          }));
+
+          const eduIds = response.data.educational_background_ids || [];
+          const updatedEducationalBackground = data.educational_background.map(
+            (item, index) => ({
+              ...item,
+              id: eduIds[index] || null,
+            })
+          );
+
+          const langIds = response.data.other_language_ids || [];
+          const updatedOtherLanguages = data.other_languages.map(
+            (item, index) => ({
+              ...item,
+              id: langIds[index] || null,
+            })
+          );
+
+          setData({
+            ...data,
+            educational_background: updatedEducationalBackground,
+            other_languages: updatedOtherLanguages,
+          });
+
+          setSavedSteps((prev) => ({
+            ...prev,
+            form2: {
+              isSaved: true,
+              id: response.data.personal_detail_id,
+            },
           }));
 
           onSuccess();
         }
       } else {
         response = await axios.put(
-          `${process.env.NEXT_PUBLIC_API_URL}/app/educational-background/${savedSteps.form2.id}/`,
+          `${process.env.NEXT_PUBLIC_API_URL}/app/educational-background/`,
           data
         );
 
@@ -161,8 +190,6 @@ export default function Form2({
       setLoading(false);
     }
   };
-
-  console.log(data);
 
   return (
     <form

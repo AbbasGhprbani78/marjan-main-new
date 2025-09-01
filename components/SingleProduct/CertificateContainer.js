@@ -44,7 +44,7 @@ export default function CertificateContainer({ data }) {
         <div className="relative w-full bg-gray-800 py-10">
           <div
             ref={containerRef}
-            className="w-full flex justify-evenly items-center overflow-x-auto overflow-y-hidden whitespace-nowrap hide-scrollbar gap-x-6 px-6"
+            className="w-full flex justify-evenly items-center overflow-x-auto overflow-y-hidden whitespace-nowrap hide-scrollbar "
           >
             {data.map((cert, i) => (
               <div

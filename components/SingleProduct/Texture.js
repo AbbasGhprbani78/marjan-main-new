@@ -122,6 +122,7 @@ export default function Texture({ textureImage }) {
                   type="radio"
                   checked={activeColor === i}
                   className="w-[16px] h-[16px] accent-black"
+                  readOnly
                 />
               </div>
             </div>

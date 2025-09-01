@@ -1,10 +1,10 @@
 import "../globals.css";
-import Footer from "@/components/Footer";
-import { NavBar } from "@/components/navBar";
 import { fetchHeaderFilter } from "@/services/header";
 import { ToggleProvider } from "@/context/context";
 import ImageLoadingWrapper from "@/components/ImageLoadingWrapper";
 import ChatBot from "@/components/module/ChatBot/ChatBot";
+import Footer from "@/components/Footer";
+import { NavBar } from "@/components/navBar";
 
 export const metadata = {
   title: "Marjan",
@@ -15,15 +15,14 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children, params }) {
-  const { locale } = await params;
-
+  const locale = params.locale;
   const dir = locale === "fa" ? "rtl" : "ltr";
   const dataHeader = await fetchHeaderFilter(locale);
 
   return (
     <html lang={locale} dir={dir}>
-      <ToggleProvider>
-        <body className={locale === "fa" ? "font-fa" : "font-en"}>
+      <body className={locale === "fa" ? "font-fa" : "font-en"}>
+        <ToggleProvider>
           <ImageLoadingWrapper>
             <div className="page-container">
               <NavBar dataHeader={dataHeader} />
@@ -32,8 +31,8 @@ export default async function RootLayout({ children, params }) {
             </div>
             <ChatBot />
           </ImageLoadingWrapper>
-        </body>
-      </ToggleProvider>
+        </ToggleProvider>
+      </body>
     </html>
   );
 }

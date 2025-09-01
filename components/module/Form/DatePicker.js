@@ -13,6 +13,7 @@ const DatePicker = ({
   value = "",
   onChange,
   error = "",
+  useCurrentYearAsEnd = false,
 }) => {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
@@ -27,9 +28,10 @@ const DatePicker = ({
     }
   }, [value]);
 
-  // محاسبه سال جاری شمسی
   const currentJalaliYear = jalaali.toJalaali(new Date()).jy;
-  const lastYear = endYear || currentJalaliYear + 1;
+  const lastYear = useCurrentYearAsEnd
+    ? currentJalaliYear
+    : endYear || currentJalaliYear + 1;
 
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
   const years = Array.from(
