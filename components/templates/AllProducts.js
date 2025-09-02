@@ -170,8 +170,6 @@ export default function AllProducts({ categories, products }) {
 
   const isLtr = false;
 
-  console.log(currentPage);
-
   return (
     <main className="px-20 md:px-40 lg:px-80">
       <section

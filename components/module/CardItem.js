@@ -58,7 +58,7 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
           onClick={() => handleSaveToggle(product.id)}
           className="cursor-pointer"
         >
-          <div className="relative">
+          <div className="relative ">
             <Image
               src={isSaved ? "/images/save2.png" : "/images/save1.png"}
               width={20}

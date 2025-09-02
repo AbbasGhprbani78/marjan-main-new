@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import * as Icons from "iconsax-reactjs";
 import Table from "./Table";
 import { useRouter } from "next/navigation";
-import { useLocalizedLink } from "@/utils/helper";
+import { toPersianDigits, useLocalizedLink } from "@/utils/helper";
 import { useTranslation } from "@/hook/useTranslation";
 
 export default function IntroductionCard({ setOpenModal, singleProduct }) {
@@ -306,7 +306,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
 function ItemOther({ setOpenModal, item }) {
   const router = useRouter();
   const { localizedHref } = useLocalizedLink();
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   return (
     <div className="flex items-center justify-between ">
       <div className="flex items-center gap-[15px]">
@@ -322,7 +322,9 @@ function ItemOther({ setOpenModal, item }) {
         <div className="flex flex-col gap-[6px] ">
           <sapn className={"font-en"}>{item.title}</sapn>
           {item.sizes.map((size) => (
-            <sapn key={size}>{size}</sapn>
+            <sapn key={size}>
+              {locale === "fa" ? toPersianDigits(size) : size}
+            </sapn>
           ))}
         </div>
       </div>

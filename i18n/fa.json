@@ -100,7 +100,7 @@
   "AddressTitleF": "نشانی دفتر مرکزی شرکت کاشی مرجان",
   "AddressTextF": "اصفهان، چهارباغ بالا، کوچه کاویان، پلاک ۴۵",
   "TextSizeInfo": "به دلیل تفاوت در تنظیمات نمایشگر‌ها، رنگ محصولات ممکن است با تصویر نمایش داده شده اندکی متفاوت باشد .",
-  "Size (cm)": "سایز (cm)",
+  "Size": "سایز",
   "Tiles per Carton": "تعداد کاشی در هرکارتن",
   "Tile Area per Carton (m²)": "متراژ کاشی هر کارتن (m²)",
   "Approx. Weight per Carton (kg)": "وزن تقریبی هر کارتن (kg)",
@@ -133,5 +133,7 @@
   "Surface Flatness": "صافی سطح",
   "Thermal Shock Resistance": "مقاومت در برابر شوک حرارتی",
   "Thickness": "ضخامت",
-  "Water Absorption": "جذب آب"
+  "Water Absorption": "جذب آب",
+  "palet_size": "سایز پالت",
+  "thickness": "ضخامت"
 }

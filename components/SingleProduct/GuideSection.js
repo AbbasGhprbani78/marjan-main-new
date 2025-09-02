@@ -69,7 +69,9 @@ export default function GuideSection({
             <>
               <Table
                 columns={[
-                  t("Size (cm)"),
+                  t("Size"),
+                  t("palet_size"),
+                  t("thickness"),
                   t("Tiles per Carton"),
                   t("Tile Area per Carton (m²)"),
                   t("Approx. Weight per Carton (kg)"),
@@ -78,7 +80,9 @@ export default function GuideSection({
                   t("Approx. Weight per Pallet (kg)"),
                 ]}
                 data={dataPack.map((item) => ({
-                  [t("Size (cm)")]: item.size || "-",
+                  [t("Size")]: item.size || "-",
+                  [t("palet_size")]: item?.palet_size || "-",
+                  [t("thickness")]: item?.thickness || "-",
                   [t("Tiles per Carton")]:
                     item.number_of_tiles_per_carton || "-",
                   [t("Tile Area per Carton (m²)")]:
