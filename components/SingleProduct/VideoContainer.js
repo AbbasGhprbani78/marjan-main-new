@@ -28,7 +28,7 @@ export default function VideoContainer({ video }) {
   if (!videoHash) return null;
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-4xl mx-auto mt-[2rem]">
       <iframe
         ref={iframeRef}
         src={`https://www.aparat.com/video/video/embed/videohash/${videoHash}/vt/frame`}

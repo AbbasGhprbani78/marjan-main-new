@@ -61,7 +61,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
                 <td className="px-4 py-3 whitespace-nowrap text-center align-top">
                   {size.map((item) => (
                     <div className="block mb-5" key={item}>
-                      {item}
+                      {locale === "fa" ? toPersianDigits(item) : item}
                     </div>
                   ))}
                 </td>
@@ -77,10 +77,34 @@ export default function Table({ title, thickness, colors, surface, size }) {
                 </td>
               )}
 
-              {hasColors && (
+              {/* {hasColors && (
                 <td className="px-4 py-3 w-max-[130px] md:w-max-[210px] flex justify-center">
                   <div className="flex flex-wrap max-w-[130px] md:max-w-[210px] ">
                     {colors.map((item, index) => (
+                      <div
+                        key={item.id ?? index}
+                        className="h-[25px] w-[25px] m-[2px] rounded-full overflow-hidden relative transition-transform duration-300 ease-in-out hover:-translate-y-2"
+                      >
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
+                          fill
+                          alt="product-circle"
+                          className="object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </td>
+              )} */}
+
+              {hasColors && (
+                <td className="px-4 py-3 w-max-[130px] md:w-max-[210px] flex justify-center">
+                  <div className="flex flex-wrap max-w-[130px] md:max-w-[210px]">
+                    {[
+                      ...new Map(
+                        colors.map((item) => [item.title, item])
+                      ).values(),
+                    ].map((item, index) => (
                       <div
                         key={item.id ?? index}
                         className="h-[25px] w-[25px] m-[2px] rounded-full overflow-hidden relative transition-transform duration-300 ease-in-out hover:-translate-y-2"

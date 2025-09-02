@@ -1,5 +1,4 @@
 "use client";
-
 import { useTranslation } from "@/hook/useTranslation";
 import { toPersianDigits } from "@/utils/helper";
 import * as Icons from "iconsax-reactjs";
@@ -53,9 +52,10 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         <button
           key={i}
           onClick={() => handlePageChange(i)}
+          disabled={currentPage === i}
           className={`mx-0.5 rounded h-[28px] w-[28px] cursor-pointer flex justify-center items-center ${
             currentPage === i
-              ? "bg-[#919191] text-white"
+              ? "bg-[#919191] text-white cursor-not-allowed"
               : "text-gray-600 hover:bg-gray-100"
           } sm:h-[32px] sm:w-[32px] sm:mx-1`}
         >

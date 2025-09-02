@@ -6,22 +6,32 @@ export default function ImageLoadingWrapper({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const MIN_LOADING_TIME = 1300;
+
     const images = Array.from(document.images);
     if (images.length === 0) {
-      setLoading(false);
-      return;
+      const timer = setTimeout(() => setLoading(false), MIN_LOADING_TIME);
+      return () => clearTimeout(timer);
     }
 
-    const promises = images.map(
+    const imagePromises = images.map(
       (img) =>
         new Promise((resolve) => {
           if (img.complete) resolve();
-          else img.onload = () => resolve();
-          img.onerror = () => resolve();
+          else {
+            img.onload = () => resolve();
+            img.onerror = () => resolve();
+          }
         })
     );
 
-    Promise.all(promises).then(() => setLoading(false));
+    const timerPromise = new Promise((resolve) =>
+      setTimeout(resolve, MIN_LOADING_TIME)
+    );
+
+    Promise.all([Promise.all(imagePromises), timerPromise]).then(() =>
+      setLoading(false)
+    );
   }, []);
 
   if (loading) return <Loading />;

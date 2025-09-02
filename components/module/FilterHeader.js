@@ -6,6 +6,7 @@ import { useTranslation } from "@/hook/useTranslation";
 import Link from "next/link";
 import AccardionFilter from "./AccardionFilter";
 import { useViewportWidth } from "@/hook/useViewportWidth";
+import { toPersianDigits } from "@/utils/helper";
 
 export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
   const { t } = useTranslation();
@@ -260,7 +261,7 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
 }
 
 function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   let width = 0;
   let height = 0;
@@ -291,7 +292,9 @@ function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
       onClick={() => setShowFilterMenu(false)}
       className="relative flex items-center justify-between px-20    h-[46px]  bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer"
     >
-      <span className="font-medium">{displayText}</span>
+      <span className="font-medium">
+        {locale === "fa" ? toPersianDigits(displayText) : displayText}
+      </span>
       <div>
         {type === "size" ? (
           <div

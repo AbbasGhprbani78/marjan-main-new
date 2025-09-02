@@ -22,10 +22,20 @@ export default function PopupGallery({
   };
 
   const downloadImage = () => {
-    const link = document.createElement("a");
-    link.href = media[currentIndex];
-    link.download = `image-${currentIndex + 1}.jpg`;
-    link.click();
+    const currentMedia = media[currentIndex];
+    const isVideo = /\.(mp4|webm|ogg|mkv)$/i.test(currentMedia);
+
+    if (!isVideo) {
+      const link = document.createElement("a");
+      link.href = `${process.env.NEXT_PUBLIC_API_URL}${currentMedia}`;
+      link.download = currentMedia.split("/").pop();
+      link.target = "_blank";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      alert("Downloading videos is not supported yet.");
+    }
   };
 
   return (
@@ -136,3 +146,8 @@ export default function PopupGallery({
     </AnimatePresence>
   );
 }
+
+// const link = document.createElement("a");
+//   link.href = media[currentIndex];
+//   link.download = `image-${currentIndex + 1}.jpg`;
+//   link.click();

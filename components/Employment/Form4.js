@@ -58,7 +58,7 @@ export default function Form4({
         }
       } else {
         response = await axios.put(
-          `${process.env.NEXT_PUBLIC_API_URL}/app/request-details/${idForm4}/`,
+          `${process.env.NEXT_PUBLIC_API_URL}/app/request-details/`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );

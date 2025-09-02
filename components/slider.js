@@ -64,7 +64,14 @@ function RightArrow({
   );
 }
 
-export function HomeSlider({ data, bgcolor, dotColor, route, delay = 3500 }) {
+export function HomeSlider({
+  nameproduct = false,
+  data,
+  bgcolor,
+  dotColor,
+  route,
+  delay = 3500,
+}) {
   const { t } = useTranslation();
   let swiper = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -103,14 +110,20 @@ export function HomeSlider({ data, bgcolor, dotColor, route, delay = 3500 }) {
       >
         {data.map((item) => (
           <SwiperSlide key={item.key} style={{ position: "relative" }}>
-            <div className="flex flex-col absolute w-full h-[100%]  z-10 bg-black/40">
+            <div className="flex flex-col items-center absolute w-full h-[100%]  z-10 bg-black/40">
               <div
                 className="relative m-auto mb-[23px]  md:pt-0"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
                 <p
-                  className={`text-[30px] md:text-[40px] font-[400] text-gray-white font-en`}
+                  className={`text-center text-[30px] md:text-[40px] font-[400] text-gray-white ${
+                    nameproduct
+                      ? "font-en"
+                      : locale === "fa"
+                      ? "font-fa"
+                      : "font-en"
+                  }`}
                 >
                   {item.title}
                 </p>

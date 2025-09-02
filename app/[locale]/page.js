@@ -27,6 +27,7 @@ export default async function Home({ params }) {
         data={dataHome?.home?.slides}
         route={"/products"}
         delay={dataHome?.delay}
+        nameproduct={true}
       />
       <div className=" pt-[25px]  md:pt-[50px] mb-20 lg:mb-60">
         <p className="mb-[1.3rem] md:mb-0 text-center title font-[500] ">

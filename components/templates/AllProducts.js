@@ -14,10 +14,12 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 export default function AllProducts({ categories, products }) {
   const itemsPerPage = 9;
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const searchParams = useSearchParams();
   const [filters, setFilters] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
-  const [currentPage, setCurrentPage] = useState(1);
+  const queryPage = Number(searchParams.get("page")) || 1;
+  const [currentPage, setCurrentPage] = useState(queryPage);
   const [isEmptyCheckBox, setEmptycheckBox] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -25,10 +27,9 @@ export default function AllProducts({ categories, products }) {
   const productsToShow = filteredProducts.slice(startIndex, endIndex);
   const { t, locale } = useTranslation();
 
-  const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const queryPage = Number(searchParams.get("page")) || 1;
+
   const queryFilterKey = searchParams.get("filterKey");
   const queryValues = searchParams.get("values")?.split(",") || [];
 
@@ -135,14 +136,16 @@ export default function AllProducts({ categories, products }) {
     });
 
     setFilteredProducts(temp);
-    setCurrentPage(1);
+    if (!isInitialLoad) {
+      setCurrentPage(1);
+    }
   }, [filters, searchTerm, products]);
 
   useEffect(() => {
     if (queryFilterKey && queryValues.length > 0) {
       const decodedValues = queryValues.map((v) => decodeURIComponent(v));
       setFilters({ [queryFilterKey]: decodedValues });
-      setCurrentPage(1);
+      // setCurrentPage(1);
       setEmptycheckBox(false);
     } else {
       setFilters({});
@@ -161,11 +164,13 @@ export default function AllProducts({ categories, products }) {
     if (!queryFilterKey && queryValues.length === 0) {
       setEmptycheckBox(true);
       setFilters({});
-      setCurrentPage(1);
+      // setCurrentPage(1);
     }
   }, [queryFilterKey, queryValues.join(",")]);
 
   const isLtr = false;
+
+  console.log(currentPage);
 
   return (
     <main className="px-20 md:px-40 lg:px-80">

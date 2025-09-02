@@ -89,7 +89,7 @@ export default function Form2({
     }
   };
 
-  const yearOptions = Array.from({ length: 1410 - 1330 + 1 }, (_, i) => {
+  const yearOptions = Array.from({ length: 1405 - 1330 + 1 }, (_, i) => {
     const year = 1330 + i;
     return { id: year, value: year };
   });
@@ -136,7 +136,6 @@ export default function Form2({
         );
 
         if (response.status === 201) {
-          console.log(response.data);
           setSavedSteps((prev) => ({
             ...prev,
             form2: { isSaved: true },
@@ -175,6 +174,7 @@ export default function Form2({
           onSuccess();
         }
       } else {
+        console.log(JSON.stringify(data));
         response = await axios.put(
           `${process.env.NEXT_PUBLIC_API_URL}/app/educational-background/`,
           data

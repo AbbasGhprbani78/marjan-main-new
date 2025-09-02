@@ -33,8 +33,7 @@ export default function Form1({
         );
 
         if (response.status === 201) {
-          console.log(response.data);
-          setIdForm(response.data.id);
+          setIdForm(response.data.personal_detail_id);
           setSavedSteps((prev) => ({
             ...prev,
             form1: { isSaved: true },
@@ -43,7 +42,7 @@ export default function Form1({
           onSuccess();
         }
       } else {
-        const updatedData = { ...data, id: idForm };
+        const updatedData = [{ ...data, id: idForm }];
 
         response = await axios.put(
           `${process.env.NEXT_PUBLIC_API_URL}/app/work-with-us/`,

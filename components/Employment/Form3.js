@@ -95,7 +95,6 @@ export default function Form3({
         );
 
         if (response.status === 201) {
-          console.log(response.data);
           const ids = response.data.career_history_ids || [];
           const updatedData = data.map((item, index) => ({
             ...item,
