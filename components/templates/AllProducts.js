@@ -152,6 +152,27 @@ export default function AllProducts({ categories, products }) {
   const isEmptyCheckBox = Object.keys(filters).length === 0;
   const isLtr = false;
 
+  const [lastPageBeforeSearch, setLastPageBeforeSearch] = useState(1);
+
+  useEffect(() => {
+    if (searchTerm.trim().length >= 3) {
+      if (!searchParams.get("searching")) {
+        setLastPageBeforeSearch(currentPage);
+      }
+      setCurrentPage(1);
+      const query = new URLSearchParams(searchParams.toString());
+      query.set("page", "1");
+      query.set("searching", "true");
+      router.push(`${pathname}?${query.toString()}`);
+    } else if (searchTerm.trim().length === 0 && lastPageBeforeSearch !== 1) {
+      setCurrentPage(lastPageBeforeSearch);
+      const query = new URLSearchParams(searchParams.toString());
+      query.set("page", lastPageBeforeSearch.toString());
+      query.delete("searching");
+      router.push(`${pathname}?${query.toString()}`);
+    }
+  }, [searchTerm]);
+
   return (
     <main className="px-20 md:px-40 lg:px-80">
       <section

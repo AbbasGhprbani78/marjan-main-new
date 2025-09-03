@@ -175,6 +175,7 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
                       height="40"
                       invert=""
                       href="/products"
+                      onClick={() => setShowFilterMenu(false)}
                     />
                     <MoreButton
                       text={t("Why Marjan")}

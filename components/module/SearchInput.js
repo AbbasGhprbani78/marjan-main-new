@@ -16,6 +16,7 @@ export default function SearchInput({ searchTerm, onSearchChange }) {
         onChange={(e) => onSearchChange(e.target.value)}
         className="w-full text-[#242021] placeholder-[#242021] outline-none bg-transparent"
         aria-label={t("ProductSearch")}
+        autoComplete="off"
       />
       <Icons.SearchNormal1 size="24" aria-hidden="true" />
     </div>

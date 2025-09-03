@@ -21,6 +21,8 @@ export default async function page({ params }) {
   const dataSingleProduct = await fetchSingleProduct(locale, id);
   const allsubjects = await getSubjects(locale);
 
+  console.log("dataSingleProduct=> ", dataSingleProduct);
+
   return (
     <div className="wrapper">
       <Anchor data={dataSingleProduct?.projects?.length} />
