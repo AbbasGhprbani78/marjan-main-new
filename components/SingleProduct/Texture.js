@@ -68,7 +68,6 @@ export default function Texture({ textureImage }) {
     const horizontal = item.imagesTailes?.horizontal || [];
     const vertical = item.imagesTailes?.vertical || [];
 
-    // گروه‌بندی
     const groupedHorizontal = groupBySize(horizontal);
     const groupedVertical = groupBySize(vertical);
 
@@ -77,23 +76,19 @@ export default function Texture({ textureImage }) {
       vertical: groupedVertical,
     });
 
-    // 📌 انتخاب پیش‌فرض
     if (groupedHorizontal.length > 0) {
-      // اولین گروه افقی
       const firstGroup = groupedHorizontal[0];
       setTailesToShow(firstGroup.slice(0, 4));
       setFullTiles(firstGroup);
       setIsHorizontal(true);
       setActiveGroupKey(`h-0`);
     } else if (groupedVertical.length > 0) {
-      // اولین گروه عمودی
       const firstGroup = groupedVertical[0];
       setTailesToShow(firstGroup.slice(0, 4));
       setFullTiles(firstGroup);
       setIsHorizontal(false);
       setActiveGroupKey(`v-0`);
     } else {
-      // هیچ کاشی نداشت
       setTailesToShow([]);
       setFullTiles([]);
       setActiveGroupKey(null);
@@ -228,8 +223,13 @@ export default function Texture({ textureImage }) {
                   const totalGroups =
                     groupedTiles.horizontal.length +
                     groupedTiles.vertical.length;
-
                   if (totalGroups <= 2) {
+                    const allTiles = [
+                      ...groupedTiles.horizontal.flat(),
+                      ...groupedTiles.vertical.flat(),
+                    ];
+                    const maxDim = getMaxDimension(allTiles);
+
                     return (
                       <>
                         {groupedTiles.horizontal.map((group, idx) => {
@@ -240,7 +240,7 @@ export default function Texture({ textureImage }) {
                                 className="relative cursor-pointer"
                                 style={getScaledSize(
                                   group[0]?.size,
-                                  getMaxDimension([group[0]]),
+                                  maxDim,
                                   150
                                 )}
                                 onClick={() =>
@@ -278,7 +278,7 @@ export default function Texture({ textureImage }) {
                                 className="relative cursor-pointer"
                                 style={getScaledSize(
                                   group[0]?.size,
-                                  getMaxDimension([group[0]]),
+                                  maxDim,
                                   150
                                 )}
                                 onClick={() =>

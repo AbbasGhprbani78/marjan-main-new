@@ -8,10 +8,10 @@ import { NavBar } from "@/components/navBar";
 
 export const metadata = {
   title: "Marjan",
-  // description: "Marjan Website",
-  // icons: {
-  //   icon: "/images/logo1.png",
-  // },
+  description: "Marjan Website",
+  icons: {
+    icon: "/images/logo1.png",
+  },
 };
 
 export default async function RootLayout({ children, params }) {
