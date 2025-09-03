@@ -50,8 +50,6 @@ export default async function page({ params }) {
   const { id } = await params;
   const singleBlog = await fetchSingleBlog(locale, id);
 
-  console.log("singleBlog", singleBlog);
-
   return (
     <main className="wrapper ">
       <h1 className="sr-only">وبلاگ</h1>

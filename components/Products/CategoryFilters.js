@@ -28,6 +28,7 @@ const CategoryFilters = ({
             defaultOpen={
               key === queryFilterKey || (ismobile ? false : index === 0)
             }
+            queryFilterKey={queryFilterKey}
             queryValues={key === queryFilterKey ? queryValues : []}
             filters={filters}
           />

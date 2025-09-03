@@ -53,8 +53,6 @@ export default async function page({ params }) {
 
   const dataFaq = await fetchFaq(locale);
 
-  console.log(dataFaq);
-
   return (
     <main className="wrapper ">
       <h1 className="sr-only">FAQ</h1>

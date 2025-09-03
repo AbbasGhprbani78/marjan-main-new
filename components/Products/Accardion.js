@@ -1,6 +1,6 @@
 "use client";
 import * as Icons from "iconsax-reactjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckBox from "../module/CheckBox";
 export default function Accordion({
   itemsCheckBox = [],
@@ -10,6 +10,7 @@ export default function Accordion({
   isEmptyCheckBox,
   defaultOpen = false,
   filters,
+  queryFilterKey,
 }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -24,6 +25,12 @@ export default function Accordion({
 
     onFilterChange(filterKey, newSelectedItems);
   };
+
+  useEffect(() => {
+    if (queryFilterKey === filterKey) {
+      setIsOpen(true);
+    }
+  }, [queryFilterKey, filterKey]);
 
   return (
     <div className="p-4 max-w-md mx-auto">

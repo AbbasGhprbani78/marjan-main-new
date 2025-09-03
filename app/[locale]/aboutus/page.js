@@ -57,8 +57,6 @@ export default async function page({ params }) {
   const { locale } = params;
   const dataAboutus = await fetchAboutUs(locale);
 
-  console.log(dataAboutus);
-
   return (
     <main className="wrapper w-full">
       <h1 className="sr-only">درباه ما</h1>

@@ -64,7 +64,6 @@ export default function Form4({
         );
 
         if (response.status === 200) {
-          console.log("Updated:", response.data);
           successMessage("فرم با موفقیت تکمیل شد");
         }
       }

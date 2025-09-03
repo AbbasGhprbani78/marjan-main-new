@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchInput from "../module/SearchInput";
 import Button from "../module/Button";
 import CardProducts from "../Products/CardProducts";
@@ -13,19 +13,61 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function AllProducts({ categories, products }) {
   const itemsPerPage = 9;
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const searchParams = useSearchParams();
-  const queryPage = Number(searchParams.get("page")) || 1;
   const [filters, setFilters] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState(products);
+  const queryPage = Number(searchParams.get("page")) || 1;
   const [currentPage, setCurrentPage] = useState(queryPage);
+  const [isEmptyCheckBox, setEmptycheckBox] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const productsToShow = filteredProducts.slice(startIndex, endIndex);
   const { t, locale } = useTranslation();
+
   const router = useRouter();
   const pathname = usePathname();
 
   const queryFilterKey = searchParams.get("filterKey");
   const queryValues = searchParams.get("values")?.split(",") || [];
+  const handleFilterChange = (key, selectedValues, pushUrl = true) => {
+    if (isEmptyCheckBox) {
+      setEmptycheckBox(false);
+    }
+
+    setFilters((prev) => {
+      const newFilters = { ...prev, [key]: selectedValues };
+
+      if (pushUrl) {
+        const query = new URLSearchParams();
+        Object.entries(newFilters).forEach(([k, vals]) => {
+          if (vals && vals.length > 0) {
+            query.set("filterKey", k);
+            query.set("values", vals.join(","));
+          }
+        });
+
+        const newUrl = `${pathname}?${query.toString()}`;
+        const currentUrl = `${pathname}?${searchParams.toString()}`;
+
+        if (newUrl !== currentUrl) {
+          router.push(newUrl);
+        }
+      }
+
+      return newFilters;
+    });
+
+    setCurrentPage(1);
+  };
+
+  const clearFilter = () => {
+    setEmptycheckBox(true);
+    setFilters({});
+    router.push(pathname);
+  };
 
   const filterKeyMap = {
     color: "colors",
@@ -38,101 +80,85 @@ export default function AllProducts({ categories, products }) {
   };
 
   const normStr = (v) => String(v).trim().toLowerCase();
+
   const normThickness = (v) => {
     const s = String(v).replace(",", ".");
     const n = Number(s.replace(/[^\d.]/g, ""));
     return Number.isFinite(n) ? n : NaN;
   };
 
-  const handleFilterChange = useCallback(
-    (key, selectedValues, pushUrl = true) => {
-      setFilters((prev) => {
-        const newFilters = { ...prev, [key]: selectedValues };
+  const handlePageChange = (newPage) => {
+    const query = new URLSearchParams(searchParams.toString());
+    query.set("page", newPage.toString());
+    router.push(`${pathname}?${query.toString()}`);
+  };
 
-        if (pushUrl) {
-          const query = new URLSearchParams();
-          Object.entries(newFilters).forEach(([k, vals]) => {
-            if (vals && vals.length > 0) {
-              query.set("filterKey", k);
-              query.set("values", vals.join(","));
-            }
-          });
+  useEffect(() => {
+    let temp = [...products];
 
-          const newUrl = `${pathname}?${query.toString()}`;
-          const currentUrl = `${pathname}?${searchParams.toString()}`;
-          if (newUrl !== currentUrl) {
-            router.push(newUrl);
-          }
-        }
+    if (searchTerm.trim().length >= 3) {
+      const lowerSearch = searchTerm.toLowerCase();
 
-        return newFilters;
-      });
-
-      setCurrentPage(1);
-    },
-    [pathname, router, searchParams]
-  );
-
-  const clearFilter = useCallback(() => {
-    setFilters({});
-    router.push(pathname);
-  }, [pathname, router]);
-
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      if (searchTerm.trim().length >= 3) {
-        const lowerSearch = searchTerm.toLowerCase();
+      temp = temp.filter((product) => {
         const inTitle = String(product.title || "")
           .toLowerCase()
           .includes(lowerSearch);
+
         const inCode = (product.tile_variants || []).some((variant) =>
           String(variant.code || "")
             .toLowerCase()
             .includes(lowerSearch)
         );
-        if (!inTitle && !inCode) return false;
-      }
 
-      for (const [key, values] of Object.entries(filters)) {
-        if (!values?.length) continue;
-        const productKey = filterKeyMap[key];
-        if (!productKey) continue;
+        return inTitle || inCode;
+      });
+    }
 
+    Object.entries(filters).forEach(([key, values]) => {
+      if (!values || values.length === 0) return;
+
+      const productKey = filterKeyMap[key];
+
+      if (!productKey) return;
+
+      const selectedStrs = new Set(values.map(normStr));
+      const selectedNums = new Set(
+        values.map(normThickness).filter((n) => Number.isFinite(n))
+      );
+
+      temp = temp.filter((product) => {
         const field = product?.[productKey];
         if (field == null) return false;
 
-        const selectedStrs = new Set(values.map(normStr));
-
         if (key === "thicknesses") {
-          const selectedNums = new Set(
-            values.map(normThickness).filter((n) => Number.isFinite(n))
-          );
           const productNum = normThickness(field);
-          if (!Number.isFinite(productNum) || !selectedNums.has(productNum)) {
-            return false;
-          }
-        } else if (Array.isArray(field)) {
-          if (!field.some((val) => selectedStrs.has(normStr(val))))
-            return false;
-        } else {
-          if (!selectedStrs.has(normStr(field))) return false;
+          if (!Number.isFinite(productNum)) return false;
+          return selectedNums.has(productNum);
         }
-      }
 
-      return true;
+        if (Array.isArray(field)) {
+          return field.some((val) => selectedStrs.has(normStr(val)));
+        }
+
+        return selectedStrs.has(normStr(field));
+      });
     });
-  }, [products, filters, searchTerm]);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const productsToShow = filteredProducts.slice(startIndex, endIndex);
+    setFilteredProducts(temp);
+    if (!isInitialLoad) {
+      setCurrentPage(1);
+    }
+  }, [filters, searchTerm, products]);
 
   useEffect(() => {
     if (queryFilterKey && queryValues.length > 0) {
       const decodedValues = queryValues.map((v) => decodeURIComponent(v));
       setFilters({ [queryFilterKey]: decodedValues });
+      // setCurrentPage(1);
+      setEmptycheckBox(false);
     } else {
       setFilters({});
+      setEmptycheckBox(true);
     }
   }, [queryFilterKey, queryValues.join(",")]);
 
@@ -141,15 +167,16 @@ export default function AllProducts({ categories, products }) {
     if (pageFromQuery !== currentPage) {
       setCurrentPage(pageFromQuery);
     }
-  }, [searchParams, currentPage]);
+  }, [searchParams]);
 
-  const handlePageChange = (newPage) => {
-    const query = new URLSearchParams(searchParams.toString());
-    query.set("page", newPage.toString());
-    router.push(`${pathname}?${query.toString()}`);
-  };
+  useEffect(() => {
+    if (!queryFilterKey && queryValues.length === 0) {
+      setEmptycheckBox(true);
+      setFilters({});
+      // setCurrentPage(1);
+    }
+  }, [queryFilterKey, queryValues.join(",")]);
 
-  const isEmptyCheckBox = Object.keys(filters).length === 0;
   const isLtr = false;
 
   return (

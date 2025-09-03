@@ -125,8 +125,6 @@ export default function Employment({
     }));
   }, [idForm]);
 
-  console.log(idForm);
-
   return (
     <div
       className={`px-20 md:px-40 lg:px-80 mt-[130px] lg:mt-[110px] ${

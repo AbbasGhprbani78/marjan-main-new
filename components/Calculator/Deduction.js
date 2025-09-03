@@ -5,14 +5,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../module/Input";
 import * as Icons from "iconsax-reactjs";
 import Options from "../module/Options";
-
-const deductionItems = [
-  { key: "door", image: "/images/99.png", name: "درب" },
-  { key: "window", image: "/images/100.png", name: "پنجره" },
-  { key: "cabinet", image: "/images/101.png", name: "کابینت" },
-  { key: "closet", image: "/images/101.png", name: "کمد" },
-  { key: "other", image: "/images/101.png", name: "سایر" },
-];
+import { useTranslation } from "@/hook/useTranslation";
 
 export default function Deduction({
   uniMeasurement,
@@ -22,10 +15,18 @@ export default function Deduction({
   walls,
 }) {
   const [isDeduction, setIsDeduction] = useState(false);
+  const { t } = useTranslation();
+
+  const deductionItems = [
+    { key: "door", image: "/images/99.png", name: t("door") },
+    { key: "window", image: "/images/100.png", name: t("window") },
+    { key: "cabinet", image: "/images/101.png", name: t("cabinet") },
+    { key: "closet", image: "/images/101.png", name: t("closet") },
+    { key: "other", image: "/images/101.png", name: t("other") },
+  ];
 
   useEffect(() => {
     if (!isDeduction) {
-      // Reset all deduction-related states when deduction is disabled
       setTabRows(
         deductionItems.map((item) =>
           item.key === "window" ? [{ width: "" }] : [{ width: "", height: "" }]
@@ -187,14 +188,14 @@ export default function Deduction({
 
   return (
     <div>
-      <p className="font-[600] text-[1rem] pb-30">کسر</p>
+      <p className="font-[600] text-[1rem] pb-30">{t("deduction")}</p>
       <div className="grid grid-cols-12 items-start gap-y-[2rem] lg:gap-y-0 lg:gap-[4rem]">
         <div className="col-span-12 md:col-span-6 lg:col-span-4 ">
           <Options
             setIsTrue={setIsDeduction}
             isTrue={isDeduction}
-            text1={"ندارد"}
-            text2={"دارد"}
+            text1={t("No")}
+            text2={t("Yes")}
           />
         </div>
 
@@ -212,7 +213,7 @@ export default function Deduction({
     }
   `}
                 >
-                  درب
+                  {t("door")}
                   <Icons.GasStation size={20} />
                 </button>
               </div>
@@ -224,12 +225,14 @@ export default function Deduction({
                       key={idx}
                       className="flex items-center mt-[2rem] gap-[1rem] w-full  md:max-w-[400px]"
                     >
-                      <span className="font-bold">{`درب ${idx + 1}`}</span>
+                      <span className="font-bold">{`${t("door")} ${
+                        idx + 1
+                      }`}</span>
                       <div className="flex flex-1 gap-5">
                         <div className="flex-1">
                           <Input
-                            label={`عرض (${
-                              uniMeasurement === 1 ? "متر" : "فوت"
+                            label={`${t("Width")} (${
+                              uniMeasurement === 1 ? t("Meter") : t("Foot")
                             })`}
                             value={row.width}
                             onChange={(e) => {
@@ -275,14 +278,16 @@ export default function Deduction({
             </div>
             <div className=" pt-[1rem]">
               <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                کسر مساحت کلی کف
+                {t("Fractionofthetotalfloorarea")}
               </h4>
               <div className="">
                 {floorRects.map((item, idx) => (
                   <div key={idx} className="flex items-end gap-5">
                     <div className="flex flex-1 items-end gap-[1.5rem] mt-[2rem]">
                       <Input
-                        label={`طول (${uniMeasurement === 1 ? "متر" : "فوت"})`}
+                        label={`${t("Length")} (${
+                          uniMeasurement === 1 ? t("Meter") : t("Foot")
+                        })`}
                         value={item.height}
                         onChange={(e) => {
                           const value = e.target.value.replace(/[^\d.]/g, "");
@@ -298,7 +303,9 @@ export default function Deduction({
                       <span className="font-bold">X</span>
 
                       <Input
-                        label={`عرض (${uniMeasurement === 1 ? "متر" : "فوت"})`}
+                        label={`${t("Width")} (${
+                          uniMeasurement === 1 ? t("Meter") : t("Foot")
+                        })`}
                         value={item.width}
                         onChange={(e) => {
                           const value = e.target.value.replace(/[^\d.]/g, "");
@@ -399,7 +406,9 @@ export default function Deduction({
                 <div key={idx} className="flex items-end gap-5">
                   <div className="flex flex-1 items-end gap-[1.5rem] mt-[2rem]">
                     <Input
-                      label={`طول (${uniMeasurement === 1 ? "متر" : "فوت"})`}
+                      label={`${t("Length")} (${
+                        uniMeasurement === 1 ? t("Meter") : t("Foot")
+                      })`}
                       value={item.width}
                       onChange={(e) =>
                         handleChange(
@@ -414,7 +423,9 @@ export default function Deduction({
                     <span className="font-bold">X</span>
 
                     <Input
-                      label={`عرض (${uniMeasurement === 1 ? "متر" : "فوت"})`}
+                      label={`${t("Width")} (${
+                        uniMeasurement === 1 ? t("Meter") : t("Foot")
+                      })`}
                       value={item.height}
                       onChange={(e) =>
                         handleChange(
@@ -503,7 +514,9 @@ export default function Deduction({
                 <div key={idx} className="flex items-end gap-5">
                   <div className="flex flex-1 items-end gap-[1.5rem] mt-[2rem]">
                     <Input
-                      label={`طول (${uniMeasurement === 1 ? "متر" : "فوت"})`}
+                      label={`${t("Length")} (${
+                        uniMeasurement === 1 ? t("Meter") : t("Foot")
+                      })`}
                       value={item.width}
                       onChange={(e) =>
                         handleChange(
@@ -518,7 +531,9 @@ export default function Deduction({
                     <span className="font-bold">X</span>
 
                     <Input
-                      label={`عرض (${uniMeasurement === 1 ? "متر" : "فوت"})`}
+                      label={`${t("Width")} (${
+                        uniMeasurement === 1 ? t("Meter") : t("Foot")
+                      })`}
                       value={item.height}
                       onChange={(e) =>
                         handleChange(
@@ -558,14 +573,16 @@ export default function Deduction({
 
             <div className=" pt-[1rem]">
               <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                کسر مساحت کلی کف
+                {t("Fractionofthetotalfloorarea")}
               </h4>
               <div className="">
                 {floorRects.map((item, idx) => (
                   <div key={idx} className="flex items-end gap-5">
                     <div className="flex flex-1 items-end gap-[1.5rem] mt-[2rem]">
                       <Input
-                        label={`طول (${uniMeasurement === 1 ? "متر" : "فوت"})`}
+                        label={`${t("Length")} (${
+                          uniMeasurement === 1 ? t("Meter") : t("Foot")
+                        })`}
                         value={item.height}
                         onChange={(e) => {
                           const value = e.target.value.replace(/[^\d.]/g, "");
@@ -581,7 +598,9 @@ export default function Deduction({
                       <span className="font-bold">X</span>
 
                       <Input
-                        label={`عرض (${uniMeasurement === 1 ? "متر" : "فوت"})`}
+                        label={`${t("Width")} (${
+                          uniMeasurement === 1 ? t("Meter") : t("Foot")
+                        })`}
                         value={item.width}
                         onChange={(e) => {
                           const value = e.target.value.replace(/[^\d.]/g, "");

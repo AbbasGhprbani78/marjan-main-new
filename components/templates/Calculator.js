@@ -10,14 +10,16 @@ import { Refresh, Calculator } from "iconsax-reactjs";
 import { ToastContainer } from "react-toastify";
 import { warningMessage } from "../module/Toast";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "@/hook/useTranslation";
 
-const TABS = [
-  { label: "کف", value: "floor" },
-  { label: "دیوار", value: "wall" },
-  { label: "کف و دیوار", value: "both" },
-];
 export default function CalculatorT({ dataSizes }) {
   const [uniMeasurement, setUnitMeasurement] = useState(1);
+  const { t } = useTranslation();
+  const TABS = [
+    { label: t("Floor"), value: "floor" },
+    { label: t("Wall"), value: "wall" },
+    { label: t("ّFloorWall"), value: "both" },
+  ];
   const [area, setArea] = useState({
     floorArea: "0.00",
     wallArea: "0.00",
@@ -59,7 +61,7 @@ export default function CalculatorT({ dataSizes }) {
       if (tab === "wall" && area?.error) {
         warningMessage(area.error);
       } else {
-        warningMessage("لطفاً ابتدا مساحت معتبر وارد کنید.");
+        warningMessage(t("invalid_area"));
       }
       return;
     }
@@ -68,14 +70,14 @@ export default function CalculatorT({ dataSizes }) {
     const numericDeductArea = parseFloat(deductArea);
 
     if (numericDeductArea > numericArea) {
-      warningMessage("مقدار کسر شده نمی‌تواند بیشتر از مساحت انتخاب‌شده باشد.");
+      warningMessage(t("deduct_more_than_area"));
       return;
     }
 
     const netArea = numericArea - numericDeductArea;
 
     if (netArea <= 0) {
-      warningMessage("مساحت نهایی باید بیشتر از صفر باشد.");
+      warningMessage(t("net_area_zero"));
       return;
     }
 
@@ -83,7 +85,7 @@ export default function CalculatorT({ dataSizes }) {
 
     const getTileAreaInMeter = (sizeStr) => {
       if (!sizeStr) return 0;
-      const fixedStr = sizeStr.replace(/[x×]/gi, "*");
+      const fixedStr = sizeStr.replace(/[Xx×]/gi, "*");
       const [w, h] = fixedStr.split("*").map((v) => parseFloat(v.trim()));
       if (!w || !h) return 0;
       return (w / 100) * (h / 100);
@@ -93,7 +95,7 @@ export default function CalculatorT({ dataSizes }) {
     if (tab === "floor" || tab === "both") {
       surfaces.push({
         key: "floor",
-        label: "کف",
+        label: t("Floor"),
         area: parseFloat(area.floorArea) || 0,
         tile: size?.mode === "same" ? size?.all : size?.floor,
       });
@@ -104,7 +106,7 @@ export default function CalculatorT({ dataSizes }) {
           (parseFloat(w.length) || 0) * (parseFloat(w.height) || 0);
         surfaces.push({
           key: w.label || `wall${idx + 1}`,
-          label: w.label || `دیوار ${idx + 1}`,
+          label: w.label || `${t("Wall")} ${idx + 1}`,
           area: wallArea,
           tile: size?.mode === "same" ? size?.all : size?.walls?.[w.label],
         });
@@ -113,7 +115,7 @@ export default function CalculatorT({ dataSizes }) {
 
     const sumArea = surfaces.reduce((s, x) => s + (x.area || 0), 0) || 0;
     if (sumArea <= 0) {
-      warningMessage("مساحت سطحی برای محاسبه موجود نیست.");
+      warningMessage(t("no_surface_area"));
       return;
     }
 
@@ -129,7 +131,7 @@ export default function CalculatorT({ dataSizes }) {
       const tArea = getTileAreaInMeter(s.tile);
 
       if (!tArea || tArea <= 0) {
-        warningMessage("لطفاً اندازه کاشی هر سطح را کامل انتخاب کنید.");
+        warningMessage(t("tile_size_missing"));
         return;
       }
       const tiles = Math.ceil(effAreaWithWaste / tArea);
@@ -142,7 +144,7 @@ export default function CalculatorT({ dataSizes }) {
       });
     }
 
-    const unit = uniMeasurement === 1 ? "متر مربع" : "فوت مربع";
+    const unit = uniMeasurement === 1 ? t("unit_m2") : t("unit_ft2");
     const areaStr = finalArea.toFixed(2);
 
     setTotalArea(areaStr + " " + unit);
@@ -218,13 +220,13 @@ export default function CalculatorT({ dataSizes }) {
       <section className="flex  flex-col items-center  mt-[4rem] pb-[3rem] gap-[2rem]">
         <div className="flex items-center gap-[2rem] w-full lg:w-1/2">
           <Button2
-            text={"برآورد متراژ کاشی"}
+            text={t("Estimatetilearea")}
             onClick={handleCalculate}
             icon={Calculator}
             bgblack={"#000"}
           />
           <Button2
-            text={"تنظیم مجدد"}
+            text={t("Reset")}
             onClick={restartHandler}
             icon={Refresh}
             bgblack={"#000"}
@@ -241,10 +243,12 @@ export default function CalculatorT({ dataSizes }) {
                 transition={{ duration: 0.4 }}
                 className="flex items-center gap-4 p-3 bg-red-50 rounded-lg border border-red-200"
               >
-                <span className="font-bold text-red-700">مساحت کسر شده:</span>
+                <span className="font-bold text-red-700">
+                  {t("Deductedarea")}:
+                </span>
                 <span className="text-red-600">
                   {deductArea.toFixed(2)}{" "}
-                  {uniMeasurement === 1 ? "متر مربع" : "فوت مربع"}
+                  {uniMeasurement === 1 ? t("unit_m2") : t("unit_ft2")}
                 </span>
               </motion.div>
             )}
@@ -261,7 +265,7 @@ export default function CalculatorT({ dataSizes }) {
                 className="flex items-center flex-row gap-4 p-3 bg-green-50 rounded-lg border border-green-200 w-full"
               >
                 <span className="font-bold text-green-700">
-                  متراژ نهایی کاشی مورد نیاز:
+                  {t("Finaltilearearequired")} :
                 </span>
                 <span className="text-green-600">{totalArea}</span>
               </motion.p>
@@ -279,16 +283,18 @@ export default function CalculatorT({ dataSizes }) {
                 className="flex items-center flex-row gap-4 p-3 bg-blue-50 rounded-lg border border-blue-200 w-full"
               >
                 <span className="font-bold text-blue-700">
-                  تعداد کاشی مورد نیاز:
+                  {t("Numberoftilesrequired")} :
                 </span>
-                <span className="text-blue-600">{numberOfTiles} عدد</span>
+                <span className="text-blue-600">
+                  {numberOfTiles} {t("Number")}
+                </span>
               </motion.p>
             )}
           </AnimatePresence>
 
           {perResults.length > 0 && (
             <div className="w-full mt-2 p-10 rounded-lg border border-gray-200 bg-white">
-              <p className="font-bold mb-2">جزئیات هر سطح</p>
+              <p className="font-bold mb-2">{t("Detailsofeachlevel")}</p>
               <div className="flex flex-col gap-2">
                 {perResults.map((r) => (
                   <div
@@ -297,10 +303,12 @@ export default function CalculatorT({ dataSizes }) {
                   >
                     <span className="font-medium">{r.label}</span>
                     <span>
-                      مساحت: {r.area.toFixed(2)}{" "}
-                      {uniMeasurement === 1 ? "متر مربع" : "فوت مربع"}
+                      {t("Area")}: {r.area.toFixed(2)}{" "}
+                      {uniMeasurement === 1 ? t("unit_m2") : t("unit_ft2")}
                     </span>
-                    <span>کاشی: {r.tiles} عدد</span>
+                    <span>
+                      {t("Tile")}: {r.tiles} {t("Number")}
+                    </span>
                   </div>
                 ))}
               </div>

@@ -4,7 +4,7 @@ import { useTranslation } from "@/hook/useTranslation";
 
 export default function PrecentageWastage({ onChange, isClean }) {
   const [isChecked, setIsChecked] = useState(false);
-  const { locale } = useTranslation();
+  const { locale, t } = useTranslation();
 
   useEffect(() => {
     if (onChange) {
@@ -20,10 +20,10 @@ export default function PrecentageWastage({ onChange, isClean }) {
 
   return (
     <div className="flex flex-col">
-      <p className="font-[600] text-[1rem] pb-30">درصد هدر دادن</p>
+      <p className="font-[600] text-[1rem] pb-30">{t("Percentageofwastage")}</p>
 
       <CheckBox
-        label={"۵٪ اضافه برای پوشش خسارات تصادفی در حین حمل و نقل یا در منزل"}
+        label={t("extraTail")}
         checked={isChecked}
         onChange={(e) => setIsChecked(e.target.checked)}
         name="wastage"

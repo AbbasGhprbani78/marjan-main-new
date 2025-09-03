@@ -5,156 +5,6 @@ import MySelect from "./../module/SelectDropDown";
 import * as Icons from "iconsax-reactjs";
 import { useTranslation } from "@/hook/useTranslation";
 
-const maxWallsByShape = {
-  rectangle: 4,
-  square: 4,
-  triangle: 3,
-  circle: 1,
-  semicircle: 2,
-  trapezoid: 4,
-  parallelogram: 4,
-  pentagon: 5,
-};
-
-const shapes = [
-  {
-    label: "مستطیل",
-    value: "rectangle",
-    inputs: {
-      floor: [
-        { name: "length", label: "طول (متر)" },
-        { name: "width", label: "عرض (متر)" },
-      ],
-      wall: [
-        { name: "length", label: "طول اتاق (متر)" },
-        { name: "width", label: "عرض اتاق (متر)" },
-      ],
-      both: [
-        { name: "length", label: "طول اتاق (متر)" },
-        { name: "width", label: "عرض اتاق (متر)" },
-      ],
-    },
-  },
-  {
-    label: "مربع",
-    value: "square",
-    inputs: {
-      floor: [{ name: "side", label: "ضلع (متر)" }],
-      wall: [{ name: "side", label: "ضلع اتاق (متر)" }],
-      both: [{ name: "side", label: "ضلع اتاق (متر)" }],
-    },
-  },
-  {
-    label: "مثلث",
-    value: "triangle",
-    edges: 3,
-    inputs: {
-      floor: [
-        { name: "length1", label: "ضلع اول (متر)" },
-        { name: "length2", label: "ضلع دوم (متر)" },
-        { name: "length3", label: "ضلع سوم (متر)" },
-      ],
-      wall: [
-        { name: "length1", label: "طول ضلع 1 (متر)" },
-        { name: "length2", label: "طول ضلع 2 (متر)" },
-        { name: "length3", label: "طول ضلع 3 (متر)" },
-      ],
-
-      both: [
-        { name: "length1", label: "ضلع اول (متر)" },
-        { name: "length2", label: "ضلع دوم (متر)" },
-        { name: "length3", label: "ضلع سوم (متر)" },
-      ],
-    },
-  },
-  {
-    label: "دایره",
-    value: "circle",
-    edges: 1,
-    inputs: {
-      floor: [{ name: "radius", label: "شعاع (متر)" }],
-      wall: [
-        { name: "radius", label: "شعاع (متر)" },
-        { name: "height1", label: "ارتفاع دیوار (متر)" },
-      ],
-      both: [
-        { name: "radius", label: "شعاع (متر)" },
-        { name: "height1", label: "ارتفاع دیوار (متر)" },
-      ],
-    },
-  },
-  {
-    label: "نیم‌دایره",
-    value: "semicircle",
-    edges: 1,
-    inputs: {
-      floor: [{ name: "radius", label: "شعاع (متر)" }],
-      wall: [{ name: "radius", label: "شعاع (متر)" }],
-      both: [{ name: "radius", label: "شعاع (متر)" }],
-    },
-  },
-  {
-    label: "ذوزنقه",
-    value: "trapezoid",
-    edges: 4,
-    inputs: {
-      floor: [
-        { name: "side1", label: "ضلع ۱ (متر)" },
-        { name: "side2", label: "ضلع ۲ (متر)" },
-        { name: "side3", label: "ضلع ۳ (متر)" },
-        { name: "side4", label: "ضلع ۴ (متر)" },
-        { name: "floorHeight", label: "ارتفاع کف (متر)" },
-      ],
-      wall: [
-        { name: "side1", label: "ضلع ۱ (متر)" },
-        { name: "side2", label: "ضلع ۲ (متر)" },
-        { name: "side3", label: "ضلع ۳ (متر)" },
-        { name: "side4", label: "ضلع ۴ (متر)" },
-        { name: "floorHeight", label: "ارتفاع کف (متر)" },
-      ],
-      both: [
-        { name: "side1", label: "ضلع ۱ (متر)" },
-        { name: "side2", label: "ضلع ۲ (متر)" },
-        { name: "side3", label: "ضلع ۳ (متر)" },
-        { name: "side4", label: "ضلع ۴ (متر)" },
-        { name: "floorHeight", label: "ارتفاع کف (متر)" },
-      ],
-    },
-  },
-  {
-    label: "متوازی‌الأضلاع",
-    value: "parallelogram",
-    edges: 4,
-    inputs: {
-      floor: [
-        { name: "length1", label: "ضلع اول (متر)" },
-        { name: "length2", label: "ضلع دوم (متر)" },
-        { name: "height1", label: "ارتفاع (متر)" },
-      ],
-      wall: [
-        { name: "length1", label: "ضلع اول (متر)" },
-        { name: "length2", label: "ضلع دوم (متر)" },
-        { name: "height1", label: "ارتفاع (متر)" },
-      ],
-      both: [
-        { name: "length1", label: "ضلع اول (متر)" },
-        { name: "length2", label: "ضلع دوم (متر)" },
-        { name: "height1", label: "ارتفاع (متر)" },
-      ],
-    },
-  },
-  {
-    label: "پنج‌ضلعی",
-    value: "pentagon",
-    edges: 5,
-    inputs: {
-      floor: [{ name: "length1", label: "طول ضلع (متر)" }],
-      wall: [{ name: "length1", label: "طول ضلع (متر)" }],
-      both: [{ name: "length1", label: "طول ضلع (متر)" }],
-    },
-  },
-];
-
 export default function SelectSurfaceSizeRoom({
   setArea,
   isClean,
@@ -168,6 +18,154 @@ export default function SelectSurfaceSizeRoom({
   const [inputs, setInputs] = useState({});
   const [wallHeightsCount, setWallHeightsCount] = useState(1);
   const { t } = useTranslation();
+  const maxWallsByShape = {
+    rectangle: 4,
+    square: 4,
+    triangle: 3,
+    circle: 1,
+    semicircle: 2,
+    trapezoid: 4,
+    parallelogram: 4,
+    pentagon: 5,
+  };
+
+  const shapes = [
+    {
+      label: t("rectangle"),
+      value: "rectangle",
+      inputs: {
+        floor: [
+          { name: "length", label: t("length_meter") },
+          { name: "width", label: t("width_meter") },
+        ],
+        wall: [
+          { name: "length", label: t("room_length_meter") },
+          { name: "width", label: t("room_width_meter") },
+        ],
+        both: [
+          { name: "length", label: t("room_length_meter") },
+          { name: "width", label: t("room_width_meter") },
+        ],
+      },
+    },
+    {
+      label: t("square"),
+      value: "square",
+      inputs: {
+        floor: [{ name: "side", label: t("side_meter") }],
+        wall: [{ name: "side", label: t("room_side_meter") }],
+        both: [{ name: "side", label: t("room_side_meter") }],
+      },
+    },
+    {
+      label: t("triangle"),
+      value: "triangle",
+      edges: 3,
+      inputs: {
+        floor: [
+          { name: "length1", label: t("triangle_side1_meter") },
+          { name: "length2", label: t("triangle_side2_meter") },
+          { name: "length3", label: t("triangle_side3_meter") },
+        ],
+        wall: [
+          { name: "length1", label: t("triangle_room_side1_meter") },
+          { name: "length2", label: t("triangle_room_side2_meter") },
+          { name: "length3", label: t("triangle_room_side3_meter") },
+        ],
+        both: [
+          { name: "length1", label: t("triangle_side1_meter") },
+          { name: "length2", label: t("triangle_side2_meter") },
+          { name: "length3", label: t("triangle_side3_meter") },
+        ],
+      },
+    },
+    {
+      label: t("circle"),
+      value: "circle",
+      edges: 1,
+      inputs: {
+        floor: [{ name: "radius", label: t("radius_meter") }],
+        wall: [
+          { name: "radius", label: t("radius_meter") },
+          { name: "height1", label: t("wall_height_meter") },
+        ],
+        both: [
+          { name: "radius", label: t("radius_meter") },
+          { name: "height1", label: t("wall_height_meter") },
+        ],
+      },
+    },
+    {
+      label: t("semicircle"),
+      value: "semicircle",
+      edges: 1,
+      inputs: {
+        floor: [{ name: "radius", label: t("radius_meter") }],
+        wall: [{ name: "radius", label: t("radius_meter") }],
+        both: [{ name: "radius", label: t("radius_meter") }],
+      },
+    },
+    {
+      label: t("trapezoid"),
+      value: "trapezoid",
+      edges: 4,
+      inputs: {
+        floor: [
+          { name: "side1", label: t("side1_meter") },
+          { name: "side2", label: t("side2_meter") },
+          { name: "side3", label: t("side3_meter") },
+          { name: "side4", label: t("side4_meter") },
+          { name: "floorHeight", label: t("floor_height_meter") },
+        ],
+        wall: [
+          { name: "side1", label: t("side1_meter") },
+          { name: "side2", label: t("side2_meter") },
+          { name: "side3", label: t("side3_meter") },
+          { name: "side4", label: t("side4_meter") },
+          { name: "floorHeight", label: t("floor_height_meter") },
+        ],
+        both: [
+          { name: "side1", label: t("side1_meter") },
+          { name: "side2", label: t("side2_meter") },
+          { name: "side3", label: t("side3_meter") },
+          { name: "side4", label: t("side4_meter") },
+          { name: "floorHeight", label: t("floor_height_meter") },
+        ],
+      },
+    },
+    {
+      label: t("parallelogram"),
+      value: "parallelogram",
+      edges: 4,
+      inputs: {
+        floor: [
+          { name: "length1", label: t("parallelogram_side1_meter") },
+          { name: "length2", label: t("parallelogram_side2_meter") },
+          { name: "height1", label: t("parallelogram_height_meter") },
+        ],
+        wall: [
+          { name: "length1", label: t("parallelogram_side1_meter") },
+          { name: "length2", label: t("parallelogram_side2_meter") },
+          { name: "height1", label: t("parallelogram_height_meter") },
+        ],
+        both: [
+          { name: "length1", label: t("parallelogram_side1_meter") },
+          { name: "length2", label: t("parallelogram_side2_meter") },
+          { name: "height1", label: t("parallelogram_height_meter") },
+        ],
+      },
+    },
+    {
+      label: t("pentagon"),
+      value: "pentagon",
+      edges: 5,
+      inputs: {
+        floor: [{ name: "length1", label: t("pentagon_side_meter") }],
+        wall: [{ name: "length1", label: t("pentagon_side_meter") }],
+        both: [{ name: "length1", label: t("pentagon_side_meter") }],
+      },
+    },
+  ];
 
   useEffect(() => {
     if (isClean) {

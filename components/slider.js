@@ -196,7 +196,7 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
           <button
             key={item.id}
             ref={(el) => (buttonsRef.current[item.id] = el)}
-            className={`w-[136px] h-[45px] text-[20px] font-[500] cursor-pointer pb-[5px] transition-all duration-300
+            className={`w-[136px] h-[45px] text-[17px] font-[500] cursor-pointer pb-[5px] transition-all duration-300
               ${shadow && activeButton === item.id && "text-black"}`}
             onClick={() => setActiveButton(item.id)}
           >

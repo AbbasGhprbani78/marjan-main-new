@@ -391,27 +391,3 @@ function UseCase({ item, setShowFilterMenu }) {
     </Link>
   );
 }
-
-// const [dataHeader, setdataHeader] = useState({});
-// const getFilterHeader = async () => {
-//   try {
-//     const response = await axios.get(
-//       `${process.env.NEXT_PUBLIC_API_URL}/product/product-catalog/`,
-//       {
-//         headers: {
-//           "Accept-Language": locale,
-//         },
-//       }
-//     );
-
-//     if (response.status === 200) {
-//       setdataHeader(response.data);
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// useEffect(() => {
-//   getFilterHeader();
-// }, []);
