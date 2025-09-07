@@ -7,7 +7,11 @@ import { useViewportWidth } from "@/hook/useViewportWidth";
 import { useToggle } from "@/context/context";
 export default function ChatBot({}) {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState({
+    ma: [],
+    mqa: [],
+  });
+
   const [sessioId, setSessionId] = useState("");
   const [isEmpty, setIsEmpty] = useState(true);
   const [disableInput, setDisableInput] = useState(false);
@@ -38,12 +42,18 @@ export default function ChatBot({}) {
     };
 
     setIsEmpty(false);
+
     const newMessage = {
       id: crypto.randomUUID(),
       isai: false,
       text: message,
     };
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+    setMessages((prev) => ({
+      ...prev,
+      [headerValue]: [...prev[headerValue], newMessage],
+    }));
+
     setMessage("");
     setDisableInput(true);
     setLoading(true);
@@ -53,15 +63,14 @@ export default function ChatBot({}) {
         query: message,
         ...(sessioId && { session_id: sessioId }),
       };
+
       const res = await axios.post(
         `https://api.nobinco.com/chat/product/productinfochatIP/`,
         body,
-        {
-          headers,
-        }
+        { headers }
       );
 
-      if (res.status === 201 || res.status === 200) {
+      if (res.status === 200 || res.status === 201) {
         setDisableInput(false);
         setLoading(false);
 
@@ -78,7 +87,11 @@ export default function ChatBot({}) {
           text: res.data.ai_assistant,
         };
 
-        setMessages((prevMessages) => [...prevMessages, messageAi]);
+        setMessages((prev) => ({
+          ...prev,
+          [headerValue]: [...prev[headerValue], messageAi],
+        }));
+
         setAiResponsesCount((prevCount) => prevCount + 1);
 
         if (res.data.seggestion_list) {
@@ -87,19 +100,25 @@ export default function ChatBot({}) {
             isai: true,
             images: res.data.seggestion_list,
           };
-          setMessages((prevMessages) => [...prevMessages, suggestionMessage]);
+          setMessages((prev) => ({
+            ...prev,
+            [headerValue]: [...prev[headerValue], suggestionMessage],
+          }));
         }
       }
     } catch (error) {
       setLoading(false);
       setDisableInput(false);
       const errorMessage = {
-        id: messages.length + 1,
+        id: crypto.randomUUID(),
         isai: true,
         text: "مشکلی پیش آمده بزودی برمیگردیم",
         isError: true,
       };
-      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      setMessages((prev) => ({
+        ...prev,
+        [headerValue]: [...prev[headerValue], errorMessage],
+      }));
     }
   };
 
@@ -186,13 +205,15 @@ export default function ChatBot({}) {
               className="bi bi-arrow-left"
               viewBox="0 0 16 16"
               style={{ cursor: "pointer" }}
-              onClick={() => {
-                setIsShowChat(false);
-              }}
+              onClick={() => setIsShowChat(false)}
             >
               <path
                 fillRule="evenodd"
-                d="M15 8a.5.5 0 0 1-.5.5H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4A.498.498 0 0 1 2 8a.498.498 0 0 1 .146-.354l4-4a.5.5 0 0 1 .708.708L3.707 7.5H14.5A.5.5 0 0 1 15 8z"
+                d="M15 8a.5.5 0 0 1-.5.5H3.707l3.147 
+                 3.146a.5.5 0 0 1-.708.708l-4-4A.498.498 
+                 0 0 1 2 8a.498.498 0 0 1 .146-.354l4-4a.5.5 
+                 0 0 1 .708.708L3.707 7.5H14.5A.5.5 
+                 0 0 1 15 8z"
               />
             </svg>
           ) : (
@@ -204,22 +225,29 @@ export default function ChatBot({}) {
               className="bi bi-x"
               viewBox="0 0 16 16"
               style={{ cursor: "pointer" }}
-              onClick={() => {
-                setIsShowChatbot(false);
-              }}
+              onClick={() => setIsShowChatbot(false)}
             >
-              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+              <path
+                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 
+                     7.293l2.646-2.647a.5.5 0 0 
+                     1 .708.708L8.707 8l2.647 
+                     2.646a.5.5 0 0 1-.708.708L8 
+                     8.707l-2.646 2.647a.5.5 0 0 
+                     1-.708-.708L7.293 8 4.646 
+                     5.354a.5.5 0 0 1 0-.708"
+              />
             </svg>
           )}
         </div>
+
         {showChat ? (
           <>
             <div className="chatbot-body">
               <div className="chat-content" ref={chatContentRef}>
-                {messages.length > 0 &&
-                  messages.map((message) => (
-                    <Message key={message.id} message={message} />
-                  ))}
+                {messages[headerValue]?.map((msg) => (
+                  <Message key={msg.id} message={msg} />
+                ))}
+
                 {loading && (
                   <div className="loading-chat">
                     <div className="dot"></div>
@@ -235,10 +263,11 @@ export default function ChatBot({}) {
                     </div>
                   </div>
                 )}
+
                 {endMessage && (
                   <>
-                    <div className={`message_wrapper_ai`}>
-                      <p className={`chat-contant-ai`}>
+                    <div className="message_wrapper_ai">
+                      <p className="chat-contant-ai">
                         از صحبت با شما لذت بردم! برای کمک به بهتر شدن سرویس و
                         ارائه راهنمایی‌های بیشتر، چت ما به ۱۰ سوال محدود شده
                         است. اگر نیاز به اطلاعات بیشتری دارید، می‌توانید یک چت
@@ -254,15 +283,19 @@ export default function ChatBot({}) {
                 )}
               </div>
             </div>
+
             <div className="chat-bottom">
               <div className="chatbot-actions" ref={wrapRef}>
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   autoComplete="false"
-                  type="text"
                   maxLength={120}
-                  placeholder="پیام خود را وارد کنید"
+                  placeholder={
+                    headerValue === "ma"
+                      ? "سوال خود درباره محصول را وارد کنید..."
+                      : "سوال خود را بپرسید..."
+                  }
                   className={`input-chat ${
                     disableInput && "disable-input-chat"
                   }`}
@@ -286,7 +319,14 @@ export default function ChatBot({}) {
                     className="bi bi-send"
                     viewBox="0 0 16 16"
                   >
-                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+                    <path
+                      d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 
+                           14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 
+                           7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 
+                           0 0 1 .54.11ZM6.636 10.07l2.761 
+                           4.338L14.13 2.576zm6.787-8.201L1.591 
+                           6.602l4.339 2.76z"
+                    />
                   </svg>
                 </button>
               </div>
@@ -304,7 +344,6 @@ export default function ChatBot({}) {
               >
                 دستیار فروش محصول
               </li>
-
               <li
                 className="item-chat"
                 onClick={() => {
@@ -317,6 +356,7 @@ export default function ChatBot({}) {
             </ul>
           </>
         )}
+
         <p className="text-bottom">Powered By Nobin</p>
       </div>
 

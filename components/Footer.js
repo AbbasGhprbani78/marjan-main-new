@@ -109,6 +109,10 @@ export default function Footer() {
             {t("All rights reserved.")}
           </p>
         </div>
+        <p className="w-full flex justify-center mt-[2rem] ">
+          طراحی و توسعه توسط تیم
+          <span className="font-semibold inline-block ms-2">نوبین</span>
+        </p>
       </div>
 
       <div className="px-20 md:hidden pt-[33px]">
@@ -206,6 +210,10 @@ export default function Footer() {
             {t("All rights reserved.")}
           </p>
         </div>
+        <p className="w-full flex justify-center mb-[2rem] ">
+          طراحی و توسعه توسط تیم
+          <span className="font-semibold inline-block ms-2">نوبین</span>
+        </p>
       </div>
     </footer>
   );

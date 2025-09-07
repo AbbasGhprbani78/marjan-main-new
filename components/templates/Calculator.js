@@ -27,7 +27,7 @@ export default function CalculatorT({ dataSizes }) {
     walls: [],
   });
   const [tab, setTab] = useState("floor");
-  const [includeWastage, setIncludeWastage] = useState(false);
+  const [includeWastage, setIncludeWastage] = useState(0);
   const [size, setSize] = useState({
     mode: "same",
     all: "",
@@ -81,7 +81,7 @@ export default function CalculatorT({ dataSizes }) {
       return;
     }
 
-    const finalArea = includeWastage ? netArea * 1.05 : netArea;
+    const finalArea = netArea * (1 + includeWastage);
 
     const getTileAreaInMeter = (sizeStr) => {
       if (!sizeStr) return 0;
@@ -127,7 +127,7 @@ export default function CalculatorT({ dataSizes }) {
 
     for (const s of surfaces) {
       const effArea = (s.area || 0) * factor;
-      const effAreaWithWaste = includeWastage ? effArea * 1.05 : effArea;
+      const effAreaWithWaste = effArea * (1 + includeWastage);
       const tArea = getTileAreaInMeter(s.tile);
 
       if (!tArea || tArea <= 0) {
@@ -163,7 +163,7 @@ export default function CalculatorT({ dataSizes }) {
       walls: [],
     });
     setDeductArea(0);
-    setIncludeWastage(false);
+    setIncludeWastage(0);
     setSize({ mode: "same", all: "", floor: "", walls: {} });
     setTotalArea(0);
     setNumberOfTiles(0);
@@ -175,10 +175,9 @@ export default function CalculatorT({ dataSizes }) {
     }, 50);
   };
 
-  const handleWastageChange = useCallback((checked) => {
-    setIncludeWastage(checked);
+  const handleWastageChange = useCallback((percentage) => {
+    setIncludeWastage(percentage);
   }, []);
-
   return (
     <main className="px-20 md:px-40 lg:px-80  mt-[145px] lg:mt-[8rem]">
       <section className="mt-[2rem]">
@@ -207,6 +206,7 @@ export default function CalculatorT({ dataSizes }) {
       <section className="mt-[2rem]">
         <PrecentageWastage onChange={handleWastageChange} isClean={isClean} />
       </section>
+
       <section className="mt-[4rem]">
         <TileSize
           value={size}
