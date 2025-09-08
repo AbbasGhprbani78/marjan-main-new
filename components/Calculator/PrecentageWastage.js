@@ -24,6 +24,7 @@ export default function PrecentageWastage({ onChange, isClean }) {
   return (
     <div className="flex flex-col gap-5">
       <p className="font-[600] text-[1rem] pb-2">{t("Percentageofwastage")}</p>
+      <p className="my-[.5rem]">{t("precentageText")}</p>
 
       <CheckBox
         label={t("extraTail5")}

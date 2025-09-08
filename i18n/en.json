@@ -198,5 +198,6 @@
   "Estimatetilearea": "Estimate tile area",
   "Reset": "Reset",
   "Area": "Area",
-  "Number": "Number"
+  "Number": "Number",
+  "precentageText": "When installing tiles, some of the material is wasted due to cutting and breakage; for simple spaces, 5% is sufficient, and in environments with special angles and cutting, this amount can be up to 15%. Here you can choose the appropriate percentage for your project."
 }
