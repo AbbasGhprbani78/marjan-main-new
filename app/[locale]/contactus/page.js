@@ -17,7 +17,7 @@ export default async function page({ params }) {
         address: "اصفهان، چهارباغ بالا، کوچه کاویان، پلاک 45",
         x: 32.626021,
         y: 51.66114,
-        link: `https://www.google.com/maps?q=32.654232,51.667491`,
+        link: `https://www.google.com/maps?q=32.626021,51.66114`,
       },
       {
         name: "کارخانه واحد 2",
@@ -27,7 +27,7 @@ export default async function page({ params }) {
           "اصفهان، کمربندی شمالی نجف آباد، شهرک صنعتی منتظریه (ویلا شهر)، شرکت کاشی مرجان",
         x: 32.682744,
         y: 51.420689,
-        link: `https://www.google.com/maps?q=32.654232,51.667491`,
+        link: `https://www.google.com/maps?q=32.682744,51.420689`,
       },
       {
         name: "کارخانه واحد 1",
@@ -37,7 +37,7 @@ export default async function page({ params }) {
           "اصفهان، کمربندی شمالی نجف آباد، شهرک صنعتی منتظریه (ویلا شهر)، شرکت کاشی مرجان",
         x: 32.681213,
         y: 51.412748,
-        link: `https://www.google.com/maps?q=32.654232,51.667491`,
+        link: `https://www.google.com/maps?q=32.681213,51.412748`,
       },
     ],
   };

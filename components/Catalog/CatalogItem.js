@@ -7,7 +7,10 @@ import React from "react";
 export default function CatalogItem({ catalog }) {
   const openPdf = () => {
     if (typeof window !== "undefined") {
-      window.open(catalog.pdfSrc, "_blank");
+      window.open(
+        `${process.env.NEXT_PUBLIC_API_URL}${catalog?.pdfSrc}`,
+        "_blank"
+      );
     }
   };
 
