@@ -619,15 +619,10 @@ export function GallerySlider({ data, onClick, ispopup = false }) {
                 key={item.key}
                 className="relative group overflow-hidden"
               >
-                <div className="cursor-pointer relative">
+                <div className="cursor-pointer relative overflow-hidden">
                   {item?.link ? (
                     <Link href={item.link} locale={locale}>
                       {image}
-                      {item.name && (
-                        <span className="text-black inline-block pt-[.5rem]">
-                          {item.name}
-                        </span>
-                      )}
                     </Link>
                   ) : (
                     <div onClick={() => onClick(item)}>{image}</div>
@@ -642,6 +637,11 @@ export function GallerySlider({ data, onClick, ispopup = false }) {
                     </div>
                   )}
                 </div>
+                {item.name && (
+                  <span className="text-black inline-block pt-[.5rem]">
+                    {item.name}
+                  </span>
+                )}
               </SwiperSlide>
             );
           })}
