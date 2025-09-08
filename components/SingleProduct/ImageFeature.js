@@ -12,14 +12,14 @@ export default function ImageFeature({ item }) {
         />
       </div>
       <div
-        className="absolute top-[120%] left-1/2 -translate-x-1/2 mt-2 hidden lg:block
+        className="absolute top-[120%] left-1/2 -translate-x-1/2 mt-2 hidden lg:block not-first:
                 opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100
                 transition-all duration-300 bg-gray-800 text-white text-sm
-                py-4 px-[10px] z-10 whitespace-nowrap shadow-lg"
+                pt-7 pb-4 px-[10px] z-10 whitespace-nowrap shadow-lg"
       >
         {item.title}
 
-        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-10 h-10 bg-gray-800 rotate-45"></div>
+        <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gray-800 rotate-45"></div>
       </div>
 
       <span className="block text-[#8b8d91] font-bold text-[.85rem] text-center mt-[4px] lg:hidden">

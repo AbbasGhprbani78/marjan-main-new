@@ -623,6 +623,11 @@ export function GallerySlider({ data, onClick, ispopup = false }) {
                   {item?.link ? (
                     <Link href={item.link} locale={locale}>
                       {image}
+                      {item.name && (
+                        <span className="text-black inline-block pt-[.5rem]">
+                          {item.name}
+                        </span>
+                      )}
                     </Link>
                   ) : (
                     <div onClick={() => onClick(item)}>{image}</div>

@@ -10,7 +10,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
   const hasSize = size && size.length > 0;
   const hasSurface = surface && surface.length > 0;
   const hasColors = colors && colors.length > 0;
-  const hasThickness = !!thickness;
+  const hasThickness = !!thickness.additional_thicknesses.length;
 
   return (
     <>
@@ -107,7 +107,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
                     ].map((item, index) => (
                       <div
                         key={item.id ?? index}
-                        className="h-[25px] w-[25px] m-[2px] rounded-full overflow-hidden relative transition-transform duration-300 ease-in-out hover:-translate-y-2"
+                        className="h-[25px] w-[25px] m-[2px] rounded-full overflow-hidden relative transition-transform duration-300 ease-in-out hover:-translate-y-2 shadow-[0_2px_2px_rgba(0,0,0,0.4)]"
                       >
                         <Image
                           src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
@@ -123,7 +123,11 @@ export default function Table({ title, thickness, colors, surface, size }) {
 
               {hasThickness && (
                 <td className="px-4 py-3 whitespace-nowrap text-center [direction:ltr] align-top">
-                  {locale === "fa" ? toPersianDigits(thickness) : thickness} mm
+                  {thickness?.additional_thicknesses.map((item, i) => (
+                    <div key={i} className="mb-5">
+                      {locale === "fa" ? toPersianDigits(item) : item} mm
+                    </div>
+                  ))}
                 </td>
               )}
             </tr>

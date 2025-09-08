@@ -18,12 +18,10 @@ export default function VideoContainer({ video }) {
         ref={iframeRef}
         src={`https://www.aparat.com/video/video/embed/videohash/${videoHash}/vt/frame`}
         allowFullScreen
-        webkitAllowFullScreen
-        mozAllowFullScreen
-        className="w-full h-[220px] sm:h-[300px] md:h-[400px] lg:h-[500px] "
-        style={{
-          display: "block",
-        }}
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
+        className="w-full h-[220px] sm:h-[300px] md:h-[400px] lg:h-[500px]"
+        style={{ display: "block" }}
       ></iframe>
     </div>
   );

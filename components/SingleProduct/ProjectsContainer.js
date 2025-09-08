@@ -33,6 +33,7 @@ export default function ProjectsContainer({ data }) {
           id: item.id,
           image: item.default_image,
           link: `/projects/${item.id}`,
+          name: item?.name,
         }))}
       />
       <div className="pt-[2rem] pb-[1rem] flex justify-center">
