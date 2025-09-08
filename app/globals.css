@@ -169,6 +169,20 @@ button {
   }
 }
 
+@media (max-width: 768px) {
+  .about-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .about-text.expanded {
+    display: block; /* تمام متن نمایش داده شود */
+    -webkit-line-clamp: unset;
+  }
+}
+
 @media (max-width: 640px) {
   .custom-bullet {
     width: 8px !important;

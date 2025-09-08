@@ -36,7 +36,7 @@ const Accordion = ({ accardionItem }) => {
         }}
         className="overflow-hidden transition-all duration-300 ease-in-out"
       >
-        <p className="px-4 pb-[2.5rem] font-normal text-[15.5px] text-justify">
+        <p className="px-4 pb-[2.5rem] font-normal text-[15.5px] text-start lg:text-justify">
           {locale === "fa"
             ? toPersianDigits(accardionItem.answer)
             : accardionItem.answer}

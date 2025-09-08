@@ -7,7 +7,7 @@ import PopFilter from "../module/PopFilter";
 import Button from "../module/Button";
 import Pagination from "../module/Pagination";
 import { useTranslation } from "@/hook/useTranslation";
-
+import { useRouter, useSearchParams } from "next/navigation";
 export default function Catalog({ catalogs, categories }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const itemsPerPage = 8;
@@ -18,11 +18,14 @@ export default function Catalog({ catalogs, categories }) {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const catalogToShow = filteredProducts.slice(startIndex, endIndex);
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { t } = useTranslation();
 
   const clearFilter = () => {
     setEmptycheckBox(true);
     setFilters({});
+    router.push("?", { shallow: true });
   };
 
   const handleCheckboxChange = (key, event) => {
@@ -30,10 +33,22 @@ export default function Catalog({ catalogs, categories }) {
     const checked = event.target.checked;
 
     setFilters((prev) => {
-      return {
-        ...prev,
-        [key]: checked ? value : "",
-      };
+      const newFilters = { ...prev };
+
+      if (checked) {
+        newFilters[key] = value;
+      } else {
+        delete newFilters[key];
+      }
+
+      if (Object.keys(newFilters).length === 0) {
+        router.push("?", { shallow: true });
+      } else {
+        const query = new URLSearchParams({ ...newFilters, page: "1" });
+        router.push(`?${query.toString()}`, { shallow: true });
+      }
+
+      return newFilters;
     });
 
     setCurrentPage(1);
@@ -55,8 +70,21 @@ export default function Catalog({ catalogs, categories }) {
     });
 
     setFilteredProducts(temp);
-    setCurrentPage(1);
   }, [filters, catalogs]);
+
+  useEffect(() => {
+    const params = {};
+    searchParams.forEach((value, key) => {
+      if (key !== "page") {
+        params[key] = value;
+      }
+    });
+
+    const page = parseInt(searchParams.get("page") || "1", 10);
+
+    setFilters(params);
+    setCurrentPage(page);
+  }, [searchParams]);
 
   return (
     <div className="grid grid-cols-12 gap-[1.3rem]  pb-[2rem]">
@@ -79,7 +107,7 @@ export default function Catalog({ catalogs, categories }) {
               key={i}
               label={item}
               name="category"
-              checked={filters.category?.includes(item) || false}
+              checked={filters.category === item}
               value={item}
               onChange={(e) => handleCheckboxChange("category", e)}
             />
@@ -111,7 +139,7 @@ export default function Catalog({ catalogs, categories }) {
                 key={i}
                 label={item}
                 name="category"
-                checked={filters.category?.includes(item) || false}
+                checked={filters.category === item}
                 value={item}
                 onChange={(e) => handleCheckboxChange("category", e)}
               />

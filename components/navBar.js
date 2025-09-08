@@ -167,13 +167,13 @@ export function NavBar({ dataHeader }) {
                     className=" hover:bg-gray-100 cursor-pointer font-semibold p-[7px]"
                     onClick={() => handleLangChange("fa")}
                   >
-                    Fa
+                    FA
                   </li>
                   <li
                     className=" hover:bg-gray-100 cursor-pointer p-[7px]"
                     onClick={() => handleLangChange("en")}
                   >
-                    En
+                    EN
                   </li>
                 </ul>
               )}
@@ -732,13 +732,13 @@ function MenuMobile({ dataHeader }) {
                 className=" hover:bg-gray-100 cursor-pointer font-semibold p-[7px]"
                 onClick={() => handleLangChange("fa")}
               >
-                Fa
+                FA
               </li>
               <li
                 className=" hover:bg-gray-100 cursor-pointer p-[7px]"
                 onClick={() => handleLangChange("en")}
               >
-                En
+                EN
               </li>
             </ul>
           )}
@@ -756,7 +756,7 @@ function MenuMobile({ dataHeader }) {
         </div>
       </div>
       <div
-        className={`fixed top-[66.94px] h-[calc(100dvh-66.94px)] pb-[40px] w-full bg-white z-50 transform transition-transform duration-300 overflow-y-auto ${
+        className={`fixed top-[66.94px] h-[calc(100dvh-66.94px)] pb-[20px] w-full bg-white z-50 transform transition-transform duration-300 overflow-y-auto ${
           isOpen
             ? "translate-x-0"
             : isRTL
@@ -798,6 +798,23 @@ function MenuMobile({ dataHeader }) {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
                 >
+                  <MenuLink
+                    href={"/products"}
+                    className={`w-max flex justify-between  py-3 font-medium text-[var(--color-gray-900)] ms-[15px] ${
+                      isActive("/products") ? "border-b-2 border-primary" : ""
+                    }`}
+                  >
+                    {t("AllProducts")}
+                  </MenuLink>
+                  <MenuLink
+                    href={"/industrial"}
+                    className={`w-max mt-[.5rem] flex justify-between  py-3 font-medium text-[var(--color-gray-900)] ms-[15px] ${
+                      isActive("/industrial") ? "border-b-2 border-primary" : ""
+                    }`}
+                  >
+                    {t("Industrial")}
+                  </MenuLink>
+
                   <FilterHeader
                     show={isOpen}
                     setShowFilterMenu={setIsOpen}
@@ -809,8 +826,6 @@ function MenuMobile({ dataHeader }) {
           </li>
 
           {[
-            { label: t("AllProducts"), href: "/products" },
-            { label: t("Industrial"), href: "/industrial" },
             { label: t("Catalog"), href: "/catalog" },
             { label: t("Representatives"), href: "/representatives" },
             { label: t("About"), href: "/aboutus" },
@@ -878,7 +893,6 @@ function MenuMobile({ dataHeader }) {
                             {label}
                           </a>
                         ) : (
-                          // لینک داخلی
                           <MenuLink
                             href={href}
                             onClick={() => setIsOpen(false)}
@@ -932,7 +946,7 @@ function MenuMobile({ dataHeader }) {
                     { label: t("Videos"), category: "videos" },
                     { label: t("News"), category: "news" },
                   ].map((item, i) => (
-                    <li key={i} className="py-[10px]">
+                    <li key={i} className="py-[10px] ms-[15px]">
                       <Link
                         href={localizedPath(
                           `/blogs?tab=2&category=${item.label.toLowerCase()}`

@@ -10,6 +10,7 @@ import en from "@/i18n/en.json";
 import FeatureTabs from "@/components/Home/FeatureTabs";
 import { MoreButton } from "@/components/moreButton";
 import { fetchhome } from "@/services/home";
+import ReadMoreText from "@/components/module/ReadMoreText";
 
 export default async function Home({ params }) {
   const { locale } = await params;
@@ -53,7 +54,7 @@ export default async function Home({ params }) {
         </div>
       </div>
       <div className="pt-[45.8px] md:pt-[90px] lg:pt-0 mb-60px text-center ">
-        <p className="text-[1.7rem] font-[500]">{t.Projects}</p>
+        <p className="title font-[500]">{t.Projects}</p>
         <ProjectsSlider data={dataHome.desginStory.projects} />
 
         <MoreButton
@@ -94,9 +95,13 @@ export default async function Home({ params }) {
             {dataHome?.about?.title}
           </p>
           <div className="w-full md:w-[38dvw] text-justify">
-            <p className="text-[16px] font-[400] text-gray-white mb-[35px] md:mb-[20px]">
-              {dataHome.about.description}
-            </p>
+            <div className=" mb-[35px] md:mb-[20px]">
+              <ReadMoreText
+                text={dataHome.about.description}
+                textColor="text-white"
+                isgradient={false}
+              />
+            </div>
             <MoreButton
               text={t.MoreDetails}
               width={263}

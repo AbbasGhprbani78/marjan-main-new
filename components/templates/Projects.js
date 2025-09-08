@@ -53,7 +53,7 @@ export default function Projects({ data, categories }) {
 
       const params = new URLSearchParams(window.location.search);
       params.delete(key);
-      params.delete("page"); // 📌 ریست صفحه هنگام تغییر فیلتر
+      params.delete("page");
 
       if (newValue) {
         params.set(key, newValue);
@@ -182,15 +182,33 @@ export default function Projects({ data, categories }) {
             </p>
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1.2rem]">
-            {productsToShow?.map((project, index) => (
-              <article
-                key={index}
-                itemScope
-                itemType="https://schema.org/CreativeWork"
-              >
-                <ProjectCardItem project={project} />
-              </article>
-            ))}
+            {productsToShow.length > 0 ? (
+              <>
+                {productsToShow?.map((project, index) => (
+                  <article
+                    key={index}
+                    itemScope
+                    itemType="https://schema.org/CreativeWork"
+                  >
+                    <ProjectCardItem project={project} />
+                  </article>
+                ))}
+              </>
+            ) : (
+              <>
+                <div
+                  role="alert"
+                  aria-live="polite"
+                  className="flex flex-col items-center justify-center col-span-full py-20 text-center text-gray-500"
+                >
+                  <Icons.SearchNormal size={48} className="mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">
+                    {t("NoResultsTitle")}
+                  </h3>
+                  <p>{t("NoResultsMessage")}</p>
+                </div>
+              </>
+            )}
           </div>
 
           <nav

@@ -3,12 +3,11 @@ import React from "react";
 
 export default function ImageFeature({ item }) {
   return (
-    <div className="group relative w-fit text-center flex flex-col justify-center items-center">
-      <div className="cursor-pointer relative">
+    <div className="group relative w-fit text-center flex flex-col justify-center items-center min-w-[80px] md:min-w-auto">
+      <div className="cursor-pointer relative w-30 h-30 md:w-40 md:h-40 ">
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
-          width={40}
-          height={40}
+          fill
           alt="feature image"
         />
       </div>

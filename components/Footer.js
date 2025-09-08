@@ -109,9 +109,18 @@ export default function Footer() {
             {t("All rights reserved.")}
           </p>
         </div>
-        <p className="w-full flex justify-center mt-[2rem] ">
-          طراحی و توسعه توسط تیم
-          <span className="font-semibold inline-block ms-2">نوبین</span>
+        <p className="w-full flex justify-center mt-[2rem]">
+          {locale === "fa" ? (
+            <>
+              طراحی و توسعه توسط تیم
+              <span className="font-semibold inline-block ms-2">نوبین</span>
+            </>
+          ) : (
+            <>
+              Designed and developed by
+              <span className="font-semibold inline-block ms-2">Nobin</span>
+            </>
+          )}
         </p>
       </div>
 

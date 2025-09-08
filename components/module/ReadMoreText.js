@@ -6,6 +6,7 @@ export default function ReadMoreText({
   fontSize = "text-[1rem]",
   fontweight = "font-normal",
   textColor = "text-[var(--color-gray-900)]",
+  isgradient = true,
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -23,7 +24,9 @@ export default function ReadMoreText({
         {!expanded && (
           <div
             onClick={() => setExpanded(true)}
-            className="absolute bottom-0 left-0 w-full h-[150px] bg-gradient-to-t from-white to-transparent cursor-pointer z-10"
+            className={`absolute bottom-0 left-0 w-full h-[150px] ${
+              isgradient && "bg-gradient-to-t from-white"
+            } to-transparent cursor-pointer z-10`}
           />
         )}
       </div>
