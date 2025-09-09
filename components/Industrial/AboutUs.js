@@ -9,8 +9,7 @@ import { toPersianDigits } from "@/utils/helper";
 export default function AboutUs({ data }) {
   const { t, locale } = useTranslation();
   return (
-    <div className="relative px-20 md:px-40 lg:px-80 pt-[3rem]  min-h-[380px] pb-[2rem]">
-      <div className="absolute bg-[#00000080] md:bg-[#292D32CC] inset-0 z-10 w-full md:w-1/2"></div>
+    <div className="flex flex-col min-h-[422px] h-auto w-full py-[50px] px-20 md:px-40 lg:px-[80px] relative">
       <div className="absolute inset-0 z-0">
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}${data?.image}`}
@@ -18,13 +17,14 @@ export default function AboutUs({ data }) {
           fill
           className="object-cover"
         />
+        <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
       <div className="relative z-10 text-white w-full md:w-1/2">
         <h3 className="font-medium title mb-[1.5rem] text-center md:text-start">
           {data.title}
         </h3>
-        <p className="text-justify w-full md:w-7/8 leading-[30px]">
+        <p className="text-justify w-full md:w-[38dvw] leading-[30px]">
           {locale === "fa" ? toPersianDigits(data.text) : data.text}
         </p>
         <div className="w-[250px] mt-[1rem] mx-auto md:mx-0">
@@ -32,7 +32,7 @@ export default function AboutUs({ data }) {
             text={t("More")}
             width={250}
             height={46}
-            className="mx-auto my-[25px] "
+            className="mx-auto my-[25px]"
             href={"/aboutus"}
           />
         </div>

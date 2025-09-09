@@ -53,8 +53,7 @@ export default function AllProducts({ categories, products }) {
           const query = new URLSearchParams();
           Object.entries(newFilters).forEach(([k, vals]) => {
             if (vals && vals.length > 0) {
-              query.set("filterKey", k);
-              query.set("values", vals.join(","));
+              query.set(k, vals.join(","));
             }
           });
 
@@ -80,6 +79,7 @@ export default function AllProducts({ categories, products }) {
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
+      // search check
       if (searchTerm.trim().length >= 3) {
         const lowerSearch = searchTerm.toLowerCase();
         const inTitle = String(product.title || "")
@@ -93,33 +93,32 @@ export default function AllProducts({ categories, products }) {
         if (!inTitle && !inCode) return false;
       }
 
-      for (const [key, values] of Object.entries(filters)) {
-        if (!values?.length) continue;
+      return Object.entries(filters).every(([key, values]) => {
+        if (!values?.length) return true;
+
         const productKey = filterKeyMap[key];
-        if (!productKey) continue;
+        if (!productKey) return true;
 
         const field = product?.[productKey];
         if (field == null) return false;
 
-        const selectedStrs = new Set(values.map(normStr));
+        const selectedStrs = values.map(normStr);
 
         if (key === "thicknesses") {
-          const selectedNums = new Set(
-            values.map(normThickness).filter((n) => Number.isFinite(n))
-          );
           const productNum = normThickness(field);
-          if (!Number.isFinite(productNum) || !selectedNums.has(productNum)) {
-            return false;
-          }
-        } else if (Array.isArray(field)) {
-          if (!field.some((val) => selectedStrs.has(normStr(val))))
-            return false;
-        } else {
-          if (!selectedStrs.has(normStr(field))) return false;
+          return (
+            Number.isFinite(productNum) &&
+            selectedStrs.some((val) => normThickness(val) === productNum)
+          );
         }
-      }
 
-      return true;
+        if (Array.isArray(field)) {
+          const normalizedField = field.map(normStr);
+          return selectedStrs.some((val) => normalizedField.includes(val));
+        }
+
+        return selectedStrs.some((val) => normStr(field) === val);
+      });
     });
   }, [products, filters, searchTerm]);
 
@@ -128,13 +127,17 @@ export default function AllProducts({ categories, products }) {
   const productsToShow = filteredProducts.slice(startIndex, endIndex);
 
   useEffect(() => {
-    if (queryFilterKey && queryValues.length > 0) {
-      const decodedValues = queryValues.map((v) => decodeURIComponent(v));
-      setFilters({ [queryFilterKey]: decodedValues });
-    } else {
-      setFilters({});
-    }
-  }, [queryFilterKey, queryValues.join(",")]);
+    const params = Object.fromEntries(searchParams.entries());
+    const newFilters = {};
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) {
+        newFilters[key] = value.split(",").map(decodeURIComponent);
+      }
+    });
+
+    setFilters(newFilters);
+  }, [searchParams]);
 
   useEffect(() => {
     const pageFromQuery = Number(searchParams.get("page")) || 1;

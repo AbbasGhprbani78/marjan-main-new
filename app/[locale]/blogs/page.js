@@ -38,6 +38,7 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = await params;
   const blogsData = await fetchBlogs(locale);
+  console.log("blogsData=>", blogsData);
 
   return (
     <main className="wrapper ">

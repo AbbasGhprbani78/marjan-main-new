@@ -7,7 +7,6 @@ export default function Accordion({
   title,
   onFilterChange,
   filterKey,
-  isEmptyCheckBox,
   defaultOpen = false,
   filters,
   queryFilterKey,

@@ -86,6 +86,8 @@ export default function Catalog({ catalogs, categories }) {
     setCurrentPage(page);
   }, [searchParams]);
 
+  console.log(categories);
+
   return (
     <div className="grid grid-cols-12 gap-[1.3rem]  pb-[2rem]">
       <div className=" hidden col-span-0 md:block md:col-span-4 lg:col-span-3  md:pt-[.27rem]">

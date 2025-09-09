@@ -10,7 +10,8 @@ export default function Table({ title, thickness, colors, surface, size }) {
   const hasSize = size && size.length > 0;
   const hasSurface = surface && surface.length > 0;
   const hasColors = colors && colors.length > 0;
-  const hasThickness = !!thickness.additional_thicknesses.length;
+  const hasThickness =
+    !!thickness?.additional_thicknesses.length || !!thickness?.main_thickness;
 
   return (
     <>
@@ -123,6 +124,14 @@ export default function Table({ title, thickness, colors, surface, size }) {
 
               {hasThickness && (
                 <td className="px-4 py-3 whitespace-nowrap text-center [direction:ltr] align-top">
+                  {thickness?.main_thickness && (
+                    <div className="mb-5">
+                      {locale === "fa"
+                        ? toPersianDigits(thickness?.main_thickness)
+                        : thickness?.main_thickness}{" "}
+                      mm
+                    </div>
+                  )}
                   {thickness?.additional_thicknesses.map((item, i) => (
                     <div key={i} className="mb-5">
                       {locale === "fa" ? toPersianDigits(item) : item} mm

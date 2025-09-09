@@ -270,12 +270,12 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
 
                     <div className="flex flex-col mt-[10px]">
                       <p
-                        className={`text-[.9rem] font-[500] ${
+                        className={`text-[.85rem] font-[500] ${
                           locale === "fa" ? "font-fa" : "font-en"
                         }`}
                         dir={locale === "fa" ? "rtl" : "ltr"}
                       >
-                        {truncateText(item.title, 25)}
+                        {item.title}
                       </p>
                     </div>
                   </Link>

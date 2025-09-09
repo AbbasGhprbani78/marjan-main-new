@@ -58,6 +58,8 @@ export function NavBar({ dataHeader }) {
     cleanPathname === "/contactus" ||
     cleanPathname === "/calculator" ||
     cleanPathname === "/employment" ||
+    cleanPathname === "/representationrequest" ||
+    cleanPathname === "/suppliers" ||
     cleanPathname === "/saved";
 
   const shouldApplyScrolledStyles =
@@ -169,12 +171,12 @@ export function NavBar({ dataHeader }) {
                   >
                     FA
                   </li>
-                  <li
+                  {/* <li
                     className=" hover:bg-gray-100 cursor-pointer p-[7px]"
                     onClick={() => handleLangChange("en")}
                   >
                     EN
-                  </li>
+                  </li> */}
                 </ul>
               )}
             </div>
@@ -734,12 +736,12 @@ function MenuMobile({ dataHeader }) {
               >
                 FA
               </li>
-              <li
+              {/* <li
                 className=" hover:bg-gray-100 cursor-pointer p-[7px]"
                 onClick={() => handleLangChange("en")}
               >
                 EN
-              </li>
+              </li> */}
             </ul>
           )}
         </div>

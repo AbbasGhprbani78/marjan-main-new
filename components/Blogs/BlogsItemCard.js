@@ -18,7 +18,7 @@ export default function BlogsItemCard({ item }) {
           />
         </div>
         <div className="border-t border-[#e8e8e8] flex items-start lg:items-center justify-between mt-[10px] pt-[10px]">
-          <p className=" text-[1rem]">{truncateText(item.text, 23)}</p>
+          <p className=" text-[.85rem]">{item?.title}</p>
         </div>
       </Link>
     </article>

@@ -25,6 +25,8 @@ export default function CatalogItem({ catalog }) {
 
   const { locale } = useTranslation();
 
+  console.log(catalog);
+
   return (
     <div>
       <div
@@ -32,13 +34,13 @@ export default function CatalogItem({ catalog }) {
         onClick={openPdf}
       >
         <Image
-          src={`${process.env.NEXT_PUBLIC_API_URL}${catalog.coverSrc}`}
+          src={`${process.env.NEXT_PUBLIC_API_URL}${catalog?.coverSrc}`}
           alt=""
           fill
           className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
         />
       </div>
-      <p className="text-[#919191] pt-7">نام کاتالوگ</p>
+      <p className="text-[#919191] pt-7">{catalog?.title}</p>
       <div className="mt-[5px] flex items-center justify-between">
         <div
           className="cursor-pointer"

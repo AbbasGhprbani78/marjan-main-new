@@ -26,10 +26,14 @@ export default function RepresentationItem({ city }) {
         <span className="font-medium">{t("Phone")}:</span>{" "}
         {locale === "fa" ? toPersianDigits(city.phone) : city.phone}
       </p>
-      <p>
-        <span className="font-medium">{t("Postal Code")}:</span>{" "}
-        {locale === "fa" ? toPersianDigits(city.postal_code) : city.postal_code}
-      </p>
+      {city?.postal_code && (
+        <p>
+          <span className="font-medium">{t("Postal Code")}:</span>{" "}
+          {locale === "fa"
+            ? toPersianDigits(city.postal_code)
+            : city.postal_code}
+        </p>
+      )}
 
       {city.link && (
         <div className="mt-[1rem] w-full md:w-[202px]">

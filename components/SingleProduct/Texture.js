@@ -6,6 +6,7 @@ import PopupGallery from "../module/PopupGallery";
 import * as Icons from "iconsax-reactjs";
 import { useTranslation } from "@/hook/useTranslation";
 import MySelect from "../module/SelectDropDown";
+import { toPersianDigits } from "@/utils/helper";
 
 export default function Texture({ textureImage }) {
   const [showTexture, setShowTexture] = useState(false);
@@ -264,7 +265,7 @@ export default function Texture({ textureImage }) {
                                 </div>
                               </div>
                               <span className="pt-[10px]">
-                                {group[0]?.size}
+                                {toPersianDigits(group[0]?.size)}
                               </span>
                             </div>
                           );
@@ -302,7 +303,7 @@ export default function Texture({ textureImage }) {
                                 </div>
                               </div>
                               <span className="pt-[10px]">
-                                {group[0]?.size}
+                                {toPersianDigits(group[0]?.size)}
                               </span>
                             </div>
                           );
