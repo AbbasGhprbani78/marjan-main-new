@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react";
 import * as Icons from "iconsax-reactjs";
 import { useTranslation } from "@/hook/useTranslation";
 import { toPersianDigits } from "@/utils/helper";
+import Link from "next/link";
 
 const Accordion = ({ accardionItem }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,12 +37,21 @@ const Accordion = ({ accardionItem }) => {
         }}
         className="overflow-hidden transition-all duration-300 ease-in-out"
       >
-        <p className="px-4 pb-[2.5rem] font-normal text-[15.5px] text-start lg:text-justify">
-          {locale === "fa"
-            ? toPersianDigits(accardionItem.answer)
-            : accardionItem.answer}
-          {}
-        </p>
+        <div className="pb-[2rem] w-full">
+          <p className="px-4  font-normal text-[15.5px] text-start lg:text-justify">
+            {locale === "fa"
+              ? toPersianDigits(accardionItem.answer)
+              : accardionItem.answer}
+          </p>
+          {accardionItem?.linkUrl && (
+            <Link
+              href={accardionItem?.linkUrl}
+              className="inline-block mt-[1rem] text-[.9rem] underline text-blue-500 font-bold"
+            >
+              {accardionItem?.linkTitle}
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

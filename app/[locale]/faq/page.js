@@ -52,6 +52,7 @@ export default async function page({ params }) {
   const t = locale === "fa" ? fa : en;
 
   const dataFaq = await fetchFaq(locale);
+  console.log(dataFaq);
 
   return (
     <main className="wrapper ">
