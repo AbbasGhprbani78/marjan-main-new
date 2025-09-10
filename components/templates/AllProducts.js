@@ -19,7 +19,7 @@ export default function AllProducts({ categories, products }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(queryPage);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true);
   const { t, locale } = useTranslation();
   const router = useRouter();
   const pathname = usePathname();
@@ -79,7 +79,6 @@ export default function AllProducts({ categories, products }) {
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
-      // search check
       if (searchTerm.trim().length >= 3) {
         const lowerSearch = searchTerm.toLowerCase();
         const inTitle = String(product.title || "")
@@ -146,7 +145,12 @@ export default function AllProducts({ categories, products }) {
     }
   }, [searchParams, currentPage]);
 
+  useEffect(() => {
+    setIsLoading(false);
+  }, [queryPage, filters, searchTerm]);
+
   const handlePageChange = (newPage) => {
+    setIsLoading(true);
     const query = new URLSearchParams(searchParams.toString());
     query.set("page", newPage.toString());
     router.push(`${pathname}?${query.toString()}`);
@@ -228,7 +232,6 @@ export default function AllProducts({ categories, products }) {
           </aside>
         </div>
       </section>
-
       <section className=" mt-[30px] grid lg:grid-cols-12 gap-[1.2rem]">
         <aside className="hidden lg:flex flex-col justify-between col-span-3">
           <div>
@@ -256,7 +259,14 @@ export default function AllProducts({ categories, products }) {
         </aside>
 
         <section className="lg:col-span-9">
-          <CardProducts products={productsToShow} />
+          {isLoading ? (
+            <div className="flex justify-center items-center h-[40vh] md:min-h-[70vh]">
+              <div className="w-70 h-70 border-4 border-black border-b-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <CardProducts products={productsToShow} />
+          )}
+
           <Pagination
             currentPage={currentPage}
             totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}

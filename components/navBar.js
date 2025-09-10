@@ -469,18 +469,33 @@ function Menu({ show, setShowInnerMenu }) {
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm text-black"
                 >
                   <li className="py-[10px] ">
-                    <Link href="/employment" className="custom-link">
-                      {t("Employment")}
+                    <Link
+                      href="/employment"
+                      className={`custom-link ${
+                        isActivePath("/employment") ? "active" : ""
+                      }`}
+                    >
+                      {t("employment")}
                     </Link>
                   </li>
                   <li className="py-[10px] ">
-                    <Link href="#" className="custom-link">
-                      {t("Representationrequest")}
+                    <Link
+                      href="/representationrequest"
+                      className={`custom-link ${
+                        isActivePath("/representationrequest") ? "active" : ""
+                      }`}
+                    >
+                      {t("representationrequest")}
                     </Link>
                   </li>
                   <li className="py-[10px] ">
-                    <Link href="#" className="custom-link">
-                      {t("Suppliers")}
+                    <Link
+                      href="/suppliers"
+                      className={`custom-link ${
+                        isActivePath("/suppliers") ? "active" : ""
+                      }`}
+                    >
+                      {t("suppliers")}
                     </Link>
                   </li>
                 </motion.ul>
@@ -685,8 +700,6 @@ function MenuMobile({ dataHeader }) {
     router.push(newPathname + (search ? "?" + search : ""));
   }
 
-  // const queryFilterKey = searchParams.get("filterKey");
-  // const queryValues = searchParams.get("values");
   const queryString = searchParams.toString();
 
   useEffect(() => {
@@ -816,6 +829,12 @@ function MenuMobile({ dataHeader }) {
                   >
                     {t("Industrial")}
                   </MenuLink>
+                  <MenuLink
+                    href={"/catalog?category=چرا مرجان"}
+                    className={`w-max mt-[.5rem] flex justify-between  py-3 font-medium text-[var(--color-gray-900)] ms-[15px] `}
+                  >
+                    {t("Why Marjan")}
+                  </MenuLink>
 
                   <FilterHeader
                     show={isOpen}
@@ -884,7 +903,6 @@ function MenuMobile({ dataHeader }) {
                     <li className="py-[10px]" key={i}>
                       {href ? (
                         href.startsWith("http") ? (
-                          // لینک خارجی
                           <a
                             href={href}
                             target="_blank"
@@ -898,7 +916,9 @@ function MenuMobile({ dataHeader }) {
                           <MenuLink
                             href={href}
                             onClick={() => setIsOpen(false)}
-                            className="ms-[15px] custom-link"
+                            className={`ms-[15px] custom-link ${
+                              isActive(href) ? "border-b-2 border-primary" : ""
+                            }`}
                           >
                             {label}
                           </MenuLink>
@@ -1011,17 +1031,22 @@ function MenuMobile({ dataHeader }) {
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
                 >
                   {[
-                    t("Employment"),
-                    t("Representationrequest"),
-                    t("Suppliers"),
-                  ].map((label, i) => (
+                    { label: t("employment"), href: "/employment" },
+                    {
+                      label: t("representationrequest"),
+                      href: "/representationrequest",
+                    },
+                    { label: t("suppliers"), href: "/suppliers" },
+                  ].map((item, i) => (
                     <li className="py-[10px] ms-[15px]" key={i}>
                       <MenuLink
-                        href="#"
+                        href={`${item.href}`}
                         onClick={() => setIsOpen(false)}
-                        className="custom-link"
+                        className={`custom-link ${
+                          isActive(item.href) ? "border-b-2 border-primary" : ""
+                        }`}
                       >
-                        {label}
+                        {item.label}
                       </MenuLink>
                     </li>
                   ))}

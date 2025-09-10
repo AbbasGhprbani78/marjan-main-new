@@ -8,6 +8,7 @@ export default function Input({
   maxLength = 256,
   onlyPersian = false,
   onlyNumber = false,
+  noNumber = false,
   error = "",
 }) {
   const [isFocused, setIsFocused] = useState(false);
@@ -21,6 +22,9 @@ export default function Input({
 
     if (onlyNumber) {
       newValue = newValue.replace(/[^0-9]/g, "");
+    }
+    if (noNumber) {
+      newValue = newValue.replace(/[0-9]/g, "");
     }
 
     onChange?.(newValue);

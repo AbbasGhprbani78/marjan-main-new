@@ -49,6 +49,7 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
             fill
             alt="product-picture"
             className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
+            priority
           />
         </div>
       </Link>

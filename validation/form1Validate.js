@@ -20,10 +20,9 @@ export const validateForm1 = (data, setErrors) => {
   }
   if (!data.national_code) {
     newErrors.national_code = "کد ملی الزامی است";
+  } else if (!validateNationalCode(data.national_code)) {
+    newErrors.national_code = "کد ملی معتبر نیست";
   }
-  // else if (!validateNationalCode(data.national_code)) {
-  //   newErrors.national_code = "کد ملی معتبر نیست";
-  // }
   if (!data.birth_date) newErrors.birth_date = "تاریخ تولد الزامی است";
   if (!data.birth_location) newErrors.birth_location = "محل تولد الزامی است";
   if (!data.religion) newErrors.religion = "دین و مذهب الزامی است";

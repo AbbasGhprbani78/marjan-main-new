@@ -17,7 +17,7 @@ export default async function page({ params }) {
   const dataWaysofacquaintance = await fetchWaysofacquaintance(locale);
 
   return (
-    <>
+    <div className="wrapper">
       <Employment
         states={statesData}
         studyData={studyData}
@@ -25,6 +25,6 @@ export default async function page({ params }) {
         dataJobs={dataJobs}
         dataWaysofacquaintance={dataWaysofacquaintance}
       />
-    </>
+    </div>
   );
 }

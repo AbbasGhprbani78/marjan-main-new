@@ -86,8 +86,6 @@ export default function Catalog({ catalogs, categories }) {
     setCurrentPage(page);
   }, [searchParams]);
 
-  console.log(categories);
-
   return (
     <div className="grid grid-cols-12 gap-[1.3rem]  pb-[2rem]">
       <div className=" hidden col-span-0 md:block md:col-span-4 lg:col-span-3  md:pt-[.27rem]">
@@ -157,11 +155,29 @@ export default function Catalog({ catalogs, categories }) {
         )}
 
         <div className="grid grid-cols-12 gap-[1rem] lg:gap-[1.7rem] mb-[2rem]">
-          {catalogToShow.map((item, i) => (
-            <div className="col-span-6 lg:col-span-3" key={i}>
-              <CatalogItem catalog={item} />
-            </div>
-          ))}
+          {catalogToShow.length > 0 ? (
+            <>
+              {catalogToShow.map((item, i) => (
+                <div className="col-span-6 lg:col-span-3" key={i}>
+                  <CatalogItem catalog={item} />
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              <div
+                role="alert"
+                aria-live="polite"
+                className="flex flex-col items-center justify-center col-span-full py-20 text-center text-gray-500"
+              >
+                <Icons.SearchNormal size={48} className="mb-4" />
+                <h3 className="text-lg font-semibold mb-2">
+                  {t("NoResultsTitle")}
+                </h3>
+                <p>{t("NoResultsMessage")}</p>
+              </div>
+            </>
+          )}
         </div>
         <Pagination
           currentPage={currentPage}

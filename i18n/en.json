@@ -90,9 +90,9 @@
   "FAQ": "FAQ",
   "Previous": "Previous",
   "Next": "Next",
-  "Employment": "Employment",
-  "Representationrequest": "Representation request",
-  "Suppliers": "Suppliers",
+  "employment": "Employment",
+  "representationrequest": "Representation request",
+  "suppliers": "Suppliers",
   "Applyfilter": "Apply filter",
   "Yourquestion": "Your question was sent successfully.",
   "Subscribenewsletter": "Subscribe to our newsletter",
@@ -199,5 +199,11 @@
   "Reset": "Reset",
   "Area": "Area",
   "Number": "Number",
-  "precentageText": "When installing tiles, some of the material is wasted due to cutting and breakage; for simple spaces, 5% is sufficient, and in environments with special angles and cutting, this amount can be up to 15%. Here you can choose the appropriate percentage for your project."
+  "precentageText": "When installing tiles, some of the material is wasted due to cutting and breakage; for simple spaces, 5% is sufficient, and in environments with special angles and cutting, this amount can be up to 15%. Here you can choose the appropriate percentage for your project.",
+  "Obtainingsupplierinformation": "دریافت اطلاعات تامین کننده ها",
+  "State": "State",
+  "Type of service": "Type of service",
+  "Sending": "Sending",
+  "SuccessForm": "Form submitted successfully",
+  "Representationrequest": "Representation request"
 }
