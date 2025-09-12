@@ -27,8 +27,8 @@ export default function Representatives({ representatives }) {
             className={`overflow-y-auto flex-1 ${styles.wrapperRepresentation}`}
             aria-label="لیست نمایندگان"
           >
-            {selectedProvince?.cities?.map((rep) => (
-              <RepresentationItem key={rep.id} city={rep} />
+            {selectedProvince?.cities?.map((rep, i) => (
+              <RepresentationItem key={i} city={rep} />
             ))}
           </div>
         </aside>

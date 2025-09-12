@@ -11,10 +11,11 @@ import { ToastContainer } from "react-toastify";
 import { warningMessage } from "../module/Toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/hook/useTranslation";
+import { toPersianDigits } from "@/utils/helper";
 
 export default function CalculatorT({ dataSizes }) {
   const [uniMeasurement, setUnitMeasurement] = useState(1);
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const TABS = [
     { label: t("Floor"), value: "floor" },
     { label: t("Wall"), value: "wall" },
@@ -126,11 +127,14 @@ export default function CalculatorT({ dataSizes }) {
     const results = [];
 
     for (const s of surfaces) {
+      console.log("s =>", s);
+      ("{key: 'floor', label: 'کف', area: 12, tile: '۶۰×۶۰'}");
       const effArea = (s.area || 0) * factor;
       const effAreaWithWaste = effArea * (1 + includeWastage);
       const tArea = getTileAreaInMeter(s.tile);
 
       if (!tArea || tArea <= 0) {
+        console.log(tArea);
         warningMessage(t("tile_size_missing"));
         return;
       }
@@ -178,6 +182,7 @@ export default function CalculatorT({ dataSizes }) {
   const handleWastageChange = useCallback((percentage) => {
     setIncludeWastage(percentage);
   }, []);
+
   return (
     <main className="px-20 md:px-40 lg:px-80  mt-[145px] lg:mt-[8rem]">
       <section className="mt-[2rem]">
@@ -247,7 +252,9 @@ export default function CalculatorT({ dataSizes }) {
                   {t("Deductedarea")}:
                 </span>
                 <span className="text-red-600">
-                  {deductArea.toFixed(2)}{" "}
+                  {locale === "fa"
+                    ? toPersianDigits(deductArea.toFixed(2))
+                    : deductArea.toFixed(2)}{" "}
                   {uniMeasurement === 1 ? t("unit_m2") : t("unit_ft2")}
                 </span>
               </motion.div>
@@ -267,7 +274,9 @@ export default function CalculatorT({ dataSizes }) {
                 <span className="font-bold text-green-700">
                   {t("Finaltilearearequired")} :
                 </span>
-                <span className="text-green-600">{totalArea}</span>
+                <span className="text-green-600">
+                  {locale === "fa" ? toPersianDigits(totalArea) : totalArea}
+                </span>
               </motion.p>
             )}
           </AnimatePresence>
@@ -286,7 +295,10 @@ export default function CalculatorT({ dataSizes }) {
                   {t("Numberoftilesrequired")} :
                 </span>
                 <span className="text-blue-600">
-                  {numberOfTiles} {t("Number")}
+                  {locale === "fa"
+                    ? toPersianDigits(numberOfTiles)
+                    : numberOfTiles}{" "}
+                  {t("Number")}
                 </span>
               </motion.p>
             )}
@@ -303,11 +315,16 @@ export default function CalculatorT({ dataSizes }) {
                   >
                     <span className="font-medium">{r.label}</span>
                     <span>
-                      {t("Area")}: {r.area.toFixed(2)}{" "}
+                      {t("Area")}:{" "}
+                      {locale === "fa"
+                        ? toPersianDigits(r.area.toFixed(2))
+                        : r.area.toFixed(2)}{" "}
                       {uniMeasurement === 1 ? t("unit_m2") : t("unit_ft2")}
                     </span>
                     <span>
-                      {t("Tile")}: {r.tiles} {t("Number")}
+                      {t("Tile")}:{" "}
+                      {locale === "fa" ? toPersianDigits(r.tiles) : r.tiles}{" "}
+                      {t("Number")}
                     </span>
                   </div>
                 ))}

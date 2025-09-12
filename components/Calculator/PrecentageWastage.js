@@ -4,19 +4,22 @@ import { useTranslation } from "@/hook/useTranslation";
 
 export default function PrecentageWastage({ onChange, isClean }) {
   const [wastage5, setWastage5] = useState(false);
+  const [wastage10, setWastage10] = useState(false);
   const [wastage15, setWastage15] = useState(false);
   const { locale, t } = useTranslation();
 
   useEffect(() => {
     let value = 0;
     if (wastage5) value = 0.05;
+    if (wastage10) value = 0.1;
     if (wastage15) value = 0.15;
     if (onChange) onChange(value);
-  }, [wastage5, wastage15, onChange]);
+  }, [wastage5, wastage10, wastage15, onChange]);
 
   useEffect(() => {
     if (isClean) {
       setWastage5(false);
+      setWastage10(false);
       setWastage15(false);
     }
   }, [isClean]);
@@ -27,22 +30,42 @@ export default function PrecentageWastage({ onChange, isClean }) {
       <p className="my-[.5rem]">{t("precentageText")}</p>
 
       <CheckBox
-        label={t("extraTail5")}
+        label={"5%"}
         checked={wastage5}
         onChange={(e) => {
           setWastage5(e.target.checked);
-          if (e.target.checked) setWastage15(false);
+          if (e.target.checked) {
+            setWastage10(false);
+            setWastage15(false);
+          }
         }}
         name="wastage5"
         dir={locale === "fa" ? "rtl" : "ltr"}
       />
 
       <CheckBox
-        label={t("extraTail15")}
+        label={"10%"}
+        checked={wastage10}
+        onChange={(e) => {
+          setWastage10(e.target.checked);
+          if (e.target.checked) {
+            setWastage5(false);
+            setWastage15(false);
+          }
+        }}
+        name="wastage10"
+        dir={locale === "fa" ? "rtl" : "ltr"}
+      />
+
+      <CheckBox
+        label={"15%"}
         checked={wastage15}
         onChange={(e) => {
           setWastage15(e.target.checked);
-          if (e.target.checked) setWastage5(false);
+          if (e.target.checked) {
+            setWastage5(false);
+            setWastage10(false);
+          }
         }}
         name="wastage15"
         dir={locale === "fa" ? "rtl" : "ltr"}
