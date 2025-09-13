@@ -25,8 +25,6 @@ export default function CatalogItem({ catalog }) {
 
   const { locale } = useTranslation();
 
-  console.log(catalog);
-
   return (
     <div>
       <div

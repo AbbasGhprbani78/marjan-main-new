@@ -57,6 +57,8 @@ export default function AllProducts({ categories, products }) {
             }
           });
 
+          query.set("page", "1");
+
           const newUrl = `${pathname}?${query.toString()}`;
           const currentUrl = `${pathname}?${searchParams.toString()}`;
           if (newUrl !== currentUrl) {

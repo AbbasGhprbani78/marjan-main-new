@@ -49,6 +49,7 @@ export default async function page({ params }) {
   const { locale } = await params;
   const { id } = await params;
   const singleBlog = await fetchSingleBlog(locale, id);
+  console.log(singleBlog);
 
   return (
     <main className="wrapper ">

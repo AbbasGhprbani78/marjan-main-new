@@ -56,6 +56,7 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = params;
   const dataAboutus = await fetchAboutUs(locale);
+  console.log(dataAboutus);
 
   return (
     <main className="wrapper w-full">
@@ -82,12 +83,34 @@ export default async function page({ params }) {
           fontweight="font-medium"
         />
       </section>
-      <section className=" mb-[4rem] md:mb-0">
-        <AboutDetail aboutDetail={data?.aboutDetail} />
+
+      <section className="mb-[4rem] md:mb-[5rem]">
+        <AboutDetail
+          aboutDetail={[
+            {
+              title: dataAboutus?.aboutDetail[0]?.title_one,
+              text: dataAboutus?.aboutDetail[0]?.text_one,
+              image: dataAboutus?.aboutDetail[0]?.image_one,
+            },
+            {
+              title: dataAboutus?.aboutDetail[0]?.title_two,
+              text: dataAboutus?.aboutDetail[0]?.text_two,
+              image: dataAboutus?.aboutDetail[0]?.image_two,
+            },
+            {
+              title: dataAboutus?.aboutDetail[0]?.title_three,
+              text: dataAboutus?.aboutDetail[0]?.text_three,
+              image: dataAboutus?.aboutDetail[0]?.image_three,
+            },
+            {
+              title: dataAboutus?.aboutDetail[0]?.title_four,
+              text: dataAboutus?.aboutDetail[0]?.text_four,
+              image: dataAboutus?.aboutDetail[0]?.image_four,
+            },
+          ]}
+        />
       </section>
-      <section className=" mb-[4rem] md:mb-[5rem] md:px-40 lg:px-80">
-        <AboutEnvironment environment={data.environment} />
-      </section>
+
       <section className=" mb-[5rem] md:mb-[8rem]">
         <AboutHistory history={data.history} />
       </section>

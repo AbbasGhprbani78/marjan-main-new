@@ -1,4 +1,5 @@
 "use client";
+import { useTranslation } from "@/hook/useTranslation";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 
@@ -12,6 +13,7 @@ export default function MySelect({
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [direction, setDirection] = useState("rtl");
+  const { t, locale } = useTranslation();
 
   useEffect(() => {
     if (typeof window !== "undefined") {

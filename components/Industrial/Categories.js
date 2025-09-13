@@ -30,9 +30,9 @@ export default function Categories({ data }) {
       {selectedCategory && (
         <Link
           href={localizedHref(
-            `/products?filterKey=industrie&values=${encodeURIComponent(
+            `/products?industrie=${encodeURIComponent(
               selectedCategory?.value
-            )}`
+            )}&page=1`
           )}
         >
           <div className="relative w-full aspect-[3/1] min-h-[200px] overflow-hidden mt-[30px]">

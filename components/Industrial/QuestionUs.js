@@ -15,7 +15,7 @@ export default function QuestionUs({ data }) {
   const [openModal, setOpenModal] = useState(false);
   return (
     <>
-      <div className="bg-[#181617] text-white flex flex-col  lg:flex-row items-center pt-[2rem] md:pt-[3rem] pb-[2rem]">
+      <div className="bg-[#241f21] text-white flex flex-col  lg:flex-row items-center pt-[2rem] md:pt-[3rem] pb-[2rem]">
         <div className="px-20  ps-20 w-full md:px-40 lg:px-80 flex flex-col gap-[1.5rem] text-white md:w-[calc(50% - .5rem)]">
           <h2 className="font-medium title text-center md:text-start">
             {data.title}
@@ -27,7 +27,7 @@ export default function QuestionUs({ data }) {
         </div>
         <div className="relative w-full md:w-[calc(50% - .5rem)] aspect-[3/1]">
           <Image
-            src={"/images/55.png"}
+            src={"/images/55.jpg"}
             alt="image contact us"
             className="object-cover"
             fill

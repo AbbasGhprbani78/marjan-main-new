@@ -66,8 +66,9 @@ export default async function page({ params }) {
           <GuideSection
             text={t.Catalog}
             icon={"MenuBoard"}
-            isLink={"true"}
-            href="/catalog"
+            iscatalog={true}
+            value={dataSingleProduct.catalog}
+            is_industrial={dataSingleProduct?.is_industrial}
           />
           <GuideSection
             text={t.SmartLayout}

@@ -46,6 +46,7 @@ export default async function page({ params }) {
   const t = locale === "fa" ? fa : en;
   const { id } = await params;
   const singleData = await fetchSingleProjects(locale, id);
+  console.log(singleData);
 
   return (
     <main className="wrapper text-[var(--color-gray-900)] ">

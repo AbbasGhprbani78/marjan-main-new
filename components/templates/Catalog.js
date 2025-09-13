@@ -33,19 +33,18 @@ export default function Catalog({ catalogs, categories }) {
     const checked = event.target.checked;
 
     setFilters((prev) => {
-      const newFilters = { ...prev };
+      const prevValues = Array.isArray(prev[key]) ? prev[key] : [];
 
+      let newValues;
       if (checked) {
-        newFilters[key] = value;
+        newValues = [...prevValues, value];
       } else {
-        delete newFilters[key];
+        newValues = prevValues.filter((v) => v !== value);
       }
 
-      if (Object.keys(newFilters).length === 0) {
-        router.push("?", { shallow: true });
-      } else {
-        const query = new URLSearchParams({ ...newFilters, page: "1" });
-        router.push(`?${query.toString()}`, { shallow: true });
+      const newFilters = { ...prev, [key]: newValues };
+      if (newValues.length === 0) {
+        delete newFilters[key];
       }
 
       return newFilters;
@@ -55,16 +54,33 @@ export default function Catalog({ catalogs, categories }) {
   };
 
   useEffect(() => {
+    if (Object.keys(filters).length === 0) {
+      router.push("?", { shallow: true });
+      return;
+    }
+
+    const query = new URLSearchParams({ page: "1" });
+    Object.entries(filters).forEach(([k, v]) => {
+      if (Array.isArray(v)) {
+        v.forEach((val) => query.append(k, val));
+      } else {
+        query.set(k, v);
+      }
+    });
+    router.push(`?${query.toString()}`, { shallow: true });
+  }, [filters]);
+
+  useEffect(() => {
     let temp = [...catalogs];
 
     Object.entries(filters).forEach(([key, value]) => {
-      if (value) {
+      if (Array.isArray(value) && value.length > 0) {
         temp = temp.filter((catalog) => {
           const productField = catalog[key];
           if (Array.isArray(productField)) {
-            return productField.includes(value);
+            return value.some((val) => productField.includes(val));
           }
-          return productField === value;
+          return value.includes(productField);
         });
       }
     });
@@ -76,15 +92,40 @@ export default function Catalog({ catalogs, categories }) {
     const params = {};
     searchParams.forEach((value, key) => {
       if (key !== "page") {
-        params[key] = value;
+        if (params[key]) {
+          params[key] = Array.isArray(params[key])
+            ? [...params[key], value]
+            : [params[key], value];
+        } else {
+          params[key] = value;
+        }
       }
     });
 
-    const page = parseInt(searchParams.get("page") || "1", 10);
+    // مقدار page را بخوان
+    let page = parseInt(searchParams.get("page") || "1", 10);
+
+    // دسته‌ها را به آرایه تبدیل کن
+    if (params.category && !Array.isArray(params.category)) {
+      params.category = [params.category];
+    }
 
     setFilters(params);
     setCurrentPage(page);
   }, [searchParams]);
+
+  useEffect(() => {
+    const query = new URLSearchParams();
+    Object.entries(filters).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((val) => query.append(key, val));
+      } else {
+        query.set(key, value);
+      }
+    });
+    query.set("page", currentPage);
+    router.push(`?${query.toString()}`, undefined, { shallow: true });
+  }, [filters, currentPage]);
 
   return (
     <div className="grid grid-cols-12 gap-[1.3rem]  pb-[2rem]">
@@ -107,7 +148,11 @@ export default function Catalog({ catalogs, categories }) {
               key={i}
               label={item}
               name="category"
-              checked={filters.category === item}
+              checked={
+                Array.isArray(filters.category)
+                  ? filters.category.includes(item)
+                  : false
+              }
               value={item}
               onChange={(e) => handleCheckboxChange("category", e)}
             />
@@ -139,7 +184,11 @@ export default function Catalog({ catalogs, categories }) {
                 key={i}
                 label={item}
                 name="category"
-                checked={filters.category === item}
+                checked={
+                  Array.isArray(filters.category)
+                    ? filters.category.includes(item)
+                    : false
+                }
                 value={item}
                 onChange={(e) => handleCheckboxChange("category", e)}
               />
@@ -148,9 +197,9 @@ export default function Catalog({ catalogs, categories }) {
         </PopFilter>
       </div>
       <div className="col-span-12 md:col-span-8 lg:col-span-9">
-        {filters.category && (
+        {filters.category && filters.category.length > 0 && (
           <p className="font-medium text-[1.1rem] border-b border-[var(--color-gray-900)] pb-[.5rem] mb-[.9rem]">
-            {filters.category}
+            {filters.category.join(" , ")}
           </p>
         )}
 

@@ -21,7 +21,7 @@ export default function Projects({ data, categories }) {
   const endIndex = startIndex + itemsPerPage;
   const productsToShow = filteredProducts?.slice(startIndex, endIndex);
 
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({ category: [] });
   const [isEmptyCheckBox, setEmptycheckBox] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -47,37 +47,43 @@ export default function Projects({ data, categories }) {
     const checked = event.target.checked;
 
     setFilters((prev) => {
-      let newValue = checked ? value : "";
+      let newArray = prev[key] || [];
 
-      const newFilters = { ...prev, [key]: newValue };
+      if (checked) {
+        // اگر انتخاب شد، اضافه می‌کنیم
+        newArray = [...newArray, value];
+      } else {
+        // اگر از حالت انتخاب خارج شد، حذف می‌کنیم
+        newArray = newArray.filter((item) => item !== value);
+      }
 
+      // بروزرسانی URL
       const params = new URLSearchParams(window.location.search);
       params.delete(key);
       params.delete("page");
 
-      if (newValue) {
-        params.set(key, newValue);
-      }
+      newArray.forEach((item) => params.append(key, item));
 
       const newUrl = `${window.location.pathname}?${params.toString()}`;
       window.history.replaceState({}, "", newUrl);
 
-      return newFilters;
+      return { ...prev, [key]: newArray };
     });
 
     setCurrentPage(1);
   };
+
   useEffect(() => {
     let temp = [...data.projects];
 
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) {
-        temp = temp.filter((catalog) => {
-          const productField = catalog[key];
-          if (Array.isArray(productField)) {
-            return productField.includes(value);
+    Object.entries(filters).forEach(([key, values]) => {
+      if (values && values.length > 0) {
+        temp = temp.filter((project) => {
+          const projectField = project[key];
+          if (Array.isArray(projectField)) {
+            return values.some((val) => projectField.includes(val));
           }
-          return value === productField;
+          return values.includes(projectField);
         });
       }
     });
@@ -92,7 +98,7 @@ export default function Projects({ data, categories }) {
     const urlFilters = searchParams.getAll("category");
     setFilters((prev) => ({
       ...prev,
-      category: urlFilters[0] || "",
+      category: urlFilters,
     }));
   }, [searchParams]);
 
@@ -178,7 +184,7 @@ export default function Projects({ data, categories }) {
         <div className="col-span-12 lg:col-span-9">
           {filters.category && (
             <p className="font-medium text-[1.1rem] border-b border-[var(--color-gray-900)] pb-[.5rem] mb-[.9rem]">
-              {filters.category}
+              {filters.category.join(" , ")}
             </p>
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1.2rem]">

@@ -3,21 +3,18 @@ import React from "react";
 import CircleItem from "../module/CircleItem";
 
 export default function Standards({ data }) {
+  console.log(data);
   return (
     <div>
       <h3 className="font-medium title mb-[1.5rem] text-center md:text-start">
         {data.title}
       </h3>
-      <div className=" ">
+      <div className="">
         <div className="gap-[2rem] md:gap-0 flex  flex-wrap items-center justify-between w-5/6 mx-auto">
-          {data.standardsImages.map((item, i) => (
-            <CircleItem key={i} url={item} />
+          {data.standards.map((item, i) => (
+            <CircleItem key={i} item={item} />
           ))}
         </div>
-
-        {/* <p className="text-justify font-normal text-[#5e5e5e] mt-[2rem] w-full md:w-3/4 mx-auto">
-          {data.text}
-        </p> */}
       </div>
     </div>
   );

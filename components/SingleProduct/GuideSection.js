@@ -19,7 +19,10 @@ export default function GuideSection({
   typeModel,
   subjects = [],
   dataPack = [],
+  iscatalog = false,
   dataTechnical = [],
+  is_industrial = false,
+  value = "",
 }) {
   const { localizedHref } = useLocalizedLink();
   const { t } = useTranslation();
@@ -28,11 +31,44 @@ export default function GuideSection({
 
   return (
     <>
-      {isLink ? (
-        <Link href={localizedHref(href)} className="flex gap-5" target="_blank">
+      {iscatalog ? (
+        value ? (
+          <a
+            href={`${process.env.NEXT_PUBLIC_API_URL}${value}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex gap-5"
+          >
+            <GuideIcon size="24" className="text-gray-700" />
+            <p className="my-auto font-[700] text-[14px] text-gray-700">
+              {text}
+            </p>
+          </a>
+        ) : (
+          <Link
+            href={
+              is_industrial
+                ? "/catalog?category=صنعتی"
+                : "/catalog?category=جنرال"
+            }
+            className="flex gap-5"
+          >
+            <GuideIcon size="24" className="text-gray-700" />
+            <p className="my-auto font-[700] text-[14px] text-gray-700">
+              {text}
+            </p>
+          </Link>
+        )
+      ) : isLink ? (
+        <a
+          href={localizedHref(href)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex gap-5"
+        >
           <GuideIcon size="24" className="text-gray-700" />
           <p className="my-auto font-[700] text-[14px] text-gray-700">{text}</p>
-        </Link>
+        </a>
       ) : (
         <div
           className="flex gap-5 cursor-pointer"

@@ -368,7 +368,7 @@ export default function ChatBot({}) {
             setIsShowChatbot((prev) => !prev);
           }}
         >
-          <img src="/images/iconchat.png" alt="icon" />
+          <img src="/images/iconchatbot.png" alt="icon" />
         </div>
       )}
     </>

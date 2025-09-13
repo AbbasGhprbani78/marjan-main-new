@@ -4,7 +4,7 @@ import Blogs from "@/components/templates/Blogs";
 import { fetchBlogs } from "@/services/blogs";
 
 export const metadata = {
-  title: "بلاگ - مقالات آموزشی، معرفی تکنولوژی و نکات فنی",
+  title: "بلاگ",
   description:
     "جدیدترین مقالات در حوزه برنامه‌نویسی، طراحی وب، تکنولوژی‌های نوین و نکات آموزشی برای توسعه‌دهندگان.",
   keywords: ["بلاگ", "صنعتی", "کاشی سرامیک", "تخصص", "محصولات"],
@@ -38,7 +38,6 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = await params;
   const blogsData = await fetchBlogs(locale);
-  console.log("blogsData=>", blogsData);
 
   return (
     <main className="wrapper ">

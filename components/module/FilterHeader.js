@@ -106,7 +106,7 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
                         />
                       ))}
                     </div>
-                    <div className="flex items-center justify-between mt-[2rem]">
+                    <div className="flex items-center justify-between mt-[7.7rem]">
                       <div className="flex items-center gap-[1.5rem]">
                         <MoreButton
                           text={t("AllProducts")}
@@ -191,7 +191,7 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
                         </div>
                       </Link>
                     </div>
-                    <div className="flex gap-20 items-center mt-[1rem]">
+                    <div className="flex gap-20 items-center justify-end mt-[1rem]">
                       <a
                         href="https://www.pinterest.com/marjantileco/"
                         target="_blank"
@@ -290,9 +290,7 @@ function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
 
   return (
     <Link
-      href={`/products?filterKey=${filterKey}&values=${encodeURIComponent(
-        filterValue
-      )}`}
+      href={`/products?${filterKey}=${encodeURIComponent(filterValue)}&page=1`}
       onClick={() => setShowFilterMenu(false)}
       className="relative flex items-center justify-between px-20    h-[46px]  bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer"
     >
@@ -351,9 +349,7 @@ function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
 function ItemStyle({ item, setShowFilterMenu }) {
   return (
     <Link
-      href={`/products?filterKey=style&values=${encodeURIComponent(
-        item.title
-      )}`}
+      href={`/products?style=${encodeURIComponent(item.title)}&page=1`}
       onClick={() => setShowFilterMenu(false)}
       className="relative flex flex-col gap-[2px] cursor-pointer"
     >
@@ -375,9 +371,7 @@ function ItemStyle({ item, setShowFilterMenu }) {
 function UseCase({ item, setShowFilterMenu }) {
   return (
     <Link
-      href={`/products?filterKey=environment&values=${encodeURIComponent(
-        item.title
-      )}`}
+      href={`/products?environment=${encodeURIComponent(item.title)}&page=1`}
       onClick={() => setShowFilterMenu(false)}
       className="relative aspect-[3/2] cursor-pointer"
     >

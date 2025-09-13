@@ -109,11 +109,17 @@ export default function Footer() {
             {t("All rights reserved.")}
           </p>
         </div>
-        <p className="w-full flex justify-center mt-[2rem]">
+        {/* <p className="w-full flex justify-center mt-[2rem]">
           {locale === "fa" ? (
             <>
               طراحی و توسعه توسط تیم
-              <span className="font-semibold inline-block ms-2">نوبین</span>
+              <a
+                className="font-semibold inline-block ms-2"
+                href="https://nobinco.com"
+                target="_blank"
+              >
+                نوبین
+              </a>
             </>
           ) : (
             <>
@@ -121,7 +127,7 @@ export default function Footer() {
               <span className="font-semibold inline-block ms-2">Nobin</span>
             </>
           )}
-        </p>
+        </p> */}
       </div>
 
       <div className="px-20 md:hidden pt-[33px]">
@@ -219,10 +225,16 @@ export default function Footer() {
             {t("All rights reserved.")}
           </p>
         </div>
-        <p className="w-full flex justify-center mb-[2rem] ">
+        {/* <p className="w-full flex justify-center mb-[2rem] ">
           طراحی و توسعه توسط تیم
-          <span className="font-semibold inline-block ms-2">نوبین</span>
-        </p>
+          <a
+            className="font-semibold inline-block ms-2"
+            href="https://nobinco.com"
+            target="_blank"
+          >
+            نوبین
+          </a>
+        </p> */}
       </div>
     </footer>
   );

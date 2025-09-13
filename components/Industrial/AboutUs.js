@@ -24,7 +24,7 @@ export default function AboutUs({ data }) {
         <h3 className="font-medium title mb-[1.5rem] text-center md:text-start">
           {data.title}
         </h3>
-        <p className="text-justify w-full md:w-[38dvw] leading-[30px]">
+        <p className="text-justify w-full md:w-[36dvw] leading-[30px]">
           {locale === "fa" ? toPersianDigits(data.text) : data.text}
         </p>
         <div className="w-[250px] mt-[1rem] mx-auto md:mx-0">

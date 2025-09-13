@@ -432,9 +432,9 @@ export function CategorySlider({ data }) {
             >
               <Link
                 href={localizedHref(
-                  `/products?filterKey=${filterKey}&values=${encodeURIComponent(
+                  `/products?${filterKey}=${encodeURIComponent(
                     item.title
-                  )}`
+                  )}&page=1`
                 )}
               >
                 <Image

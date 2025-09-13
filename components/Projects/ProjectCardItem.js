@@ -20,10 +20,13 @@ export default function ProjectCardItem({ project }) {
       <h3 className="font-bold text-[1.1rem] text-[var(--color-gray-900)] mb-[.5rem]">
         {project.title}
       </h3>
-      {/* <p className="text-[#919191] font-normal text-[.9rem]">
-        <span>مکان : </span>
-        {truncateText(project.text, 50)}
-      </p> */}
     </Link>
   );
+}
+
+{
+  /* <p className="text-[#919191] font-normal text-[.9rem]">
+        <span>مکان : </span>
+        {truncateText(project.text, 50)}
+      </p> */
 }

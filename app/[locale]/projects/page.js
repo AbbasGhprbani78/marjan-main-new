@@ -4,13 +4,13 @@ import Projects from "@/components/templates/Projects";
 import { fetchAllProjects } from "@/services/allProjects";
 
 export const metadata = {
-  title: "پروژه‌ها | شرکت شما",
+  title: "پروژه ها",
   description:
     "مجموعه‌ای از پروژه‌های شاخص طراحی و توسعه‌ی ما، شامل نمونه‌کارهای وب‌سایت، اپلیکیشن و راهکارهای نرم‌افزاری اختصاصی.",
   keywords:
     "پروژه‌ها, نمونه‌کارها, طراحی سایت, توسعه نرم‌افزار, اپلیکیشن, React, Next.js, شرکت طراحی",
   openGraph: {
-    title: "پروژه‌های ما | شرکت شما",
+    title: "پروژه ها",
     description:
       "نگاهی به پروژه‌های موفق انجام‌شده توسط تیم حرفه‌ای ما در زمینه طراحی و توسعه وب و نرم‌افزار.",
     url: "https://yourdomain.com/projects",
@@ -27,7 +27,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "پروژه‌ها | شرکت شما",
+    title: "پروژه ها",
     description:
       "برخی از پروژه‌های حرفه‌ای که توسط تیم ما طراحی و پیاده‌سازی شده‌اند.",
     images: ["/images/24.png"],
@@ -40,6 +40,7 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = await params;
   const dataProjects = await fetchAllProjects(locale);
+  console.log(dataProjects);
 
   return (
     <div className="wrapper">

@@ -81,6 +81,9 @@ export default function PopupGallery({
                 alt={`Media ${currentIndex + 1}`}
                 className="h-[50dvh] md:h-[60dvh] max-w-[80vw] object-contain"
                 draggable={false}
+                onContextMenu={(e) => {
+                  if (!isdownload) e.preventDefault();
+                }}
               />
             )}
 
@@ -125,6 +128,9 @@ export default function PopupGallery({
                       i === currentIndex ? "3px solid #fff" : "2px solid #888",
                     opacity: i === currentIndex ? 1 : 0.6,
                     userSelect: "none",
+                  }}
+                  onContextMenu={(e) => {
+                    if (!isdownload) e.preventDefault();
                   }}
                   draggable={false}
                 />

@@ -13,6 +13,7 @@ import { fetchIndustrial } from "@/services/industrial";
 export default async function page({ params }) {
   const { locale } = await params;
   const dataindustrial = await fetchIndustrial(locale);
+  console.log("dataindustrial =>", dataindustrial);
 
   return (
     <main className="wrapper ">
