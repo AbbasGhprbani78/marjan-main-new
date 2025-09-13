@@ -182,6 +182,8 @@ export default function AllProducts({ categories, products }) {
     }
   }, [searchTerm]);
 
+  console.log(filters);
+
   return (
     <main className="px-20 md:px-40 lg:px-80">
       <section

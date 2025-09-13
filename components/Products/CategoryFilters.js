@@ -13,6 +13,7 @@ const CategoryFilters = ({
   filters,
 }) => {
   const { t } = useTranslation();
+  console.log("filters =>", filters);
 
   return (
     <>
@@ -25,11 +26,8 @@ const CategoryFilters = ({
             onFilterChange={handleFilterChange}
             title={t(key)}
             isEmptyCheckBox={isEmptyCheckBox}
-            defaultOpen={
-              key === queryFilterKey || (ismobile ? false : index === 0)
-            }
-            queryFilterKey={queryFilterKey}
-            queryValues={key === queryFilterKey ? queryValues : []}
+            open={filters[key]?.length > 0 || (!ismobile && index === 0)}
+            queryValues={filters[key] || []}
             filters={filters}
           />
         );

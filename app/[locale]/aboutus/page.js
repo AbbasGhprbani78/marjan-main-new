@@ -10,7 +10,7 @@ import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchAboutUs } from "@/services/aboutus";
 
 export const metadata = {
-  title: "درباره ما | شرکت ما",
+  title: "درباره ما",
   description:
     "با بیش از 10 سال سابقه در صنعت، بیش از 100 پرسنل و صادرات به بیش از 10 کشور. با داستان ما، شرکای تجاری و دستاوردهای شرکت آشنا شوید.",
   keywords: [

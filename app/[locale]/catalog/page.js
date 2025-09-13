@@ -3,7 +3,7 @@ import Catalog from "@/components/templates/Catalog";
 import { fetchCatalogs } from "@/services/catalogs";
 
 export const metadata = {
-  title: "کاتالوگ محصولات | برند شما",
+  title: "کاتالوگ محصولات",
   description:
     "مشاهده جدیدترین کاتالوگ‌های محصولات برند شما. انتخابی متنوع بر اساس سبک، رنگ، سایز و کاربردهای مختلف.",
   keywords: [

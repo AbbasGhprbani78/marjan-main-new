@@ -4,7 +4,7 @@ import { fetchAllProducts } from "@/services/allProducts";
 
 export const metadata = () => {
   return {
-    title: "همه محصولات - نام فروشگاه شما",
+    title: "همه محصولات",
     description:
       "خرید انواع محصولات با بهترین قیمت و کیفیت در فروشگاه ما. فیلتر و جستجوی آسان برای یافتن محصول موردنظر.",
     keywords: ["محصولات", "خرید آنلاین", "فروشگاه", "قیمت مناسب", "کیفیت بالا"],

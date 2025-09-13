@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import { NavBar } from "@/components/navBar";
 
 export const metadata = {
-  title: "Marjan",
+  title: "مرجان",
   description: "Marjan Website",
   icons: {
     icon: "/images/logo1.png",

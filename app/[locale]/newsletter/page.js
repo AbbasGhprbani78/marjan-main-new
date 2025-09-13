@@ -6,7 +6,7 @@ import en from "@/i18n/en.json";
 import { fetchTypeofActivity } from "@/services/newsLetter";
 
 export const metadata = {
-  title: "عضویت در خبرنامه | وب‌سایت ما",
+  title: "عضویت در خبرنامه",
   description:
     "با عضویت در خبرنامه ما از جدیدترین اخبار، مقالات و تخفیف‌ها مطلع شوید.",
   keywords: [

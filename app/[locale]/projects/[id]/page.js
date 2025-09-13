@@ -8,7 +8,7 @@ import en from "@/i18n/en.json";
 import { fetchSingleProjects } from "@/services/singleproject";
 
 export const metadata = {
-  title: "پروژه‌ها | شرکت شما",
+  title: "پروژه‌ها ",
   description:
     "مجموعه‌ای از پروژه‌های شاخص طراحی و توسعه‌ی ما، شامل نمونه‌کارهای وب‌سایت، اپلیکیشن و راهکارهای نرم‌افزاری اختصاصی.",
   keywords:

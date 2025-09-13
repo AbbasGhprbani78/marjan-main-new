@@ -2,16 +2,32 @@
 import * as Icons from "iconsax-reactjs";
 import { useEffect, useState } from "react";
 import CheckBox from "../module/CheckBox";
+
 export default function Accordion({
   itemsCheckBox = [],
   title,
   onFilterChange,
   filterKey,
   defaultOpen = false,
+  open, // 👈 اینو از بیرون می‌گیری
   filters,
   queryFilterKey,
 }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  // وقتی prop `open` تغییر کرد، sync کن
+  useEffect(() => {
+    if (open !== undefined) {
+      setIsOpen(open);
+    }
+  }, [open]);
+
+  // حالت queryFilterKey هم نگه دار
+  useEffect(() => {
+    if (queryFilterKey === filterKey) {
+      setIsOpen(true);
+    }
+  }, [queryFilterKey, filterKey]);
 
   const toggleAccordion = () => setIsOpen((prev) => !prev);
 
@@ -24,12 +40,6 @@ export default function Accordion({
 
     onFilterChange(filterKey, newSelectedItems);
   };
-
-  useEffect(() => {
-    if (queryFilterKey === filterKey) {
-      setIsOpen(true);
-    }
-  }, [queryFilterKey, filterKey]);
 
   return (
     <div className="p-4 max-w-md mx-auto">

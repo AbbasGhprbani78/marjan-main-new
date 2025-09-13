@@ -5,7 +5,7 @@ import fa from "@/i18n/fa.json";
 import en from "@/i18n/en.json";
 import { fetchFaq } from "@/services/faq";
 export const metadata = {
-  title: "سوالات متداول | برند شما",
+  title: "سوالات متداول",
   description:
     "پاسخ به پرتکرارترین سوالات کاربران درباره محصولات، خدمات، پرداخت، ارسال و سایر موارد. همه چیز را درباره برند ما بدانید.",
   keywords: [

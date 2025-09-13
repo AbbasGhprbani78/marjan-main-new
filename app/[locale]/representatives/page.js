@@ -3,7 +3,7 @@ import { fetchRepresentatives } from "@/services/representatives";
 import Representatives from "@/components/templates/Representatives";
 
 export const metadata = {
-  title: "نمایندگان ما در سراسر جهان | شرکت ما",
+  title: "نمایندگان ما در سراسر جهان ",
   description:
     "لیست نمایندگان رسمی شرکت ما در کشورهای مختلف همراه با اطلاعات تماس و موقعیت مکانی روی نقشه.",
   keywords: [
