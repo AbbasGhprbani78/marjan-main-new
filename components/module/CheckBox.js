@@ -12,6 +12,7 @@ export default function CheckBox({
   const id = `checkbox-${name || label?.replace(/\s+/g, "-").toLowerCase()}`;
 
   const { locale } = useTranslation();
+  console.log(name);
 
   return (
     <div className="flex items-start sm:items-center space-x-2 rtl:space-x-reverse gap-4">
@@ -21,7 +22,7 @@ export default function CheckBox({
         name={name || label}
         checked={checked}
         onChange={onChange}
-        className=" text-[#292d32] focus:ring-0 border-gray-400 rounded mt-[4px] sm:mt-0 flex-shrink-0"
+        className="focus:ring-0 border-gray-400 rounded mt-[4px] sm:mt-0 flex-shrink-0"
         value={value || label}
       />
       <label

@@ -336,13 +336,13 @@ export default function ChatBot({}) {
           <>
             <ul className="chat-list">
               <li
-                className="item-chat"
-                onClick={() => {
-                  setHeaderValue("ma");
-                  setIsShowChat(true);
-                }}
+                className="item-chat opacity-50 pointer-events-none"
+                // onClick={() => {
+                //   setHeaderValue("ma");
+                //   setIsShowChat(true);
+                // }}
               >
-                دستیار فروش محصول
+                {"دستیار فروش محصول (به زودی )"}
               </li>
               <li
                 className="item-chat"
@@ -351,7 +351,7 @@ export default function ChatBot({}) {
                   setIsShowChat(true);
                 }}
               >
-                سوال و جواب
+                سوال و جواب های پر تکرار
               </li>
             </ul>
           </>
@@ -368,7 +368,7 @@ export default function ChatBot({}) {
             setIsShowChatbot((prev) => !prev);
           }}
         >
-          <img src="/images/iconchatbot.png" alt="icon" />
+          <img src="/images/chaticon2.png" alt="icon" />
         </div>
       )}
     </>

@@ -5,6 +5,7 @@ import ImageLoadingWrapper from "@/components/ImageLoadingWrapper";
 import ChatBot from "@/components/module/ChatBot/ChatBot";
 import Footer from "@/components/Footer";
 import { NavBar } from "@/components/navBar";
+import TopProgressBar from "@/components/module/TopProgressBar";
 
 export const metadata = {
   title: "مرجان",
@@ -22,6 +23,7 @@ export default async function RootLayout({ children, params }) {
   return (
     <html lang={locale} dir={dir}>
       <body className={locale === "fa" ? "font-fa" : "font-en"}>
+        <TopProgressBar />
         <ToggleProvider>
           <ImageLoadingWrapper>
             <div className="page-container">

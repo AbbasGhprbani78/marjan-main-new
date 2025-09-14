@@ -321,11 +321,11 @@ function ItemOther({ setOpenModal, item }) {
 
         <div className="flex flex-col gap-[6px] ">
           <sapn className={"font-en"}>{item.title}</sapn>
-          {item.sizes.map((size) => (
-            <sapn key={size}>
-              {locale === "fa" ? toPersianDigits(size) : size}
-            </sapn>
-          ))}
+          {item.sizes.map((size) => {
+            const parts = size.split("x").reverse().join("x");
+            const finalSize = locale === "fa" ? toPersianDigits(parts) : parts;
+            return <span key={size}>{finalSize}</span>;
+          })}
         </div>
       </div>
       <button

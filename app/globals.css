@@ -149,6 +149,42 @@ button {
   font-size: 1.7rem;
 }
 
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  background-color: #fff;
+  border: 1px solid #000;
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+#nprogress .bar {
+  background: #000;
+  height: 5px !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #000, 0 0 5px #000;
+}
+
+#nprogress .spinner {
+  display: none;
+}
+
 @layer utilities {
   .text-stroke-gold {
     text-shadow: -1px -1px 0 #ecd993, 1px -1px 0 #ecd993, -1px 1px 0 #ecd993,
@@ -178,7 +214,7 @@ button {
     text-overflow: ellipsis;
   }
   .about-text.expanded {
-    display: block; /* تمام متن نمایش داده شود */
+    display: block;
     -webkit-line-clamp: unset;
   }
 }

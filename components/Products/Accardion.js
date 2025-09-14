@@ -9,20 +9,18 @@ export default function Accordion({
   onFilterChange,
   filterKey,
   defaultOpen = false,
-  open, // 👈 اینو از بیرون می‌گیری
+  open,
   filters,
   queryFilterKey,
 }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
-  // وقتی prop `open` تغییر کرد، sync کن
   useEffect(() => {
     if (open !== undefined) {
       setIsOpen(open);
     }
   }, [open]);
 
-  // حالت queryFilterKey هم نگه دار
   useEffect(() => {
     if (queryFilterKey === filterKey) {
       setIsOpen(true);
@@ -63,15 +61,30 @@ export default function Accordion({
         }`}
       >
         <div className="space-y-5 p-2">
-          {itemsCheckBox.map((item, idx) => (
-            <CheckBox
-              key={idx}
-              label={item}
-              name={item}
-              checked={selectedItems.includes(item)}
-              onChange={handleChange}
-            />
-          ))}
+          {itemsCheckBox.map((item, idx) => {
+            let display = item;
+            if (
+              filterKey === "size" &&
+              typeof item === "string" &&
+              item.includes("x")
+            ) {
+              display = item.split("x").reverse().join("x");
+              if (locale === "fa") {
+                display = toPersianDigits(display);
+              }
+            }
+
+            return (
+              <CheckBox
+                key={idx}
+                label={display}
+                name={item}
+                checked={selectedItems.includes(item)}
+                onChange={handleChange}
+                dir={filterKey == "size" ? "rtl" : "ltr"}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

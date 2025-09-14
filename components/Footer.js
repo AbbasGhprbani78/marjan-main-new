@@ -140,8 +140,8 @@ export default function Footer() {
           />
           <TextRow
             icon="DirectboxNotif"
-            text={`${t("Postal Code")} : ${
-              locale === "fa" ? toPersianDigits("1234567890") : "1234567890"
+            text={`${t("Postal Code")}: ${
+              locale === "fa" ? toPersianDigits("817399971") : "817399971"
             }`}
           />
           <TextRow
@@ -149,11 +149,11 @@ export default function Footer() {
             text={
               t("Phone") +
               ` : ${
-                locale === "fa" ? toPersianDigits("09151231234") : "09151231234"
+                locale === "fa" ? toPersianDigits("03126248019") : "03126248019"
               }   ` +
               t("Fax") +
               ` : ${
-                locale === "fa" ? toPersianDigits("031342123") : "09151231234"
+                locale === "fa" ? toPersianDigits("03136240642") : "03136240642"
               }`
             }
           />

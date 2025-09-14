@@ -72,11 +72,19 @@ export default function Table({ title, thickness, colors, surface, size }) {
             <tr className="text-center">
               {hasSize && (
                 <td className="px-4 py-3 whitespace-nowrap text-center align-top">
-                  {size.map((item) => (
-                    <div className="block mb-5" key={item}>
-                      {locale === "fa" ? toPersianDigits(item) : item}
-                    </div>
-                  ))}
+                  {size.map((item) => {
+                    const reversed = item.includes("x")
+                      ? item.split("x").reverse().join("x")
+                      : item;
+                    const display =
+                      locale === "fa" ? toPersianDigits(reversed) : reversed;
+
+                    return (
+                      <div className="block mb-5" key={item}>
+                        {display}
+                      </div>
+                    );
+                  })}
                 </td>
               )}
 

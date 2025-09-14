@@ -298,8 +298,8 @@ export function CategorySlider({ data }) {
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
   const { localizedHref } = useLocalizedLink();
 
-  const slidesNumber =
-    viewportWidth < 768 ? 2 : Math.floor(viewportWidth / 340);
+  // تعیین تعداد slides بر اساس viewport
+  const slidesPerView = viewportWidth < 768 ? 2 : viewportWidth < 1025 ? 3 : 4;
 
   useEffect(() => {
     const currentButton = buttonsRef.current[activeButton];
@@ -330,7 +330,7 @@ export function CategorySlider({ data }) {
   };
   const filterKey = filterKeyMap[parentTitle] || parentTitle.toLowerCase();
 
-  const showArrows = currentData.length > slidesNumber;
+  const showArrows = currentData.length > slidesPerView;
 
   return (
     <div className="px-20 md:px-40 lg:px-80">
@@ -419,11 +419,7 @@ export function CategorySlider({ data }) {
           speed={800}
           dir={locale}
           key={locale + activeButton}
-          breakpoints={{
-            0: { slidesPerView: 2 },
-            768: { slidesPerView: 3 },
-            1025: { slidesPerView: 4 },
-          }}
+          slidesPerView={slidesPerView}
         >
           {currentData.map((item) => (
             <SwiperSlide
@@ -440,7 +436,7 @@ export function CategorySlider({ data }) {
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
                   alt={item.title}
-                  className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] "
+                  className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15]"
                   width={500}
                   height={500}
                   priority
@@ -451,10 +447,17 @@ export function CategorySlider({ data }) {
                       locale === "fa" ? "font-fa" : "font-en"
                     }`}
                   >
-                    {item.title}
+                    {locale === "fa" ? toPersianDigits(item.title) : item.title}
                   </p>
                 </div>
               </Link>
+              <p
+                className={`text-black text-[.9rem] font-medium text-center md:hidden pt-6 ${
+                  locale === "fa" ? "font-fa" : "font-en"
+                }`}
+              >
+                {locale === "fa" ? toPersianDigits(item.title) : item.title}
+              </p>
             </SwiperSlide>
           ))}
         </Swiper>
@@ -468,7 +471,6 @@ export function ProjectsSlider({ data, bgcolor }) {
   const swiper = useRef(null);
   const [windowWidth, setWindowWidth] = useState(null);
   const { localizedHref } = useLocalizedLink();
-  const { t } = useTranslation();
 
   const getSlideWidth = (index) => {
     if (windowWidth < 768) return windowWidth / 2;

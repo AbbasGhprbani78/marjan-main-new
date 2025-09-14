@@ -17,6 +17,7 @@
     "jalaali-js": "^1.2.8",
     "leaflet": "^1.9.4",
     "next": "15.3.2",
+    "nprogress": "^0.2.0",
     "react": "^19.0.0",
     "react-aspect-ratio": "^1.1.9",
     "react-dom": "^19.0.0",

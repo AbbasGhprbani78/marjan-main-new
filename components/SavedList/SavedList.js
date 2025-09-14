@@ -1,16 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CardItem from "../module/CardItem";
 import * as Icons from "iconsax-reactjs";
 import Pagination from "../module/Pagination";
 import { useTranslation } from "@/hook/useTranslation";
+import { useRouter, useSearchParams } from "next/navigation";
+
 export default function SavedList({ products }) {
   const { t } = useTranslation();
   const itemsPerPage = 12;
-  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const initialPage = parseInt(searchParams.get("page")) || 1;
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const [savedProducts, setSavedProducts] = useState(products);
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
   const productsCards = savedProducts.map((item) => ({
     ...item.product,
     image: item.product.main_image,
@@ -22,6 +30,13 @@ export default function SavedList({ products }) {
     setSavedProducts((prev) =>
       prev.filter((item) => item.product.id !== productId)
     );
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", page);
+    router.replace(`${window.location.pathname}?${params.toString()}`);
   };
 
   return (
@@ -51,8 +66,8 @@ export default function SavedList({ products }) {
       </div>
       <Pagination
         currentPage={currentPage}
-        totalPages={Math.ceil(products.length / itemsPerPage)}
-        onPageChange={setCurrentPage}
+        totalPages={Math.ceil(savedProducts.length / itemsPerPage)}
+        onPageChange={handlePageChange}
       />
     </>
   );

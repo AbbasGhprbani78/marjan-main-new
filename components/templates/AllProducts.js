@@ -19,7 +19,7 @@ export default function AllProducts({ categories, products }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(queryPage);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { t, locale } = useTranslation();
   const router = useRouter();
   const pathname = usePathname();
@@ -62,7 +62,7 @@ export default function AllProducts({ categories, products }) {
           const newUrl = `${pathname}?${query.toString()}`;
           const currentUrl = `${pathname}?${searchParams.toString()}`;
           if (newUrl !== currentUrl) {
-            router.push(newUrl);
+            router.replace(newUrl, { shallow: true });
           }
         }
 
@@ -76,10 +76,12 @@ export default function AllProducts({ categories, products }) {
 
   const clearFilter = useCallback(() => {
     setFilters({});
-    router.push(pathname);
+    router.replace(pathname, { shallow: true });
   }, [pathname, router]);
 
   const filteredProducts = useMemo(() => {
+    if (!filters || (Object.keys(filters).length === 0 && !searchTerm))
+      return products;
     return products.filter((product) => {
       if (searchTerm.trim().length >= 3) {
         const lowerSearch = searchTerm.toLowerCase();
@@ -123,9 +125,10 @@ export default function AllProducts({ categories, products }) {
     });
   }, [products, filters, searchTerm]);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const productsToShow = filteredProducts.slice(startIndex, endIndex);
+  const productsToShow = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredProducts, currentPage]);
 
   useEffect(() => {
     const params = Object.fromEntries(searchParams.entries());
@@ -142,20 +145,15 @@ export default function AllProducts({ categories, products }) {
 
   useEffect(() => {
     const pageFromQuery = Number(searchParams.get("page")) || 1;
-    if (pageFromQuery !== currentPage) {
-      setCurrentPage(pageFromQuery);
-    }
-  }, [searchParams, currentPage]);
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, [queryPage, filters, searchTerm]);
+    setCurrentPage(pageFromQuery);
+  }, [searchParams]);
 
   const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
     setIsLoading(true);
     const query = new URLSearchParams(searchParams.toString());
     query.set("page", newPage.toString());
-    router.push(`${pathname}?${query.toString()}`);
+    router.replace(`${pathname}?${query.toString()}`, { shallow: true });
   };
 
   const isEmptyCheckBox = Object.keys(filters).length === 0;
@@ -164,25 +162,28 @@ export default function AllProducts({ categories, products }) {
   const [lastPageBeforeSearch, setLastPageBeforeSearch] = useState(1);
 
   useEffect(() => {
+    const query = new URLSearchParams(searchParams.toString());
+
     if (searchTerm.trim().length >= 3) {
       if (!searchParams.get("searching")) {
         setLastPageBeforeSearch(currentPage);
       }
-      setCurrentPage(1);
-      const query = new URLSearchParams(searchParams.toString());
       query.set("page", "1");
       query.set("searching", "true");
-      router.push(`${pathname}?${query.toString()}`);
-    } else if (searchTerm.trim().length === 0 && lastPageBeforeSearch !== 1) {
-      setCurrentPage(lastPageBeforeSearch);
-      const query = new URLSearchParams(searchParams.toString());
+      router.replace(`${pathname}?${query.toString()}`, { shallow: true });
+    } else if (
+      searchTerm.trim().length === 0 &&
+      searchParams.get("searching")
+    ) {
       query.set("page", lastPageBeforeSearch.toString());
       query.delete("searching");
-      router.push(`${pathname}?${query.toString()}`);
+      router.replace(`${pathname}?${query.toString()}`, { shallow: true });
     }
   }, [searchTerm]);
 
-  console.log(filters);
+  useEffect(() => {
+    setIsLoading(false);
+  }, [searchParams.toString()]);
 
   return (
     <main className="px-20 md:px-40 lg:px-80">
@@ -263,13 +264,7 @@ export default function AllProducts({ categories, products }) {
         </aside>
 
         <section className="lg:col-span-9">
-          {isLoading ? (
-            <div className="flex justify-center items-center h-[40vh] md:min-h-[70vh]">
-              <div className="w-70 h-70 border-4 border-black border-b-transparent rounded-full animate-spin"></div>
-            </div>
-          ) : (
-            <CardProducts products={productsToShow} />
-          )}
+          <CardProducts products={productsToShow} isLoading={isLoading} />
 
           <Pagination
             currentPage={currentPage}
@@ -290,3 +285,8 @@ export default function AllProducts({ categories, products }) {
     </main>
   );
 }
+
+// useEffect(() => {
+//   setIsLoading(false);
+// setIsLoading(true);
+// }, [queryPage, filters, searchTerm]);

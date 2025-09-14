@@ -265,7 +265,16 @@ export default function Texture({ textureImage }) {
                                 </div>
                               </div>
                               <span className="pt-[10px]">
-                                {toPersianDigits(group[0]?.size)}
+                                <span className="pt-[10px]">
+                                  {(() => {
+                                    const size = group[0]?.size ?? "";
+                                    const parts = size.split("x").reverse();
+                                    const finalSize = parts.join("x");
+                                    return locale === "fa"
+                                      ? toPersianDigits(finalSize)
+                                      : finalSize;
+                                  })()}
+                                </span>
                               </span>
                             </div>
                           );
@@ -303,7 +312,14 @@ export default function Texture({ textureImage }) {
                                 </div>
                               </div>
                               <span className="pt-[10px]">
-                                {toPersianDigits(group[0]?.size)}
+                                {(() => {
+                                  const size = group[0]?.size ?? "";
+                                  const parts = size.split("x").reverse();
+                                  const finalSize = parts.join("x");
+                                  return locale === "fa"
+                                    ? toPersianDigits(finalSize)
+                                    : finalSize;
+                                })()}
                               </span>
                             </div>
                           );
