@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import ProductItem from "./ProductItem";
 import PopupGallery from "../module/PopupGallery";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { useViewportWidth } from "@/hook/useViewportWidth";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid } from "swiper/modules";

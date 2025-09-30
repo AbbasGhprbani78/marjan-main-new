@@ -5,6 +5,7 @@ import Message from "./Message/Message";
 import axios from "axios";
 import { useViewportWidth } from "@/hook/useViewportWidth";
 import { useToggle } from "@/context/context";
+import { useTranslation } from "@/context/TranslationContext";
 export default function ChatBot({}) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState({
@@ -27,6 +28,7 @@ export default function ChatBot({}) {
   const [hideIcon, setHideIcon] = useState(false);
   const { isShowChatbot, setIsShowChatbot } = useToggle();
   const [headerValue, setHeaderValue] = useState("");
+  const { t, locale } = useTranslation();
 
   const sendMessage = async () => {
     if (message.trim() === "") return;
@@ -37,7 +39,7 @@ export default function ChatBot({}) {
     }
 
     const headers = {
-      "X-Language": "fa",
+      "X-Language": locale,
       "fac-key": headerValue,
     };
 

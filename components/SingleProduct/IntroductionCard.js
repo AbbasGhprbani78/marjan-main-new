@@ -5,7 +5,7 @@ import * as Icons from "iconsax-reactjs";
 import Table from "./Table";
 import { useRouter } from "next/navigation";
 import { toPersianDigits, useLocalizedLink } from "@/utils/helper";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function IntroductionCard({ setOpenModal, singleProduct }) {
   const router = useRouter();
@@ -323,7 +323,9 @@ function ItemOther({ setOpenModal, item }) {
           <sapn className={"font-en"}>{item.title}</sapn>
           {item.sizes.map((size) => {
             const parts = size.split("x").reverse().join("x");
-            const finalSize = locale === "fa" ? toPersianDigits(parts) : parts;
+            const finalSize = ["fa", "ar"].includes(locale)
+              ? toPersianDigits(parts)
+              : parts;
             return <span key={size}>{finalSize}</span>;
           })}
         </div>

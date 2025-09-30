@@ -6,7 +6,11 @@ export function middleware(request) {
   const { pathname } = request.nextUrl;
 
   const isMissingLocale =
-    !pathname.startsWith("/fa") && !pathname.startsWith("/en");
+    !pathname.startsWith("/fa") &&
+    !pathname.startsWith("/en") &&
+    !pathname.startsWith("/ar") &&
+    !pathname.startsWith("/ru");
+
   const isPublicFile = PUBLIC_FILE.test(pathname);
 
   if (isMissingLocale && !isPublicFile && pathname !== "/favicon.ico") {

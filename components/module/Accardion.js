@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import * as Icons from "iconsax-reactjs";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { toPersianDigits } from "@/utils/helper";
 import Link from "next/link";
 
@@ -39,7 +39,7 @@ const Accordion = ({ accardionItem }) => {
       >
         <div className="pb-[2rem] w-full">
           <p className="px-4  font-normal text-[15.5px] text-start lg:text-justify">
-            {locale === "fa"
+            {["fa", "ar"].includes(locale)
               ? toPersianDigits(accardionItem.answer)
               : accardionItem.answer}
           </p>

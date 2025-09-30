@@ -4,7 +4,7 @@ import Form1 from "../Employment/Form1";
 import Form2 from "../Employment/Form2";
 import Form3 from "../Employment/Form3";
 import Form4 from "../Employment/Form4";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function Employment({
   states,
@@ -128,7 +128,7 @@ export default function Employment({
   return (
     <div
       className={`px-20 md:px-40 lg:px-80 mt-[130px] lg:mt-[110px] ${
-        locale === "fa" ? "font-fa" : "font-en"
+        ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
       }`}
     >
       <div className="flex items-center border-b overflow-x-auto whitespace-nowrap hide-scrollbar">

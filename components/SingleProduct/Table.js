@@ -1,5 +1,5 @@
 "use client";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { toPersianDigits } from "@/utils/helper";
 import Image from "next/image";
 import React from "react";
@@ -61,7 +61,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
                       hasColors && "rtl:border-r"
                     } border-[#000] ltr:border-l`}
                   >
-                    {t("thicknesses")}
+                    {t("Thickness")}
                   </div>
                 </th>
               )}
@@ -76,8 +76,9 @@ export default function Table({ title, thickness, colors, surface, size }) {
                     const reversed = item.includes("x")
                       ? item.split("x").reverse().join("x")
                       : item;
-                    const display =
-                      locale === "fa" ? toPersianDigits(reversed) : reversed;
+                    const display = ["fa", "ar"].includes(locale)
+                      ? toPersianDigits(reversed)
+                      : reversed;
 
                     return (
                       <div className="block mb-5" key={item}>
@@ -126,7 +127,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
                 <td className="px-4 py-3 whitespace-nowrap text-center [direction:ltr] align-top">
                   {thickness?.main_thickness && (
                     <div className="mb-5">
-                      {locale === "fa"
+                      {["fa", "ar"].includes(locale)
                         ? toPersianDigits(thickness?.main_thickness)
                         : thickness?.main_thickness}{" "}
                       mm
@@ -134,7 +135,10 @@ export default function Table({ title, thickness, colors, surface, size }) {
                   )}
                   {thickness?.additional_thicknesses.map((item, i) => (
                     <div key={i} className="mb-5">
-                      {locale === "fa" ? toPersianDigits(item) : item} mm
+                      {["fa", "ar"].includes(locale)
+                        ? toPersianDigits(item)
+                        : item}{" "}
+                      mm
                     </div>
                   ))}
                 </td>

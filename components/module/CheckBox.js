@@ -1,4 +1,4 @@
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { toPersianDigits } from "@/utils/helper";
 
 export default function CheckBox({
@@ -12,7 +12,6 @@ export default function CheckBox({
   const id = `checkbox-${name || label?.replace(/\s+/g, "-").toLowerCase()}`;
 
   const { locale } = useTranslation();
-  console.log(name);
 
   return (
     <div className="flex items-start sm:items-center space-x-2 rtl:space-x-reverse gap-4">
@@ -30,7 +29,7 @@ export default function CheckBox({
         dir={dir}
         className="text-[#292d32] block cursor-pointer text-sm leading-relaxed"
       >
-        {locale === "fa" ? toPersianDigits(label) : label}
+        {["fa", "ar"].includes(locale) ? toPersianDigits(label) : label}
       </label>
     </div>
   );

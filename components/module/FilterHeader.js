@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { MoreButton } from "../moreButton";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import Link from "next/link";
 import AccardionFilter from "./AccardionFilter";
 import { useViewportWidth } from "@/hook/useViewportWidth";
@@ -25,7 +25,6 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
                 setShowFilterMenu={setShowFilterMenu}
               />
             ))}
-            1
           </div>
         </AccardionFilter>
         <AccardionFilter title={t("color")}>
@@ -90,11 +89,11 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
               transition={{ duration: 0.3 }}
               className="absolute top-[70px] left-0 right-0 bg-white z-10 w-full px-80  pt-[3rem]"
             >
-              <div className="h-[80dvh] overflow-y-auto pb-[3rem] hide-scrollbar">
+              <div className="h-[80vh] overflow-y-auto  hide-scrollbar">
                 <div className="grid grid-cols-12 gap-[2rem] ">
                   <div className=" md:col-span-6 xl:col-span-3 text-start">
                     <span className="font-medium pb-[5px] border-b-2 inline-block w-85 text-center text-[var(--color-gray-900)]">
-                      {t("size")}
+                      {t("Size")}
                     </span>
                     <div className="grid grid-cols-2 gap-[10px] mt-[1rem]">
                       {dataHeader?.sizes?.map((item, i) => (
@@ -105,32 +104,6 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
                           setShowFilterMenu={setShowFilterMenu}
                         />
                       ))}
-                    </div>
-                    <div className="flex items-center justify-between mt-[7.7rem]">
-                      <div className="flex items-center gap-[1.5rem]">
-                        <MoreButton
-                          text={t("AllProducts")}
-                          width="124"
-                          height="40"
-                          invert=""
-                          href="/products"
-                          onClick={() => setShowFilterMenu(false)}
-                        />
-                        <MoreButton
-                          text={t("Why Marjan")}
-                          width="124"
-                          height="40"
-                          invert=""
-                          href={"/catalog?category=چرا مرجان"}
-                        />
-                        <MoreButton
-                          text={t("Catalog")}
-                          width="124"
-                          height="40"
-                          invert=""
-                          href="/catalog"
-                        />
-                      </div>
                     </div>
                   </div>
                   <div className=" md:col-span-6 xl:col-span-3 text-start">
@@ -191,68 +164,91 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
                         </div>
                       </Link>
                     </div>
-                    <div className="flex gap-20 items-center justify-end mt-[1rem]">
-                      <a
-                        href="https://www.pinterest.com/marjantileco/"
-                        target="_blank"
-                      >
-                        <Image
-                          src={"/images/pintrest.png"}
-                          width={30}
-                          height={30}
-                          className="object-fill cursor-pointer  mix-blend-multiply"
-                          alt=""
-                        />
-                      </a>
-                      <a
-                        href="https://instagram.com/marjantileco?utm_medium=copy_link"
-                        target="_blank"
-                      >
-                        <Image
-                          src={"/images/instagram.png"}
-                          width={40}
-                          height={40}
-                          className="object-fill cursor-pointer mix-blend-multiply"
-                          alt=""
-                        />
-                      </a>
-                      <a
-                        href="https://www.linkedin.com/company/marjantilecompany"
-                        target="_blank"
-                      >
-                        <Image
-                          src={"/images/linkdin.png"}
-                          width={40}
-                          height={40}
-                          className="object-fill cursor-pointer mix-blend-multiply"
-                          alt=""
-                        />
-                      </a>
-                      <a
-                        href="https://www.aparat.com/marjantile"
-                        target="_blank"
-                      >
-                        <Image
-                          src={"/images/aparat.png"}
-                          width={35}
-                          height={35}
-                          className="object-fill cursor-pointer mix-blend-multiply"
-                          alt=""
-                        />
-                      </a>
-                      <a
-                        href="https://www.youtube.com/@marjantile6108"
-                        target="_blank"
-                      >
-                        <Image
-                          src={"/images/youtube.png"}
-                          width={40}
-                          height={40}
-                          className="object-fill cursor-pointer mix-blend-multiply"
-                          alt=""
-                        />
-                      </a>
-                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between pb-[2rem]">
+                  <div className="flex items-center gap-[1.5rem]">
+                    <MoreButton
+                      text={t("AllProducts")}
+                      width="124"
+                      height="40"
+                      invert=""
+                      href="/products"
+                      onClick={() => setShowFilterMenu(false)}
+                    />
+                    <MoreButton
+                      text={t("Why Marjan")}
+                      width="124"
+                      height="40"
+                      invert=""
+                      href={"/catalog?category=چرا مرجان"}
+                    />
+                    <MoreButton
+                      text={t("Catalog")}
+                      width="124"
+                      height="40"
+                      invert=""
+                      href="/catalog"
+                    />
+                  </div>
+                  <div className="flex gap-20 items-center justify-end mt-[1rem]">
+                    <a
+                      href="https://www.pinterest.com/marjantileco/"
+                      target="_blank"
+                    >
+                      <Image
+                        src={"/images/pintrest.png"}
+                        width={30}
+                        height={30}
+                        className="object-fill cursor-pointer  mix-blend-multiply"
+                        alt=""
+                      />
+                    </a>
+                    <a
+                      href="https://instagram.com/marjantileco?utm_medium=copy_link"
+                      target="_blank"
+                    >
+                      <Image
+                        src={"/images/instagram.png"}
+                        width={40}
+                        height={40}
+                        className="object-fill cursor-pointer mix-blend-multiply"
+                        alt=""
+                      />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/company/marjantilecompany"
+                      target="_blank"
+                    >
+                      <Image
+                        src={"/images/linkdin.png"}
+                        width={40}
+                        height={40}
+                        className="object-fill cursor-pointer mix-blend-multiply"
+                        alt=""
+                      />
+                    </a>
+                    <a href="https://www.aparat.com/marjantile" target="_blank">
+                      <Image
+                        src={"/images/aparat.png"}
+                        width={35}
+                        height={35}
+                        className="object-fill cursor-pointer mix-blend-multiply"
+                        alt=""
+                      />
+                    </a>
+                    <a
+                      href="https://www.youtube.com/@marjantile6108"
+                      target="_blank"
+                    >
+                      <Image
+                        src={"/images/youtube.png"}
+                        width={40}
+                        height={40}
+                        className="object-fill cursor-pointer mix-blend-multiply"
+                        alt=""
+                      />
+                    </a>
                   </div>
                 </div>
               </div>
@@ -295,7 +291,9 @@ function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
       className="relative flex items-center justify-between px-20    h-[46px]  bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer"
     >
       <span className="font-medium">
-        {locale === "fa" ? toPersianDigits(displayText) : displayText}
+        {["fa", "ar"].includes(locale)
+          ? toPersianDigits(displayText)
+          : displayText}
       </span>
       <div>
         {type === "size" ? (

@@ -174,7 +174,6 @@ export default function Form2({
           onSuccess();
         }
       } else {
-        console.log(JSON.stringify(data));
         response = await axios.put(
           `${process.env.NEXT_PUBLIC_API_URL}/app/educational-background/`,
           data

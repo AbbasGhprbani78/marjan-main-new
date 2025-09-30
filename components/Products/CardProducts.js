@@ -3,7 +3,7 @@
 import React from "react";
 import CardItem from "../module/CardItem";
 import * as Icons from "iconsax-reactjs";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function CardProducts({ products, isLoading }) {
   const { t } = useTranslation();

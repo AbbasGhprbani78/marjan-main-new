@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Button2 from "../module/Button2";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { toPersianDigits } from "@/utils/helper";
 
 export default function RepresentationItem({ city }) {
@@ -20,16 +20,20 @@ export default function RepresentationItem({ city }) {
       </p>
       <p>
         <span className="font-medium">{t("Address")}:</span>{" "}
-        {locale === "fa" ? toPersianDigits(city.address) : city.address}
+        {["fa", "ar"].includes(locale)
+          ? toPersianDigits(city.address)
+          : city.address}
       </p>
       <p>
         <span className="font-medium">{t("Phone")}:</span>{" "}
-        {locale === "fa" ? toPersianDigits(city.phone) : city.phone}
+        {["fa", "ar"].includes(locale)
+          ? toPersianDigits(city.phone)
+          : city.phone}
       </p>
       {city?.postal_code && (
         <p>
           <span className="font-medium">{t("Postal Code")}:</span>{" "}
-          {locale === "fa"
+          {["fa", "ar"].includes(locale)
             ? toPersianDigits(city.postal_code)
             : city.postal_code}
         </p>

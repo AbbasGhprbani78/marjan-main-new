@@ -3,7 +3,6 @@ import React from "react";
 import CircleItem from "../module/CircleItem";
 
 export default function Standards({ data }) {
-  console.log(data);
   return (
     <div>
       <h3 className="font-medium title mb-[1.5rem] text-center md:text-start">

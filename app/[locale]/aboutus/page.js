@@ -51,12 +51,11 @@ export const metadata = {
 //   return [{ locale: "fa" }, { locale: "en" }];
 // }
 
-// const dict = params.locale === "fa" ? fa : en;
+// const dict = params.["fa", "ar"].includes(locale) ? fa : en;
 
 export default async function page({ params }) {
   const { locale } = params;
   const dataAboutus = await fetchAboutUs(locale);
-  console.log(dataAboutus);
 
   return (
     <main className="wrapper w-full">
@@ -112,13 +111,13 @@ export default async function page({ params }) {
       </section>
 
       <section className=" mb-[5rem] md:mb-[8rem]">
-        <AboutHistory history={data.history} />
+        <AboutHistory history={dataAboutus?.history} />
       </section>
       <section className=" mb-[5rem] md:mb-[7rem]">
-        <BusinessPartners brands={data.brands} />
+        <BusinessPartners brands={dataAboutus?.brands} />
       </section>
       <section className=" pb-[20px]">
-        <AwardSlider sliderItems={data.slider} />
+        <AwardSlider sliderItems={dataAboutus.slider} />
       </section>
     </main>
   );

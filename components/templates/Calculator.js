@@ -10,7 +10,7 @@ import { Refresh, Calculator } from "iconsax-reactjs";
 import { ToastContainer } from "react-toastify";
 import { warningMessage } from "../module/Toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { toPersianDigits } from "@/utils/helper";
 
 export default function CalculatorT({ dataSizes }) {
@@ -127,14 +127,12 @@ export default function CalculatorT({ dataSizes }) {
     const results = [];
 
     for (const s of surfaces) {
-      console.log("s =>", s);
       ("{key: 'floor', label: 'کف', area: 12, tile: '۶۰×۶۰'}");
       const effArea = (s.area || 0) * factor;
       const effAreaWithWaste = effArea * (1 + includeWastage);
       const tArea = getTileAreaInMeter(s.tile);
 
       if (!tArea || tArea <= 0) {
-        console.log(tArea);
         warningMessage(t("tile_size_missing"));
         return;
       }
@@ -252,7 +250,7 @@ export default function CalculatorT({ dataSizes }) {
                   {t("Deductedarea")}:
                 </span>
                 <span className="text-red-600">
-                  {locale === "fa"
+                  {["fa", "ar"].includes(locale)
                     ? toPersianDigits(deductArea.toFixed(2))
                     : deductArea.toFixed(2)}{" "}
                   {uniMeasurement === 1 ? t("unit_m2") : t("unit_ft2")}
@@ -275,7 +273,9 @@ export default function CalculatorT({ dataSizes }) {
                   {t("Finaltilearearequired")} :
                 </span>
                 <span className="text-green-600">
-                  {locale === "fa" ? toPersianDigits(totalArea) : totalArea}
+                  {["fa", "ar"].includes(locale)
+                    ? toPersianDigits(totalArea)
+                    : totalArea}
                 </span>
               </motion.p>
             )}
@@ -295,7 +295,7 @@ export default function CalculatorT({ dataSizes }) {
                   {t("Numberoftilesrequired")} :
                 </span>
                 <span className="text-blue-600">
-                  {locale === "fa"
+                  {["fa", "ar"].includes(locale)
                     ? toPersianDigits(numberOfTiles)
                     : numberOfTiles}{" "}
                   {t("Number")}
@@ -316,14 +316,16 @@ export default function CalculatorT({ dataSizes }) {
                     <span className="font-medium">{r.label}</span>
                     <span>
                       {t("Area")}:{" "}
-                      {locale === "fa"
+                      {["fa", "ar"].includes(locale)
                         ? toPersianDigits(r.area.toFixed(2))
                         : r.area.toFixed(2)}{" "}
                       {uniMeasurement === 1 ? t("unit_m2") : t("unit_ft2")}
                     </span>
                     <span>
                       {t("Tile")}:{" "}
-                      {locale === "fa" ? toPersianDigits(r.tiles) : r.tiles}{" "}
+                      {["fa", "ar"].includes(locale)
+                        ? toPersianDigits(r.tiles)
+                        : r.tiles}{" "}
                       {t("Number")}
                     </span>
                   </div>

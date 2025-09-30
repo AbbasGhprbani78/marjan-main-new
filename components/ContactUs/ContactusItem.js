@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Button2 from "../module/Button2";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { useParams } from "next/navigation";
 import { toPersianDigits } from "@/utils/helper";
 

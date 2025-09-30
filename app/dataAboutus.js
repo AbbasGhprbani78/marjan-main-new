@@ -22,36 +22,56 @@ export const data = {
 
   slider: [
     {
+      image: "/images/award/9.png",
+      text: "۱۴۰۱ صادر کننده ممتاز استان اصفهان",
+    },
+    {
+      image: "/images/award/7.png",
+      text: "۱۳۹۸ تولید ملی - افتخار ملی",
+    },
+    {
+      image: "/images/award/6.png",
+      text: "۱۳۹۸ صادر کننده ممتاز استانی",
+    },
+    {
+      image: "/images/award/2.png",
+      text: "۱۳۹۷ جایزه ملی تعالی سازمانی",
+    },
+    {
+      image: "/images/award/11.jpg",
+      text: "۱۳۹۷ تولید ملی - افتخار ملی",
+    },
+    {
+      image: "/images/award/5.png",
+      text: "۱۳۹۷ واحد نمونه استانی",
+    },
+    {
+      image: "/images/award/4.png",
+      text: "۱۳۹۶ واحد نمونه استانی",
+    },
+    {
+      image: "/images/award/2.png",
+      text: "۱۳۹۶ جایزه ملی تعالی سازمانی",
+    },
+    {
+      image: "/images/award/8.png",
+      text: "۱۳۹۶ صادرکننده نمونه استان اصفهان ",
+    },
+    {
+      image: "/images/award/10.jpg",
+      text: "۱۳۸۹ صادر کننده نمونه استانی",
+    },
+    {
+      image: "/images/award/3.png",
+      text: "۱۳۸۸ صادر کننده نمونه استانی",
+    },
+    {
       image: "/images/award/1.png",
       text: "۱۳۷۹ صادر کننده نمونه کشور",
     },
     {
-      image: "/images/award/2.png",
-      text: "۱۳۷۹ صادر کننده نمونه کشور",
-    },
-    {
-      image: "/images/award/3.png",
-      text: "۱۳۷۹ صادر کننده نمونه کشور",
-    },
-    {
-      image: "/images/award/5.png",
-      text: "۱۳۷۹ صادر کننده نمونه کشور",
-    },
-    {
-      image: "/images/award/6.png",
-      text: "۱۳۷۹ صادر کننده نمونه کشور",
-    },
-    {
-      image: "/images/award/7.png",
-      text: "۱۳۷۹ صادر کننده نمونه کشور",
-    },
-    {
-      image: "/images/award/8.png",
-      text: "۱۳۷۹ صادر کننده نمونه کشور",
-    },
-    {
-      image: "/images/award/9.png",
-      text: "۱۳۷۹ صادر کننده نمونه کشور",
+      image: "/images/award/12.jpg",
+      text: "گواهینامه استانی رعایت حقوق مصرف‌ کنندگان",
     },
   ],
 

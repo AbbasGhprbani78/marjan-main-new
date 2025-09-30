@@ -17,7 +17,7 @@ import {
   useLocalizedLink,
 } from "@/utils/helper";
 import { useParams } from "next/navigation";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { useViewportWidth } from "@/hook/useViewportWidth";
 
 function LeftArrow({
@@ -120,7 +120,7 @@ export function HomeSlider({
                   className={`text-center text-[30px] md:text-[40px] font-[400] text-gray-white ${
                     nameproduct
                       ? "font-en"
-                      : locale === "fa"
+                      : ["fa", "ar"].includes(locale)
                       ? "font-fa"
                       : "font-en"
                   }`}
@@ -200,7 +200,9 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
               ${shadow && activeButton === item.id && "text-black"}`}
             onClick={() => setActiveButton(item.id)}
           >
-            {locale === "fa" ? toPersianDigits(item.title) : item.title}
+            {["fa", "ar"].includes(locale)
+              ? toPersianDigits(item.title)
+              : item.title}
           </button>
         ))}
 
@@ -215,7 +217,9 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
       <div className="relative w-full">
         {currentSectionItems.length === 0 ? (
           <div className="flex justify-center items-center h-[200px] text-gray-500">
-            {locale === "fa" ? "موردی وجود ندارد" : "No items available"}
+            {["fa", "ar"].includes(locale)
+              ? "موردی وجود ندارد"
+              : "No items available"}
           </div>
         ) : (
           <>
@@ -271,9 +275,9 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
                     <div className="flex flex-col mt-[10px]">
                       <p
                         className={`text-[.85rem] font-[500] ${
-                          locale === "fa" ? "font-fa" : "font-en"
+                          ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
                         }`}
-                        dir={locale === "fa" ? "rtl" : "ltr"}
+                        dir={["fa", "ar"].includes(locale) ? "rtl" : "ltr"}
                       >
                         {item.title}
                       </p>
@@ -298,7 +302,6 @@ export function CategorySlider({ data }) {
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
   const { localizedHref } = useLocalizedLink();
 
-  // تعیین تعداد slides بر اساس viewport
   const slidesPerView = viewportWidth < 768 ? 2 : viewportWidth < 1025 ? 3 : 4;
 
   useEffect(() => {
@@ -342,7 +345,9 @@ export function CategorySlider({ data }) {
             className="w-[136px] h-[45px] text-[22px] font-[500] cursor-pointer pb-[5px] transition-all duration-300"
             onClick={() => setActiveButton(item.id)}
           >
-            {locale === "fa" ? toPersianDigits(item.title) : item.title}
+            {["fa", "ar"].includes(locale)
+              ? toPersianDigits(item.title)
+              : item.title}
           </button>
         ))}
         <span
@@ -363,7 +368,7 @@ export function CategorySlider({ data }) {
           className="text-xl px-2 py-1 disabled:opacity-30"
         >
           <Icons.ArrowRight2
-            className={`${locale === "fa" ? "" : "rotate-180"}`}
+            className={`${["fa", "ar"].includes(locale) ? "" : "rotate-180"}`}
             size="20"
             color="#000"
             variant="blod"
@@ -389,7 +394,7 @@ export function CategorySlider({ data }) {
           className="text-xl px-2 py-1 disabled:opacity-30"
         >
           <Icons.ArrowLeft2
-            className={`${locale === "fa" ? "" : "rotate-180"}`}
+            className={`${["fa", "ar"].includes(locale) ? "" : "rotate-180"}`}
             size="20"
             color="#000"
             variant="blod"
@@ -444,19 +449,23 @@ export function CategorySlider({ data }) {
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                   <p
                     className={`text-white text-[1.2rem] text-center px-4 ${
-                      locale === "fa" ? "font-fa" : "font-en"
+                      ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
                     }`}
                   >
-                    {locale === "fa" ? toPersianDigits(item.title) : item.title}
+                    {["fa", "ar"].includes(locale)
+                      ? toPersianDigits(item.title)
+                      : item.title}
                   </p>
                 </div>
               </Link>
               <p
                 className={`text-black text-[.9rem] font-medium text-center md:hidden pt-6 ${
-                  locale === "fa" ? "font-fa" : "font-en"
+                  ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
                 }`}
               >
-                {locale === "fa" ? toPersianDigits(item.title) : item.title}
+                {["fa", "ar"].includes(locale)
+                  ? toPersianDigits(item.title)
+                  : item.title}
               </p>
             </SwiperSlide>
           ))}
@@ -549,7 +558,7 @@ export function ProjectsSlider({ data, bgcolor }) {
               {index % 2 !== 0 && (
                 <div className="hidden md:flex">
                   <p className="text-[18px] font-[400] mt-[5px] me-auto">
-                    {locale === "fa"
+                    {["fa", "ar"].includes(locale)
                       ? toPersianDigits(item?.title)
                       : item?.title}
                   </p>

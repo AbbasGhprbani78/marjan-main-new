@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CheckBox from "../module/CheckBox";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function PrecentageWastage({ onChange, isClean }) {
   const [wastage5, setWastage5] = useState(false);
@@ -40,7 +40,7 @@ export default function PrecentageWastage({ onChange, isClean }) {
           }
         }}
         name="wastage5"
-        dir={locale === "fa" ? "rtl" : "ltr"}
+        dir={["fa", "ar"].includes(locale) ? "rtl" : "ltr"}
       />
 
       <CheckBox
@@ -54,7 +54,7 @@ export default function PrecentageWastage({ onChange, isClean }) {
           }
         }}
         name="wastage10"
-        dir={locale === "fa" ? "rtl" : "ltr"}
+        dir={["fa", "ar"].includes(locale) ? "rtl" : "ltr"}
       />
 
       <CheckBox
@@ -68,7 +68,7 @@ export default function PrecentageWastage({ onChange, isClean }) {
           }
         }}
         name="wastage15"
-        dir={locale === "fa" ? "rtl" : "ltr"}
+        dir={["fa", "ar"].includes(locale) ? "rtl" : "ltr"}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import * as Icons from "iconsax-reactjs";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function Button({ text, onClick, disable, isActive }) {
   const { locale } = useTranslation();
@@ -23,7 +23,7 @@ export default function Button({ text, onClick, disable, isActive }) {
       ) : (
         <Icons.ArrowLeft2
           size="15"
-          className={`${locale === "fa" ? "" : "rotate-180"}`}
+          className={`${["fa", "ar"].includes(locale) ? "" : "rotate-180"}`}
         />
       )}
     </button>

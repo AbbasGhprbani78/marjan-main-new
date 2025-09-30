@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { MoreButton } from "../moreButton";
 import Image from "next/image";
 import * as Icons from "iconsax-reactjs";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import ReadMoreText from "../module/ReadMoreText";
 import { useToggle } from "@/context/context";
 

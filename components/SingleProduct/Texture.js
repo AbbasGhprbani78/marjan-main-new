@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import "react-aspect-ratio/aspect-ratio.css";
 import PopupGallery from "../module/PopupGallery";
 import * as Icons from "iconsax-reactjs";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import MySelect from "../module/SelectDropDown";
 import { toPersianDigits } from "@/utils/helper";
 
@@ -167,7 +167,7 @@ export default function Texture({ textureImage }) {
               <div
                 dir="ltr"
                 className={`flex flex-wrap gap-4 items-center w-full justify-center 
-    ${locale === "fa" ? "md:justify-start" : "md:justify-end"}`}
+    ${["fa", "ar"].includes(locale) ? "md:justify-start" : "md:justify-end"}`}
               >
                 {(() => {
                   const maxDim = getMaxDimension(tailesToShow);
@@ -270,7 +270,7 @@ export default function Texture({ textureImage }) {
                                     const size = group[0]?.size ?? "";
                                     const parts = size.split("x").reverse();
                                     const finalSize = parts.join("x");
-                                    return locale === "fa"
+                                    return ["fa", "ar"].includes(locale)
                                       ? toPersianDigits(finalSize)
                                       : finalSize;
                                   })()}
@@ -316,7 +316,7 @@ export default function Texture({ textureImage }) {
                                   const size = group[0]?.size ?? "";
                                   const parts = size.split("x").reverse();
                                   const finalSize = parts.join("x");
-                                  return locale === "fa"
+                                  return ["fa", "ar"].includes(locale)
                                     ? toPersianDigits(finalSize)
                                     : finalSize;
                                 })()}

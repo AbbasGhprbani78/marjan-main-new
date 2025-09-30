@@ -43,10 +43,9 @@ export const metadata = {
 
 export default async function page({ params }) {
   const { locale } = await params;
-  const t = locale === "fa" ? fa : en;
+  const t = ["fa", "ar"].includes(locale) ? fa : en;
   const { id } = await params;
   const singleData = await fetchSingleProjects(locale, id);
-  console.log(singleData);
 
   return (
     <main className="wrapper text-[var(--color-gray-900)] ">
@@ -66,7 +65,7 @@ export default async function page({ params }) {
         {singleData?.name && (
           <p
             className={`w-max text-white font-normal text-[1.5rem] md:text-[2rem] z-10 ${
-              locale === "fa" ? "font-fa" : "font-en"
+              ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
             }`}
           >
             {singleData?.name}

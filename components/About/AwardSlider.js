@@ -8,13 +8,15 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function AwardSlider({ sliderItems }) {
   let swiper = useRef(null);
+  const { t } = useTranslation();
   return (
     <>
       <h3 className="text-[var(--color-gray-900)]  mb-[2rem] px-20 md:px-40 lg:px-80  title font-[500]">
-        جوایز و افتخارات
+        {t("Awardsandhonors")}
       </h3>
 
       <div className="flex justify-center items-center mt-[3rem]">
@@ -38,7 +40,7 @@ export default function AwardSlider({ sliderItems }) {
               >
                 <div className="relative w-full h-3/4">
                   <Image
-                    src={item.image}
+                    src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
                     alt="Background Image"
                     className="object-contain"
                     fill

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Modal from "../module/Modal";
 import IntroductionCard from "./IntroductionCard";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { GallerySlider } from "../slider";
 
 export default function ImagesContainer({ dataSingleProduct, images }) {

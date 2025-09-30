@@ -1,5 +1,5 @@
 "use client";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { useState, useEffect } from "react";
 
 export function Anchor({ data }) {

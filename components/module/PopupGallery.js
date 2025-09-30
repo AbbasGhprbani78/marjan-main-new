@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import * as Icons from "iconsax-reactjs";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function PopupGallery({
   open,

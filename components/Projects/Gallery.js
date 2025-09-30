@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import GalleryItem from "./GalleryItem";
 import * as Icons from "iconsax-reactjs";
 import PopupGallery from "../module/PopupGallery";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {} from "swiper";
 import "swiper/css";

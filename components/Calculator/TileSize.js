@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Options from "../module/Options";
 import SelectDropDown from "@/components/module/SelectDropDown";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function TileSize({
   value,

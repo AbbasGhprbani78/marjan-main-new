@@ -11,7 +11,7 @@ import Image from "next/image";
 
 import Link from "next/link";
 import { truncateText, useLocalizedLink } from "@/utils/helper";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Blogs({ blogs, categories, filters }) {

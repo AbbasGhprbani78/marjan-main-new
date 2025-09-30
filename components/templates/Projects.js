@@ -6,7 +6,7 @@ import * as Icons from "iconsax-reactjs";
 import CheckBox from "../module/CheckBox";
 import Button from "../module/Button";
 import PopFilter from "../module/PopFilter";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { useSearchParams } from "next/navigation";
 export default function Projects({ data, categories }) {
   const { t } = useTranslation();

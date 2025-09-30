@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import * as Icons from "iconsax-reactjs";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function SearchInput({ searchTerm, onSearchChange }) {
   const { t } = useTranslation();

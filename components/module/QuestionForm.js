@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Input from "./Input";
 import SelectDropDown from "./SelectDropDown";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import Button2 from "./Button2";
 import { successMessage } from "./Toast";
 

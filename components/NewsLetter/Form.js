@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Input from "../module/Input";
 import Button2 from "../module/Button2";
 import SelectDropDown from "../module/SelectDropDown";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { successMessage, ToastContainerCustom } from "../module/Toast";
 
 export default function Form({ dataTypeOfActivity }) {

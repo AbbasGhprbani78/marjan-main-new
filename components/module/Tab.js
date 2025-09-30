@@ -47,7 +47,7 @@ export default function Tab({ itemsFilter, selected, setSelected }) {
           className="text-xl px-2 py-1 disabled:opacity-30"
         >
           <Icons.ArrowRight2
-            className={`${locale === "fa" ? "" : "rotate-180"}`}
+            className={`${["fa", "ar"].includes(locale) ? "" : "rotate-180"}`}
             size="20"
             color="#000"
             variant="blod"
@@ -67,7 +67,7 @@ export default function Tab({ itemsFilter, selected, setSelected }) {
           className="text-xl px-2 py-1 disabled:opacity-30"
         >
           <Icons.ArrowLeft2
-            className={`${locale === "fa" ? "" : "rotate-180"}`}
+            className={`${["fa", "ar"].includes(locale) ? "" : "rotate-180"}`}
             size="20"
             color="#000"
             variant="blod"

@@ -49,10 +49,9 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = params;
 
-  const t = locale === "fa" ? fa : en;
+  const t = ["fa", "ar"].includes(locale) ? fa : en;
 
   const dataFaq = await fetchFaq(locale);
-  console.log(dataFaq);
 
   return (
     <main className="wrapper ">

@@ -1,5 +1,5 @@
 "use client";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { toPersianDigits } from "@/utils/helper";
 import Image from "next/image";
 import React from "react";
@@ -53,7 +53,7 @@ export default function CatalogItem({ catalog }) {
           />
         </div>
         <span className="text-[#919191]" dir="ltr">
-          {locale === "fa"
+          {["fa", "ar"].includes(locale)
             ? toPersianDigits(catalog?.fileSize)
             : catalog?.fileSize}
         </span>

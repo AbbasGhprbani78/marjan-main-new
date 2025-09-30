@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import SelectDropDown from "../../components/module/SelectDropDown";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function SelectLocation({ locations, onProvinceSelect }) {
   const [countryId, setCountryId] = useState("");

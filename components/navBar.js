@@ -12,7 +12,7 @@ import {
   useParams,
 } from "next/navigation";
 import FilterHeader from "./module/FilterHeader";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import axios from "axios";
 import { useToggle } from "@/context/context";
 
@@ -33,17 +33,14 @@ export function NavBar({ dataHeader }) {
   function handleLangChange(newLocale) {
     const segments = pathname.split("/").filter(Boolean);
 
-    if (segments.length && ["fa", "en"].includes(segments[0])) {
+    if (segments.length && ["fa", "en", "ar", "ru"].includes(segments[0])) {
       segments[0] = newLocale;
     } else {
       segments.unshift(newLocale);
     }
 
     const newPathname = "/" + segments.join("/");
-
     document.cookie = `lang=${newLocale}; path=/; max-age=31536000`;
-
-    setIsOpen(false);
     router.push(newPathname);
   }
 
@@ -171,12 +168,12 @@ export function NavBar({ dataHeader }) {
                   >
                     FA
                   </li>
-                  {/* <li
+                  <li
                     className=" hover:bg-gray-100 cursor-pointer p-[7px]"
-                    onClick={() => handleLangChange("en")}
+                    onClick={() => handleLangChange("ar")}
                   >
-                    EN
-                  </li> */}
+                    AR
+                  </li>
                 </ul>
               )}
             </div>
@@ -242,7 +239,11 @@ export function NavBar({ dataHeader }) {
           className="relative w-[0px] aspect-[3/2] md:w-[205px]"
         >
           <Image
-            src={locale === "fa" ? "/images/logofa.png" : "/images/logo1.png"}
+            src={
+              ["fa", "ar"].includes(locale)
+                ? "/images/logofa.png"
+                : "/images/logo1.png"
+            }
             alt="White Logo"
             fill
             className={`${
@@ -307,10 +308,10 @@ function Menu({ show, setShowInnerMenu }) {
         className={`w-full fixed top-[102px] left-0 right-0 z-50 transition-all duration-700 ease-in-out bottom-0
     ${
       show
-        ? locale === "fa"
+        ? ["fa", "ar"].includes(locale)
           ? "translate-x-0"
           : "translate-x-0"
-        : locale === "fa"
+        : ["fa", "ar"].includes(locale)
         ? "translate-x-full"
         : "-translate-x-full"
     }`}
@@ -363,7 +364,7 @@ function Menu({ show, setShowInnerMenu }) {
                         isActivePath("/calculator") ? "active" : ""
                       }`}
                     >
-                      {t("Tile Area Estimator")}
+                      {t("Estimatetilearea")}
                     </Link>
                   </li>
                 </motion.ul>
@@ -679,7 +680,7 @@ function MenuMobile({ dataHeader }) {
     return pathname === `/${locale}${route}`;
   };
 
-  const isRTL = locale === "fa";
+  const isRTL = ["fa", "ar"].includes(locale);
 
   const currentLocale = pathname.split("/")[1] || "fa";
   function handleLangChange(newLocale) {
@@ -715,9 +716,13 @@ function MenuMobile({ dataHeader }) {
         >
           <HamburgerButton isOpen={isOpen} />
         </div>
-        <Link href={`${locale}/`}>
+        <Link href={`/`}>
           <Image
-            src={"/images/logo1.png"}
+            src={
+              ["fa", "ar"].includes(locale)
+                ? "/images/logofa.png"
+                : "/images/logo1.png"
+            }
             alt="White Logo"
             width={150}
             height={50}
@@ -749,12 +754,12 @@ function MenuMobile({ dataHeader }) {
               >
                 FA
               </li>
-              {/* <li
+              <li
                 className=" hover:bg-gray-100 cursor-pointer p-[7px]"
-                onClick={() => handleLangChange("en")}
+                onClick={() => handleLangChange("ar")}
               >
-                EN
-              </li> */}
+                AR
+              </li>
             </ul>
           )}
         </div>
@@ -896,7 +901,7 @@ function MenuMobile({ dataHeader }) {
                       href: "https://marjan.ariisco.com",
                     },
                     {
-                      label: t("Tile Area Estimator"),
+                      label: t("Estimatetilearea"),
                       href: "/calculator",
                     },
                   ].map(({ label, href, action }, i) => (

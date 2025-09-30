@@ -8,7 +8,7 @@ import Pagination from "../module/Pagination";
 import ImageDescription from "../Products/ImageDescription";
 import PopFilter from "../module/PopFilter";
 import CategoryFilters from "../Products/CategoryFilters";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function AllProducts({ categories, products }) {
@@ -189,7 +189,7 @@ export default function AllProducts({ categories, products }) {
     <main className="px-20 md:px-40 lg:px-80">
       <section
         className={`w-full h-full pt-[150px] lg:pt-[120px] ${
-          locale === "fa" ? "font-fa" : "font-en"
+          ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
         }`}
       >
         <div className="grid grid-cols-1 gap-y-[30px] md:grid-cols-3 md:gap-x-[3rem] md:gap-y-0 items-center relative ">

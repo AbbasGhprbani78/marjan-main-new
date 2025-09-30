@@ -1,5 +1,5 @@
 "use client";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { toPersianDigits } from "@/utils/helper";
 import React from "react";
 export default function Table({ columns = [], data = [] }) {
@@ -30,7 +30,7 @@ export default function Table({ columns = [], data = [] }) {
                     key={col}
                     className="px-6 py-4 whitespace-nowrap text-center text-gray-700 border border-gray-300"
                   >
-                    {locale === "fa"
+                    {["fa", "ar"].includes(locale)
                       ? toPersianDigits(row[col] || "-")
                       : row[col] || "-"}
                   </td>
@@ -68,7 +68,7 @@ export default function Table({ columns = [], data = [] }) {
                       data-label={col}
                     >
                       <span className="md:hidden font-medium">{col}: </span>
-                      {locale === "fa"
+                      {["fa", "ar"].includes(locale)
                         ? toPersianDigits(row[col] || "-")
                         : row[col] || "-"}
                     </td>

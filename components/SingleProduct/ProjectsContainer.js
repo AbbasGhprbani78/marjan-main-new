@@ -5,7 +5,7 @@ import Link from "next/link";
 import * as Icons from "iconsax-reactjs";
 import { MoreButton } from "../moreButton";
 import { useLocalizedLink } from "@/utils/helper";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { GallerySlider } from "../slider";
 
 export default function ProjectsContainer({ data }) {

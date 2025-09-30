@@ -41,12 +41,12 @@ export default async function page({ params }) {
   const dataProducts = await fetchAllProducts(locale);
 
   const cleanedCategories = {
-    environment: dataProducts.categories.environment || [],
-    industrie: dataProducts.categories.industrie || [],
+    Usage: dataProducts.categories.environment || [],
+    Industrial: dataProducts.categories.industrie || [],
     style: dataProducts.categories.style || [],
     color: dataProducts.categories.color || [],
-    size: dataProducts.categories.size || [],
-    thicknesses: (dataProducts.categories.thicknesses || [])
+    Size: dataProducts.categories.size || [],
+    Thickness: (dataProducts.categories.thicknesses || [])
       .map(String)
       .map((t) => `${t} mm`),
   };

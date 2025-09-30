@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import LinkButton from "../module/LinkButton";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { MoreButton } from "../moreButton";
 import Button from "../module/Button";
 import Button2 from "../module/Button2";

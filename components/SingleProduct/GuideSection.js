@@ -8,7 +8,7 @@ import SelectDropDown from "../module/SelectDropDown";
 import Button2 from "../module/Button2";
 import Table from "../module/Table";
 import { useLocalizedLink } from "@/utils/helper";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import QuestionForm from "../module/QuestionForm";
 import { successMessage, ToastContainerCustom } from "../module/Toast";
 export default function GuideSection({
@@ -107,7 +107,7 @@ export default function GuideSection({
                 columns={[
                   t("Size"),
                   t("palet_size"),
-                  t("thickness"),
+                  t("Thickness"),
                   t("Tiles per Carton"),
                   t("Tile Area per Carton (m²)"),
                   t("Approx. Weight per Carton (kg)"),
@@ -118,7 +118,7 @@ export default function GuideSection({
                 data={dataPack.map((item) => ({
                   [t("Size")]: item.size || "-",
                   [t("palet_size")]: item?.palet_size || "-",
-                  [t("thickness")]: item?.thickness || "-",
+                  [t("Thickness")]: item?.thickness || "-",
                   [t("Tiles per Carton")]:
                     item.number_of_tiles_per_carton || "-",
                   [t("Tile Area per Carton (m²)")]:

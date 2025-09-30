@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { ProjectsSlider } from "../slider";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { MoreButton } from "../moreButton";
 
 export default function Project({ data }) {

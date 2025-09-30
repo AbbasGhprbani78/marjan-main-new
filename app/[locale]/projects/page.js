@@ -40,7 +40,6 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = await params;
   const dataProjects = await fetchAllProjects(locale);
-  console.log(dataProjects);
 
   return (
     <div className="wrapper">

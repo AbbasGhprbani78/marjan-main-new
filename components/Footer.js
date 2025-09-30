@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 import * as Icons from "iconsax-reactjs";
-import { useTranslation } from "@/hook/useTranslation";
+
 import { useParams } from "next/navigation";
 import { toPersianDigits } from "@/utils/helper";
 import Image from "next/image";
+import { useTranslation } from "@/context/TranslationContext";
 export default function Footer() {
   const { t } = useTranslation();
   const { locale } = useParams();
@@ -19,7 +20,9 @@ export default function Footer() {
           <TextRow
             icon="DirectboxNotif"
             text={`${t("Postal Code")}: ${
-              locale === "fa" ? toPersianDigits("817399971") : "817399971"
+              ["fa", "ar"].includes(locale)
+                ? toPersianDigits("817399971")
+                : "817399971"
             }`}
           />
 
@@ -33,11 +36,15 @@ export default function Footer() {
             text={
               t("Phone") +
               ` : ${
-                locale === "fa" ? toPersianDigits("03126248019") : "03126248019"
+                ["fa", "ar"].includes(locale)
+                  ? toPersianDigits("03126248019")
+                  : "03126248019"
               }   ` +
               t("Fax") +
               ` : ${
-                locale === "fa" ? toPersianDigits("03136240642") : "03136240642"
+                ["fa", "ar"].includes(locale)
+                  ? toPersianDigits("03136240642")
+                  : "03136240642"
               }`
             }
           />
@@ -110,7 +117,7 @@ export default function Footer() {
           </p>
         </div>
         {/* <p className="w-full flex justify-center mt-[2rem]">
-          {locale === "fa" ? (
+          {["fa", "ar"].includes(locale) ? (
             <>
               طراحی و توسعه توسط تیم
               <a
@@ -141,7 +148,9 @@ export default function Footer() {
           <TextRow
             icon="DirectboxNotif"
             text={`${t("Postal Code")}: ${
-              locale === "fa" ? toPersianDigits("817399971") : "817399971"
+              ["fa", "ar"].includes(locale)
+                ? toPersianDigits("817399971")
+                : "817399971"
             }`}
           />
           <TextRow
@@ -149,11 +158,15 @@ export default function Footer() {
             text={
               t("Phone") +
               ` : ${
-                locale === "fa" ? toPersianDigits("03126248019") : "03126248019"
+                ["fa", "ar"].includes(locale)
+                  ? toPersianDigits("03126248019")
+                  : "03126248019"
               }   ` +
               t("Fax") +
               ` : ${
-                locale === "fa" ? toPersianDigits("03136240642") : "03136240642"
+                ["fa", "ar"].includes(locale)
+                  ? toPersianDigits("03136240642")
+                  : "03136240642"
               }`
             }
           />

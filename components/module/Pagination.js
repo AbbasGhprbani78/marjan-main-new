@@ -1,5 +1,5 @@
 "use client";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { toPersianDigits } from "@/utils/helper";
 import * as Icons from "iconsax-reactjs";
 import { useParams } from "next/navigation";
@@ -35,7 +35,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
               : "text-gray-600 hover:bg-gray-100"
           } sm:px-3 sm:py-1 sm:mx-1`}
         >
-          {locale === "fa" ? toPersianDigits(1) : 1}
+          {["fa", "ar"].includes(locale) ? toPersianDigits(1) : 1}
         </button>
       );
       if (startPage > 2) {
@@ -59,7 +59,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
               : "text-gray-600 hover:bg-gray-100"
           } sm:h-[32px] sm:w-[32px] sm:mx-1`}
         >
-          {locale === "fa" ? toPersianDigits(i) : i}
+          {["fa", "ar"].includes(locale) ? toPersianDigits(i) : i}
         </button>
       );
     }
@@ -82,7 +82,9 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
               : "text-gray-600 hover:bg-gray-100"
           } sm:h-[32px] sm:w-[32px] sm:mx-1`}
         >
-          {locale === "fa" ? toPersianDigits(totalPages) : totalPages}
+          {["fa", "ar"].includes(locale)
+            ? toPersianDigits(totalPages)
+            : totalPages}
         </button>
       );
     }

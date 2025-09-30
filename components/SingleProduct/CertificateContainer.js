@@ -1,7 +1,7 @@
 // "use client";
 // import { useEffect, useRef, useState } from "react";
 // import Image from "next/image";
-// import { useTranslation } from "@/hook/useTranslation";
+// import { useTranslation } from "@/context/TranslationContext";
 // import Modal from "../module/Modal";
 // import * as Icons from "iconsax-reactjs";
 
@@ -113,7 +113,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import Modal from "../module/Modal";
 import * as Icons from "iconsax-reactjs";
 

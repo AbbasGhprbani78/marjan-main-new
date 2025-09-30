@@ -69,7 +69,7 @@ export default function Accordion({
               item.includes("x")
             ) {
               display = item.split("x").reverse().join("x");
-              if (locale === "fa") {
+              if (["fa", "ar"].includes(locale)) {
                 display = toPersianDigits(display);
               }
             }

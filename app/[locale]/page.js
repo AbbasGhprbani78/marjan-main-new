@@ -4,24 +4,24 @@ import {
   ProjectsSlider,
   HomeSlider,
 } from "@/components/slider";
-import fa from "@/i18n/fa.json";
-import en from "@/i18n/en.json";
 
 import FeatureTabs from "@/components/Home/FeatureTabs";
 import { MoreButton } from "@/components/moreButton";
 import { fetchhome } from "@/services/home";
 import ReadMoreText from "@/components/module/ReadMoreText";
+import { fetchTranslateWords } from "@/services/translate";
+import { buildDictionary } from "@/utils/buildDictionary";
 
 export default async function Home({ params }) {
   const { locale } = await params;
-  const t = locale === "fa" ? fa : en;
-
   const dataHome = await fetchhome(locale);
+  const dictArray = await fetchTranslateWords(locale);
+  const dict = buildDictionary(dictArray);
 
   return (
     <div
       className={`wrapper w-full h-full ${
-        locale === "fa" ? "font-fa" : "font-en"
+        ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
       }`}
     >
       <HomeSlider
@@ -32,11 +32,11 @@ export default async function Home({ params }) {
       />
       <div className=" pt-[25px]  md:pt-[50px] mb-20 lg:mb-60">
         <p className="mb-[1.3rem] md:mb-0 text-center title font-[500] ">
-          {t.Categories}
+          {dict["Categories"]}
         </p>
         <CategorySlider data={dataHome?.category?.categories} />
         <MoreButton
-          text={t.Products}
+          text={dict["Products"]}
           width={263}
           height={46}
           className="mx-auto my-[35px] lg:my-[50px]"
@@ -47,18 +47,18 @@ export default async function Home({ params }) {
         <div className="w-full ">
           <div className="pb-[20px] pt-[1.3rem] md:p-[50px]">
             <p className="text-center  title font-[500] ">
-              {t.DigitalAssistant}
+              {dict["DigitalAssistant"]}
             </p>
           </div>
           <FeatureTabs data={dataHome.tabsData} />
         </div>
       </div>
       <div className="pt-[45.8px] md:pt-[90px] lg:pt-0 mb-60px text-center ">
-        <p className="title font-[500]">{t.Projects}</p>
+        <p className="title font-[500]">{dict["Projects"]}</p>
         <ProjectsSlider data={dataHome.desginStory.projects} />
 
         <MoreButton
-          text={t.More}
+          text={dict["More"]}
           width={263}
           height={46}
           className="mx-auto  my-[35px] md:my-[50px]"
@@ -67,13 +67,13 @@ export default async function Home({ params }) {
       </div>
       <div className=" py-[30px] md:py-[50px] ">
         <p className=" text-center title font-[500]  mb-[10px] md:mb-[50px]">
-          {t.Blog}
+          {dict["Blog"]}
         </p>
         <BlogSlider data={dataHome?.blog} />
 
         <div className="flex flex-col items-center mt-[20x] lg:mt-[50px]">
           <MoreButton
-            text={t.More}
+            text={dict["More"]}
             width={263}
             height={46}
             className="mx-auto my-[50px]"
@@ -103,7 +103,7 @@ export default async function Home({ params }) {
               />
             </div>
             <MoreButton
-              text={t.MoreDetails}
+              text={dict["MoreDetails"]}
               width={263}
               height={46}
               className="mx-auto py-[10px] md:mx-0"
@@ -114,15 +114,9 @@ export default async function Home({ params }) {
         </div>
       </div>
       <div className="flex flex-col items-center px-[20px] md:px-40 py-[50px]  gap-[28px]">
-        <Section
-          locale={locale}
-          title={t.Subscribenewsletter}
-          // descrption={
-          //   "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با . . استفاده از طراحان گرافیک است"
-          // }
-        />
+        <Section locale={locale} title={dict["Subscribenewsletter"]} />
         <MoreButton
-          text={t.Becomeamember}
+          text={dict["ecomeamember"]}
           width={239}
           height={46}
           href={"/newsletter"}
@@ -137,7 +131,7 @@ function Section({ title, descrption, locale }) {
     <div className="flex flex-col text-center">
       <h1
         className={`title font-[500] mb-[10px] leading-[50px] ${
-          locale === "fa" ? "font-fa" : "font-en"
+          ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
         }`}
       >
         {title}

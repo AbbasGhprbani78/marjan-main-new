@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import LinkButton from "../module/LinkButton";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { MoreButton } from "../moreButton";
 import { toPersianDigits } from "@/utils/helper";
 
@@ -25,7 +25,7 @@ export default function AboutUs({ data }) {
           {data.title}
         </h3>
         <p className="text-justify w-full md:w-[36dvw] leading-[30px]">
-          {locale === "fa" ? toPersianDigits(data.text) : data.text}
+          {["fa", "ar"].includes(locale) ? toPersianDigits(data.text) : data.text}
         </p>
         <div className="w-[250px] mt-[1rem] mx-auto md:mx-0">
           <MoreButton

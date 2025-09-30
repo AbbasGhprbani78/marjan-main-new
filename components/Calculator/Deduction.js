@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../module/Input";
 import * as Icons from "iconsax-reactjs";
 import Options from "../module/Options";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function Deduction({
   uniMeasurement,

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Accordion from "./Accardion";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 
 const CategoryFilters = ({
   categories,
@@ -13,7 +13,6 @@ const CategoryFilters = ({
   filters,
 }) => {
   const { t } = useTranslation();
-  console.log("filters =>", filters);
 
   return (
     <>

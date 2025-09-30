@@ -49,7 +49,7 @@ export const metadata = {
 
 export default async function page({ params }) {
   const { locale } = await params;
-  const t = locale === "fa" ? fa : en;
+  const t = ["fa", "ar"].includes(locale) ? fa : en;
 
   const dataTypeOfActivity = await fetchTypeofActivity(locale);
   return (
@@ -75,10 +75,6 @@ export default async function page({ params }) {
           <h2 className="font-medium text-[1.7rem] md:text-[2rem]">
             {t.Subscribenewsletter}
           </h2>
-          {/* <p className="w-3/4 md:w-full text-[.9rem] md:text-[1rem] font-normal text-center">
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-            استفاده از طراحان گرافیک است.
-          </p> */}
         </div>
       </section>
 

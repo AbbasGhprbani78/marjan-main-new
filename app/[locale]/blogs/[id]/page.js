@@ -49,7 +49,6 @@ export default async function page({ params }) {
   const { locale } = await params;
   const { id } = await params;
   const singleBlog = await fetchSingleBlog(locale, id);
-  console.log(singleBlog);
 
   return (
     <main className="wrapper ">
@@ -59,13 +58,13 @@ export default async function page({ params }) {
           <Image
             src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog?.image}`}
             fill
-            alt="image project"
-            className=""
+            alt="image project "
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-black/50 z-10" />
           <p
             className={`w-max text-white font-normal text-[1.2rem] md:text-[2rem] z-[11] ${
-              locale === "fa" ? "font-fa" : "font-en"
+              ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
             }`}
           >
             {singleBlog?.title}

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Tab from "../module/Tab";
 import Image from "next/image";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { MoreButton } from "../moreButton";
 import Link from "next/link";
 import { useLocalizedLink } from "@/utils/helper";

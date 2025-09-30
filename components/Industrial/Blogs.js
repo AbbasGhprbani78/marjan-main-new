@@ -2,7 +2,7 @@
 import React from "react";
 import { BlogSlider } from "../slider";
 
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { MoreButton } from "../moreButton";
 
 export default function Blogs({ data }) {

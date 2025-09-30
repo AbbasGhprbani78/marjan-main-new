@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CardItem from "../module/CardItem";
 import * as Icons from "iconsax-reactjs";
 import Pagination from "../module/Pagination";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SavedList({ products }) {

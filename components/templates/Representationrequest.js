@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import Input from "../module/Form/Input";
 import DropDown from "../module/Form/DropDown";
 import Texterea from "../module/Form/Texterea";
@@ -178,7 +178,6 @@ export default function Representationrequest() {
     // }
   };
 
-  console.log(form);
   return (
     <div className="px-20 md:px-40 lg:px-80 mt-[130px] lg:mt-[110px]">
       <form

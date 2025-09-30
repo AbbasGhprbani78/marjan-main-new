@@ -11,18 +11,18 @@ import GuideSection from "@/components/SingleProduct/GuideSection";
 import VideoContainer from "@/components/SingleProduct/VideoContainer";
 import ProjectsContainer from "@/components/SingleProduct/ProjectsContainer";
 import fa from "@/i18n/fa.json";
-import en from "@/i18n/en.json";
+
 import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchSingleProduct, getSubjects } from "@/services/singleProduct";
+import { fetchTranslateWords } from "@/services/translate";
+import { buildDictionary } from "@/utils/buildDictionary";
 export default async function page({ params }) {
   const { id } = await params;
   const { locale } = await params;
-  const t = locale === "fa" ? fa : en;
   const dataSingleProduct = await fetchSingleProduct(locale, id);
   const allsubjects = await getSubjects(locale);
-
-  console.log("dataSingleProduct=> ", dataSingleProduct);
-
+  const dictArray = await fetchTranslateWords(locale);
+  const dict = buildDictionary(dictArray);
   return (
     <div className="wrapper">
       <Anchor data={dataSingleProduct?.projects?.length} />
@@ -52,38 +52,38 @@ export default async function page({ params }) {
         </div>
         <div className="flex flex-wrap pt-[1.5rem] md:pt-54 gap-[1.5rem]  md:gap-42 lg:gap-52 flex-col md:flex-row">
           <GuideSection
-            text={t.AskQuestion}
+            text={dict["AskQuestion"]}
             icon={"MessageQuestion"}
             typeModel={"questions"}
             subjects={allsubjects}
           />
           <GuideSection
-            text={t.WhereToBuy}
+            text={dict["WhereToBuy"]}
             icon={"Location"}
             isLink={"true"}
             href="/representatives"
           />
           <GuideSection
-            text={t.Catalog}
+            text={dict["Catalog"]}
             icon={"MenuBoard"}
             iscatalog={true}
             value={dataSingleProduct.catalog}
             is_industrial={dataSingleProduct?.is_industrial}
           />
           <GuideSection
-            text={t.SmartLayout}
+            text={dict["SmartLayout"]}
             icon={"Box2"}
             isLink={"true"}
             href="https://marjan.ariisco.com/"
           />
           <GuideSection
-            text={t.CategoryTable}
+            text={dict["CategoryTable"]}
             icon={"Box"}
             typeModel={"categories"}
             dataPack={dataSingleProduct?.packing_tables}
           />
           <GuideSection
-            text={t.TechnicalSpecsTable}
+            text={dict["TechnicalSpecsTable"]}
             icon={"InfoCircle"}
             typeModel={"properties"}
             dataTechnical={dataSingleProduct?.technical_specifications}
@@ -135,7 +135,7 @@ export default async function page({ params }) {
         <div className=" border-2 border-[#919191]">
           <Icons.Danger size={15} className="m-3" />
         </div>
-        <p className="text-gray-900 text-justify">{t.TextSizeInfo}</p>
+        <p className="text-gray-900 text-justify">{dict["TextSizeInfo"]}</p>
       </div>
     </div>
   );

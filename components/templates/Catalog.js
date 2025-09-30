@@ -6,7 +6,7 @@ import CatalogItem from "../Catalog/CatalogItem";
 import PopFilter from "../module/PopFilter";
 import Button from "../module/Button";
 import Pagination from "../module/Pagination";
-import { useTranslation } from "@/hook/useTranslation";
+import { useTranslation } from "@/context/TranslationContext";
 import { useRouter, useSearchParams } from "next/navigation";
 export default function Catalog({ catalogs, categories }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -17,7 +17,7 @@ export default function Catalog({ catalogs, categories }) {
   const [isEmptyCheckBox, setEmptycheckBox] = useState(false);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const catalogToShow = filteredProducts.slice(startIndex, endIndex);
+  const catalogToShow = filteredProducts?.slice(startIndex, endIndex);
   const router = useRouter();
   const searchParams = useSearchParams();
   const { t } = useTranslation();
@@ -33,13 +33,13 @@ export default function Catalog({ catalogs, categories }) {
     const checked = event.target.checked;
 
     setFilters((prev) => {
-      const prevValues = Array.isArray(prev[key]) ? prev[key] : [];
+      const prevValues = Array?.isArray(prev[key]) ? prev[key] : [];
 
       let newValues;
       if (checked) {
         newValues = [...prevValues, value];
       } else {
-        newValues = prevValues.filter((v) => v !== value);
+        newValues = prevValues?.filter((v) => v !== value);
       }
 
       const newFilters = { ...prev, [key]: newValues };
@@ -71,6 +71,8 @@ export default function Catalog({ catalogs, categories }) {
   }, [filters]);
 
   useEffect(() => {
+    if (!Array.isArray(catalogs)) return;
+
     let temp = [...catalogs];
 
     Object.entries(filters).forEach(([key, value]) => {
@@ -143,20 +145,21 @@ export default function Catalog({ catalogs, categories }) {
           </button>
         </div>
         <div className="flex flex-col items-start justify-start gap-[.8rem] mt-[1.3rem] max-h-[25rem] overflow-y-auto">
-          {categories?.map((item, i) => (
-            <CheckBox
-              key={i}
-              label={item}
-              name="category"
-              checked={
-                Array.isArray(filters.category)
-                  ? filters.category.includes(item)
-                  : false
-              }
-              value={item}
-              onChange={(e) => handleCheckboxChange("category", e)}
-            />
-          ))}
+          {categories?.length > 0 &&
+            categories?.map((item, i) => (
+              <CheckBox
+                key={i}
+                label={item}
+                name="category"
+                checked={
+                  Array.isArray(filters?.category)
+                    ? filters?.category?.includes(item)
+                    : false
+                }
+                value={item}
+                onChange={(e) => handleCheckboxChange("category", e)}
+              />
+            ))}
         </div>
       </div>
       <div className="relative mb-[1rem]  col-span-12 md:hidden">
@@ -179,34 +182,35 @@ export default function Catalog({ catalogs, categories }) {
             </button>
           </div>
           <div className="flex flex-col items-start justify-start gap-[.8rem] mt-[1.3rem]">
-            {categories?.map((item, i) => (
-              <CheckBox
-                key={i}
-                label={item}
-                name="category"
-                checked={
-                  Array.isArray(filters.category)
-                    ? filters.category.includes(item)
-                    : false
-                }
-                value={item}
-                onChange={(e) => handleCheckboxChange("category", e)}
-              />
-            ))}
+            {categories?.length > 0 &&
+              categories?.map((item, i) => (
+                <CheckBox
+                  key={i}
+                  label={item}
+                  name="category"
+                  checked={
+                    Array.isArray(filters?.category)
+                      ? filters?.category?.includes(item)
+                      : false
+                  }
+                  value={item}
+                  onChange={(e) => handleCheckboxChange("category", e)}
+                />
+              ))}
           </div>
         </PopFilter>
       </div>
       <div className="col-span-12 md:col-span-8 lg:col-span-9">
-        {filters.category && filters.category.length > 0 && (
+        {filters?.category && filters?.category?.length > 0 && (
           <p className="font-medium text-[1.1rem] border-b border-[var(--color-gray-900)] pb-[.5rem] mb-[.9rem]">
-            {filters.category.join(" , ")}
+            {filters?.category?.join(" , ")}
           </p>
         )}
 
         <div className="grid grid-cols-12 gap-[1rem] lg:gap-[1.7rem] mb-[2rem]">
-          {catalogToShow.length > 0 ? (
+          {catalogToShow?.length > 0 ? (
             <>
-              {catalogToShow.map((item, i) => (
+              {catalogToShow?.map((item, i) => (
                 <div className="col-span-6 lg:col-span-3" key={i}>
                   <CatalogItem catalog={item} />
                 </div>
@@ -230,7 +234,7 @@ export default function Catalog({ catalogs, categories }) {
         </div>
         <Pagination
           currentPage={currentPage}
-          totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
+          totalPages={Math.ceil(filteredProducts?.length / itemsPerPage)}
           onPageChange={setCurrentPage}
         />
       </div>
