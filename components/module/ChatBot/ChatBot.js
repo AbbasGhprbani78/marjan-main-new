@@ -344,7 +344,7 @@ export default function ChatBot({}) {
                 //   setIsShowChat(true);
                 // }}
               >
-                {"دستیار فروش محصول (به زودی )"}
+                {t("Product Sales Assistant (coming soon)")}
               </li>
               <li
                 className="item-chat"
@@ -353,7 +353,7 @@ export default function ChatBot({}) {
                   setIsShowChat(true);
                 }}
               >
-                سوال و جواب های پر تکرار
+                {t("Frequently asked questions and answers")}
               </li>
             </ul>
           </>

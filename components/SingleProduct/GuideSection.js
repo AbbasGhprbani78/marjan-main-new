@@ -23,6 +23,7 @@ export default function GuideSection({
   dataTechnical = [],
   is_industrial = false,
   value = "",
+  category = "",
 }) {
   const { localizedHref } = useLocalizedLink();
   const { t } = useTranslation();
@@ -48,8 +49,8 @@ export default function GuideSection({
           <Link
             href={
               is_industrial
-                ? "/catalog?category=صنعتی"
-                : "/catalog?category=جنرال"
+                ? `/catalog?category=${category}`
+                : `/catalog?category=${category}`
             }
             className="flex gap-5"
           >

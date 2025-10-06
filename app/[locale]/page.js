@@ -116,7 +116,7 @@ export default async function Home({ params }) {
       <div className="flex flex-col items-center px-[20px] md:px-40 py-[50px]  gap-[28px]">
         <Section locale={locale} title={dict["Subscribenewsletter"]} />
         <MoreButton
-          text={dict["ecomeamember"]}
+          text={dict["Becomeamember"]}
           width={239}
           height={46}
           href={"/newsletter"}

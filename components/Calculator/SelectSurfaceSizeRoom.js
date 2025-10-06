@@ -254,7 +254,7 @@ export default function SelectSurfaceSizeRoom({
           <div className="flex justify-between w-full items-center">
             <div className="w-full lg:w-auto md:min-w-[250px]  lg:min-w-[230px]  xl:min-w-[350px]">
               <div className="font-bold text-[18px] mb-[3rem]">
-                {t("Dimensions")}{" "}
+                {t("Floordimensions")}
                 {tab === "floor"
                   ? t("Floor")
                   : tab === t("Wall")

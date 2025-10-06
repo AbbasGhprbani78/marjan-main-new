@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Input from "../module/Form/Input";
 import DropDown from "../module/Form/DropDown";
 import Texterea from "../module/Form/Texterea";
-import axios from "axios";
 import { successMessage, ToastContainerCustom } from "../module/Toast";
 import { validateSupliers } from "@/validation/suppliersValidate";
 

@@ -1,12 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { useTranslation } from "@/context/TranslationContext";
 import Input from "../module/Form/Input";
 import DropDown from "../module/Form/DropDown";
 import Texterea from "../module/Form/Texterea";
-import axios from "axios";
 import { successMessage, ToastContainerCustom } from "../module/Toast";
 import { validateRepresentationrequest } from "@/validation/representationrequestValidate";
+import { useTranslation } from "@/context/TranslationContext";
 
 const province = [
   { id: 1, name: "آذربایجان شرقی" },
@@ -40,56 +39,6 @@ const province = [
   { id: 29, name: "هرمزگان" },
   { id: 30, name: "همدان" },
   { id: 31, name: "یزد" },
-];
-
-const storeOwnershipType = [
-  {
-    id: 1,
-    name: "اختصاصی",
-  },
-  {
-    id: 2,
-    name: "استیجاری",
-  },
-];
-
-const typeOfWarehouse = [
-  {
-    id: 1,
-    name: "باز",
-  },
-  {
-    id: 2,
-    name: "سرپوشیده",
-  },
-  {
-    id: 3,
-    name: "هردو",
-  },
-];
-
-const warehouseFacilities = [
-  {
-    id: 1,
-    name: "رمپ",
-  },
-  {
-    id: 2,
-    name: "لیفتراک",
-  },
-  {
-    id: 3,
-    name: "هردو",
-  },
-  {
-    id: 4,
-    name: "هیچ کدام",
-  },
-];
-
-const foreignActivity = [
-  { id: 1, name: "بله" },
-  { id: 2, name: "خیر" },
 ];
 
 const years = [];
@@ -178,6 +127,56 @@ export default function Representationrequest() {
     // }
   };
 
+  const storeOwnershipType = [
+    {
+      id: 1,
+      name: t("Exclusive"),
+    },
+    {
+      id: 2,
+      name: t("Rental"),
+    },
+  ];
+
+  const typeOfWarehouse = [
+    {
+      id: 1,
+      name: t("Indoor storeage"),
+    },
+    {
+      id: 2,
+      name: t("Outdoor storeage"),
+    },
+    {
+      id: 3,
+      name: t("Both"),
+    },
+  ];
+
+  const warehouseFacilities = [
+    {
+      id: 1,
+      name: t("Ramp"),
+    },
+    {
+      id: 2,
+      name: t("Forklift"),
+    },
+    {
+      id: 3,
+      name: t("Both"),
+    },
+    {
+      id: 4,
+      name: t("None"),
+    },
+  ];
+
+  const foreignActivity = [
+    { id: 1, name: t("Yes") },
+    { id: 2, name: t("No") },
+  ];
+
   return (
     <div className="px-20 md:px-40 lg:px-80 mt-[130px] lg:mt-[110px]">
       <form
@@ -187,7 +186,9 @@ export default function Representationrequest() {
           handleSubmit();
         }}
       >
-        <p className="font-bold mb-[1.3rem]">اطلاعات شخصی مدیر</p>
+        <p className="font-bold mb-[1.3rem]">
+          {t("Manager's personal information")}
+        </p>
         <div className="grid grid-cols-12 gap-[1rem] w-full">
           <div className="col-span-12 md:col-span-8">
             <Input
@@ -195,7 +196,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("fullName", val)}
               type="text"
               maxLength={256}
-              label={"نام و نام خانوادگی"}
+              label={t("Full Name")}
               noNumber={true}
               onlyPersian={true}
               error={errors.fullName}
@@ -203,7 +204,7 @@ export default function Representationrequest() {
           </div>
           <div className="col-span-12 md:col-span-4">
             <DropDown
-              label="سال تولد"
+              label={t("year of birth")}
               options={years.map((year) => ({
                 id: year?.id,
                 value: year?.name,
@@ -221,7 +222,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("educationDegree", val)}
               type="text"
               maxLength={256}
-              label={"مدرک تحصیلی"}
+              label={t("Degree")}
               noNumber={true}
               error={errors.educationDegree}
             />
@@ -232,7 +233,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("fieldOfStudy", val)}
               type="text"
               maxLength={256}
-              label={"رشته تحصیلی"}
+              label={t("field of study")}
               noNumber={true}
               error={errors.fieldOfStudy}
             />
@@ -245,7 +246,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("phoneNumber", val)}
               type="text"
               maxLength={256}
-              label={"تلفن همراه"}
+              label={t("PhoneNumber")}
               onlyNumber={true}
               error={errors.phoneNumber}
             />
@@ -262,12 +263,14 @@ export default function Representationrequest() {
               }))}
               type="text"
               maxLength={256}
-              label={"استان"}
+              label={t("Province")}
               error={errors.province}
             />
           </div>
         </div>
-        <p className="font-bold  mt-[1.7rem] mb-[1.3rem]">اطلاعات فروشگاه</p>
+        <p className="font-bold  mt-[1.7rem] mb-[1.3rem]">
+          {t("Store information")}
+        </p>
         <div className="grid grid-cols-12 gap-[1rem] w-full">
           <div className="col-span-12 md:col-span-8">
             <Input
@@ -275,7 +278,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("storeName", val)}
               type="text"
               maxLength={256}
-              label={"نام فروشگاه"}
+              label={t("Store Name")}
               noNumber={true}
               error={errors.storeName}
             />
@@ -286,7 +289,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("storeArea", val)}
               type="text"
               maxLength={256}
-              label={"متراژ فروشگاه"}
+              label={t("The size of the store")}
               error={errors.storeArea}
               onlyNumber={true}
             />
@@ -303,7 +306,7 @@ export default function Representationrequest() {
                 value: item?.name,
               }))}
               error={errors.storeOwnershipType}
-              label={"نوع مالکیت"}
+              label={t("Type of ownership")}
             />
           </div>
           <div className="col-span-12 md:col-span-6">
@@ -312,7 +315,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("storePhone", val)}
               type="text"
               maxLength={256}
-              label={"تلفن فروشگاه"}
+              label={t("Store phone")}
               onlyNumber={true}
               error={errors.storePhone}
             />
@@ -325,7 +328,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("storeAddress", val)}
               type="text"
               maxLength={1000}
-              label={"آدرس فروشگاه"}
+              label={t("Store address")}
               error={errors.storeAddress}
             />
           </div>
@@ -335,7 +338,7 @@ export default function Representationrequest() {
             <DropDown
               value={form.warehouseType}
               onChange={(val) => handleFieldChange("warehouseType", val)}
-              label={"نوع انبار"}
+              label={t("Warehouse type")}
               options={typeOfWarehouse.map((item) => ({
                 id: item?.id,
                 value: item?.name,
@@ -349,7 +352,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("warehouseArea", val)}
               type="text"
               maxLength={256}
-              label={"متراژ انبار"}
+              label={t("Warehouse size")}
               onlyNumber={true}
               error={errors.warehouseArea}
             />
@@ -364,7 +367,7 @@ export default function Representationrequest() {
                 id: item?.id,
                 value: item?.name,
               }))}
-              label={"امکانات انبار"}
+              label={t("Warehouse facilities")}
               error={errors.warehouseFacilities}
             />
           </div>
@@ -380,7 +383,7 @@ export default function Representationrequest() {
                 id: item?.id,
                 value: item?.name,
               }))}
-              label={"نوع مالکیت"}
+              label={t("Type of ownership")}
               error={errors.warehouseOwnershipType}
             />
           </div>
@@ -392,7 +395,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("warehousePhone", val)}
               type="text"
               maxLength={256}
-              label={"تلفن انبار"}
+              label={t("Warehouse phone")}
               onlyNumber={true}
               error={errors.warehousePhone}
             />
@@ -405,7 +408,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("warehouseAddress", val)}
               type="text"
               maxLength={256}
-              label={"آدرس انبار"}
+              label={t("warehouse address")}
               error={errors.warehouseAddress}
             />
           </div>
@@ -419,9 +422,9 @@ export default function Representationrequest() {
               }
               type="text"
               maxLength={256}
-              label={
-                "نام شرکت هایی که در زمینه خرید کاشی نمایندگی رسمی دارید /سابقه نمایندگی / نام شرکت / سابقه"
-              }
+              label={t(
+                "Names of companies that you have official representation in the field of tile purchasing / representation history / company name / history"
+              )}
               error={errors.representativeCompanies}
             />
           </div>
@@ -435,7 +438,9 @@ export default function Representationrequest() {
                 id: item?.id,
                 value: item?.name,
               }))}
-              label={"آیا در زمینه فروش کاشی های خارجی فعالیت دارید ؟"}
+              label={t(
+                "Are you active in the field of selling foreign tiles ?"
+              )}
               error={errors.foreignTileActivity}
             />
           </div>
@@ -449,7 +454,7 @@ export default function Representationrequest() {
               }
               type="text"
               maxLength={256}
-              label={"علت انتخاب کاشی مرجان"}
+              label={t("The reason for choosing Marjan tile")}
               onlyPersian={true}
               error={errors.reasonForChoosingMarjan}
             />
@@ -462,7 +467,7 @@ export default function Representationrequest() {
               onChange={(val) => handleFieldChange("salesExperienceYears", val)}
               type="text"
               maxLength={256}
-              label={"سابقه فعالیت در زمینه فروش کاشی( سال )"}
+              label={t("Experience in tile sales (years)")}
               onlyNumber={true}
               error={errors.salesExperienceYears}
             />
@@ -477,7 +482,7 @@ export default function Representationrequest() {
               }
               type="text"
               maxLength={526}
-              label={"توضیحات تکمیلی"}
+              label={t("Additional information")}
               error={errors.additionalDescription}
             />
           </div>

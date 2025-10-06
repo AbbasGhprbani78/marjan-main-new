@@ -1,34 +1,46 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Icons from "iconsax-reactjs";
-
 import { useParams } from "next/navigation";
 import { toPersianDigits } from "@/utils/helper";
 import Image from "next/image";
 import { useTranslation } from "@/context/TranslationContext";
+import { fetchFooter } from "@/services/footer";
+
 export default function Footer() {
   const { t } = useTranslation();
   const { locale } = useParams();
+  const [footerData, setFooterData] = useState(null);
+
+  useEffect(() => {
+    const loadFooterData = async () => {
+      try {
+        const data = await fetchFooter(locale);
+        setFooterData(data);
+      } catch (error) {
+        console.error("Error fetching footer data:", error);
+      }
+    };
+
+    loadFooterData();
+  }, []);
+
   return (
     <footer>
       <div className="hidden md:block w-full min-h-[210px] bg-gray-400 md:px-40 lg:px-80 pb-[21px] pt-[33px]">
         <TextRow
           icon="Location"
-          text={`${t("AddressTitleF")} : ${t("AddressTextF")}`}
+          text={`${t("AddressTitleF")} : ${footerData?.address}`}
         />
         <div className="flex items-center justify-between mt-[1.3rem]">
           <TextRow
             icon="DirectboxNotif"
             text={`${t("Postal Code")}: ${
               ["fa", "ar"].includes(locale)
-                ? toPersianDigits("817399971")
-                : "817399971"
+                ? toPersianDigits(footerData?.postal_code)
+                : footerData?.postal_code
             }`}
           />
-
-          {/* <p className="text-[14px] underline underline-offset-4 cursor-pointer">
-            {t("conditions of sales and purchase")}
-          </p> */}
         </div>
         <div className="flex items-center justify-between mt-[1.3rem]">
           <TextRow
@@ -37,14 +49,14 @@ export default function Footer() {
               t("Phone") +
               ` : ${
                 ["fa", "ar"].includes(locale)
-                  ? toPersianDigits("03126248019")
-                  : "03126248019"
+                  ? toPersianDigits(footerData?.phone)
+                  : footerData.phone
               }   ` +
               t("Fax") +
               ` : ${
                 ["fa", "ar"].includes(locale)
-                  ? toPersianDigits("03136240642")
-                  : "03136240642"
+                  ? toPersianDigits(footerData?.fax)
+                  : footerData?.fax
               }`
             }
           />
@@ -116,41 +128,20 @@ export default function Footer() {
             {t("All rights reserved.")}
           </p>
         </div>
-        {/* <p className="w-full flex justify-center mt-[2rem]">
-          {["fa", "ar"].includes(locale) ? (
-            <>
-              طراحی و توسعه توسط تیم
-              <a
-                className="font-semibold inline-block ms-2"
-                href="https://nobinco.com"
-                target="_blank"
-              >
-                نوبین
-              </a>
-            </>
-          ) : (
-            <>
-              Designed and developed by
-              <span className="font-semibold inline-block ms-2">Nobin</span>
-            </>
-          )}
-        </p> */}
       </div>
 
       <div className="px-20 md:hidden pt-[33px]">
         <div className="flex flex-col gap-[1rem]">
           <TextRow
             icon="Location"
-            text={t(
-              "نشانی دفتر مرکزی شرکت کاشی مرجان : اصفهان، چهارباغ بالا، کوچه کاویان، پلاک ۴۵"
-            )}
+            text={`${t("AddressTitleF")} : ${footerData?.address}`}
           />
           <TextRow
             icon="DirectboxNotif"
             text={`${t("Postal Code")}: ${
               ["fa", "ar"].includes(locale)
-                ? toPersianDigits("817399971")
-                : "817399971"
+                ? toPersianDigits(footerData?.postal_code)
+                : footerData?.postal_code
             }`}
           />
           <TextRow
@@ -159,26 +150,23 @@ export default function Footer() {
               t("Phone") +
               ` : ${
                 ["fa", "ar"].includes(locale)
-                  ? toPersianDigits("03126248019")
-                  : "03126248019"
+                  ? toPersianDigits(footerData?.phone)
+                  : footerData?.phone
               }   ` +
               t("Fax") +
               ` : ${
                 ["fa", "ar"].includes(locale)
-                  ? toPersianDigits("03136240642")
-                  : "03136240642"
+                  ? toPersianDigits(footerData?.fax)
+                  : footerData?.fax
               }`
             }
           />
           <TextRow
             icon="SmsTracking"
-            text={t("Email") + " : info@marjantileco.com"}
+            text={`t("Email") + " : "${footerData?.email}`}
           />
         </div>
         <div className="flex flex-col gap-[2rem] mt-[3rem] items-center pb-[1.5rem]">
-          {/* <p className="text-[14px] underline underline-offset-4 cursor-pointer">
-            {t("conditions of sales and purchase")}
-          </p> */}
           <div className="flex gap-[20px] items-center">
             <a href="https://www.pinterest.com/marjantileco/" target="_blank">
               <Image
@@ -238,16 +226,6 @@ export default function Footer() {
             {t("All rights reserved.")}
           </p>
         </div>
-        {/* <p className="w-full flex justify-center mb-[2rem] ">
-          طراحی و توسعه توسط تیم
-          <a
-            className="font-semibold inline-block ms-2"
-            href="https://nobinco.com"
-            target="_blank"
-          >
-            نوبین
-          </a>
-        </p> */}
       </div>
     </footer>
   );

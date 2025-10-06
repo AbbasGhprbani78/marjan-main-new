@@ -15,17 +15,17 @@ export default function RepresentationItem({ city }) {
       </h2>
 
       <p>
-        <span className="font-medium">{t("AgencyName")}:</span>{" "}
+        <span className="font-medium">{t("AgencyName")}:</span>
         {city.agency_name}
       </p>
       <p>
-        <span className="font-medium">{t("Address")}:</span>{" "}
+        <span className="font-medium">{t("Address")}:</span>
         {["fa", "ar"].includes(locale)
           ? toPersianDigits(city.address)
           : city.address}
       </p>
       <p>
-        <span className="font-medium">{t("Phone")}:</span>{" "}
+        <span className="font-medium">{t("Phone")}:</span>
         {["fa", "ar"].includes(locale)
           ? toPersianDigits(city.phone)
           : city.phone}

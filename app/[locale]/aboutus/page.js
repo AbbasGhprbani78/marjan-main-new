@@ -3,7 +3,6 @@ import React from "react";
 import AboutDetail from "@/components/About/AboutDetail";
 import AwardSlider from "@/components/About/AwardSlider";
 import AboutHistory from "@/components/About/AboutHistory";
-import AboutEnvironment from "@/components/About/AboutEnvironment";
 import { data } from "@/app/dataAboutus";
 import BusinessPartners from "@/components/About/BusinessPartners";
 import ReadMoreText from "@/components/module/ReadMoreText";
@@ -44,14 +43,6 @@ export const metadata = {
     canonical: "https://yourdomain.com/aboutus",
   },
 };
-
-// import fa from "@/app/i18n/fa";
-// import en from "@/app/i18n/en";
-// export async function generateStaticParams() {
-//   return [{ locale: "fa" }, { locale: "en" }];
-// }
-
-// const dict = params.["fa", "ar"].includes(locale) ? fa : en;
 
 export default async function page({ params }) {
   const { locale } = params;

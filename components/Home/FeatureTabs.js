@@ -101,7 +101,7 @@ export default function FeatureTabs({ data }) {
       )}
 
       <div className="w-full flex flex-col ps-[0px] lg:ps-[80px] order-2 md:order-none">
-        <div className="hidden lg:flex flex-row justify-center gap-[50px] relative border-b border-gray-300 lg:text-[.9rem] xl:text-[1rem]">
+        <div className="hidden lg:flex flex-row justify-center gap-[50px] relative border-b border-gray-300 text-[.9rem]">
           {data.map((item) => (
             <button
               key={item.id}

@@ -240,7 +240,7 @@ export function NavBar({ dataHeader }) {
         >
           <Image
             src={
-              ["fa", "ar"].includes(locale)
+              ["fa"].includes(locale)
                 ? "/images/logofa.png"
                 : "/images/logo1.png"
             }
@@ -252,7 +252,11 @@ export function NavBar({ dataHeader }) {
           />
         </Link>
 
-        <Menu show={showInnerMenu} setShowInnerMenu={setShowInnerMenu} />
+        <Menu
+          show={showInnerMenu}
+          setShowInnerMenu={setShowInnerMenu}
+          locale={locale}
+        />
         <FilterHeader
           show={showFilterMenu}
           setShowFilterMenu={setShowFilterMenu}
@@ -447,6 +451,7 @@ function Menu({ show, setShowInnerMenu }) {
               {t("FAQ")}
             </Link>
           </li>
+
           <li className="w-full">
             <div
               onClick={() => toggleItem("collab")}
@@ -469,16 +474,19 @@ function Menu({ show, setShowInnerMenu }) {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm text-black"
                 >
-                  <li className="py-[10px] ">
-                    <Link
-                      href="/employment"
-                      className={`custom-link ${
-                        isActivePath("/employment") ? "active" : ""
-                      }`}
-                    >
-                      {t("employment")}
-                    </Link>
-                  </li>
+                  {locale === "fa" && (
+                    <li className="py-[10px] ">
+                      <Link
+                        href="/employment"
+                        className={`custom-link ${
+                          isActivePath("/employment") ? "active" : ""
+                        }`}
+                      >
+                        {t("employment")}
+                      </Link>
+                    </li>
+                  )}
+
                   <li className="py-[10px] ">
                     <Link
                       href="/representationrequest"
@@ -489,16 +497,18 @@ function Menu({ show, setShowInnerMenu }) {
                       {t("representationrequest")}
                     </Link>
                   </li>
-                  <li className="py-[10px] ">
-                    <Link
-                      href="/suppliers"
-                      className={`custom-link ${
-                        isActivePath("/suppliers") ? "active" : ""
-                      }`}
-                    >
-                      {t("suppliers")}
-                    </Link>
-                  </li>
+                  {locale === "fa" && (
+                    <li className="py-[10px] ">
+                      <Link
+                        href="/suppliers"
+                        className={`custom-link ${
+                          isActivePath("/suppliers") ? "active" : ""
+                        }`}
+                      >
+                        {t("suppliers")}
+                      </Link>
+                    </li>
+                  )}
                 </motion.ul>
               )}
             </AnimatePresence>
@@ -719,7 +729,7 @@ function MenuMobile({ dataHeader }) {
         <Link href={`/`}>
           <Image
             src={
-              ["fa", "ar"].includes(locale)
+              ["fa"].includes(locale)
                 ? "/images/logofa.png"
                 : "/images/logo1.png"
             }
@@ -1036,16 +1046,20 @@ function MenuMobile({ dataHeader }) {
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
                 >
                   {[
-                    { label: t("employment"), href: "/employment" },
+                    ...(locale === "fa"
+                      ? [{ label: t("employment"), href: "/employment" }]
+                      : []),
                     {
                       label: t("representationrequest"),
                       href: "/representationrequest",
                     },
-                    { label: t("suppliers"), href: "/suppliers" },
+                    ...(locale === "fa"
+                      ? [{ label: t("suppliers"), href: "/suppliers" }]
+                      : []),
                   ].map((item, i) => (
                     <li className="py-[10px] ms-[15px]" key={i}>
                       <MenuLink
-                        href={`${item.href}`}
+                        href={item.href}
                         onClick={() => setIsOpen(false)}
                         className={`custom-link ${
                           isActive(item.href) ? "border-b-2 border-primary" : ""

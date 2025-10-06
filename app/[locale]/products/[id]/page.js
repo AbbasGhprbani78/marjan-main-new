@@ -10,8 +10,6 @@ import CertificateContainer from "@/components/SingleProduct/CertificateContaine
 import GuideSection from "@/components/SingleProduct/GuideSection";
 import VideoContainer from "@/components/SingleProduct/VideoContainer";
 import ProjectsContainer from "@/components/SingleProduct/ProjectsContainer";
-import fa from "@/i18n/fa.json";
-
 import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchSingleProduct, getSubjects } from "@/services/singleProduct";
 import { fetchTranslateWords } from "@/services/translate";
@@ -23,6 +21,7 @@ export default async function page({ params }) {
   const allsubjects = await getSubjects(locale);
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
+
   return (
     <div className="wrapper">
       <Anchor data={dataSingleProduct?.projects?.length} />
@@ -69,6 +68,7 @@ export default async function page({ params }) {
             iscatalog={true}
             value={dataSingleProduct.catalog}
             is_industrial={dataSingleProduct?.is_industrial}
+            category={dataSingleProduct?.category}
           />
           <GuideSection
             text={dict["SmartLayout"]}

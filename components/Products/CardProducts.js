@@ -12,12 +12,26 @@ export default function CardProducts({ products, isLoading }) {
     <div className="h-[168px] bg-gray-200 animate-pulse" />
   );
 
-  if (isLoading || products.length === 0) {
+  if (isLoading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[20px]">
         {Array.from({ length: 9 }).map((_, i) => (
           <SkeletonCard key={i} />
         ))}
+      </div>
+    );
+  }
+
+  if (!products || products.length === 0) {
+    return (
+      <div
+        role="alert"
+        aria-live="polite"
+        className="flex flex-col items-center justify-center col-span-full py-20 text-center text-gray-500"
+      >
+        <Icons.SearchNormal size={48} className="mb-4" />
+        <h3 className="text-lg font-semibold mb-2">{t("NoResultsTitle")}</h3>
+        <p>{t("NoResultsMessage")}</p>
       </div>
     );
   }

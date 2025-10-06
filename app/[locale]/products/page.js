@@ -41,8 +41,8 @@ export default async function page({ params }) {
   const dataProducts = await fetchAllProducts(locale);
 
   const cleanedCategories = {
-    Usage: dataProducts.categories.environment || [],
-    Industrial: dataProducts.categories.industrie || [],
+    environment: dataProducts.categories.environment || [],
+    industrie: dataProducts.categories.industrie || [],
     style: dataProducts.categories.style || [],
     color: dataProducts.categories.color || [],
     Size: dataProducts.categories.size || [],

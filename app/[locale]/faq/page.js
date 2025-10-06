@@ -1,9 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import FaqItem from "@/components/Faq/FaqItem";
-import fa from "@/i18n/fa.json";
-import en from "@/i18n/en.json";
 import { fetchFaq } from "@/services/faq";
+import { fetchTranslateWords } from "@/services/translate";
+import { buildDictionary } from "@/utils/buildDictionary";
 export const metadata = {
   title: "سوالات متداول",
   description:
@@ -49,9 +49,9 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = params;
 
-  const t = ["fa", "ar"].includes(locale) ? fa : en;
-
   const dataFaq = await fetchFaq(locale);
+  const dictArray = await fetchTranslateWords(locale);
+  const dict = buildDictionary(dictArray);
 
   return (
     <main className="wrapper ">
@@ -74,7 +74,7 @@ export default async function page({ params }) {
 
         <div className="flex flex-col justify-center items-center text-white gap-[1rem] z-10 ">
           <h2 className="font-medium text-[1.5rem] md:text-[2rem]">
-            {t.Frequentlyaskedquestions}
+            {dict["FAQ"]}
           </h2>
           {/* <p className="w-3/4 md:w-full text-[.9rem] md:text-[1rem] font-normal text-center">
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با

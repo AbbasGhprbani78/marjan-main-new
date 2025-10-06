@@ -42,7 +42,7 @@ export default function ContactusItem({ info }) {
       </div>
       <div className="w-full md:w-[202px]">
         <Button2
-          text={t("Routing")}
+          text={t("Navigation")}
           width={202}
           height={42}
           bgblack={"#000"}

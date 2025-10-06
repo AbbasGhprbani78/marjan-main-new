@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import * as Icons from "iconsax-reactjs";
 import PopupGallery from "../module/PopupGallery";
-import { useTranslation } from "@/context/TranslationContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {} from "swiper";
 import "swiper/css";
@@ -15,7 +14,6 @@ import { Grid } from "swiper/modules";
 
 export default function GallerySingleBlog({ media }) {
   const [open, setOpen] = useState(false);
-  const { t } = useTranslation();
   const viewportWidth = useViewportWidth();
   const slidesNumber =
     viewportWidth < 768 ? 2 : Math.floor(viewportWidth / 340);

@@ -10,14 +10,9 @@ export default function Blogs({ data }) {
   return (
     <>
       <h2 className="font-[500] title text-center mb-[2rem] px-20 md:px-40 lg:px-80">
-        {t("Blogs")}
+        {t("Blog")}
       </h2>
-      <BlogSlider
-        data={data}
-        shadow={"true"}
-        lineColor={"true"}
-        // bgcolor={"#ecd993"}
-      />
+      <BlogSlider data={data} shadow={"true"} lineColor={"true"} />
       <div className="mt-[2rem] flex justify-center">
         <MoreButton
           text={t("More")}

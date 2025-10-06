@@ -3,9 +3,9 @@ import Image from "next/image";
 import ReadMoreText from "@/components/Projects/ReadMoreText";
 import Gallery from "@/components/Projects/Gallery";
 import Products from "@/components/Projects/Products";
-import fa from "@/i18n/fa.json";
-import en from "@/i18n/en.json";
 import { fetchSingleProjects } from "@/services/singleproject";
+import { fetchTranslateWords } from "@/services/translate";
+import { buildDictionary } from "@/utils/buildDictionary";
 
 export const metadata = {
   title: "پروژه‌ها ",
@@ -43,9 +43,10 @@ export const metadata = {
 
 export default async function page({ params }) {
   const { locale } = await params;
-  const t = ["fa", "ar"].includes(locale) ? fa : en;
   const { id } = await params;
   const singleData = await fetchSingleProjects(locale, id);
+  const dictArray = await fetchTranslateWords(locale);
+  const dict = buildDictionary(dictArray);
 
   return (
     <main className="wrapper text-[var(--color-gray-900)] ">
@@ -79,21 +80,21 @@ export default async function page({ params }) {
           )}
           {singleData?.location && (
             <p className="font-medium text-[1.1rem]">
-              <span>{t.City}: </span>
+              <span>{dict["City"]}: </span>
               {singleData?.location}
             </p>
           )}
 
           {singleData?.env && (
             <p className="font-medium text-[1.1rem]">
-              <span>{t.Usage} : </span>
+              <span>{dict["Usage"]} : </span>
               {singleData?.env}
             </p>
           )}
 
           {singleData?.products.length > 0 && (
             <p className="font-medium text-[1.1rem]">
-              <span>{t.Products} : </span>
+              <span>{dict["Products"]} : </span>
               {singleData?.products
                 ?.map((product) => product?.title)
                 .join(" / ")}

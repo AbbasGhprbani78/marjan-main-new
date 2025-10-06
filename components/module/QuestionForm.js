@@ -108,7 +108,7 @@ export default function QuestionForm({ openModal, subjects }) {
         <div className="grid grid-cols-12 md:gap-[3rem] md:my-[2rem]">
           <div className="pt-[20px] md:pt-0 mb-[3rem] md:mb-0 col-span-12 md:col-span-6">
             <Input
-              label={t("Name")}
+              label={t("FirstName")}
               name={"fullName"}
               value={form.fullName}
               onChange={handleChange}

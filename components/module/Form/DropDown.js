@@ -1,3 +1,4 @@
+import { useTranslation } from "@/context/TranslationContext";
 import React, { useState } from "react";
 
 export default function DropDown({
@@ -14,6 +15,7 @@ export default function DropDown({
     const newValue = e.target.value;
     onChange?.(newValue);
   };
+  const { t } = useTranslation();
 
   return (
     <div className="flex flex-col gap-[.3rem]">
@@ -34,7 +36,7 @@ export default function DropDown({
   `}
       >
         <option value="" disabled selected={true}>
-          انتخاب کنید...
+          {t("Choose")}
         </option>
         {options.map((opt, index) => (
           <option key={opt.id ?? index} value={opt.id}>

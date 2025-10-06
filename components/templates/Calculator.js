@@ -19,7 +19,7 @@ export default function CalculatorT({ dataSizes }) {
   const TABS = [
     { label: t("Floor"), value: "floor" },
     { label: t("Wall"), value: "wall" },
-    { label: t("ّFloorWall"), value: "both" },
+    { label: t("FloorWall"), value: "both" },
   ];
   const [area, setArea] = useState({
     floorArea: "0.00",
@@ -127,7 +127,6 @@ export default function CalculatorT({ dataSizes }) {
     const results = [];
 
     for (const s of surfaces) {
-      ("{key: 'floor', label: 'کف', area: 12, tile: '۶۰×۶۰'}");
       const effArea = (s.area || 0) * factor;
       const effAreaWithWaste = effArea * (1 + includeWastage);
       const tArea = getTileAreaInMeter(s.tile);

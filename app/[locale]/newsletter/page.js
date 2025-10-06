@@ -1,9 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import Form from "@/components/NewsLetter/Form";
-import fa from "@/i18n/fa.json";
-import en from "@/i18n/en.json";
 import { fetchTypeofActivity } from "@/services/newsLetter";
+import { fetchTranslateWords } from "@/services/translate";
+import { buildDictionary } from "@/utils/buildDictionary";
 
 export const metadata = {
   title: "عضویت در خبرنامه",
@@ -49,9 +49,10 @@ export const metadata = {
 
 export default async function page({ params }) {
   const { locale } = await params;
-  const t = ["fa", "ar"].includes(locale) ? fa : en;
-
   const dataTypeOfActivity = await fetchTypeofActivity(locale);
+  const dictArray = await fetchTranslateWords(locale);
+  const dict = buildDictionary(dictArray);
+
   return (
     <main className="wrapper ">
       <h1 className="sr-only">newsLetter</h1>
@@ -73,7 +74,7 @@ export default async function page({ params }) {
 
         <div className="flex flex-col justify-center items-center text-white gap-[1rem] z-10 ">
           <h2 className="font-medium text-[1.7rem] md:text-[2rem]">
-            {t.Subscribenewsletter}
+            {dict["Subscribenewsletter"]}
           </h2>
         </div>
       </section>

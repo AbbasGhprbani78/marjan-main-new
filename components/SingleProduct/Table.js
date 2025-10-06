@@ -29,7 +29,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
             <tr className="text-black border-b border-[#000]">
               {hasSize && (
                 <th className="px-0 py-6 text-center">
-                  <div className="px-4 font-normal">{t("size")}</div>
+                  <div className="px-4 font-normal">{t("Size")}</div>
                 </th>
               )}
               {hasSurface && (

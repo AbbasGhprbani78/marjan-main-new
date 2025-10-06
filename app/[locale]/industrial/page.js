@@ -1,6 +1,5 @@
 import React from "react";
 import { HomeSlider } from "@/components/slider";
-import { industrial } from "@/app/dataindustrial";
 import Categories from "@/components/Industrial/Categories";
 import Project from "@/components/Industrial/Project";
 import Blogs from "@/components/Industrial/Blogs";

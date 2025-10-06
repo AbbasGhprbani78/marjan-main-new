@@ -19,9 +19,9 @@ export default function Categories({ data }) {
         {t("Categories")}
       </h2>
       <Tab
-        itemsFilter={data.map(({ value, lable }) => ({
+        itemsFilter={data.map(({ value, label }) => ({
           value,
-          label: lable,
+          label: label,
         }))}
         selected={selected}
         setSelected={setSelected}

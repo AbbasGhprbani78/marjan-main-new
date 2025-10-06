@@ -18,7 +18,7 @@ export default function QuestionUs({ data }) {
       <div className="bg-[#241f21] text-white flex flex-col  lg:flex-row items-center pt-[2rem] md:pt-[3rem] pb-[2rem]">
         <div className="px-20  ps-20 w-full md:px-40 lg:px-80 flex flex-col gap-[1.5rem] text-white md:w-[calc(50% - .5rem)]">
           <h2 className="font-medium title text-center md:text-start">
-            {data.title}
+            {t("AskQuestion")}
           </h2>
           <p className="font-normal  text-justify">{data.text}</p>
           <div className="hidden w-[250px]  lg:block">
