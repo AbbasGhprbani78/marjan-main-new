@@ -27,15 +27,21 @@ export default function AllProducts({ categories, products }) {
   const queryFilterKey = searchParams.get("filterKey");
   const queryValues = searchParams.get("values")?.split(",") || [];
 
-  const filterKeyMap = {
-    color: "colors",
-    size: "sizes",
-    industrie: "industry",
-    environment: "environment",
-    style: "style",
-    surface: "surface",
-    thicknesses: "thickness",
-  };
+  const searchParamsString = searchParams.toString();
+
+  const filterKeyMap = React.useMemo(
+    () => ({
+      color: "colors",
+      size: "sizes",
+      thickness: "thickness",
+      industrie: "industry",
+      environment: "environment",
+      style: "style",
+      surface: "surface",
+      thicknesses: "thickness",
+    }),
+    []
+  );
 
   const normStr = (v) => String(v).trim().toLowerCase();
   const normThickness = (v) => {
@@ -43,6 +49,9 @@ export default function AllProducts({ categories, products }) {
     const n = Number(s.replace(/[^\d.]/g, ""));
     return Number.isFinite(n) ? n : NaN;
   };
+
+  const normSize = (v) =>
+    String(v).trim().toLowerCase().replace(/\s+/g, "").replace(/[×x*]/gi, "x");
 
   const handleFilterChange = useCallback(
     (key, selectedValues, pushUrl = true) => {
@@ -99,15 +108,20 @@ export default function AllProducts({ categories, products }) {
       return Object.entries(filters).every(([key, values]) => {
         if (!values?.length) return true;
 
-        const productKey = filterKeyMap[key];
+        const keyLower = String(key).toLowerCase();
+        const productKey = filterKeyMap[keyLower];
         if (!productKey) return true;
 
         const field = product?.[productKey];
         if (field == null) return false;
 
-        const selectedStrs = values.map(normStr);
+        const selectedStrs = values.map((val) =>
+          productKey === "sizes" || keyLower === "size"
+            ? normSize(val)
+            : normStr(val)
+        );
 
-        if (key === "thicknesses") {
+        if (keyLower === "thicknesses" || keyLower === "thickness") {
           const productNum = normThickness(field);
           return (
             Number.isFinite(productNum) &&
@@ -116,14 +130,19 @@ export default function AllProducts({ categories, products }) {
         }
 
         if (Array.isArray(field)) {
-          const normalizedField = field.map(normStr);
+          const normalizedField = field.map((f) =>
+            productKey === "sizes" ? normSize(f) : normStr(f)
+          );
           return selectedStrs.some((val) => normalizedField.includes(val));
         }
 
-        return selectedStrs.some((val) => normStr(field) === val);
+        return selectedStrs.some(
+          (val) =>
+            (productKey === "sizes" ? normSize(field) : normStr(field)) === val
+        );
       });
     });
-  }, [products, filters, searchTerm]);
+  }, [products, filters, searchTerm, filterKeyMap]);
 
   const productsToShow = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -141,12 +160,12 @@ export default function AllProducts({ categories, products }) {
     });
 
     setFilters(newFilters);
-  }, [searchParams]);
+  }, [searchParamsString, searchParams]);
 
   useEffect(() => {
     const pageFromQuery = Number(searchParams.get("page")) || 1;
     setCurrentPage(pageFromQuery);
-  }, [searchParams]);
+  }, [searchParamsString, searchParams]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -179,11 +198,19 @@ export default function AllProducts({ categories, products }) {
       query.delete("searching");
       router.replace(`${pathname}?${query.toString()}`, { shallow: true });
     }
-  }, [searchTerm]);
+  }, [
+    searchTerm,
+    searchParamsString,
+    searchParams,
+    currentPage,
+    lastPageBeforeSearch,
+    pathname,
+    router,
+  ]);
 
   useEffect(() => {
     setIsLoading(false);
-  }, [searchParams.toString()]);
+  }, [searchParamsString]);
 
   return (
     <main className="px-20 md:px-40 lg:px-80">

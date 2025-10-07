@@ -240,7 +240,7 @@ export default function Suppliers() {
   return (
     <div className="px-20 md:px-40 lg:px-80 mt-[130px] lg:mt-[110px]">
       <h2 className=" text-[.9rem] lg:text-[1.1rem] font-bold">
-        {t("Obtainingsupplierinformation")}
+        دریافت اطلاعات تامین کننده ها
       </h2>
       <form
         className="lg:px-80 xl:px-197 mt-[1.5rem]"
@@ -289,7 +289,7 @@ export default function Suppliers() {
               onChange={(val) => handleFieldChange("state", val)}
               type="text"
               maxLength={256}
-              label={`${t("Province")}/${t("State")}`}
+              label={"استان / ایالت"}
               noNumber={true}
             />
           </div>
@@ -359,7 +359,7 @@ export default function Suppliers() {
                 id: service?.id,
                 value: service?.name,
               }))}
-              label={t("Type of service")}
+              label={"نوع خدمات"}
             />
           </div>
         </div>

@@ -26,7 +26,7 @@ export default function CheckBox({
       />
       <label
         htmlFor={id}
-        dir={dir}
+        dir={"rtl"}
         className="text-[#292d32] block cursor-pointer text-sm leading-relaxed"
       >
         {["fa", "ar"].includes(locale) ? toPersianDigits(label) : label}

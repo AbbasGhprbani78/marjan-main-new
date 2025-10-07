@@ -321,19 +321,35 @@ export function CategorySlider({ data }) {
   const filterKeyMap = {
     "Use case": "environment",
     کاربری: "environment",
+    "حالة الاستخدام": "environment",
+    Применение: "environment",
+
     Color: "color",
     رنگ: "color",
+    اللون: "color",
+    Цвет: "color",
+
     Styles: "style",
-    استایل: "style",
-    Size: "size",
-    سایز: "size",
+    سبک: "style",
+    النمط: "style",
+    Стиль: "style",
+
+    Size: "Size",
+    سایز: "Size",
+    الحجم: "Size",
+    Размер: "Size",
+
     Industrial: "industrie",
     صنعتی: "industrie",
-    سبک: "style",
+    صناعي: "industrie",
+    Промышленный: "industrie",
   };
+
   const filterKey = filterKeyMap[parentTitle] || parentTitle.toLowerCase();
 
   const showArrows = currentData.length > slidesPerView;
+
+  console.log(data);
 
   return (
     <div className="px-20 md:px-40 lg:px-80">

@@ -82,7 +82,7 @@ export default function Representationrequest() {
   };
 
   const handleSubmit = async () => {
-    if (!validateRepresentationrequest(form, setErrors)) return;
+    if (!validateRepresentationrequest(form, setErrors, t)) return;
 
     setForm({});
     successMessage(t("SuccessForm"));

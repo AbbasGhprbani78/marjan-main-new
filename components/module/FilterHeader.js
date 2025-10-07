@@ -181,7 +181,7 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
                       width="124"
                       height="40"
                       invert=""
-                      href={"/catalog?category=چرا مرجان"}
+                      href={`/catalog?category=${dataHeader.category}`}
                     />
                     <MoreButton
                       text={t("Catalog")}
@@ -279,10 +279,11 @@ function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
   const filterValue = text || item.title;
 
   const filterKeyMap = {
-    sizes: "size",
+    sizes: "Size",
     colors: "color",
   };
-  const filterKey = filterKeyMap[type] || type;
+
+  const filterKey = type.toLowerCase() === "size" ? "Size" : type;
 
   return (
     <Link

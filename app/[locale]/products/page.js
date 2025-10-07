@@ -48,7 +48,7 @@ export default async function page({ params }) {
     Size: dataProducts.categories.size || [],
     Thickness: (dataProducts.categories.thicknesses || [])
       .map(String)
-      .map((t) => `${t} mm`),
+      .map((t) => `${t}mm`),
   };
 
   return (

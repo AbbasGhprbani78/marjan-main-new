@@ -30,6 +30,7 @@ export default function Accordion({
   const toggleAccordion = () => setIsOpen((prev) => !prev);
 
   const selectedItems = filters[filterKey] || [];
+
   const handleChange = (e) => {
     const value = e.target.name;
     const newSelectedItems = selectedItems.includes(value)
