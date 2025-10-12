@@ -82,7 +82,7 @@ export default function Accordion({
                 name={item}
                 checked={selectedItems.includes(item)}
                 onChange={handleChange}
-                dir={filterKey == "size" ? "rtl" : "ltr"}
+                dir={filterKey === "Size" && "rtl"}
               />
             );
           })}

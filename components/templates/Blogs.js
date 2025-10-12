@@ -118,7 +118,7 @@ export default function Blogs({ blogs, categories, filters }) {
   };
 
   const tabTitle = () => {
-    if (tab === 1) return t("Blogs");
+    if (tab === 1) return t("Blog");
     if (tab === 2) {
       switch (selectedCategory) {
         case "articles":

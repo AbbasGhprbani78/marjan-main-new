@@ -61,7 +61,7 @@ function TextContent({ title, text }) {
       <h3 className="text-base mt-[18px] md:mt-[36px] lg:mt-0 title text-[var(--color-gray-900)] font-[500]">
         {title}
       </h3>
-      <p className="text-[1rem] md:text-base mt-[15px] text-justify md:max-h-[230px] md:overflow-y-auto">
+      <p className="text-[1rem] md:text-base mt-[15px]  md:max-h-[230px] md:overflow-y-auto">
         {text}
       </p>
     </div>

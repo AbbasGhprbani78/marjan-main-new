@@ -163,10 +163,16 @@ export function NavBar({ dataHeader }) {
               {isOpen && (
                 <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-[9999] text-[var(--color-gray-900)]">
                   <li
-                    className=" hover:bg-gray-100 cursor-pointer font-semibold p-[7px]"
+                    className=" hover:bg-gray-100 cursor-pointer p-[7px]"
                     onClick={() => handleLangChange("fa")}
                   >
                     FA
+                  </li>
+                  <li
+                    className=" hover:bg-gray-100 cursor-pointer  p-[7px]"
+                    onClick={() => handleLangChange("en")}
+                  >
+                    EN
                   </li>
                   <li
                     className=" hover:bg-gray-100 cursor-pointer p-[7px]"
@@ -594,6 +600,12 @@ export default function BoxSearch({ showBox }) {
     }
   };
 
+  useEffect(() => {
+    if (!showBox) {
+      setQuery("");
+    }
+  }, [showBox]);
+
   return (
     <div
       className={`bg-[#eeedec] px-[20px] pb-[10px] pt-[20px] absolute z-30 text-[var(--color-gray-900)] rounded-[4px] transition-all duration-700 ease-in-out top-[120%] inset-x-[20px] md:inset-x-auto md:w-[355px] rtl:md:right-0 rtl:md:left-auto ltr:md:left-0 ltr:md:right-auto ${
@@ -693,28 +705,35 @@ function MenuMobile({ dataHeader }) {
   const isRTL = ["fa", "ar"].includes(locale);
 
   const currentLocale = pathname.split("/")[1] || "fa";
+
   function handleLangChange(newLocale) {
     const segments = pathname.split("/").filter(Boolean);
 
-    if (segments.length && ["fa", "en"].includes(segments[0])) {
+    if (segments.length && ["fa", "en", "ar", "ru"].includes(segments[0])) {
       segments[0] = newLocale;
     } else {
       segments.unshift(newLocale);
     }
 
     const newPathname = "/" + segments.join("/");
-    const search = searchParams.toString();
-
     document.cookie = `lang=${newLocale}; path=/; max-age=31536000`;
-
-    setIsOpen(false);
-    router.push(newPathname + (search ? "?" + search : ""));
+    router.push(newPathname);
   }
 
   const queryString = searchParams.toString();
 
+  const categoryMap = {
+    fa: "چرا مرجان",
+    ar: "لماذا المرجان",
+    en: "Why Coral",
+    ru: "Почему коралл",
+  };
+
+  const category = categoryMap[locale] || categoryMap.fa;
+
   useEffect(() => {
     setIsOpen(false);
+    setIsShowSearch(false);
   }, [queryString, pathname]);
 
   return (
@@ -759,10 +778,16 @@ function MenuMobile({ dataHeader }) {
           {isOpenLanguage && (
             <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-50 text-[var(--color-gray-900)]">
               <li
-                className=" hover:bg-gray-100 cursor-pointer font-semibold p-[7px]"
+                className=" hover:bg-gray-100 cursor-pointer p-[7px]"
                 onClick={() => handleLangChange("fa")}
               >
                 FA
+              </li>
+              <li
+                className=" hover:bg-gray-100 cursor-pointer  p-[7px]"
+                onClick={() => handleLangChange("en")}
+              >
+                EN
               </li>
               <li
                 className=" hover:bg-gray-100 cursor-pointer p-[7px]"
@@ -845,7 +870,7 @@ function MenuMobile({ dataHeader }) {
                     {t("Industrial")}
                   </MenuLink>
                   <MenuLink
-                    href={"/catalog?category=چرا مرجان"}
+                    href={`/catalog?category=${encodeURIComponent(category)}`}
                     className={`w-max mt-[.5rem] flex justify-between  py-3 font-medium text-[var(--color-gray-900)] ms-[15px] `}
                   >
                     {t("Why Marjan")}

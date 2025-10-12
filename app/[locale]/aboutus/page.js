@@ -8,41 +8,41 @@ import BusinessPartners from "@/components/About/BusinessPartners";
 import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchAboutUs } from "@/services/aboutus";
 
-export const metadata = {
-  title: "درباره ما",
-  description:
-    "با بیش از 10 سال سابقه در صنعت، بیش از 100 پرسنل و صادرات به بیش از 10 کشور. با داستان ما، شرکای تجاری و دستاوردهای شرکت آشنا شوید.",
-  keywords: [
-    "درباره ما",
-    "شرکت ما",
-    "تاریخچه شرکت",
-    "شرکای تجاری",
-    "جوایز",
-    "صادرات",
-    "پرسنل",
-    "محیط زیست",
-  ],
-  openGraph: {
-    title: "درباره ما | شرکت ما",
-    description:
-      "با ما بیشتر آشنا شوید؛ تجربه، افتخارات، شرکای جهانی و مسئولیت‌های محیط‌زیستی ما",
-    url: "https://yourdomain.com/aboutus",
-    siteName: "شرکت ما",
-    images: [
-      {
-        url: data?.imageHeader || "/default-og.jpg",
-        width: 1200,
-        height: 630,
-        alt: "تصویر درباره ما",
-      },
-    ],
-    locale: "fa_IR",
-    type: "website",
-  },
-  alternates: {
-    canonical: "https://yourdomain.com/aboutus",
-  },
-};
+// export const metadata = {
+//   title: "درباره ما",
+//   description:
+//     "با بیش از 10 سال سابقه در صنعت، بیش از 100 پرسنل و صادرات به بیش از 10 کشور. با داستان ما، شرکای تجاری و دستاوردهای شرکت آشنا شوید.",
+//   keywords: [
+//     "درباره ما",
+//     "شرکت ما",
+//     "تاریخچه شرکت",
+//     "شرکای تجاری",
+//     "جوایز",
+//     "صادرات",
+//     "پرسنل",
+//     "محیط زیست",
+//   ],
+//   openGraph: {
+//     title: "درباره ما | شرکت ما",
+//     description:
+//       "با ما بیشتر آشنا شوید؛ تجربه، افتخارات، شرکای جهانی و مسئولیت‌های محیط‌زیستی ما",
+//     url: "https://yourdomain.com/aboutus",
+//     siteName: "شرکت ما",
+//     images: [
+//       {
+//         url: data?.imageHeader || "/default-og.jpg",
+//         width: 1200,
+//         height: 630,
+//         alt: "تصویر درباره ما",
+//       },
+//     ],
+//     locale: "fa_IR",
+//     type: "website",
+//   },
+//   alternates: {
+//     canonical: "https://yourdomain.com/aboutus",
+//   },
+// };
 
 export default async function page({ params }) {
   const { locale } = params;

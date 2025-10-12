@@ -15,7 +15,7 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
   return (
     <>
       <div className="block lg:hidden">
-        <AccardionFilter title={t("size")}>
+        <AccardionFilter title={t("Size")}>
           <div className="grid grid-cols-1 gap-[10px] mt-[1rem]">
             {dataHeader?.sizes?.map((item, i) => (
               <ItemFilterBox
@@ -269,7 +269,7 @@ function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
   if (text) {
     const parts = text.split(/[*xX×]/i);
     if (parts.length === 2) {
-      const [h, w] = parts.map((n) => parseInt(n.trim(), 10));
+      const [w, h] = parts.map((n) => parseInt(n.trim(), 10));
       height = h || 0;
       width = w || 0;
     }

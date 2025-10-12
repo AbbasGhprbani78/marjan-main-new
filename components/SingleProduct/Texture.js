@@ -374,20 +374,3 @@ export default function Texture({ textureImage }) {
     </div>
   );
 }
-
-// const switchTiles = () => {
-//   if (!mainHorizontalTile && !mainVerticalTile) return;
-
-//   if (isHorizontal) {
-//     const vertical = textureImage[activeColor]?.imagesTailes?.vertical || [];
-//     setTailesToShow(vertical.slice(0, 4));
-//     setFullTiles(vertical);
-//     setIsHorizontal(false);
-//   } else {
-//     const horizontal =
-//       textureImage[activeColor]?.imagesTailes?.horizontal || [];
-//     setTailesToShow(horizontal.slice(0, 4));
-//     setFullTiles(horizontal);
-//     setIsHorizontal(true);
-//   }
-// };

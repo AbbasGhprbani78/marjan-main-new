@@ -50,7 +50,7 @@ export default function Footer() {
               ` : ${
                 ["fa", "ar"].includes(locale)
                   ? toPersianDigits(footerData?.phone)
-                  : footerData.phone
+                  : footerData?.phone
               }   ` +
               t("Fax") +
               ` : ${
@@ -163,7 +163,7 @@ export default function Footer() {
           />
           <TextRow
             icon="SmsTracking"
-            text={`t("Email") + " : "${footerData?.email}`}
+            text={`${t("Email")} : ${footerData?.email}`}
           />
         </div>
         <div className="flex flex-col gap-[2rem] mt-[3rem] items-center pb-[1.5rem]">

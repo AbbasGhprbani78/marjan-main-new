@@ -13,6 +13,13 @@ export default function Categories({ data }) {
   const { t } = useTranslation();
   const { localizedHref } = useLocalizedLink();
 
+  const baseUrl = "/products";
+  const industrieValues = data.map((item) => item.value).join(",");
+  const queryString = `?industrie=${encodeURIComponent(
+    industrieValues
+  )}&page=1`;
+  const finalUrl = `${baseUrl}${queryString}`;
+
   return (
     <>
       <h2 className="font-[500] title text-center mb-[2rem]">
@@ -52,7 +59,7 @@ export default function Categories({ data }) {
           width={263}
           height={46}
           className="mx-auto my-[35px] "
-          href={"/products"}
+          href={finalUrl}
         />
       </div>
     </>

@@ -30,14 +30,14 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
           <div className="flex items-center  w-full gap-[5px]">
             <button
               onClick={() => router.push(localizedHref("/representatives"))}
-              className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer"
+              className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer text-[.9rem]"
             >
               {t("WhereToBuy")}
               <Icons.Location size={15} />
             </button>
             <button
               onClick={() => router.push("https://marjan.ariisco.com")}
-              className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer"
+              className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer text-[.9rem]"
             >
               {t("SmartLayout")}
               <Icons.Box2 size={15} />
@@ -144,7 +144,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
         </div>
       </div>
       <div
-        className=" md:hidden w-[95vw] md:w-[80vw] h-[600px] md:h-[500px] perspective cursor-pointer mx-auto"
+        className=" md:hidden w-[95vw] md:w-[80vw] h-[600px] md:h-[500px] cursor-pointer mx-auto"
         onClick={() => setFlipped(!flipped)}
       >
         <div
@@ -173,7 +173,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                   e.stopPropagation();
                   router.push("/representatives");
                 }}
-                className="flex-1 py-7 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md"
+                className="flex-1 py-7 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md text-[.8rem]"
               >
                 {t("WhereToBuy")}
                 <Icons.Location size={15} />
@@ -183,7 +183,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                   e.stopPropagation();
                   router.push("https://marjan.ariisco.com");
                 }}
-                className="flex-1 py-7 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md"
+                className="flex-1 py-7 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md text-[.8rem]"
               >
                 {t("SmartLayout")}
                 <Icons.Box2 size={15} />
@@ -209,11 +209,13 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
             </div>
           </div>
 
-          <div className="absolute w-full h-full backface-hidden rotate-y-180 shadow-lg rounded-xl overflow-hidden">
+          <div className="absolute w-full h-full backface-hidden rotate-y-180  rounded-xl overflow-hidden">
             <Image
               src={`${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`}
               alt=" Introduction image"
-              className="object-fill"
+              className="object-contain"
+              // className="object-cover"
+              quality={100}
               fill
             />
             <Icons.CloseCircle
@@ -227,7 +229,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
             />
             <div className="absolute left-0 bottom-0 p-4 w-full flex justify-center backdrop-blur-[5px] bg-white/50">
               <div className="flex md:flex-col items-center gap-4 w-max">
-                <span>{t("ShareOn")}</span>
+                <span>{t("Share On")}</span>
                 <div className="flex items-center gap-3">
                   <a
                     href="https://www.pinterest.com/marjantileco/"
@@ -285,9 +287,6 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
         </div>
 
         <style jsx>{`
-          .perspective {
-            perspective: 1000px;
-          }
           .transform-style {
             transform-style: preserve-3d;
           }

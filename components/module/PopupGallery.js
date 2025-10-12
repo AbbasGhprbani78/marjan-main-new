@@ -63,7 +63,7 @@ export default function PopupGallery({
           <div className="relative flex items-center mb-[20px] max-w-[80vw] max-h-[60dvh]">
             <button
               onClick={prevImage}
-              className="absolute left-[-5vw] text-white cursor-pointer rounded-full backdrop-blur-[4px] w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-[background:#24202180]"
+              className="absolute left-[-8vw] text-white cursor-pointer rounded-full backdrop-blur-[4px] w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-[background:#24202180]"
               aria-label="Previous Media"
             >
               <Icons.ArrowLeft className="m-auto text-gray-white w-20 h-20 md:w-35 md:h-35" />
@@ -89,7 +89,7 @@ export default function PopupGallery({
 
             <button
               onClick={nextImage}
-              className="absolute right-[-5vw] text-white cursor-pointer rounded-full backdrop-blur-[4px] w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-[background:#24202180]"
+              className="absolute right-[-8vw] text-white cursor-pointer rounded-full backdrop-blur-[4px] w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-[background:#24202180]"
               aria-label="Next Media"
             >
               <Icons.ArrowRight className="m-auto text-gray-white w-20 h-20 md:w-35 md:h-35" />

@@ -11,6 +11,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { useTranslation } from "@/context/TranslationContext";
 
 const customIcon = L.icon({
   iconUrl: "/images/location.svg",
@@ -21,6 +22,7 @@ const customIcon = L.icon({
 
 export default function Map({ reps = [] }) {
   const [userLocation, setUserLocation] = useState(null);
+  const { locale } = useTranslation();
 
   useEffect(() => {
     if (!navigator.geolocation) return;
