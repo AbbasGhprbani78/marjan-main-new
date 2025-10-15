@@ -8,6 +8,9 @@ import {
 } from "@/services/employmentGet";
 import React from "react";
 
+export const metadata = {
+  title: "Employment",
+};
 export default async function page({ params }) {
   const { locale } = await params;
   const statesData = await fetchStates(locale);

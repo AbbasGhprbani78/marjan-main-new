@@ -59,7 +59,7 @@ export default function TileSize({
           {isSameSize ? (
             <div className=" flex flex-col md:flex-row md:items-end gap-[1rem] justify-end">
               <span className="font-bold mt-[1.5rem]">
-                {t("Tilesize")} ({t("Alllevels")}):{" "}
+                {t("Tilesize")} ({t("Alllevels")}):
               </span>
               <div className="flex-1 md:max-w-[300px]">
                 <SelectDropDown
@@ -97,7 +97,7 @@ export default function TileSize({
                       key={w.label}
                       className="flex items-end mt-[2rem] lg:justify-end gap-[1rem]"
                     >
-                      <span className="font-bold">{w.label}:</span>
+                      {/* <span className="font-bold">{t(w.label)}:</span> */}
                       <div className="flex-1 md:max-w-[300px]">
                         <SelectDropDown
                           data={dataSizes}

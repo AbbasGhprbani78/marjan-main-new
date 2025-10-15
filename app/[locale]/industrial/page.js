@@ -9,6 +9,10 @@ import Customers from "@/components/Industrial/Customers";
 import AboutUs from "@/components/Industrial/AboutUs";
 import { fetchIndustrial } from "@/services/industrial";
 
+export const metadata = {
+  title: "Industrial",
+};
+
 export default async function page({ params }) {
   const { locale } = await params;
   const dataindustrial = await fetchIndustrial(locale);

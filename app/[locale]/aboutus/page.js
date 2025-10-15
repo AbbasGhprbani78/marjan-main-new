@@ -44,6 +44,9 @@ import { fetchAboutUs } from "@/services/aboutus";
 //   },
 // };
 
+export const metadata = {
+  title: "About us",
+};
 export default async function page({ params }) {
   const { locale } = params;
   const dataAboutus = await fetchAboutUs(locale);

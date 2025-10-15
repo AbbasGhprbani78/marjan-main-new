@@ -14,6 +14,11 @@ import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchSingleProduct, getSubjects } from "@/services/singleProduct";
 import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
+
+export const metadata = {
+  title: "Product",
+};
+
 export default async function page({ params }) {
   const { id } = await params;
   const { locale } = await params;

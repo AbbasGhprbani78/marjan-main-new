@@ -6,43 +6,7 @@ import Image from "next/image";
 import React from "react";
 
 export const metadata = {
-  title: "مقاله",
-  description: "مقاله",
-  keywords: [
-    "آموزش React",
-    "پروژه واقعی",
-    "ReactJS",
-    "جاوااسکریپت",
-    "برنامه‌نویسی فرانت‌اند",
-    "Next.js",
-  ],
-  alternates: {
-    canonical: "https://yourdomain.com/blogs/my-post",
-  },
-  openGraph: {
-    title: "مقاله",
-    description: "مقاله",
-    url: "https://yourdomain.com/blogs/my-post",
-    siteName: "YourSiteName",
-    type: "article",
-    locale: "fa_IR",
-    publishedTime: "2025-06-27",
-    images: [
-      {
-        url: "/images/38.png",
-        width: 1200,
-        height: 630,
-        alt: "مقاله",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "آموزش React در پروژه واقعی",
-    description:
-      "مقاله‌ای برای یادگیری React در دنیای واقعی با مثال‌های کاربردی.",
-    images: ["/images/38.png"],
-  },
+  title: "Blogs",
 };
 
 export default async function page({ params }) {

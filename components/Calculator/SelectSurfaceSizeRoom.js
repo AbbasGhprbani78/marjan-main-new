@@ -213,6 +213,7 @@ export default function SelectSurfaceSizeRoom({
     setArea(result);
   }, [shape, inputs, tab, wallHeightsCount, setArea, isClean]);
 
+  console.log(TABS);
   return (
     <div>
       <p className="font-[600] text-[1rem] pb-30">
@@ -254,12 +255,11 @@ export default function SelectSurfaceSizeRoom({
           <div className="flex justify-between w-full items-center">
             <div className="w-full lg:w-auto md:min-w-[250px]  lg:min-w-[230px]  xl:min-w-[350px]">
               <div className="font-bold text-[18px] mb-[3rem]">
-                {t("Floordimensions")}
                 {tab === "floor"
                   ? t("Floor")
-                  : tab === t("Wall")
+                  : tab === "wall"
                   ? t("Wall")
-                  : t("ّFloorWall")}{" "}
+                  : t("FloorWall")}
               </div>
 
               {shapeInputs.map((input) => (
@@ -436,6 +436,7 @@ function ShapeSVG({ shape }) {
 }
 
 function calculateArea({ shape, inputs, tab, wallHeightsCount }) {
+  console.log(tab);
   const toNumber = (val) => (val ? parseFloat(val) : 0);
   let walls = [];
   let floorArea = 0;
@@ -477,7 +478,7 @@ function calculateArea({ shape, inputs, tab, wallHeightsCount }) {
       walls = [];
       for (let i = 0; i < wallHeightsCount; i++) {
         const height = toNumber(inputs[`height${i + 1}`]);
-        const length = sides[i % sides.length]; // مثلاً اگر 5 تا وارد کردیم، دوباره از اول می‌گرده
+        const length = sides[i % sides.length];
         if (!isNaN(height)) {
           walls.push({ length, height });
         }
@@ -524,7 +525,7 @@ function calculateArea({ shape, inputs, tab, wallHeightsCount }) {
       const r = toNumber(inputs.radius);
       floorArea = isNaN(r) ? 0 : 0.5 * Math.PI * r * r;
 
-      const lengths = [2 * r, Math.PI * r]; // قطر و نیم‌دایره
+      const lengths = [2 * r, Math.PI * r];
 
       walls = [];
       for (let i = 0; i < wallHeightsCount; i++) {

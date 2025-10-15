@@ -19,7 +19,7 @@ export default function CalculatorT({ dataSizes }) {
   const TABS = [
     { label: t("Floor"), value: "floor" },
     { label: t("Wall"), value: "wall" },
-    { label: t("FloorWall"), value: "both" },
+    // { label: t("FloorWall"), value: "both" },
   ];
   const [area, setArea] = useState({
     floorArea: "0.00",
@@ -208,7 +208,6 @@ export default function CalculatorT({ dataSizes }) {
       <section className="mt-[2rem]">
         <PrecentageWastage onChange={handleWastageChange} isClean={isClean} />
       </section>
-
       <section className="mt-[4rem]">
         <TileSize
           value={size}

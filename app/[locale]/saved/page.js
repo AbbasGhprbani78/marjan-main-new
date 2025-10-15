@@ -1,8 +1,10 @@
 import React from "react";
-import { products } from "@/app/dataAllProducts";
+
 import SavedList from "@/components/SavedList/SavedList";
 import { fetchAllSaveProducts } from "@/services/allSaveProducts";
-
+export const metadata = {
+  title: "Saves",
+};
 export default async function page({ params }) {
   const { locale } = await params;
   const productsSaved = await fetchAllSaveProducts(locale);

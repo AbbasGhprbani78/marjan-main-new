@@ -9,7 +9,14 @@ export default function ProductChatItem({ item }) {
     <div className={`productchat`}>
       <div className="d-flex align-items-center gap-3">
         <div className="img-chat-wrapp">
-          <img src={`https://recomchat.ariisco.com${item.image}`} alt="image" />
+          <img
+            src={
+              item.image
+                ? `https://marjanapi.nobinco.com${item?.image}`
+                : "/images/images.png"
+            }
+            alt="image"
+          />
         </div>
         <span className="product-chat-name">{item.name}</span>
       </div>

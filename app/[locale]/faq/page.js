@@ -5,45 +5,7 @@ import { fetchFaq } from "@/services/faq";
 import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
 export const metadata = {
-  title: "سوالات متداول",
-  description:
-    "پاسخ به پرتکرارترین سوالات کاربران درباره محصولات، خدمات، پرداخت، ارسال و سایر موارد. همه چیز را درباره برند ما بدانید.",
-  keywords: [
-    "سوالات متداول",
-    "پرسش های پرتکرار",
-    "FAQ",
-    "سوال درباره خدمات",
-    "مشکلات خرید",
-    "پشتیبانی فنی",
-  ],
-  openGraph: {
-    title: "سوالات متداول | برند شما",
-    description:
-      "اگر سوالی درباره خدمات یا محصولات ما دارید، احتمالاً پاسخ آن در این بخش وجود دارد. پاسخ کامل به رایج‌ترین سوالات کاربران.",
-    url: "https://yourdomain.com/faq",
-    type: "website",
-    locale: "fa_IR",
-    siteName: "برند شما",
-    images: [
-      {
-        url: "/images/41.jpg",
-        width: 1200,
-        height: 630,
-        alt: "سوالات متداول کاربران برند شما",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "سوالات متداول | برند شما",
-    description:
-      "مرور کامل سوالات پرتکرار کاربران درباره محصولات و خدمات برند شما.",
-    images: ["/images/41.jpg"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  title: "FAQ",
 };
 
 export default async function page({ params }) {

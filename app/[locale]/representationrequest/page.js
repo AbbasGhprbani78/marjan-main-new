@@ -1,6 +1,8 @@
 import Representationrequest from "@/components/templates/Representationrequest";
 import React from "react";
-
+export const metadata = {
+  title: "Representation request",
+};
 export default async function page() {
   return (
     <div className="wrapper">

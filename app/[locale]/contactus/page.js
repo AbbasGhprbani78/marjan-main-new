@@ -3,6 +3,11 @@ import MapWrapper from "@/components/module/MapWrapper";
 import styles from "./contactus.module.css";
 import ContactusItem from "@/components/ContactUs/ContactusItem";
 import { fetchContactUs } from "@/services/contactus";
+
+export const metadata = {
+  title: "Contact us",
+};
+
 export default async function page({ params }) {
   const { locale } = params;
   const contactusData = await fetchContactUs(locale);

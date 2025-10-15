@@ -4,37 +4,7 @@ import Projects from "@/components/templates/Projects";
 import { fetchAllProjects } from "@/services/allProjects";
 
 export const metadata = {
-  title: "پروژه ها",
-  description:
-    "مجموعه‌ای از پروژه‌های شاخص طراحی و توسعه‌ی ما، شامل نمونه‌کارهای وب‌سایت، اپلیکیشن و راهکارهای نرم‌افزاری اختصاصی.",
-  keywords:
-    "پروژه‌ها, نمونه‌کارها, طراحی سایت, توسعه نرم‌افزار, اپلیکیشن, React, Next.js, شرکت طراحی",
-  openGraph: {
-    title: "پروژه ها",
-    description:
-      "نگاهی به پروژه‌های موفق انجام‌شده توسط تیم حرفه‌ای ما در زمینه طراحی و توسعه وب و نرم‌افزار.",
-    url: "https://yourdomain.com/projects",
-    siteName: "شرکت شما",
-    type: "website",
-    images: [
-      {
-        url: "/images/24.png",
-        width: 1200,
-        height: 630,
-        alt: "نمونه پروژه‌های شرکت شما",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "پروژه ها",
-    description:
-      "برخی از پروژه‌های حرفه‌ای که توسط تیم ما طراحی و پیاده‌سازی شده‌اند.",
-    images: ["/images/24.png"],
-  },
-  alternates: {
-    canonical: "https://yourdomain.com/projects",
-  },
+  title: "Projects",
 };
 
 export default async function page({ params }) {

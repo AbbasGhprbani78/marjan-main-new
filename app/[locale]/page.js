@@ -12,6 +12,10 @@ import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
 
+export const metadata = {
+  title: "Home",
+};
+
 export default async function Home({ params }) {
   const { locale } = await params;
   const dataHome = await fetchhome(locale);

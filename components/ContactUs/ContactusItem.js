@@ -26,7 +26,7 @@ export default function ContactusItem({ info }) {
         <p className="font-normal text-[.9rem]">
           <span className="font-medium text-[1rem]">{t("PhoneNumber")} : </span>
           <span itemProp="name">
-            {locale ? toPersianDigits(info.phone) : info.phone}
+            {locale === "fa" ? toPersianDigits(info.phone) : info.phone}
           </span>
         </p>
 

@@ -295,8 +295,8 @@ export default function ChatBot({}) {
                   maxLength={120}
                   placeholder={
                     headerValue === "ma"
-                      ? "سوال خود درباره محصول را وارد کنید..."
-                      : "سوال خود را بپرسید..."
+                      ? t("quetionsinput")
+                      : t("quetionsinput2")
                   }
                   className={`input-chat ${
                     disableInput && "disable-input-chat"
@@ -338,13 +338,13 @@ export default function ChatBot({}) {
           <>
             <ul className="chat-list">
               <li
-                className="item-chat opacity-50 pointer-events-none"
-                // onClick={() => {
-                //   setHeaderValue("ma");
-                //   setIsShowChat(true);
-                // }}
+                className="item-chat"
+                onClick={() => {
+                  setHeaderValue("ma");
+                  setIsShowChat(true);
+                }}
               >
-                {t("Product Sales Assistant (coming soon)")}
+                {t("Product Sales Assistant")}
               </li>
               <li
                 className="item-chat"

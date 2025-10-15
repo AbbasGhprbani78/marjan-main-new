@@ -4,35 +4,7 @@ import { fetchAllProducts } from "@/services/allProducts";
 
 export const metadata = () => {
   return {
-    title: "همه محصولات",
-    description:
-      "خرید انواع محصولات با بهترین قیمت و کیفیت در فروشگاه ما. فیلتر و جستجوی آسان برای یافتن محصول موردنظر.",
-    keywords: ["محصولات", "خرید آنلاین", "فروشگاه", "قیمت مناسب", "کیفیت بالا"],
-    openGraph: {
-      title: "همه محصولات - نام فروشگاه شما",
-      description: "محصولات متنوع با قیمت مناسب در فروشگاه ما.",
-      url: "https://your-site.com/products",
-      siteName: "نام فروشگاه شما",
-      images: [
-        {
-          url: "/images/1.png",
-          width: 800,
-          height: 600,
-          alt: "همه محصولات",
-        },
-      ],
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "همه محصولات - نام فروشگاه شما",
-      description: "محصولات متنوع با قیمت مناسب در فروشگاه ما.",
-      images: ["/images/1.png"],
-    },
-    metadataBase: new URL("https://your-site.com"),
-    alternates: {
-      canonical: "/products",
-    },
+    title: "Products",
   };
 };
 

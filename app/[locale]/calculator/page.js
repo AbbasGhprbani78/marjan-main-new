@@ -2,7 +2,9 @@ import CalculatorT from "@/components/templates/Calculator";
 import { fetchSizesCalculator } from "@/services/sizesCalculator";
 
 import React from "react";
-
+export const metadata = {
+  title: "Calculator",
+};
 export default async function page({ params }) {
   const { locale } = await params;
 
