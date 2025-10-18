@@ -143,7 +143,11 @@ export function HomeSlider({
                 height={38}
                 invert={true}
                 className={"m-auto mt-0"}
-                href={`${route}/${type === 2 ? item?.slug : item?.title}`}
+                href={`${route}/${
+                  type === 2
+                    ? item?.slug
+                    : item?.products?.[0]?.title || item?.title
+                }`}
               />
             </div>
             <Image
@@ -259,7 +263,7 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
             >
               {currentSectionItems.map((item) => (
                 <SwiperSlide key={item.key}>
-                  <Link href={localizedHref(`/blogs/${item.id}`)}>
+                  <Link href={localizedHref(`/blogs/${item.slug}`)}>
                     <div className="relative w-full aspect-square overflow-hidden">
                       <Image
                         src={`${
@@ -546,7 +550,7 @@ export function ProjectsSlider({ data, bgcolor }) {
             key={item.key}
             style={{ width: `${getSlideWidth(index)}px` }}
           >
-            <Link href={localizedHref(`projects/${item.id}`)}>
+            <Link href={localizedHref(`projects/${item?.slug}`)}>
               <p className="text-[.9rem] md:text-[18px] font-[400] mb-[5px] text-start md:hidden">
                 {item?.title}
               </p>

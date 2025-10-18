@@ -655,7 +655,7 @@ function SearchItem({ item }) {
         text={t("View")}
         width={100}
         height={40}
-        href={`/products/${item?.id}`}
+        href={`/products/${item?.title}`}
       />
     </div>
   );

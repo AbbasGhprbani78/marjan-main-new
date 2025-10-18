@@ -32,7 +32,7 @@ export default function ProjectsContainer({ data }) {
         data={data.map((item) => ({
           id: item.id,
           image: item.default_image,
-          link: `/projects/${item.id}`,
+          link: `/projects/${item?.slug}`,
           name: item?.name,
         }))}
       />

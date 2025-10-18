@@ -332,7 +332,7 @@ function ItemOther({ setOpenModal, item }) {
       <button
         onClick={() => {
           setOpenModal(false);
-          router.push(localizedHref(`/products/${item.id}`));
+          router.push(localizedHref(`/products/${item?.title}`));
         }}
         className="px-[30px] py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer"
       >

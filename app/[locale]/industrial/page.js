@@ -16,12 +16,16 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = await params;
   const dataindustrial = await fetchIndustrial(locale);
-
+  console.log(dataindustrial?.slidesHeader);
   return (
     <main className="wrapper ">
       <h1 className="sr-only">صنعتی</h1>
       <section className="">
-        <HomeSlider data={dataindustrial?.slidesHeader} route={"/products"} />
+        <HomeSlider
+          data={dataindustrial?.slidesHeader}
+          route={"/products"}
+          type={1}
+        />
       </section>
       <section className="px-20 md:px-40 lg:px-80 mt-[2.5rem] ">
         <Categories data={dataindustrial?.categories} />

@@ -111,6 +111,7 @@ export default function Projects({ data, categories }) {
     setCurrentPage(newPage);
   };
 
+  console.log(data);
   return (
     <main>
       <section

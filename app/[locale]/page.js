@@ -22,6 +22,9 @@ export default async function Home({ params }) {
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
 
+  console.log(dataHome.desginStory.projects);
+  console.log(dataHome?.blog);
+
   return (
     <div
       className={`wrapper w-full h-full ${

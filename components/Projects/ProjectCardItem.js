@@ -12,14 +12,14 @@ export default function ProjectCardItem({ project }) {
     <Link href={localizedHref(`/projects/${project?.slug}`)}>
       <div className="relative w-full aspect-[4/2]   mb-[1rem]  overflow-hidden">
         <Image
-          src={`${process.env.NEXT_PUBLIC_API_URL}${project.image}`}
+          src={`${process.env.NEXT_PUBLIC_API_URL}${project?.image}`}
           alt="project image item"
           fill
           className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
         />
       </div>
       <h3 className="font-bold text-[1.1rem] text-[var(--color-gray-900)] mb-[.5rem]">
-        {project.title}
+        {project?.name}
       </h3>
     </Link>
   );
