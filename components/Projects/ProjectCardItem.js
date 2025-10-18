@@ -7,7 +7,6 @@ import React from "react";
 export default function ProjectCardItem({ project }) {
   const { localizedHref } = useLocalizedLink();
 
-  //slug
   return (
     <Link href={localizedHref(`/projects/${project?.slug}`)}>
       <div className="relative w-full aspect-[4/2]   mb-[1rem]  overflow-hidden">

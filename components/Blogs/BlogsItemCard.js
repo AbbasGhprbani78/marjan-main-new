@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function BlogsItemCard({ item }) {
   const { localizedHref } = useLocalizedLink();
-  //slug
+
   return (
     <article>
       <Link href={localizedHref(`/blogs/${item?.slug}`)}>

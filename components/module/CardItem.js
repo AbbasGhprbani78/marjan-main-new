@@ -40,7 +40,6 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
     }
   };
 
-  //slug
   return (
     <div className="mb-[30px] box-border cursor-pointer">
       <Link

@@ -1,6 +1,6 @@
-export const fetchSingleProduct = async (lang, id) => {
+export const fetchSingleProduct = async (lang, slug) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/product/api/product/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/product/api/product/${slug}`,
     {
       method: "GET",
       headers: {

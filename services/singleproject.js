@@ -1,6 +1,6 @@
-export const fetchSingleProjects = async (lang, id) => {
+export const fetchSingleProjects = async (lang, slug) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/app/project-detail/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/app/project-detail/${slug}`,
     {
       method: "GET",
       headers: {

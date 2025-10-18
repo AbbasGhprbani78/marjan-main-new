@@ -1,6 +1,6 @@
-export const fetchSingleBlog = async (lang, id) => {
+export const fetchSingleBlog = async (lang, slug) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/app/api/blog/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/app/api/blog/${slug}`,
     {
       method: "GET",
       headers: {
