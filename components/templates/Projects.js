@@ -50,14 +50,11 @@ export default function Projects({ data, categories }) {
       let newArray = prev[key] || [];
 
       if (checked) {
-        // اگر انتخاب شد، اضافه می‌کنیم
         newArray = [...newArray, value];
       } else {
-        // اگر از حالت انتخاب خارج شد، حذف می‌کنیم
         newArray = newArray.filter((item) => item !== value);
       }
 
-      // بروزرسانی URL
       const params = new URLSearchParams(window.location.search);
       params.delete(key);
       params.delete("page");

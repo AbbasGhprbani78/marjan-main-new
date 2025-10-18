@@ -11,8 +11,8 @@ export const metadata = {
 
 export default async function page({ params }) {
   const { locale } = await params;
-  const { id } = await params;
-  const singleBlog = await fetchSingleBlog(locale, id);
+  const { slug } = await params;
+  const singleBlog = await fetchSingleBlog(locale, slug);
 
   return (
     <main className="wrapper ">

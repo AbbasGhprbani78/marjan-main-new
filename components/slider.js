@@ -71,12 +71,14 @@ export function HomeSlider({
   dotColor,
   route,
   delay = 3500,
+  type = 1,
 }) {
   const { t } = useTranslation();
   let swiper = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const { locale } = useParams();
 
+  console.log(data);
   return (
     <div
       className="relative mt-[130px] lg:mt-0"
@@ -141,7 +143,7 @@ export function HomeSlider({
                 height={38}
                 invert={true}
                 className={"m-auto mt-0"}
-                href={`${route}/${item.id}`}
+                href={`${route}/${type === 2 ? item?.slug : item?.title}`}
               />
             </div>
             <Image
@@ -348,8 +350,6 @@ export function CategorySlider({ data }) {
   const filterKey = filterKeyMap[parentTitle] || parentTitle.toLowerCase();
 
   const showArrows = currentData.length > slidesPerView;
-
-  console.log(data);
 
   return (
     <div className="px-20 md:px-40 lg:px-80">

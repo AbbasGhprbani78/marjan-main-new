@@ -13,8 +13,8 @@ export const metadata = {
 
 export default async function page({ params }) {
   const { locale } = await params;
-  const { id } = await params;
-  const singleData = await fetchSingleProjects(locale, id);
+  const { slug } = await params;
+  const singleData = await fetchSingleProjects(locale, slug);
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
 

@@ -40,9 +40,13 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
     }
   };
 
+  //slug
   return (
-    <div className="  mb-[30px] box-border cursor-pointer">
-      <Link href={localizedHref(`/products/${product.id}`)} className="block">
+    <div className="mb-[30px] box-border cursor-pointer">
+      <Link
+        href={localizedHref(`/products/${product?.title}`)}
+        className="block"
+      >
         <div className="aspect-[4/2]  h-full  relative overflow-hidden">
           <Image
             src={`${process.env.NEXT_PUBLIC_API_URL}${product?.image}`}

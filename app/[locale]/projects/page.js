@@ -15,7 +15,11 @@ export default async function page({ params }) {
     <div className="wrapper">
       <h1 className="sr-only">پروژه ها</h1>
       <section>
-        <HomeSlider data={dataProjects?.projects?.slides} route={"/projects"} />
+        <HomeSlider
+          data={dataProjects?.projects?.slides}
+          route={"/projects"}
+          type={2}
+        />
       </section>
       <Projects
         data={dataProjects?.projects}

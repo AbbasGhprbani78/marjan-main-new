@@ -6,10 +6,10 @@ import Link from "next/link";
 
 export default function BlogsItemCard({ item }) {
   const { localizedHref } = useLocalizedLink();
-
+  //slug
   return (
     <article>
-      <Link href={localizedHref(`/blogs/${item?.id}`)}>
+      <Link href={localizedHref(`/blogs/${item?.slug}`)}>
         <div className="relative aspect-[4/2] md:aspect-[4/4] h-full overflow-hidden">
           <Image
             src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}

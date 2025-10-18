@@ -14,7 +14,7 @@ export default async function page({ params }) {
     <main className="wrapper ">
       <h1 className="sr-only">وبلاگ</h1>
       <section>
-        <HomeSlider data={blogsData?.slides} route={"/blogs"} />
+        <HomeSlider data={blogsData?.slides} route={"/blogs"} type={2} />
       </section>
       <section className="mt-[2.5rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)]">
         <Blogs

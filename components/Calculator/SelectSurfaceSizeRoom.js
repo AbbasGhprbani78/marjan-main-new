@@ -213,7 +213,6 @@ export default function SelectSurfaceSizeRoom({
     setArea(result);
   }, [shape, inputs, tab, wallHeightsCount, setArea, isClean]);
 
-  console.log(TABS);
   return (
     <div>
       <p className="font-[600] text-[1rem] pb-30">
@@ -436,7 +435,6 @@ function ShapeSVG({ shape }) {
 }
 
 function calculateArea({ shape, inputs, tab, wallHeightsCount }) {
-  console.log(tab);
   const toNumber = (val) => (val ? parseFloat(val) : 0);
   let walls = [];
   let floorArea = 0;
