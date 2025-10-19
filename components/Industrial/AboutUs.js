@@ -20,12 +20,14 @@ export default function AboutUs({ data }) {
         <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
-      <div className="relative z-10 text-white w-full md:w-1/2">
+      <div className="relative z-10 text-white w-full  md:w-2/3 lg:w-1/2">
         <h3 className="font-medium title mb-[1.5rem] text-center md:text-start">
           {data.title}
         </h3>
-        <p className="text-justify w-full md:w-[36dvw] leading-[30px]">
-          {["fa", "ar"].includes(locale) ? toPersianDigits(data.text) : data.text}
+        <p className="text-justify w-full lg:w-[50dvw] xl:w-[36dvw]  leading-[30px]">
+          {["fa", "ar"].includes(locale)
+            ? toPersianDigits(data.text)
+            : data.text}
         </p>
         <div className="w-[250px] mt-[1rem] mx-auto md:mx-0">
           <MoreButton

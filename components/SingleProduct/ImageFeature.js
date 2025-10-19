@@ -3,7 +3,7 @@ import React from "react";
 
 export default function ImageFeature({ item }) {
   return (
-    <div className="group relative w-fit text-center flex flex-col justify-center items-center min-w-[80px] md:min-w-auto">
+    <div className="group relative w-fit text-center flex flex-col justify-center lg:items-center min-w-[80px] md:min-w-auto">
       <div className="cursor-pointer relative w-30 h-30 md:w-40 md:h-40 ">
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
@@ -22,7 +22,7 @@ export default function ImageFeature({ item }) {
         <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gray-800 rotate-45"></div>
       </div>
 
-      <span className="block text-[#8b8d91] font-bold text-[.85rem] text-center mt-[4px] lg:hidden">
+      <span className="block text-[#8b8d91] font-bold text-[.85rem] text-start  mt-[4px] lg:hidden">
         {item.title}
       </span>
     </div>

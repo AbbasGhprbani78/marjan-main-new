@@ -11,8 +11,6 @@ export default async function page({ params }) {
   const { locale } = await params;
   const dataProjects = await fetchAllProjects(locale);
 
-  console.log(dataProjects);
-
   return (
     <div className="wrapper">
       <h1 className="sr-only">پروژه ها</h1>

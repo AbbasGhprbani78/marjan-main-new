@@ -14,14 +14,14 @@ export default function CheckBox({
   const { locale } = useTranslation();
 
   return (
-    <div className="flex items-start sm:items-center space-x-2 rtl:space-x-reverse gap-4">
+    <div className="flex  space-x-2 rtl:space-x-reverse gap-4">
       <input
         id={id}
         type="checkbox"
         name={name || label}
         checked={checked}
         onChange={onChange}
-        className="focus:ring-0 border-gray-400 rounded mt-[4px] sm:mt-0 flex-shrink-0"
+        className="focus:ring-0 border-gray-400 rounded mt-4 flex-shrink-0"
         value={value || label}
       />
       <label

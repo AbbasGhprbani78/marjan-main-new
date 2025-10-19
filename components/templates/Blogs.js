@@ -8,7 +8,6 @@ import * as Icons from "iconsax-reactjs";
 import Button from "../module/Button";
 import PopFilter from "../module/PopFilter";
 import Image from "next/image";
-
 import Link from "next/link";
 import { truncateText, useLocalizedLink } from "@/utils/helper";
 import { useTranslation } from "@/context/TranslationContext";
@@ -339,7 +338,7 @@ export default function Blogs({ blogs, categories, filters }) {
 
             <div
               ref={scrollRef}
-              className="flex items-center flex-nowrap  gap-[1rem] overflow-x-auto max-w-[500px] md:hidden scroll-smooth border-b border-[#c4c4c4] pb-10 hide-scrollbar "
+              className="flex items-center flex-nowrap  gap-[1rem] overflow-x-auto  md:hidden scroll-smooth border-b border-[#c4c4c4] pb-10 hide-scrollbar "
             >
               {productsToShow.slice(0, 4).map((item, i) => (
                 <Link
@@ -347,7 +346,7 @@ export default function Blogs({ blogs, categories, filters }) {
                   key={i}
                   className="flex flex-col gap-10 min-w-full shrink-0 "
                 >
-                  <div className="relative aspect-square w-full">
+                  <div className="relative aspect-[4/3] sm:aspect-[4/2] lg:aspect-square w-full">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_API_URL}${item.image}`}
                       alt="blog item image"

@@ -33,7 +33,7 @@ export default async function page({ params }) {
       <Image
         src={`${process.env.NEXT_PUBLIC_API_URL}${dataSingleProduct?.mainImage}`}
         alt="Background Image"
-        className="aspect-[4/3] object-fill lg:object-cover w-full  md:min-h-[400px] lg:h-[72dvh] mt-[130px] lg:mt-0"
+        className="lg:aspect-[4/3] object-fill lg:object-cover w-full  md:min-h-[400px] lg:h-[72dvh] mt-[130px] lg:mt-0"
         width={1980}
         height={1080}
       />

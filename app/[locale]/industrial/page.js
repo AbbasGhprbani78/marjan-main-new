@@ -16,7 +16,6 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = await params;
   const dataindustrial = await fetchIndustrial(locale);
-  console.log(dataindustrial?.slidesHeader);
   return (
     <main className="wrapper ">
       <h1 className="sr-only">صنعتی</h1>

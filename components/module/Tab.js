@@ -75,7 +75,7 @@ export default function Tab({ itemsFilter, selected, setSelected }) {
         </button>
       </div>
 
-      <div className="relative hidden md:flex gap-[4.5rem] border-b border-gray-300 text-sm font-medium items-center justify-center">
+      <div className="relative hidden md:flex ] border-b border-gray-300 text-sm font-medium items-center justify-evenly">
         {itemsFilter.map((cat) => (
           <button
             key={cat.value}
