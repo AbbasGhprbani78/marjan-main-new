@@ -357,12 +357,12 @@ export function CategorySlider({ data }) {
 
   return (
     <div className="px-20 md:px-40 lg:px-80">
-      <div className="hidden md:flex flex-row justify-center gap-[50px] mt-[50px] relative border-b border-gray-300">
+      <div className="hidden md:flex flex-row justify-evenly mt-[50px] relative border-b border-gray-300">
         {data.map((item) => (
           <button
             key={item.id}
             ref={(el) => (buttonsRef.current[item.id] = el)}
-            className="w-[136px] h-[45px] text-[22px] font-[500] cursor-pointer pb-[5px] transition-all duration-300"
+            className=" h-[45px] md:text-[18px] lg:text-[22px] font-[500] cursor-pointer pb-[5px] transition-all duration-300"
             onClick={() => setActiveButton(item.id)}
           >
             {["fa", "ar"].includes(locale)

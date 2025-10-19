@@ -104,10 +104,8 @@ export default function Catalog({ catalogs, categories }) {
       }
     });
 
-    // مقدار page را بخوان
     let page = parseInt(searchParams.get("page") || "1", 10);
 
-    // دسته‌ها را به آرایه تبدیل کن
     if (params.category && !Array.isArray(params.category)) {
       params.category = [params.category];
     }
@@ -129,20 +127,26 @@ export default function Catalog({ catalogs, categories }) {
     router.push(`?${query.toString()}`, undefined, { shallow: true });
   }, [filters, currentPage]);
 
+  const hasActiveFilters = Object.values(filters).some(
+    (value) => Array.isArray(value) && value.length > 0
+  );
+
   return (
     <div className="grid grid-cols-12 gap-[1.3rem]  pb-[2rem]">
       <div className=" hidden col-span-0 md:block md:col-span-4 lg:col-span-3  md:pt-[.27rem]">
         <div className="border-b border-[#b7b7b7] flex justify-between items-center  pb-7 mb-10">
           <h2 className="font-medium">{t("Filters")}</h2>
-          <button
-            type="button"
-            className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
-            onClick={clearFilter}
-            aria-label={t("ClearFilters")}
-          >
-            <Icons.CloseCircle size="20" />
-            {t("ClearFilters")}
-          </button>
+          {hasActiveFilters && (
+            <button
+              type="button"
+              className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
+              onClick={clearFilter}
+              aria-label={t("ClearFilters")}
+            >
+              <Icons.CloseCircle size="20" />
+              {t("ClearFilters")}
+            </button>
+          )}
         </div>
         <div className="flex flex-col items-start justify-start gap-[.8rem] mt-[1.3rem] max-h-[25rem] overflow-y-auto">
           {categories?.length > 0 &&
@@ -171,15 +175,17 @@ export default function Catalog({ catalogs, categories }) {
         <PopFilter className isFilterOpen={isFilterOpen}>
           <div className="border-b border-[#b7b7b7] flex justify-between items-center  pb-7">
             <h2 className="font-medium">{t("Filters")}</h2>
-            <button
-              type="button"
-              className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
-              onClick={clearFilter}
-              aria-label={t("ClearFilters")}
-            >
-              <Icons.CloseCircle size="20" />
-              {t("ClearFilters")}
-            </button>
+            {hasActiveFilters && (
+              <button
+                type="button"
+                className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
+                onClick={clearFilter}
+                aria-label={t("ClearFilters")}
+              >
+                <Icons.CloseCircle size="20" />
+                {t("ClearFilters")}
+              </button>
+            )}
           </div>
           <div className="flex flex-col items-start justify-start gap-[.8rem] mt-[1.3rem]">
             {categories?.length > 0 &&

@@ -22,7 +22,7 @@ export function Anchor({ data }) {
     };
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 680);
+      setIsMobile(window.innerWidth < 1400);
     };
 
     handleResize();

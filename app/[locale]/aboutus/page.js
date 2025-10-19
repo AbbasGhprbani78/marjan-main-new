@@ -3,7 +3,6 @@ import React from "react";
 import AboutDetail from "@/components/About/AboutDetail";
 import AwardSlider from "@/components/About/AwardSlider";
 import AboutHistory from "@/components/About/AboutHistory";
-import { data } from "@/app/dataAboutus";
 import BusinessPartners from "@/components/About/BusinessPartners";
 import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchAboutUs } from "@/services/aboutus";
@@ -54,7 +53,6 @@ export default async function page({ params }) {
   return (
     <main className="wrapper w-full">
       <h1 className="sr-only">درباه ما</h1>
-
       <section className="w-full relative mt-[130px] lg:mt-0 aspect-[3/2] max-h-[550px]">
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}${dataAboutus?.imageHeader}`}
@@ -65,7 +63,6 @@ export default async function page({ params }) {
         />
         <div className="absolute inset-0 bg-black/30 z-10" />
       </section>
-
       <section className=" mt-[40px] px-20 md:px-40 lg:px-80 mb-[4rem] md:mb-[7rem] ">
         <h2 className="title text-[var(--color-gray-900)] font-[500] mb-[18px]">
           {dataAboutus?.aboutDetail[0]?.title}
@@ -76,7 +73,6 @@ export default async function page({ params }) {
           fontweight="font-medium"
         />
       </section>
-
       <section className="mb-[4rem] md:mb-[5rem]">
         <AboutDetail
           aboutDetail={[
@@ -103,8 +99,7 @@ export default async function page({ params }) {
           ]}
         />
       </section>
-
-      <section className=" mb-[5rem] md:mb-[8rem]">
+      <section className=" mb-[5rem] md:mb-[8rem] px-20 md:px-40 lg:px-80">
         <AboutHistory history={dataAboutus?.history} />
       </section>
       <section className=" mb-[5rem] md:mb-[7rem]">

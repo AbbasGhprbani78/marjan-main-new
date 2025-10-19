@@ -25,7 +25,7 @@ export default function AboutHistory({ history }) {
   return (
     <div
       ref={ref}
-      className="gap-[3rem] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:gap-8 text-center w-3/4 mx-auto"
+      className="gap-[3rem] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8 text-center  mx-auto"
     >
       {history.map((item, index) => (
         <HistoryComponent key={index} item={item} start={inView} />
@@ -64,7 +64,7 @@ const HistoryComponent = ({ item, start }) => {
     <div className="space-y-3">
       <h3 className="font-[500] text-[1.5rem]">{item.title}</h3>
       <div className="flex items-end gap-3 justify-center">
-        <p className="font-[600] text-[1.2rem] mt-[1.1rem]">
+        <p className="font-[600] lg:text-[1.2rem] mt-[1.1rem]">
           {prefix}
           {["fa", "ar"].includes(locale) ? toPersianDigits(count) : count}
         </p>

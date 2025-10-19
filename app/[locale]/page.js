@@ -60,7 +60,7 @@ export default async function Home({ params }) {
           <FeatureTabs data={dataHome.tabsData} />
         </div>
       </div>
-      <div className="pt-[45.8px] md:pt-[90px] lg:pt-0 mb-60px text-center ">
+      <div className="pt-[45.8px] md:pt-[90px] xl:pt-0 mb-60px text-center ">
         <p className="title font-[500]">{dict["Projects"]}</p>
         <ProjectsSlider data={dataHome.desginStory.projects} />
 
@@ -88,38 +88,38 @@ export default async function Home({ params }) {
           />
         </div>
       </div>
-      <div>
-        <div
-          className="flex flex-col min-h-[422px] h-auto w-full py-[50px] px-20 md:px-40 lg:px-[80px] pe-auto bg-cover bg-center"
-          style={{
-            backgroundImage: `
+
+      <div
+        className="flex flex-col min-h-[422px] h-auto w-full py-[50px] px-20 md:px-40 lg:px-[80px] pe-auto bg-cover bg-center"
+        style={{
+          backgroundImage: `
       linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
       url(${process.env.NEXT_PUBLIC_API_URL}${dataHome?.about?.image})
     `,
-          }}
-        >
-          <p className="text-center md:text-start title font-[500] text-gray-white mb-[40px]">
-            {dataHome?.about?.title}
-          </p>
-          <div className="w-full md:w-[38dvw] text-justify">
-            <div className=" mb-[35px] md:mb-[20px]">
-              <ReadMoreText
-                text={dataHome.about.description}
-                textColor="text-white"
-                isgradient={false}
-              />
-            </div>
-            <MoreButton
-              text={dict["MoreDetails"]}
-              width={263}
-              height={46}
-              className="mx-auto py-[10px] md:mx-0"
-              invert={true}
-              href="/aboutus"
+        }}
+      >
+        <p className="text-center md:text-start title font-[500] text-gray-white mb-[40px]">
+          {dataHome?.about?.title}
+        </p>
+        <div className="w-full lg:w-[60dvw] xl:w-[38dvw] text-justify">
+          <div className=" mb-[35px] md:mb-[20px]">
+            <ReadMoreText
+              text={dataHome.about.description}
+              textColor="text-white"
+              isgradient={false}
             />
           </div>
+          <MoreButton
+            text={dict["MoreDetails"]}
+            width={263}
+            height={46}
+            className="mx-auto py-[10px] md:mx-0"
+            invert={true}
+            href="/aboutus"
+          />
         </div>
       </div>
+
       <div className="flex flex-col items-center px-[20px] md:px-40 py-[50px]  gap-[28px]">
         <Section locale={locale} title={dict["Subscribenewsletter"]} />
         <MoreButton

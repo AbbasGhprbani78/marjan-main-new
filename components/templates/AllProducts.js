@@ -212,6 +212,10 @@ export default function AllProducts({ categories, products }) {
     setIsLoading(false);
   }, [searchParamsString]);
 
+  const hasActiveFilters = Object.entries(filters).some(
+    ([key, value]) => key !== "page" && Array.isArray(value) && value.length > 0
+  );
+
   return (
     <main className="px-20 md:px-40 lg:px-80">
       <section
@@ -241,15 +245,17 @@ export default function AllProducts({ categories, products }) {
             <PopFilter className isFilterOpen={isFilterOpen}>
               <div className="border-b border-[#b7b7b7] flex justify-between items-center  pb-7">
                 <h2 className="font-medium">{t("Filters")}</h2>
-                <button
-                  type="button"
-                  className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
-                  onClick={clearFilter}
-                  aria-label={t("ClearFilters")}
-                >
-                  <Icons.CloseCircle size="20" />
-                  {t("ClearFilters")}
-                </button>
+                {hasActiveFilters && (
+                  <button
+                    type="button"
+                    className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
+                    onClick={clearFilter}
+                    aria-label={t("ClearFilters")}
+                  >
+                    <Icons.CloseCircle size="20" />
+                    {t("ClearFilters")}
+                  </button>
+                )}
               </div>
               <CategoryFilters
                 categories={categories}
@@ -269,15 +275,18 @@ export default function AllProducts({ categories, products }) {
           <div>
             <div className="border-b border-[#b7b7b7] flex justify-between items-center  pb-7 mb-10">
               <h2 className="font-medium">{t("Filters")}</h2>
-              <button
-                type="button"
-                className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
-                onClick={clearFilter}
-                aria-label={t("ClearFilters")}
-              >
-                <Icons.CloseCircle size="20" />
-                {t("ClearFilters")}
-              </button>
+
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
+                  onClick={clearFilter}
+                  aria-label={t("ClearFilters")}
+                >
+                  <Icons.CloseCircle size="20" />
+                  {t("ClearFilters")}
+                </button>
+              )}
             </div>
             <CategoryFilters
               categories={categories}

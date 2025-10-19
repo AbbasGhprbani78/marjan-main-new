@@ -37,7 +37,7 @@ export default function FeatureTabs({ data }) {
     [data[2]?.id]: null,
   };
   return (
-    <div className="grid lg:grid-cols-2 lg:gap-[52px] h-full lg:items-center xl:items-start">
+    <div className="grid lg:grid-cols-2 lg:gap-[2rem] xl:gap-[52px] h-full lg:items-center xl:items-start">
       <div className="lg:hidden flex items-start md:justify-center justify-between gap-0 md:gap-[1rem] w-full px-[20px] mb-[1.5rem]">
         <button
           onClick={() => {
@@ -100,8 +100,8 @@ export default function FeatureTabs({ data }) {
         </div>
       )}
 
-      <div className="w-full flex flex-col ps-[0px] lg:ps-[80px] order-2 md:order-none">
-        <div className="hidden lg:flex flex-row justify-center gap-[50px] relative border-b border-gray-300 text-[.9rem]">
+      <div className="w-full flex flex-col ps-[0px] lg:ps-[40px] order-2 md:order-none">
+        <div className="hidden lg:flex flex-row justify-around   relative border-b border-gray-300 text-[.9rem]">
           {data.map((item) => (
             <button
               key={item.id}

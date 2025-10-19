@@ -119,7 +119,7 @@ export function NavBar({ dataHeader }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`hidden lg:flex flex-row justify-between w-full fixed z-10 h-102 px-40 xl:px-80 py-10 font-fa transition-all duration-300 ${
+        className={`hidden xl:flex flex-row justify-between w-full fixed z-10 h-102 px-40 xl:px-80 py-10 font-fa transition-all duration-300 ${
           shouldApplyScrolledStyles
             ? isInDustrial
               ? "bg-[#fabd02]"
@@ -148,16 +148,17 @@ export function NavBar({ dataHeader }) {
             />
             <div className="relative">
               <div
+                dir="ltr"
                 className="cursor-pointer flex items-center gap-[5px] select-none"
                 onClick={() => handleToggle("open")}
               >
+                {currentLocale.toUpperCase()}
                 <Icons.ArrowDown2
                   size="20"
                   className={`transition-transform duration-300 ${
                     isOpen ? "rotate-180" : ""
                   }`}
                 />
-                {currentLocale.toUpperCase()}
               </div>
 
               {isOpen && (
@@ -179,6 +180,12 @@ export function NavBar({ dataHeader }) {
                     onClick={() => handleLangChange("ar")}
                   >
                     AR
+                  </li>
+                  <li
+                    className=" hover:bg-gray-100 cursor-pointer p-[7px]"
+                    onClick={() => handleLangChange("ru")}
+                  >
+                    RU
                   </li>
                 </ul>
               )}
@@ -737,7 +744,7 @@ function MenuMobile({ dataHeader }) {
   }, [queryString, pathname]);
 
   return (
-    <div className="fixed w-full left-0 right-0 z-[9999999]  lg:hidden">
+    <div className="fixed w-full left-0 right-0 z-[9999999]  xl:hidden">
       <div className="flex items-center justify-between bg-[#292d32] px-20 py-3">
         <div
           className="cursor-pointer"
@@ -763,16 +770,17 @@ function MenuMobile({ dataHeader }) {
       >
         <div className="relative">
           <div
+            dir={"ltr"}
             className="cursor-pointer flex items-center gap-[5px] select-none"
             onClick={() => setIsOpenLanguage((prev) => !prev)}
           >
+            {currentLocale.toUpperCase()}
             <Icons.ArrowDown2
               size="20"
               className={`transition-transform duration-300 ${
                 isOpen ? "rotate-180" : ""
               }`}
             />
-            {currentLocale.toUpperCase()}
           </div>
 
           {isOpenLanguage && (
@@ -794,6 +802,12 @@ function MenuMobile({ dataHeader }) {
                 onClick={() => handleLangChange("ar")}
               >
                 AR
+              </li>
+              <li
+                className=" hover:bg-gray-100 cursor-pointer p-[7px]"
+                onClick={() => handleLangChange("ru")}
+              >
+                RU
               </li>
             </ul>
           )}

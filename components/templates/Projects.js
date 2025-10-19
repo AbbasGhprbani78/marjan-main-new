@@ -111,7 +111,10 @@ export default function Projects({ data, categories }) {
     setCurrentPage(newPage);
   };
 
-  console.log(data);
+  const hasActiveFilters = Object.values(filters).some(
+    (value) => Array.isArray(value) && value.length > 0
+  );
+
   return (
     <main>
       <section
@@ -121,15 +124,17 @@ export default function Projects({ data, categories }) {
         <div className="hidden lg:flex flex-col col-span-3">
           <div className="border-b border-[#b7b7b7] flex justify-between items-center  pb-7 mb-10">
             <h2 className="font-medium">{t("Filters")}</h2>
-            <button
-              type="button"
-              className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
-              onClick={clearFilter}
-              aria-label="حذف فیلترها"
-            >
-              <Icons.CloseCircle size="20" />
-              {t("ClearFilters")}
-            </button>
+            {hasActiveFilters && (
+              <button
+                type="button"
+                className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
+                onClick={clearFilter}
+                aria-label="حذف فیلترها"
+              >
+                <Icons.CloseCircle size="20" />
+                {t("ClearFilters")}
+              </button>
+            )}
           </div>
           <div className="flex flex-col items-start justify-start gap-[.8rem] mt-[1.3rem] max-h-[20rem] overflow-y-auto">
             {categories?.map((item, i) => (
@@ -154,15 +159,17 @@ export default function Projects({ data, categories }) {
           <PopFilter className isFilterOpen={isFilterOpen}>
             <div className="border-b border-[#b7b7b7] flex justify-between items-center  pb-7">
               <h2 className="font-medium">{t("Filters")}</h2>
-              <button
-                type="button"
-                className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
-                onClick={clearFilter}
-                aria-label="حذف فیلترها"
-              >
-                <Icons.CloseCircle size="20" />
-                {t("ClearFilters")}
-              </button>
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  className="flex justify-between items-center gap-3 font-normal cursor-pointer text-[#e3302d]"
+                  onClick={clearFilter}
+                  aria-label="حذف فیلترها"
+                >
+                  <Icons.CloseCircle size="20" />
+                  {t("ClearFilters")}
+                </button>
+              )}
             </div>
             <div className="flex flex-col items-start justify-start gap-[.8rem] mt-[1.3rem]">
               {categories?.map((item, i) => (
