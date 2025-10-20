@@ -7,9 +7,9 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 768px) {
   .wrapperRepresentation {
-    max-height: 400px;
+    max-height: 100%;
   }
 }
 

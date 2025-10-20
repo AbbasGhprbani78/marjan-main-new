@@ -47,7 +47,7 @@ export default function Map({ reps = [] }) {
 
   return (
     <div className="lg:min-h-[400px] h-full w-full">
-      <MapContainer center={center} zoom={6} className="h-full w-full">
+      <MapContainer center={center} zoom={1} className="h-full w-full">
         <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
 
         <MapCenter center={center} />

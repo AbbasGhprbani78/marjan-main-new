@@ -4,6 +4,7 @@ import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchSingleBlog } from "@/services/singleBlog";
 import Image from "next/image";
 import React from "react";
+import DOMPurify from "dompurify";
 
 export const metadata = {
   title: "Blogs",
@@ -63,3 +64,5 @@ export default async function page({ params }) {
     </main>
   );
 }
+
+//dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(singleBlog) }}

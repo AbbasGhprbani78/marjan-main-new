@@ -43,9 +43,9 @@ export default function Form({ dataTypeOfActivity }) {
     if (!form.lastName) {
       newErrors.lastName = t("LastNameRequired");
     }
-    if (!form.email) {
-      newErrors.email = t("EmailRequired");
-    }
+    // if (!form.email) {
+    //   newErrors.email = t("EmailRequired");
+    // }
 
     if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       newErrors.email = t("InvalidEmail");

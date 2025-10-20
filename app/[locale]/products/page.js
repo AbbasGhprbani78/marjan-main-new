@@ -18,10 +18,13 @@ export default async function page({ params }) {
     style: dataProducts.categories.style || [],
     color: dataProducts.categories.color || [],
     Size: dataProducts.categories.size || [],
+    Surface: [],
     Thickness: (dataProducts.categories.thicknesses || [])
       .map(String)
       .map((t) => `${t}mm`),
   };
+
+  console.log(dataProducts);
 
   return (
     <div className="wrapper">

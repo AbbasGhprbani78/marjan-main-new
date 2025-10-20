@@ -44,6 +44,21 @@ export default function AllProducts({ categories, products }) {
   );
 
   const normStr = (v) => String(v).trim().toLowerCase();
+
+  const normalizeNumbers = (str) => {
+    const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+    const englishNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+    let normalized = str;
+    persianNumbers.forEach((persian, index) => {
+      normalized = normalized.replace(
+        new RegExp(persian, "g"),
+        englishNumbers[index]
+      );
+    });
+    return normalized;
+  };
+
   const normThickness = (v) => {
     const s = String(v).replace(",", ".");
     const n = Number(s.replace(/[^\d.]/g, ""));
@@ -92,16 +107,26 @@ export default function AllProducts({ categories, products }) {
     if (!filters || (Object.keys(filters).length === 0 && !searchTerm))
       return products;
     return products.filter((product) => {
-      if (searchTerm.trim().length >= 3) {
+      if (searchTerm.trim().length >= 2) {
         const lowerSearch = searchTerm.toLowerCase();
+        const normalizedSearch = normalizeNumbers(lowerSearch);
+
         const inTitle = String(product.title || "")
           .toLowerCase()
           .includes(lowerSearch);
-        const inCode = (product.tile_variants || []).some((variant) =>
-          String(variant.code || "")
-            .toLowerCase()
-            .includes(lowerSearch)
-        );
+
+        const inCode = (product.tile_variants || []).some((variant) => {
+          const variantCode = String(variant.code || "").toLowerCase();
+          const normalizedVariantCode = normalizeNumbers(variantCode);
+
+          return (
+            variantCode.includes(lowerSearch) ||
+            normalizedVariantCode.includes(normalizedSearch) ||
+            variantCode.includes(normalizedSearch) ||
+            normalizedVariantCode.includes(lowerSearch)
+          );
+        });
+
         if (!inTitle && !inCode) return false;
       }
 
@@ -183,7 +208,7 @@ export default function AllProducts({ categories, products }) {
   useEffect(() => {
     const query = new URLSearchParams(searchParams.toString());
 
-    if (searchTerm.trim().length >= 3) {
+    if (searchTerm.trim().length >= 2) {
       if (!searchParams.get("searching")) {
         setLastPageBeforeSearch(currentPage);
       }
@@ -219,7 +244,7 @@ export default function AllProducts({ categories, products }) {
   return (
     <main className="px-20 md:px-40 lg:px-80">
       <section
-        className={`w-full h-full pt-[150px] lg:pt-[120px] ${
+        className={`w-full h-full pt-[150px] lg:pt-[120px] relative ${
           ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
         }`}
       >

@@ -162,29 +162,57 @@ export function NavBar({ dataHeader }) {
               </div>
 
               {isOpen && (
-                <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-[9999] text-[var(--color-gray-900)]">
+                <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-[9999] text-[var(--color-gray-900)] px-4 w-[60px]">
                   <li
-                    className=" hover:bg-gray-100 cursor-pointer p-[7px]"
+                    dir="ltr"
+                    className=" hover:bg-gray-100 cursor-pointer w-full flex items-center justify-between "
                     onClick={() => handleLangChange("fa")}
                   >
+                    <Image
+                      alt="flag"
+                      src={"/images/iran.png"}
+                      width={30}
+                      height={20}
+                    />
                     FA
                   </li>
                   <li
-                    className=" hover:bg-gray-100 cursor-pointer  p-[7px]"
+                    dir="ltr"
+                    className=" hover:bg-gray-100 cursor-pointer  flex items-center justify-between "
                     onClick={() => handleLangChange("en")}
                   >
+                    <Image
+                      alt="flag"
+                      src={"/images/usa.png"}
+                      width={30}
+                      height={20}
+                    />
                     EN
                   </li>
                   <li
-                    className=" hover:bg-gray-100 cursor-pointer p-[7px]"
+                    dir="ltr"
+                    className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                     onClick={() => handleLangChange("ar")}
                   >
+                    <Image
+                      alt="flag"
+                      src={"/images/arab.png"}
+                      width={30}
+                      height={20}
+                    />
                     AR
                   </li>
                   <li
-                    className=" hover:bg-gray-100 cursor-pointer p-[7px]"
+                    dir="ltr"
+                    className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                     onClick={() => handleLangChange("ru")}
                   >
+                    <Image
+                      alt="flag"
+                      src={"/images/russia.png"}
+                      width={30}
+                      height={20}
+                    />
                     RU
                   </li>
                 </ul>
@@ -601,6 +629,7 @@ export default function BoxSearch({ showBox }) {
       );
       if (response.status === 200) {
         setResults(response.data);
+        console.log(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -784,29 +813,57 @@ function MenuMobile({ dataHeader }) {
           </div>
 
           {isOpenLanguage && (
-            <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-50 text-[var(--color-gray-900)]">
+            <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-50 text-[var(--color-gray-900)] px-4 w-[60px]">
               <li
-                className=" hover:bg-gray-100 cursor-pointer p-[7px]"
+                dir="ltr"
+                className=" hover:bg-gray-100 cursor-pointer w-full flex items-center justify-between "
                 onClick={() => handleLangChange("fa")}
               >
+                <Image
+                  alt="flag"
+                  src={"/images/iran.png"}
+                  width={30}
+                  height={20}
+                />
                 FA
               </li>
               <li
-                className=" hover:bg-gray-100 cursor-pointer  p-[7px]"
+                dir="ltr"
+                className=" hover:bg-gray-100 cursor-pointer  flex items-center justify-between "
                 onClick={() => handleLangChange("en")}
               >
+                <Image
+                  alt="flag"
+                  src={"/images/usa.png"}
+                  width={30}
+                  height={20}
+                />
                 EN
               </li>
               <li
-                className=" hover:bg-gray-100 cursor-pointer p-[7px]"
+                dir="ltr"
+                className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                 onClick={() => handleLangChange("ar")}
               >
+                <Image
+                  alt="flag"
+                  src={"/images/arab.png"}
+                  width={30}
+                  height={20}
+                />
                 AR
               </li>
               <li
-                className=" hover:bg-gray-100 cursor-pointer p-[7px]"
+                dir="ltr"
+                className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                 onClick={() => handleLangChange("ru")}
               >
+                <Image
+                  alt="flag"
+                  src={"/images/russia.png"}
+                  width={30}
+                  height={20}
+                />
                 RU
               </li>
             </ul>
