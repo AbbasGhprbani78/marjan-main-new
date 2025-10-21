@@ -2,11 +2,13 @@
 
 import { useEffect } from "react";
 import styles from "./error.module.css";
+import { useTranslation } from "@/context/TranslationContext";
 export default function GlobalError({ error, reset }) {
   useEffect(() => {
     console.error("API Error:", error);
   }, [error]);
 
+  const { t } = useTranslation();
   return (
     <div className={styles.wrapper}>
       <div className={styles.card}>
@@ -29,11 +31,11 @@ export default function GlobalError({ error, reset }) {
           </svg>
         </div>
 
-        <h1 className={styles.title}>مشکلی در سرور پیش آمد</h1>
-        <p className={styles.text}>بزودی برمی‌گردیم</p>
+        <h1 className={styles.title}>{t("A server error occurred")}</h1>
+        <p className={styles.text}>{t("We'll be back shortly")}</p>
 
         <button onClick={() => reset()} className={styles.button}>
-          تلاش مجدد
+          {t("Retry")}
         </button>
       </div>
     </div>
