@@ -3,45 +3,53 @@ import { useState, useEffect } from "react";
 import SelectDropDown from "../../components/module/SelectDropDown";
 import { useTranslation } from "@/context/TranslationContext";
 
-export default function SelectLocation({ locations, onProvinceSelect }) {
+export default function SelectLocation({ locations, onCitySelect }) {
+  const { t } = useTranslation();
   const [countryId, setCountryId] = useState("");
   const [provinceId, setProvinceId] = useState("");
-  const { t } = useTranslation();
+  const [cityId, setCityId] = useState("");
 
   const selectedCountry = locations.find((c) => c.id === countryId);
   const provinces = selectedCountry?.provinces || [];
   const selectedProvince = provinces.find((p) => p.id === provinceId);
+  const cities = selectedProvince?.cities || [];
+  const selectedCity = cities.find((c) => c.id === cityId);
 
   useEffect(() => {
-    if (onProvinceSelect) {
-      onProvinceSelect(selectedProvince || null);
-    }
-  }, [selectedProvince, onProvinceSelect]);
+    onCitySelect(selectedCity || null);
+  }, [selectedCity, onCitySelect]);
 
   return (
-    <div>
-      <div className="mb-[2rem]">
-        <SelectDropDown
-          label={t("Country")}
-          data={locations}
-          value={countryId}
-          onChange={(option) => {
-            setCountryId(option?.value || "");
-            setProvinceId("");
-          }}
-        />
-      </div>
+    <div className="flex flex-col gap-[1.5rem] mb-[2rem]">
+      <SelectDropDown
+        label={t("Country")}
+        data={locations}
+        value={countryId}
+        onChange={(option) => {
+          setCountryId(option?.value || "");
+          setProvinceId("");
+          setCityId("");
+        }}
+      />
 
-      <div className="mb-[2rem]">
-        <SelectDropDown
-          label={t("Province")}
-          data={provinces}
-          value={provinceId}
-          onChange={(option) => {
-            setProvinceId(option?.value || "");
-          }}
-        />
-      </div>
+      <SelectDropDown
+        label={t("Province")}
+        data={provinces}
+        value={provinceId}
+        onChange={(option) => {
+          setProvinceId(option?.value || "");
+          setCityId("");
+        }}
+        disabled={!selectedCountry}
+      />
+
+      <SelectDropDown
+        label={t("City")}
+        data={cities}
+        value={cityId}
+        onChange={(option) => setCityId(option?.value || "")}
+        disabled={!selectedProvince}
+      />
     </div>
   );
 }

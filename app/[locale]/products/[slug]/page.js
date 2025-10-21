@@ -23,7 +23,6 @@ export default async function page({ params }) {
   const { slug } = await params;
   const { locale } = await params;
   const dataSingleProduct = await fetchSingleProduct(locale, slug);
-  const allsubjects = await getSubjects(locale);
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
 
@@ -59,7 +58,6 @@ export default async function page({ params }) {
             text={dict["AskQuestion"]}
             icon={"MessageQuestion"}
             typeModel={"questions"}
-            subjects={allsubjects}
           />
           <GuideSection
             text={dict["WhereToBuy"]}

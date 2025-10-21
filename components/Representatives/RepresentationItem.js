@@ -8,6 +8,15 @@ export default function RepresentationItem({ city }) {
   const { t, locale } = useTranslation();
   if (!city) return null;
 
+  const openMap = () => {
+    if (!city.address) return;
+    const address = encodeURIComponent(city.address);
+    window.open(
+      `https://www.google.com/maps/search/?api=1&query=${address}`,
+      "_blank"
+    );
+  };
+
   return (
     <article className="text-[var(--color-gray-900)] mb-[2rem]">
       <h2 className="font-medium text-[1.2rem] mb-[1.2rem]">
@@ -39,13 +48,9 @@ export default function RepresentationItem({ city }) {
         </p>
       )}
 
-      {city.link && (
+      {city.address && (
         <div className="mt-[1rem] w-full md:w-[202px]">
-          <Button2
-            text={t("Navigation")}
-            bgblack
-            onClick={() => window.open(city.link, "_blank")}
-          />
+          <Button2 text={t("Navigation")} bgblack onClick={openMap} />
         </div>
       )}
     </article>

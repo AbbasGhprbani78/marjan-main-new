@@ -114,7 +114,7 @@ export default function ChatBot({}) {
       const errorMessage = {
         id: crypto.randomUUID(),
         isai: true,
-        text: "مشکلی پیش آمده بزودی برمیگردیم",
+        text: t("There was a problem, we'll be back soon"),
         isError: true,
       };
       setMessages((prev) => ({
@@ -136,6 +136,13 @@ export default function ChatBot({}) {
     setSessionId("");
     setEndMessage(false);
     setMaxMessage(70);
+  };
+
+  const handleChange = (e) => {
+    let value = e.target.value;
+    value = value.replace(/[^0-9\u06F0-\u06F9\u0600-\u06FF\s،.؟!*]/g, "");
+
+    setMessage(value);
   };
 
   useEffect(() => {
@@ -191,6 +198,7 @@ export default function ChatBot({}) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [viewportWidth]);
+
   return (
     <>
       <div className={`chatbot-container ${isShowChatbot && "activeChat"}`}>
@@ -290,7 +298,7 @@ export default function ChatBot({}) {
               <div className="chatbot-actions" ref={wrapRef}>
                 <textarea
                   value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  onChange={handleChange}
                   autoComplete="false"
                   maxLength={120}
                   placeholder={

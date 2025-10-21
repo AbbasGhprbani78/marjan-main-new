@@ -5,9 +5,11 @@ import SelectDropDown from "./SelectDropDown";
 import { useTranslation } from "@/context/TranslationContext";
 import Button2 from "./Button2";
 import { successMessage } from "./Toast";
+import axios from "axios";
 
-export default function QuestionForm({ openModal, subjects }) {
+export default function QuestionForm({ openModal }) {
   const { t } = useTranslation();
+  const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
@@ -17,6 +19,25 @@ export default function QuestionForm({ openModal, subjects }) {
     phoneNumber: "",
     message: "",
   });
+
+  const getSubjects = async (lang) => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/app/question-subject-list/`,
+        {
+          method: "GET",
+          headers: {
+            "Accept-Language": lang,
+          },
+        }
+      );
+      if (res.status === 200) {
+        setSubjects(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -101,6 +122,10 @@ export default function QuestionForm({ openModal, subjects }) {
       });
     }
   }, [openModal]);
+
+  useEffect(() => {
+    getSubjects();
+  });
 
   return (
     <form>

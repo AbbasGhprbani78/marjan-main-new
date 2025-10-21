@@ -420,7 +420,6 @@ export function CategorySlider({ data }) {
           />
         </button>
       </div>
-
       <div className="relative mt-[30px]">
         {showArrows && (
           <>
@@ -467,6 +466,7 @@ export function CategorySlider({ data }) {
                 />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                   <p
+                    dir="rtl"
                     className={`text-white text-[1.2rem] text-center px-4 ${
                       ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
                     }`}

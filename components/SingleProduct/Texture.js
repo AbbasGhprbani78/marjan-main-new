@@ -126,22 +126,19 @@ export default function Texture({ textureImage }) {
               setActiveColor(i);
             }}
           >
-            <div className="relative aspect-square w-full">
+            <div
+              className={`relative aspect-square w-full border-2 transition-all duration-200 ${
+                activeColor === i
+                  ? "border-gray-200 shadow-sm"
+                  : "border-transparent hover:shadow-sm"
+              }`}
+            >
               <Image
                 src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
                 className="object-cover"
                 alt="color image"
                 fill
               />
-
-              <div className="absolute top-5 right-5 z-10">
-                <input
-                  type="radio"
-                  checked={activeColor === i}
-                  className="w-[16px] h-[16px] accent-black"
-                  readOnly
-                />
-              </div>
             </div>
             <div className="flex items-center justify-between mt-[7px] text-sm flex-wrap">
               <span>{item.code}</span>
@@ -234,7 +231,11 @@ export default function Texture({ textureImage }) {
                           return (
                             <div key={key} className="flex flex-col">
                               <div
-                                className="relative cursor-pointer"
+                                className={`relative cursor-pointer border-2 transition-all duration-200 ${
+                                  activeGroupKey === key
+                                    ? "border-gray-200 shadow-sm"
+                                    : "border-transparent hover:shadow-sm"
+                                }`}
                                 style={getScaledSize(
                                   group[0]?.size,
                                   maxDim,
@@ -250,15 +251,6 @@ export default function Texture({ textureImage }) {
                                   className="object-cover"
                                   fill
                                 />
-                                <div className="absolute top-2 right-2 z-10">
-                                  <input
-                                    type="radio"
-                                    name="tileGroup"
-                                    checked={activeGroupKey === key}
-                                    readOnly
-                                    className="w-[16px] h-[16px] accent-black"
-                                  />
-                                </div>
                               </div>
 
                               <span className="pt-[10px]" dir="rtl">
@@ -280,7 +272,11 @@ export default function Texture({ textureImage }) {
                           return (
                             <div key={key} className="flex flex-col">
                               <div
-                                className="relative cursor-pointer"
+                                className={`relative cursor-pointer border-2 transition-all duration-200 ${
+                                  activeGroupKey === key
+                                    ? "border-gray-200 shadow-sm"
+                                    : "border-transparent hover:shadow-sm"
+                                }`}
                                 style={getScaledSize(
                                   group[0]?.size,
                                   maxDim,
@@ -296,15 +292,6 @@ export default function Texture({ textureImage }) {
                                   className="object-cover"
                                   fill
                                 />
-                                <div className="absolute top-2 right-2 z-10">
-                                  <input
-                                    type="radio"
-                                    name="tileGroup"
-                                    checked={activeGroupKey === key}
-                                    readOnly
-                                    className="w-[16px] h-[16px] accent-black"
-                                  />
-                                </div>
                               </div>
                               <span className="pt-[10px]" dir="rtl">
                                 {(() => {
@@ -368,11 +355,4 @@ export default function Texture({ textureImage }) {
       )}
     </div>
   );
-}
-
-{
-  /* <span
-                  style={{ backgroundColor: item.color }}
-                  className="w-[15px] h-[15px] inline-block rounded-full"
-                /> */
 }

@@ -36,8 +36,8 @@ export default function ReadMoreText({
       <p
         className={`hidden md:block text-justify leading-[27px] ${fontweight} ${fontSize}`}
       >
-        {locale === "fa" ? (
-          text
+        {locale === "fa" || locale === "ar" ? (
+          <span dir="rtl">{fixSizesInText(text, locale)}</span>
         ) : (
           <span dir="ltr">{fixSizesInText(text, locale)}</span>
         )}
@@ -49,11 +49,11 @@ export default function ReadMoreText({
 function fixSizesInText(text, locale = "fa") {
   if (!text) return text;
 
-  const sizeRegex = /(\d+)\s*×\s*(\d+)/g;
+  const sizeRegex = /([0-9۰-۹]+)\s*[x××\u00D7\u2715]\s*([0-9۰-۹]+)/gi;
 
   return text.replace(sizeRegex, (match, p1, p2) => {
     if (locale === "fa" || locale === "ar") {
-      return toPersianDigits(`${p1}×${p2}`);
+      return toPersianDigits(p1) + "×" + toPersianDigits(p2);
     } else {
       return `${p2}\u200E×\u200E${p1}`;
     }
@@ -63,5 +63,5 @@ function fixSizesInText(text, locale = "fa") {
 function toPersianDigits(str) {
   const en = "0123456789";
   const fa = "۰۱۲۳۴۵۶۷۸۹";
-  return str.replace(/\d/g, (d) => fa[en.indexOf(d)]);
+  return str.replace(/[0-9]/g, (d) => fa[en.indexOf(d)]);
 }

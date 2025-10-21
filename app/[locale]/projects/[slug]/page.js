@@ -17,6 +17,7 @@ export default async function page({ params }) {
   const singleData = await fetchSingleProjects(locale, slug);
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
+  console.log(singleData?.descriptions);
 
   return (
     <main className="wrapper text-[var(--color-gray-900)] ">

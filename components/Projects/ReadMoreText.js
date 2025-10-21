@@ -1,8 +1,10 @@
 "use client";
+import { useTranslation } from "@/context/TranslationContext";
 import React, { useState } from "react";
 
 export default function ReadMoreText({ text = "" }) {
   const [expanded, setExpanded] = useState(false);
+  const { locale } = useTranslation();
   return (
     <section className="relative mt-[2.3rem]" aria-labelledby="about-heading">
       <div className="md:hidden relative">
@@ -25,8 +27,30 @@ export default function ReadMoreText({ text = "" }) {
       </div>
 
       <div className="hidden md:block text-justify font-normal text-[1rem] leading-[30px]">
-        <p>{text}</p>
+        <span dir={["fa", "ar"].includes(locale) ? "rtl" : "ltr"}>
+          {fixSizesInText(text, locale)}
+        </span>
       </div>
     </section>
   );
+}
+
+function fixSizesInText(text, locale = "fa") {
+  if (!text) return text;
+
+  const sizeRegex = /([0-9۰-۹]+)\s*[x××\u00D7\u2715]\s*([0-9۰-۹]+)/gi;
+
+  return text.replace(sizeRegex, (match, p1, p2) => {
+    if (locale === "fa" || locale === "ar") {
+      return toPersianDigits(p1) + "×" + toPersianDigits(p2);
+    } else {
+      return `${p2}\u200E×\u200E${p1}`;
+    }
+  });
+}
+
+function toPersianDigits(str) {
+  const en = "0123456789";
+  const fa = "۰۱۲۳۴۵۶۷۸۹";
+  return str.replace(/[0-9]/g, (d) => fa[en.indexOf(d)]);
 }
