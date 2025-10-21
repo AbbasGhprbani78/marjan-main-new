@@ -291,7 +291,7 @@ function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
       onClick={() => setShowFilterMenu(false)}
       className="relative flex items-center justify-between px-20    h-[46px]  bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer"
     >
-      <span className="font-medium">
+      <span className="font-medium" dir="rtl">
         {["fa", "ar"].includes(locale)
           ? toPersianDigits(displayText)
           : displayText}

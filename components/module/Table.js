@@ -27,6 +27,7 @@ export default function Table({ columns = [], data = [] }) {
               <tr key={rowIndex}>
                 {columns.map((col) => (
                   <td
+                    dir="rtl"
                     key={col}
                     className="px-6 py-4 whitespace-nowrap text-center text-gray-700 border border-gray-300"
                   >

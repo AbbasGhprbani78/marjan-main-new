@@ -36,7 +36,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
               <Icons.Location size={15} />
             </button>
             <button
-              onClick={() => router.push("https://marjan.ariisco.com")}
+              onClick={() => router.push("https://marjan.ariisco.com/en")}
               className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer text-[.9rem]"
             >
               {t("SmartLayout")}
@@ -181,7 +181,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  router.push("https://marjan.ariisco.com");
+                  router.push("https://marjan.ariisco.com/en");
                 }}
                 className="flex-1 py-7 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md text-[.8rem]"
               >
@@ -325,7 +325,11 @@ function ItemOther({ setOpenModal, item }) {
             const finalSize = ["fa", "ar"].includes(locale)
               ? toPersianDigits(parts)
               : parts;
-            return <span key={size}>{finalSize}</span>;
+            return (
+              <span key={size} dir="rtl">
+                {finalSize}
+              </span>
+            );
           })}
         </div>
       </div>

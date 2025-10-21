@@ -81,7 +81,7 @@ export default function Table({ title, thickness, colors, surface, size }) {
                       : reversed;
 
                     return (
-                      <div className="block mb-5" key={item}>
+                      <div className="block mb-5" key={item} dir="rtl">
                         {display}
                       </div>
                     );

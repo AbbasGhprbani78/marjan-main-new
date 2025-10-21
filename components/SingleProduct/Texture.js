@@ -143,13 +143,9 @@ export default function Texture({ textureImage }) {
                 />
               </div>
             </div>
-            <div className="flex items-center justify-between mt-[7px] text-sm">
+            <div className="flex items-center justify-between mt-[7px] text-sm flex-wrap">
               <span>{item.code}</span>
               <div className="flex items-center gap-[5px]">
-                <span
-                  style={{ backgroundColor: item.color }}
-                  className="w-[15px] h-[15px] inline-block rounded-full"
-                />
                 <span>{item.title}</span>
               </div>
             </div>
@@ -264,17 +260,16 @@ export default function Texture({ textureImage }) {
                                   />
                                 </div>
                               </div>
-                              <span className="pt-[10px]">
-                                <span className="pt-[10px]">
-                                  {(() => {
-                                    const size = group[0]?.size ?? "";
-                                    const parts = size.split("x").reverse();
-                                    const finalSize = parts.join("x");
-                                    return ["fa", "ar"].includes(locale)
-                                      ? toPersianDigits(finalSize)
-                                      : finalSize;
-                                  })()}
-                                </span>
+
+                              <span className="pt-[10px]" dir="rtl">
+                                {(() => {
+                                  const size = group[0]?.size ?? "";
+                                  const parts = size.split("x").reverse();
+                                  const finalSize = parts.join("x");
+                                  return ["fa", "ar"].includes(locale)
+                                    ? toPersianDigits(finalSize)
+                                    : finalSize;
+                                })()}
                               </span>
                             </div>
                           );
@@ -311,7 +306,7 @@ export default function Texture({ textureImage }) {
                                   />
                                 </div>
                               </div>
-                              <span className="pt-[10px]">
+                              <span className="pt-[10px]" dir="rtl">
                                 {(() => {
                                   const size = group[0]?.size ?? "";
                                   const parts = size.split("x").reverse();
@@ -346,7 +341,7 @@ export default function Texture({ textureImage }) {
                   return (
                     <div className="w-2/3 md:w-1/2 mt-[1rem]">
                       <MySelect
-                        label="انتخاب سایز"
+                        label={t("SelectSize")}
                         data={allGroups}
                         value={activeGroupKey || allGroups[0]?.id}
                         onChange={(selected) => {
@@ -373,4 +368,11 @@ export default function Texture({ textureImage }) {
       )}
     </div>
   );
+}
+
+{
+  /* <span
+                  style={{ backgroundColor: item.color }}
+                  className="w-[15px] h-[15px] inline-block rounded-full"
+                /> */
 }

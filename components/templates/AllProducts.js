@@ -25,7 +25,7 @@ export default function AllProducts({ categories, products }) {
   const pathname = usePathname();
 
   const queryFilterKey = searchParams.get("filterKey");
-  const queryValues = searchParams.get("values")?.split(",") || [];
+  const queryValues = searchParams.get("values")?.split("|") || [];
 
   const searchParamsString = searchParams.toString();
 
@@ -77,7 +77,7 @@ export default function AllProducts({ categories, products }) {
           const query = new URLSearchParams();
           Object.entries(newFilters).forEach(([k, vals]) => {
             if (vals && vals.length > 0) {
-              query.set(k, vals.join(","));
+              query.set(k, vals.join("|"));
             }
           });
 
@@ -180,7 +180,7 @@ export default function AllProducts({ categories, products }) {
 
     Object.entries(params).forEach(([key, value]) => {
       if (value) {
-        newFilters[key] = value.split(",").map(decodeURIComponent);
+        newFilters[key] = value.split("|").map(decodeURIComponent);
       }
     });
 
@@ -244,11 +244,25 @@ export default function AllProducts({ categories, products }) {
   return (
     <main className="px-20 md:px-40 lg:px-80">
       <section
-        className={`w-full h-full pt-[150px] lg:pt-[120px] relative ${
+        className={`w-full h-full pt-[130px] md:pt-[150px] lg:pt-[120px] relative ${
           ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
         }`}
       >
-        <div className="grid grid-cols-1 gap-y-[30px] md:grid-cols-3 md:gap-x-[3rem] md:gap-y-0 items-center relative ">
+        <div
+          className="
+        fixed 
+        z-5
+        left-20 right-20 
+        bg-white
+        md:relative
+        md:left-0
+        md:right-0
+        md:z-0
+        grid grid-cols-1 gap-y-[30px] 
+        md:grid-cols-3 md:gap-x-[3rem] md:gap-y-0 
+        items-center
+      "
+        >
           <div className="w-full md:col-span-1 lg:hidden">
             <Button
               text={isFilterOpen ? t("Applyfilter") : t("Filters")}
@@ -323,10 +337,8 @@ export default function AllProducts({ categories, products }) {
             />
           </div>
         </aside>
-
-        <section className="lg:col-span-9">
+        <section className="lg:col-span-9 mt-[116px] md:mt-0">
           <CardProducts products={productsToShow} isLoading={isLoading} />
-
           <Pagination
             currentPage={currentPage}
             totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
@@ -346,8 +358,3 @@ export default function AllProducts({ categories, products }) {
     </main>
   );
 }
-
-// useEffect(() => {
-//   setIsLoading(false);
-// setIsLoading(true);
-// }, [queryPage, filters, searchTerm]);

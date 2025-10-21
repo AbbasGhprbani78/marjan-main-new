@@ -1,17 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useMap } from "react-leaflet";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  Polyline,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useTranslation } from "@/context/TranslationContext";
 
 const customIcon = L.icon({
   iconUrl: "/images/location.svg",
@@ -22,35 +14,40 @@ const customIcon = L.icon({
 
 export default function Map({ reps = [] }) {
   const [userLocation, setUserLocation] = useState(null);
-  const { locale } = useTranslation();
+  const [initialCenter, setInitialCenter] = useState(null);
 
   useEffect(() => {
-    if (!navigator.geolocation) return;
-    navigator.geolocation.getCurrentPosition((pos) => {
-      setUserLocation([pos.coords.latitude, pos.coords.longitude]);
-    });
+    fetch("/api/ip")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.latitude && data.longitude) {
+          setInitialCenter([data.latitude, data.longitude]);
+        } else {
+        }
+      })
+      .catch(() => {});
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        setUserLocation([pos.coords.latitude, pos.coords.longitude]);
+      });
+    }
   }, []);
 
-  const defaultCenter = [35.6892, 51.389];
-
-  const firstValidRep = reps.find(
-    (rep) =>
-      rep.x !== null &&
-      rep.x !== undefined &&
-      rep.y !== null &&
-      rep.y !== undefined
-  );
+  const firstValidRep = reps.find((rep) => rep.x != null && rep.y != null);
 
   const center = firstValidRep
     ? [firstValidRep.x, firstValidRep.y]
-    : defaultCenter;
+    : initialCenter;
+
+  const zoom = reps.length === 1 ? 15 : 10;
 
   return (
     <div className="lg:min-h-[400px] h-full w-full">
-      <MapContainer center={center} zoom={1} className="h-full w-full">
+      <MapContainer center={center} zoom={zoom} className="h-full w-full">
         <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
 
-        <MapCenter center={center} />
+        <MapCenter center={center} zoom={zoom} />
 
         {reps.map(
           (rep) =>
@@ -78,14 +75,14 @@ export default function Map({ reps = [] }) {
   );
 }
 
-function MapCenter({ center }) {
+function MapCenter({ center, zoom }) {
   const map = useMap();
 
   useEffect(() => {
     if (center) {
-      map.setView(center, 13, { animate: true });
+      map.setView(center, zoom, { animate: true });
     }
-  }, [center, map]);
+  }, [center, zoom, map]);
 
   return null;
 }

@@ -202,7 +202,7 @@ export function NavBar({ dataHeader }) {
                     />
                     AR
                   </li>
-                  <li
+                  {/* <li
                     dir="ltr"
                     className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                     onClick={() => handleLangChange("ru")}
@@ -214,7 +214,7 @@ export function NavBar({ dataHeader }) {
                       height={20}
                     />
                     RU
-                  </li>
+                  </li> */}
                 </ul>
               )}
             </div>
@@ -395,7 +395,7 @@ function Menu({ show, setShowInnerMenu }) {
                   </li>
                   <li className="py-[10px] ">
                     <Link
-                      href="https://marjan.ariisco.com/"
+                      href="https://marjan.ariisco.com/en"
                       className="custom-link"
                       target="_blank"
                     >
@@ -840,7 +840,7 @@ function MenuMobile({ dataHeader }) {
                 />
                 EN
               </li>
-              <li
+              {/* <li
                 dir="ltr"
                 className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                 onClick={() => handleLangChange("ar")}
@@ -852,7 +852,7 @@ function MenuMobile({ dataHeader }) {
                   height={20}
                 />
                 AR
-              </li>
+              </li> */}
               <li
                 dir="ltr"
                 className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
@@ -1004,7 +1004,7 @@ function MenuMobile({ dataHeader }) {
                     },
                     {
                       label: t("Smart Layout Software"),
-                      href: "https://marjan.ariisco.com",
+                      href: "https://marjan.ariisco.com/en",
                     },
                     {
                       label: t("Estimatetilearea"),

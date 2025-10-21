@@ -32,7 +32,7 @@ export default function FeatureTabs({ data }) {
   }, [activeButton, data]);
 
   const tabLinks = {
-    [data[0]?.id]: "https://marjan.ariisco.com",
+    [data[0]?.id]: "https://marjan.ariisco.com/en",
     [data[1]?.id]: "/calculator",
     [data[2]?.id]: null,
   };

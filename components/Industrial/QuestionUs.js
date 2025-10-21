@@ -34,12 +34,12 @@ export default function QuestionUs({ data }) {
           />
         </div>
         <div className=" w-[250px] mx-auto lg:hidden">
-          <MoreButton
+          <Button2
             text={t("Contactus")}
+            onClick={() => setOpenModal(true)}
             width={250}
             height={46}
             className="mx-auto my-[25px] "
-            href={"/newsletter"}
           />
         </div>
       </div>

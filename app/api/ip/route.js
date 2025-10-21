@@ -1,13 +1,25 @@
-export async function GET(req) {
-  const forwarded = req.headers.get("x-forwarded-for");
-  const ip = forwarded?.split(",")[0] || req.ip || "0.0.0.0";
+export async function GET() {
+  try {
+    const res = await fetch("https://ipwho.is", {
+      headers: { accept: "application/json" },
+      cache: "no-store",
+    });
 
-  const parts = ip.split(".");
-  const x = parts[0] || null;
-  const y = parts[1] || null;
+    if (!res.ok) {
+      console.error("IP API error:", res.status, await res.text());
+      return Response.json(
+        { error: "Failed to fetch IP location" },
+        { status: 500 }
+      );
+    }
 
-  return new Response(JSON.stringify({ ip, x, y }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+    const data = await res.json();
+    return Response.json(data);
+  } catch (err) {
+    console.error("Error fetching IP location:", err);
+    return Response.json(
+      { error: "Failed to fetch IP location" },
+      { status: 500 }
+    );
+  }
 }

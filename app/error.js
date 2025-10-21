@@ -1,14 +1,51 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./error.module.css";
-import { useTranslation } from "@/context/TranslationContext";
+
+const translations = {
+  fa: {
+    errorTitle: "خطای سرور رخ داده است",
+    errorText: "به زودی برمی‌گردیم",
+    retry: "تلاش مجدد",
+  },
+  en: {
+    errorTitle: "A server error occurred",
+    errorText: "We'll be back shortly",
+    retry: "Retry",
+  },
+  ar: {
+    errorTitle: "حدث خطأ في الخادم",
+    errorText: "سنعود قريبًا",
+    retry: "إعادة المحاولة",
+  },
+  ru: {
+    errorTitle: "Произошла ошибка сервера",
+    errorText: "Мы скоро вернемся",
+    retry: "Повторить",
+  },
+};
+
 export default function GlobalError({ error, reset }) {
+  const [locale, setLocale] = useState("fa");
+  const [dict, setDict] = useState(translations["fa"]);
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    const lang = path.split("/")[1];
+    if (["fa", "ar", "ru", "en"].includes(lang)) {
+      setLocale(lang);
+      setDict(translations[lang]);
+    } else {
+      setLocale("fa");
+      setDict(translations["fa"]);
+    }
+  }, []);
+
   useEffect(() => {
     console.error("API Error:", error);
   }, [error]);
 
-  const { t } = useTranslation();
   return (
     <div className={styles.wrapper}>
       <div className={styles.card}>
@@ -31,11 +68,11 @@ export default function GlobalError({ error, reset }) {
           </svg>
         </div>
 
-        <h1 className={styles.title}>{t("A server error occurred")}</h1>
-        <p className={styles.text}>{t("We'll be back shortly")}</p>
+        <h1 className={styles.title}>{dict.errorTitle}</h1>
+        <p className={styles.text}>{dict.errorText}</p>
 
         <button onClick={() => reset()} className={styles.button}>
-          {t("Retry")}
+          {dict.retry}
         </button>
       </div>
     </div>

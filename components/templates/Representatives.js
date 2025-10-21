@@ -8,8 +8,6 @@ import styles from "../../app/[locale]/representatives/representatives.module.cs
 export default function Representatives({ representatives }) {
   const [selectedProvince, setSelectedProvince] = useState(null);
 
-  console.log(representatives);
-
   return (
     <main className="wrapper">
       <h1 className="sr-only">نمایندگان شرکت ما</h1>

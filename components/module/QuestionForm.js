@@ -38,7 +38,7 @@ export default function QuestionForm({ openModal, subjects }) {
     const newErrors = {};
 
     if (!form.fullName) newErrors.fullName = t("NameRequired");
-    if (!form.email) newErrors.email = t("EmailRequired");
+    // if (!form.email) newErrors.email = t("EmailRequired");
     if (!form.subject) newErrors.subject = t("SubjectRequired");
     if (!form.phoneNumber) newErrors.phoneNumber = t("PhoneNumberRequired");
     if (!form.message) newErrors.message = t("MessageRequired");
@@ -140,7 +140,7 @@ export default function QuestionForm({ openModal, subjects }) {
             <SelectDropDown
               label={t("Subject")}
               name={"subject"}
-              data={subjects.map((item) => ({
+              data={subjects?.map((item) => ({
                 id: item.id,
                 name: item.title,
               }))}

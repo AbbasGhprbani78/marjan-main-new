@@ -41,19 +41,19 @@ export default function MySelect({
       borderBottom: "1px solid #000",
       borderRadius: 0,
       boxShadow: "none",
-      direction: direction,
+      direction: "rtl", // همیشه rtl باشه
       "&:hover": {
         borderBottom: "2px solid #555",
       },
     }),
     menu: (provided) => ({
       ...provided,
-      direction: direction,
-      textAlign: direction === "rtl" ? "right" : "left",
+      direction: "rtl", // منو هم همیشه rtl
+      textAlign: locale === "fa" || locale === "ar" ? "right" : "left", // متن بر اساس زبان
     }),
     option: (provided, state) => ({
       ...provided,
-      textAlign: direction === "rtl" ? "right" : "left",
+      textAlign: locale === "fa" || locale === "ar" ? "right" : "left", // متن گزینه‌ها
       fontSize: ".9rem",
       paddingTop: "7px",
       paddingBottom: "7px",
