@@ -25,8 +25,7 @@
     "react-leaflet": "^5.0.0",
     "react-select": "^5.10.1",
     "react-toastify": "^11.0.5",
-    "swiper": "^11.2.8",
-    "zustand": "^5.0.7"
+    "swiper": "^11.2.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

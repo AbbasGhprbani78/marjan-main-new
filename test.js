@@ -31,7 +31,7 @@ export default function SelectLocation({
   const cities = selectedProvince?.cities || [];
   const selectedCity = cities.find((c) => c.id === cityId);
 
-  console.log(cities);
+
 
   useEffect(() => {
     if (onProvinceSelect) {
@@ -97,7 +97,7 @@ export default function Representatives({ representatives }) {
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
 
-  console.log(representatives);
+
 
   return (
     <main className="wrapper">

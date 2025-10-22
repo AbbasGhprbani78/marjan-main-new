@@ -629,7 +629,6 @@ export default function BoxSearch({ showBox }) {
       );
       if (response.status === 200) {
         setResults(response.data);
-        console.log(response.data);
       }
     } catch (error) {
       console.log(error);
