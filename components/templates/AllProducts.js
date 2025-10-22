@@ -339,11 +339,13 @@ export default function AllProducts({ categories, products }) {
         </aside>
         <section className="lg:col-span-9 mt-[116px] md:mt-0">
           <CardProducts products={productsToShow} isLoading={isLoading} />
-          <Pagination
-            currentPage={currentPage}
-            totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
-            onPageChange={handlePageChange}
-          />
+          {productsToShow.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
+              onPageChange={handlePageChange}
+            />
+          )}
         </section>
       </section>
       <figure className="mb-[1.6rem] hidden lg:block">

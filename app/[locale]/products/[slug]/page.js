@@ -45,7 +45,7 @@ export default async function page({ params }) {
       />
 
       <div className="px-20 md:px-40 lg:px-80 mt-[2rem] pt-35 pb-61  border-b-1 border-t-1 border-[#919191] ">
-        <div className="  text-justify " id="catalog">
+        <div id="catalog">
           {
             <ReadMoreText
               text={dataSingleProduct?.description}
@@ -138,7 +138,7 @@ export default async function page({ params }) {
         <div className=" border-2 border-[#919191]">
           <Icons.Danger size={15} className="m-3" />
         </div>
-        <p className="text-gray-900 text-justify">{dict["TextSizeInfo"]}</p>
+        <p className="text-gray-900 ">{dict["TextSizeInfo"]}</p>
       </div>
     </div>
   );

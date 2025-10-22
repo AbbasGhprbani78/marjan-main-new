@@ -5,7 +5,11 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "marjanapi.nobinco.com",
-        // port: "7200",
+        pathname: "/images/**",
+      },
+      {
+        protocol: "https",
+        hostname: "marjanapi.nobinco.com",
         pathname: "/media/**",
       },
     ],

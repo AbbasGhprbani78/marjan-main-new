@@ -118,7 +118,7 @@ export function HomeSlider({
                 onMouseLeave={() => setIsHovered(false)}
               >
                 <p
-                  className={`text-center text-[30px] md:text-[40px] font-[400] text-gray-white ${
+                  className={`text-center text-[1.2rem] px-10 md:px-[2rem] md:text-[30px] font-[400] text-gray-white ${
                     nameproduct
                       ? "font-en"
                       : ["fa", "ar"].includes(locale)
@@ -126,7 +126,7 @@ export function HomeSlider({
                       : "font-en"
                   }`}
                 >
-                  {item.title}
+                  {truncateText(item.title, 80)}
                 </p>
                 <div
                   className={`absolute bottom-8 left-20 w-5 h-3 bg-gradient-to-r from-gray-white/0 via-gray-white/100 to-gray-white/0 rounded-full transition-all duration-600 opacity-0 invisible ${

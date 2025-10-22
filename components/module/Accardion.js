@@ -38,7 +38,7 @@ const Accordion = ({ accardionItem }) => {
         className="overflow-hidden transition-all duration-300 ease-in-out"
       >
         <div className="pb-[2rem] w-full">
-          <p className="px-4  font-normal text-[15.5px] text-start lg:text-justify">
+          <p className="px-4  font-normal text-[15.5px] text-start ">
             {["fa", "ar"].includes(locale)
               ? toPersianDigits(accardionItem.answer)
               : accardionItem.answer}

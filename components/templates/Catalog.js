@@ -238,11 +238,13 @@ export default function Catalog({ catalogs, categories }) {
             </>
           )}
         </div>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={Math.ceil(filteredProducts?.length / itemsPerPage)}
-          onPageChange={setCurrentPage}
-        />
+        {catalogToShow?.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.ceil(filteredProducts?.length / itemsPerPage)}
+            onPageChange={setCurrentPage}
+          />
+        )}
       </div>
     </div>
   );

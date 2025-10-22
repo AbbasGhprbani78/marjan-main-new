@@ -114,12 +114,14 @@ export function NavBar({ dataHeader }) {
 
   return (
     <header
-      className="absolute w-full z-20 bg-gary-black"
+      className={`absolute w-full z-20 bg-gary-black ${
+        ["ar", "fa"].includes(locale) ? "font-fa" : "font-en"
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`hidden xl:flex flex-row justify-between w-full fixed z-10 h-102 px-40 xl:px-80 py-10 font-fa transition-all duration-300 ${
+        className={`hidden xl:flex flex-row justify-between w-full fixed z-10 h-102 px-40 xl:px-80 py-10  transition-all duration-300 ${
           shouldApplyScrolledStyles
             ? isInDustrial
               ? "bg-[#fabd02]"
@@ -312,6 +314,7 @@ export function NavBar({ dataHeader }) {
 function Menu({ show, setShowInnerMenu }) {
   const { locale } = useParams();
   const { setIsShowChatbot } = useToggle();
+  const searchParams = useSearchParams();
   const { t } = useTranslation();
   const [openItems, setOpenItems] = useState({
     assistant: false,
@@ -319,13 +322,17 @@ function Menu({ show, setShowInnerMenu }) {
     collab: false,
   });
 
+  const [activeBlog, setActiveBlog] = useState(null);
+
   const pathname = usePathname();
 
   const localizedPath = (path) => `/${locale}${path}`;
-  const isActivePath = (route) =>
-    route === "/"
-      ? pathname === `/${locale}` || pathname === `/${locale}/`
-      : pathname === `/${locale}${route}`;
+
+  const isActivePath = (route, category) => {
+    const currentCategory = searchParams.get("category")?.toLowerCase();
+    const fullPath = route === "/" ? `/${locale}` : `/${locale}${route}`;
+    return pathname === fullPath && currentCategory === category?.toLowerCase();
+  };
 
   const toggleItem = (key) => {
     setOpenItems((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -333,7 +340,7 @@ function Menu({ show, setShowInnerMenu }) {
 
   useEffect(() => {
     setShowInnerMenu(false);
-  }, [pathname, setShowInnerMenu]);
+  }, [pathname, searchParams.get("category")]);
 
   return (
     <>
@@ -449,12 +456,9 @@ function Menu({ show, setShowInnerMenu }) {
                           `/blogs?tab=2&category=${item.label.toLowerCase()}`
                         )}
                         className={`custom-link ${
-                          isActivePath(
-                            `/blogs?tab=2&label=${item.category.toLowerCase()}`
-                          )
-                            ? "active"
-                            : ""
+                          activeBlog === item?.category ? "active" : ""
                         }`}
+                        onClick={() => setActiveBlog(item.category)}
                       >
                         {item.label}
                       </Link>
@@ -713,6 +717,7 @@ function MenuMobile({ dataHeader }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { setIsShowChatbot } = useToggle();
+  const [activeBlog, setActiveBlog] = useState(null);
 
   const localizedPath = (path) => `/${locale}${path}`;
 
@@ -1084,12 +1089,9 @@ function MenuMobile({ dataHeader }) {
                           `/blogs?tab=2&category=${item.label.toLowerCase()}`
                         )}
                         className={`custom-link ${
-                          isActive(
-                            `/blogs?tab=2&label=${item.category.toLowerCase()}`
-                          )
-                            ? "active"
-                            : ""
+                          activeBlog === item?.category ? "active" : ""
                         }`}
+                        onClick={() => setActiveBlog(item.category)}
                       >
                         {item.label}
                       </Link>

@@ -20,7 +20,7 @@ export default function QuestionUs({ data }) {
           <h2 className="font-medium title text-center md:text-start">
             {t("AskQuestion")}
           </h2>
-          <p className="font-normal  text-justify">{data.text}</p>
+          <p className="font-normal">{data.text}</p>
           <div className="hidden w-[250px]  lg:block">
             <Button2 text={t("Contactus")} onClick={() => setOpenModal(true)} />
           </div>

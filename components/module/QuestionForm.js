@@ -4,7 +4,7 @@ import Input from "./Input";
 import SelectDropDown from "./SelectDropDown";
 import { useTranslation } from "@/context/TranslationContext";
 import Button2 from "./Button2";
-import { successMessage } from "./Toast";
+import { successMessage, ToastContainerCustom } from "./Toast";
 import axios from "axios";
 
 export default function QuestionForm({ openModal }) {
@@ -57,10 +57,9 @@ export default function QuestionForm({ openModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
-
     if (!form.fullName) newErrors.fullName = t("NameRequired");
     // if (!form.email) newErrors.email = t("EmailRequired");
-    if (!form.subject) newErrors.subject = t("SubjectRequired");
+    // if (!form.subject) newErrors.subject = t("SubjectRequired");
     if (!form.phoneNumber) newErrors.phoneNumber = t("PhoneNumberRequired");
     if (!form.message) newErrors.message = t("MessageRequired");
 
@@ -75,23 +74,19 @@ export default function QuestionForm({ openModal }) {
 
     try {
       setLoading(true);
-
       const formData = new FormData();
       formData.append("name", form.fullName);
       formData.append("email", form.email);
       formData.append("text", form.message);
       formData.append("phone", form.phoneNumber);
-      formData.append("subject_id", form.subject);
+      // formData.append("subject_id", form.subject);
 
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/app/ask-a-question/`,
-        {
-          method: "POST",
-          body: formData,
-        }
+        formData
       );
 
-      if (response.ok) {
+      if (response.status === 201) {
         setErrors({});
         setForm({
           fullName: "",
@@ -125,7 +120,7 @@ export default function QuestionForm({ openModal }) {
 
   useEffect(() => {
     getSubjects();
-  });
+  }, []);
 
   return (
     <form>
@@ -161,7 +156,7 @@ export default function QuestionForm({ openModal }) {
           </div>
         </div>
         <div className="grid grid-cols-12 md:gap-[3rem] md:my-[2rem] items-center">
-          <div className=" mb-[3rem] md:mb-0 col-span-12 md:col-span-6">
+          {/* <div className=" mb-[3rem] md:mb-0 col-span-12 md:col-span-6">
             <SelectDropDown
               label={t("Subject")}
               name={"subject"}
@@ -184,7 +179,7 @@ export default function QuestionForm({ openModal }) {
                 </p>
               )}
             </div>
-          </div>
+          </div> */}
           <div className=" mb-[3rem] md:mb-0 col-span-12 md:col-span-6 ">
             <Input
               label={t("PhoneNumber")}
@@ -230,6 +225,7 @@ export default function QuestionForm({ openModal }) {
           bgblack={"#000"}
         />
       </div>
+      <ToastContainerCustom />
     </form>
   );
 }

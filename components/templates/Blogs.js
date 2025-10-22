@@ -33,7 +33,7 @@ export default function Blogs({ blogs, categories, filters }) {
   const [underlineStyle, setUnderlineStyle] = useState({ left: 0, width: 0 });
   const buttonsRef = useRef({});
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const { localizedHref } = useLocalizedLink();
   const [showArrows, setShowArrows] = useState(false);
 
@@ -99,12 +99,8 @@ export default function Blogs({ blogs, categories, filters }) {
 
   const normalizeValue = (value) => {
     if (/^[A-Za-z]/.test(value)) {
-      return value
-        .split(" ")
-        .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        )
-        .join(" ");
+      // For English locale, always use lowercase in query param (e.g., "articles")
+      return locale === "en" ? value.toLowerCase() : value;
     }
     return value;
   };
@@ -216,6 +212,8 @@ export default function Blogs({ blogs, categories, filters }) {
       setCurrentPage(pageFromQuery);
     }
   }, [searchParams]);
+
+  console.log(blogs);
 
   return (
     <>
@@ -448,15 +446,17 @@ export default function Blogs({ blogs, categories, filters }) {
                 </div>
               )}
 
-              <div className="pt-[2rem] lg:pt-0">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={Math.ceil(
-                    blogs[selectedCategory]?.length / itemsPerPage
-                  )}
-                  onPageChange={handlePageChange}
-                />
-              </div>
+              {productsToShow.length > 0 && (
+                <div className="pt-[2rem] lg:pt-0">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(
+                      blogs[selectedCategory]?.length / itemsPerPage
+                    )}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </>

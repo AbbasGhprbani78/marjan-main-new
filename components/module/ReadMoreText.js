@@ -17,7 +17,7 @@ export default function ReadMoreText({
       <div className="md:hidden relative">
         <div
           dir=""
-          className={`text-justify leading-[27px] transition-all duration-300 ${fontweight} ${fontSize} ${
+          className={` leading-[27px] transition-all duration-300 ${fontweight} ${fontSize} ${
             expanded ? "" : "line-clamp-[6]"
           }`}
         >
@@ -34,7 +34,7 @@ export default function ReadMoreText({
         )}
       </div>
       <p
-        className={`hidden md:block text-justify leading-[27px] ${fontweight} ${fontSize}`}
+        className={`hidden md:block  leading-[27px] ${fontweight} ${fontSize}`}
       >
         {locale === "fa" || locale === "ar" ? (
           <span dir="rtl">{fixSizesInText(text, locale)}</span>

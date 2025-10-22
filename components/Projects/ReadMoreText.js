@@ -9,7 +9,7 @@ export default function ReadMoreText({ text = "" }) {
     <section className="relative mt-[2.3rem]" aria-labelledby="about-heading">
       <div className="md:hidden relative">
         <div
-          className={`text-justify leading-[30px] font-normal text-[1rem] transition-all duration-300 ${
+          className={` leading-[30px] font-normal text-[1rem] transition-all duration-300 ${
             expanded ? "" : "line-clamp-[6]"
           }`}
           id="about-text"
@@ -26,7 +26,7 @@ export default function ReadMoreText({ text = "" }) {
         )}
       </div>
 
-      <div className="hidden md:block text-justify font-normal text-[1rem] leading-[30px]">
+      <div className="hidden md:block  font-normal text-[1rem] leading-[30px]">
         <span dir={["fa", "ar"].includes(locale) ? "rtl" : "ltr"}>
           {fixSizesInText(text, locale)}
         </span>

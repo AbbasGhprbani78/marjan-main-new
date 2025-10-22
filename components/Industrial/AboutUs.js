@@ -5,6 +5,7 @@ import LinkButton from "../module/LinkButton";
 import { useTranslation } from "@/context/TranslationContext";
 import { MoreButton } from "../moreButton";
 import { toPersianDigits } from "@/utils/helper";
+import ReadMoreText from "../module/ReadMoreText";
 
 export default function AboutUs({ data }) {
   const { t, locale } = useTranslation();
@@ -24,11 +25,13 @@ export default function AboutUs({ data }) {
         <h3 className="font-medium title mb-[1.5rem] text-center md:text-start">
           {data.title}
         </h3>
-        <p className="text-justify w-full lg:w-[50dvw] xl:w-[36dvw]  leading-[30px]">
-          {["fa", "ar"].includes(locale)
-            ? toPersianDigits(data.text)
-            : data.text}
-        </p>
+        <div className=" w-full lg:w-[50dvw] xl:w-[36dvw]  leading-[30px]">
+          <ReadMoreText
+            text={data?.text}
+            textColor="text-white"
+            isgradient={false}
+          />
+        </div>
         <div className="w-[250px] mt-[1rem] mx-auto md:mx-0">
           <MoreButton
             text={t("More")}
@@ -41,4 +44,10 @@ export default function AboutUs({ data }) {
       </div>
     </div>
   );
+}
+
+{
+  /* {["fa", "ar"].includes(locale)
+            ? toPersianDigits(data.text)
+            : data.text} */
 }

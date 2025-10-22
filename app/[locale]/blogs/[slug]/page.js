@@ -35,7 +35,7 @@ export default async function page({ params }) {
             {singleBlog?.title}
           </p>
         </section>
-        <section className="mt-[2rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)] font-normal text-justify pb-[2rem]">
+        <section className="mt-[2rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)] font-normal  pb-[2rem]">
           {singleBlog.text && (
             <div className="leading-[30px] ">
               <ReadMoreText text={singleBlog?.text} />

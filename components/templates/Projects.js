@@ -222,17 +222,19 @@ export default function Projects({ data, categories }) {
             )}
           </div>
 
-          <nav
-            className="mt-[4rem] mb-[3rem]"
-            role="navigation"
-            aria-label="صفحه‌بندی پروژه‌ها"
-          >
-            <Pagination
-              currentPage={currentPage}
-              totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
-              onPageChange={handlePageChange}
-            />
-          </nav>
+          {productsToShow.length > 0 && (
+            <nav
+              className="mt-[4rem] mb-[3rem]"
+              role="navigation"
+              aria-label="صفحه‌بندی پروژه‌ها"
+            >
+              <Pagination
+                currentPage={currentPage}
+                totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
+                onPageChange={handlePageChange}
+              />
+            </nav>
+          )}
         </div>
       </section>
     </main>

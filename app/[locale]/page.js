@@ -98,7 +98,7 @@ export default async function Home({ params }) {
         <p className="text-center md:text-start title font-[500] text-gray-white mb-[40px]">
           {dataHome?.about?.title}
         </p>
-        <div className="w-full lg:w-[60dvw] xl:w-[38dvw] text-justify">
+        <div className="w-full lg:w-[60dvw] xl:w-[38dvw] ">
           <div className=" mb-[35px] md:mb-[20px]">
             <ReadMoreText
               text={dataHome.about.description}

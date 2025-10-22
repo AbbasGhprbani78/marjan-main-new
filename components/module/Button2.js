@@ -9,6 +9,7 @@ export default function Button2({ text, onClick, loading, bgblack, icon }) {
 
   return (
     <button
+      disabled={loading}
       aria-label={text}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
