@@ -9,5 +9,6 @@ export const metadata = {
 export default async function page({ params }) {
   const { locale } = await params;
   const representatives = await fetchRepresentatives(locale);
+  console.log(representatives);
   return <Representatives representatives={representatives} />;
 }

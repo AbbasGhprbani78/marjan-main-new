@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
@@ -12,35 +11,28 @@ const customIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-export default function Map({ reps = [] }) {
-  const [userLocation, setUserLocation] = useState(null);
-  const [initialCenter, setInitialCenter] = useState(null);
+export default function Map({ reps = [], allrepresentives, userLocation }) {
+  const [mapCenter, setMapCenter] = useState(null);
 
   useEffect(() => {
-    fetch("/api/ip")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.latitude && data.longitude) {
-          setInitialCenter([data.latitude, data.longitude]);
-        } else {
-        }
-      })
-      .catch(() => {});
+    if (reps.length > 0) {
+      const firstValidRep = reps.find((rep) => rep.x != null && rep.y != null);
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        setUserLocation([pos.coords.latitude, pos.coords.longitude]);
-      });
+      if (firstValidRep) {
+        setMapCenter([firstValidRep.x, firstValidRep.y]);
+      }
+    } else if (userLocation) {
+      setMapCenter(userLocation);
     }
-  }, []);
+  }, [reps, userLocation]);
 
   const firstValidRep = reps.find((rep) => rep.x != null && rep.y != null);
 
-  const center = firstValidRep
-    ? [firstValidRep.x, firstValidRep.y]
-    : initialCenter;
+  const center =
+    mapCenter ||
+    (firstValidRep ? [firstValidRep.x, firstValidRep.y] : [35.6892, 51.389]);
 
-  const zoom = reps.length === 1 ? 15 : 10;
+  const zoom = reps.length > 0 ? 10 : 10;
 
   return (
     <div className="lg:min-h-[400px] h-full w-full">
@@ -64,12 +56,6 @@ export default function Map({ reps = [] }) {
               </Marker>
             )
         )}
-
-        {userLocation && (
-          <Marker position={userLocation}>
-            <Popup>موقعیت من</Popup>
-          </Marker>
-        )}
       </MapContainer>
     </div>
   );
@@ -79,8 +65,12 @@ function MapCenter({ center, zoom }) {
   const map = useMap();
 
   useEffect(() => {
-    if (center) {
-      map.setView(center, zoom, { animate: true });
+    if (center && center.length === 2 && center[0] && center[1]) {
+      map.setView(center, zoom, {
+        animate: true,
+        duration: 0.8,
+        easeLinearity: 0.1,
+      });
     }
   }, [center, zoom, map]);
 

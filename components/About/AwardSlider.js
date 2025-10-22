@@ -46,7 +46,7 @@ export default function AwardSlider({ sliderItems }) {
                     fill
                   />
                 </div>
-                <p className="text-base h-1/4 text-center w-1/2 mx-auto mt-[5px] text-[var(--color-gray-900)] font-bold ">
+                <p className="text-base h-1/4 text-center w-1/2 mx-auto mt-[5px] text-[var(--color-gray-900)] font-bold pb-5">
                   {item.text}
                 </p>
               </SwiperSlide>
