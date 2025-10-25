@@ -5,10 +5,17 @@ import { fetchSingleBlog } from "@/services/singleBlog";
 import Image from "next/image";
 import React from "react";
 import DOMPurify from "dompurify";
+import translations from "@/components/module/translations";
 
-export const metadata = {
-  title: "Blogs",
-};
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Blogs";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Blogs"}`,
+  };
+}
 
 export default async function page({ params }) {
   const { locale } = await params;

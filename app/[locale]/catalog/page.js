@@ -2,10 +2,17 @@ import React from "react";
 import Catalog from "@/components/templates/Catalog";
 import { fetchCatalogs } from "@/services/catalogs";
 
-export const metadata = {
-  title: "Catalog",
-};
+import translations from "@/components/module/translations";
 
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Catalog";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Catalog"}`,
+  };
+}
 export default async function page({ params }) {
   const { locale } = await params;
   const dataCatalogs = await fetchCatalogs(locale);

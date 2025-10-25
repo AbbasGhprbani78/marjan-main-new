@@ -2,9 +2,18 @@ import React from "react";
 
 import SavedList from "@/components/SavedList/SavedList";
 import { fetchAllSaveProducts } from "@/services/allSaveProducts";
-export const metadata = {
-  title: "Saves",
-};
+
+import translations from "@/components/module/translations";
+
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Favorites";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Favorites"}`,
+  };
+}
 export default async function page({ params }) {
   const { locale } = await params;
   const productsSaved = await fetchAllSaveProducts(locale);

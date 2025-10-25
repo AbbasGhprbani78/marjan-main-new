@@ -1,10 +1,17 @@
 import CalculatorT from "@/components/templates/Calculator";
 import { fetchSizesCalculator } from "@/services/sizesCalculator";
-
 import React from "react";
-export const metadata = {
-  title: "Calculator",
-};
+import translations from "@/components/module/translations";
+
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Calculator";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Calculator"}`,
+  };
+}
 export default async function page({ params }) {
   const { locale } = await params;
 

@@ -164,49 +164,49 @@ export function NavBar({ dataHeader }) {
               </div>
 
               {isOpen && (
-                <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-[9999] text-[var(--color-gray-900)] px-4 w-[60px]">
+                <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-[9999] text-[var(--color-gray-900)] px-4 flex flex-col gap-4">
                   <li
                     dir="ltr"
-                    className=" hover:bg-gray-100 cursor-pointer w-full flex items-center justify-between "
+                    className="  cursor-pointer w-full flex items-center justify-between "
                     onClick={() => handleLangChange("fa")}
                   >
-                    <Image
+                    {/* <Image
                       alt="flag"
                       src={"/images/iran.png"}
                       width={30}
                       height={20}
-                    />
+                    /> */}
                     FA
                   </li>
                   <li
                     dir="ltr"
-                    className=" hover:bg-gray-100 cursor-pointer  flex items-center justify-between "
+                    className="  cursor-pointer  flex items-center justify-between "
                     onClick={() => handleLangChange("en")}
                   >
-                    <Image
+                    {/* <Image
                       alt="flag"
                       src={"/images/usa.png"}
                       width={30}
                       height={20}
-                    />
+                    /> */}
                     EN
                   </li>
                   <li
                     dir="ltr"
-                    className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
+                    className="  cursor-pointer flex items-center justify-between"
                     onClick={() => handleLangChange("ar")}
                   >
-                    <Image
+                    {/* <Image
                       alt="flag"
                       src={"/images/arab.png"}
                       width={30}
                       height={20}
-                    />
+                    /> */}
                     AR
                   </li>
                   {/* <li
                     dir="ltr"
-                    className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
+                    className="  cursor-pointer flex items-center justify-between"
                     onClick={() => handleLangChange("ru")}
                   >
                     <Image
@@ -817,47 +817,47 @@ function MenuMobile({ dataHeader }) {
           </div>
 
           {isOpenLanguage && (
-            <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-50 text-[var(--color-gray-900)] px-4 w-[60px]">
+            <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-50 text-[var(--color-gray-900)] px-4 flex flex-col gap-4">
               <li
                 dir="ltr"
-                className=" hover:bg-gray-100 cursor-pointer w-full flex items-center justify-between "
+                className=" cursor-pointer w-full flex items-center justify-between "
                 onClick={() => handleLangChange("fa")}
               >
-                <Image
+                {/* <Image
                   alt="flag"
                   src={"/images/iran.png"}
                   width={30}
                   height={20}
-                />
+                /> */}
                 FA
               </li>
               <li
                 dir="ltr"
-                className=" hover:bg-gray-100 cursor-pointer  flex items-center justify-between "
+                className=" cursor-pointer  flex items-center justify-between "
                 onClick={() => handleLangChange("en")}
               >
-                <Image
+                {/* <Image
                   alt="flag"
                   src={"/images/usa.png"}
                   width={30}
                   height={20}
-                />
+                /> */}
                 EN
               </li>
-              {/* <li
+              <li
                 dir="ltr"
-                className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
+                className=" cursor-pointer flex items-center justify-between"
                 onClick={() => handleLangChange("ar")}
               >
-                <Image
+                {/* <Image
                   alt="flag"
                   src={"/images/arab.png"}
                   width={30}
                   height={20}
-                />
+                /> */}
                 AR
-              </li> */}
-              <li
+              </li>
+              {/* <li
                 dir="ltr"
                 className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                 onClick={() => handleLangChange("ru")}
@@ -869,7 +869,7 @@ function MenuMobile({ dataHeader }) {
                   height={20}
                 />
                 RU
-              </li>
+              </li> */}
             </ul>
           )}
         </div>

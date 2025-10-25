@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import CirecleProductItem from "../Products/CirecleProductItem";
 import { useLocalizedLink } from "@/utils/helper";
 import Link from "next/link";
+import { useTranslation } from "@/context/TranslationContext";
 
 export default function CardItem({ product, setProductIdUnSave = null }) {
   const [isSaved, setIsSaved] = useState(product?.is_save);
   const { localizedHref } = useLocalizedLink();
+  const { t, locale } = useTranslation();
 
   const handleSaveToggle = async (productId) => {
     try {
@@ -40,6 +42,8 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
     }
   };
 
+  console.log(product?.new_collection);
+
   return (
     <div className="mb-[30px] box-border cursor-pointer">
       <Link
@@ -54,6 +58,15 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
             className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
             priority
           />
+          {product?.new_collection && (
+            <div
+              className={`absolute top-4 right-4 bg-black text-white text-xs font-bold px-4 pt-4 pb-2 rounded flex items-center justify-center ${
+                ["ar", "fa"].includes(locale) ? "font-fa" : "font-en"
+              }`}
+            >
+              {t("New")}
+            </div>
+          )}
         </div>
       </Link>
 

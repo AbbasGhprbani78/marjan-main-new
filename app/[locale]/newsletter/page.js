@@ -4,48 +4,17 @@ import Form from "@/components/NewsLetter/Form";
 import { fetchTypeofActivity } from "@/services/newsLetter";
 import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
+import translations from "@/components/module/translations";
 
-export const metadata = {
-  title: "عضویت در خبرنامه",
-  description:
-    "با عضویت در خبرنامه ما از جدیدترین اخبار، مقالات و تخفیف‌ها مطلع شوید.",
-  keywords: [
-    "خبرنامه",
-    "عضویت در خبرنامه",
-    "ایمیل مارکتینگ",
-    "تخفیف ویژه",
-    "مقالات جدید",
-    "به‌روز رسانی‌ها",
-  ],
-  authors: [{ name: "وب‌سایت ما", url: "https://example.com" }],
-  openGraph: {
-    title: "عضویت در خبرنامه | وب‌سایت ما",
-    description:
-      "با عضویت در خبرنامه ما از جدیدترین اخبار، مقالات و تخفیف‌ها مطلع شوید.",
-    url: "https://example.com/newsletter",
-    siteName: "وب‌سایت ما",
-    images: [
-      {
-        url: "/images/12.png",
-        width: 800,
-        height: 600,
-        alt: "خبرنامه",
-      },
-    ],
-    locale: "fa_IR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "عضویت در خبرنامه",
-    description:
-      "جدیدترین اخبار، مقالات و تخفیف‌ها را از طریق ایمیل دریافت کنید.",
-    images: ["/images/12.png"],
-  },
-  alternates: {
-    canonical: "https://example.com/newsletter",
-  },
-};
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Newsletter";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Newsletter"}`,
+  };
+}
 
 export default async function page({ params }) {
   const { locale } = await params;

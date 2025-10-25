@@ -4,9 +4,17 @@ import FaqItem from "@/components/Faq/FaqItem";
 import { fetchFaq } from "@/services/faq";
 import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
-export const metadata = {
-  title: "FAQ",
-};
+import translations from "@/components/module/translations";
+
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Faq";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Faq"}`,
+  };
+}
 
 export default async function page({ params }) {
   const { locale } = params;

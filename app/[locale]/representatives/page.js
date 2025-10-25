@@ -2,13 +2,20 @@ import React from "react";
 import { fetchRepresentatives } from "@/services/representatives";
 import Representatives from "@/components/templates/Representatives";
 
-export const metadata = {
-  title: "representatives",
-};
+import translations from "@/components/module/translations";
 
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Representatives";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Representatives"}`,
+  };
+}
 export default async function page({ params }) {
   const { locale } = await params;
   const representatives = await fetchRepresentatives(locale);
-  console.log(representatives);
+
   return <Representatives representatives={representatives} />;
 }

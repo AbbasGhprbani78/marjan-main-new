@@ -178,7 +178,7 @@ export default function FilterHeader({ show, setShowFilterMenu, dataHeader }) {
                     />
                     <MoreButton
                       text={t("Why Marjan")}
-                      width="124"
+                      // width="124"
                       height="40"
                       invert=""
                       href={`/catalog?category=${dataHeader.category}`}

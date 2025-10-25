@@ -5,12 +5,27 @@ import { useTranslation } from "@/context/TranslationContext";
 import { useParams } from "next/navigation";
 import { toPersianDigits } from "@/utils/helper";
 
-export default function ContactusItem({ info }) {
+export default function ContactusItem({ info, onLocationClick }) {
   const { t } = useTranslation();
   const { locale } = useParams();
+
+  const handleLocationClick = () => {
+    if (onLocationClick && info.x && info.y) {
+      onLocationClick(info);
+    }
+  };
+
+  const openMap = () => {
+    if (typeof window !== "undefined" && info.x && info.y) {
+      const lat = info.x;
+      const lng = info.y;
+      window.open(`https://www.google.com/maps/place/${lat},${lng}`, "_blank");
+    }
+  };
+
   return (
     <article
-      className="text-[var(--color-gray-900)] mb-[2rem]"
+      className="text-[var(--color-gray-900)] mb-[2rem]   p-4 rounded-lg transition-colors"
       itemScope
       itemType="https://schema.org/LocalBusiness"
     >
@@ -35,7 +50,10 @@ export default function ContactusItem({ info }) {
           {info.email}
         </p>
 
-        <p className="font-normal text-[.9rem]">
+        <p
+          className="font-normal text-[.9rem] cursor-pointer hover:text-blue-600 transition-colors"
+          onClick={handleLocationClick}
+        >
           <span className="font-medium text-[1rem]">{t("Address")} : </span>
           <span itemProp="streetAddress">{info.address}</span>
         </p>
@@ -46,7 +64,7 @@ export default function ContactusItem({ info }) {
           width={202}
           height={42}
           bgblack={"#000"}
-          onClick={() => window.open(info.link, "_blank")}
+          onClick={openMap}
         />
       </div>
     </article>

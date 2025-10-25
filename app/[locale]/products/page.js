@@ -1,12 +1,17 @@
 import React from "react";
 import AllProducts from "@/components/templates/AllProducts";
 import { fetchAllProducts } from "@/services/allProducts";
+import translations from "@/components/module/translations";
 
-export const metadata = () => {
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Products";
+
   return {
-    title: "Products",
+    title: `${dict.websiteName} | ${dict[pageKey] || "Products"}`,
   };
-};
+}
 
 export default async function page({ params }) {
   const { locale } = await params;

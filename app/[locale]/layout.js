@@ -9,6 +9,12 @@ import { NavBar } from "@/components/navBar";
 import TopProgressBar from "@/components/module/TopProgressBar";
 import { fetchTranslateWords } from "@/services/translate";
 
+export const metadata = {
+  icons: {
+    icon: "/images/logo3.ico",
+  },
+};
+
 export default async function RootLayout({ children, params }) {
   const locale = params.locale || "fa";
 

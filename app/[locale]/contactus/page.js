@@ -1,44 +1,24 @@
 import React from "react";
-import MapWrapper from "@/components/module/MapWrapper";
 import styles from "./contactus.module.css";
 import ContactusItem from "@/components/ContactUs/ContactusItem";
 import { fetchContactUs } from "@/services/contactus";
+import translations from "@/components/module/translations";
+import MapWrapperContactUs from "@/components/module/MapWrapperContactUs";
+import ContactusPageClient from "./ContactusPageClient";
 
-export const metadata = {
-  title: "Contact us",
-};
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Contact Us";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Contact Us"}`,
+  };
+}
 
 export default async function page({ params }) {
   const { locale } = params;
   const contactusData = await fetchContactUs(locale);
 
-  return (
-    <main className="wrapper">
-      <h1 className="sr-only">تماس با ما</h1>
-      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-[2rem] px-20 md:px-40 lg:px-80  pt-[140px] lg:pt-[120px] pb-[3rem]">
-        <aside className="lg:col-span-4 xl:col-span-3 flex flex-col ">
-          <section
-            className={`block lg:hidden lg:col-span-8 xl:col-span-9 lg:h-full inset-0 z-0  mb-[1rem] ${styles.mapContainer}`}
-            aria-label="نقشه دفاتر ما"
-          >
-            <MapWrapper province={contactusData?.province} />
-          </section>
-          <div
-            className={`overflow-y-auto flex-1 ${styles.wrapperRepresentation}`}
-            aria-label="لیست دفاتر"
-          >
-            {contactusData?.province?.cities?.map((info, i) => (
-              <ContactusItem key={i} info={info} />
-            ))}
-          </div>
-        </aside>
-        <section
-          className={`hidden lg:block lg:col-span-8 xl:col-span-9 lg:h-full inset-0 z-0  ${styles.mapContainer}`}
-          aria-label="نقشه دفاتر ما"
-        >
-          <MapWrapper province={contactusData?.province} />
-        </section>
-      </div>
-    </main>
-  );
+  return <ContactusPageClient contactusData={contactusData} locale={locale} />;
 }

@@ -12,14 +12,31 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
   const { localizedHref } = useLocalizedLink();
   const { t, locale } = useTranslation();
   const [flipped, setFlipped] = useState(false);
+
+  const handleShare = async () => {
+    const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: singleProduct.title,
+          text: t("CheckOutThisProduct") || "این محصول رو ببین!",
+          url: imageUrl,
+        });
+      } else {
+        await navigator.clipboard.writeText(imageUrl);
+        alert("📋 لینک تصویر کپی شد! می‌تونی در اینستاگرام به اشتراک بذاری 😊");
+      }
+    } catch (err) {
+      console.error("Error sharing:", err);
+    }
+  };
+
   return (
     <>
-      <div className="hidden md:grid grid-cols-12  md:w-[95vw] lg:w-[70vw] lg:min-h-[510] mx-auto ">
+      <div className="hidden md:grid grid-cols-12 md:w-[95vw] lg:w-[70vw] lg:min-h-[510] mx-auto">
         <div className="col-span-12 md:col-span-6 xl:col-span-5 h-full text-[var(--color-gray-900)] bg-white p-[1.2rem] ">
           <div className="flex items-center justify-between mb-[1rem] md:mb-[2rem]">
-            <span className={`text-[1.3rem] font-en`}>
-              {singleProduct.title}
-            </span>
+            <span className="text-[1.3rem] font-en">{singleProduct.title}</span>
             <Icons.CloseCircle
               size={25}
               className="cursor-pointer hidden md:block"
@@ -43,6 +60,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
               <Icons.Box2 size={15} />
             </button>
           </div>
+
           <div className="w-full mt-[1rem]">
             <Table
               title={""}
@@ -52,7 +70,8 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
               size={singleProduct.size}
             />
           </div>
-          <div className="flex flex-col gap-[20px] max-h-[200] overflow-y-auto  hide-scrollbar mt-[2rem] md:mt-[3rem]">
+
+          <div className="flex flex-col gap-[20px] max-h-[200] overflow-y-auto hide-scrollbar mt-[2rem] md:mt-[3rem]">
             {singleProduct?.products.map((item) => (
               <ItemOther
                 key={item.id}
@@ -62,12 +81,13 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
             ))}
           </div>
         </div>
+
         <div className="col-span-12 md:col-span-6 xl:col-span-7 relative">
-          <div className="relative h-[25dvh] md:h-full">
+          <div className="relative h-[25dvh] md:h-full bg-white">
             <Image
               src={`${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`}
-              alt=" Introduction image"
-              className="object-fill"
+              alt="Introduction image"
+              className="object-contain"
               fill
             />
             <Icons.CloseCircle
@@ -77,76 +97,24 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
               onClick={() => setOpenModal(false)}
             />
           </div>
-          <div className=" absolute left-0 bottom-0 p-[1rem] w-full flex justify-end backdrop-blur-[5px] bg-white/50  z-50">
-            <div className="flex md:flex-col  items-center md:items-start  gap-[15px] w-max  ">
+
+          <div className="absolute left-0 bottom-0 p-[1rem] w-full flex justify-end backdrop-blur-[5px] bg-white/50 z-50">
+            <div className="flex items-center gap-[15px] w-full ">
               <span>{t("ShareOn")}</span>
-              <div className="flex items-center gap-[15px]">
-                <a
-                  href="https://www.pinterest.com/marjantileco/"
-                  target="_blank"
-                >
-                  <Image
-                    src={"/images/pintrest.png"}
-                    width={30}
-                    height={30}
-                    className="object-fill cursor-pointer  mix-blend-multiply"
-                    alt=""
-                  />
-                </a>
-                <a
-                  href="https://instagram.com/marjantileco?utm_medium=copy_link"
-                  target="_blank"
-                >
-                  <Image
-                    src={"/images/instagram.png"}
-                    width={40}
-                    height={40}
-                    className="object-fill cursor-pointer mix-blend-multiply"
-                    alt=""
-                  />
-                </a>
-                <a
-                  href="https://www.linkedin.com/company/marjantilecompany"
-                  target="_blank"
-                >
-                  <Image
-                    src={"/images/linkdin.png"}
-                    width={40}
-                    height={40}
-                    className="object-fill cursor-pointer mix-blend-multiply"
-                    alt=""
-                  />
-                </a>
-                <a href="https://www.aparat.com/marjantile" target="_blank">
-                  <Image
-                    src={"/images/aparat.png"}
-                    width={35}
-                    height={35}
-                    className="object-fill cursor-pointer mix-blend-multiply"
-                    alt=""
-                  />
-                </a>
-                <a
-                  href="https://www.youtube.com/@marjantile6108"
-                  target="_blank"
-                >
-                  <Image
-                    src={"/images/youtube.png"}
-                    width={40}
-                    height={40}
-                    className="object-fill cursor-pointer mix-blend-multiply"
-                    alt=""
-                  />
-                </a>
-              </div>
+              <button onClick={handleShare}>
+                <Image
+                  src="/images/share.png"
+                  width={30}
+                  height={30}
+                  className="cursor-pointer mix-blend-multiply"
+                  alt="share"
+                />
+              </button>
             </div>
           </div>
         </div>
       </div>
-      <div
-        className=" md:hidden w-[95vw] md:w-[80vw] h-[600px] md:h-[500px] cursor-pointer mx-auto"
-        onClick={() => setFlipped(!flipped)}
-      >
+      <div className=" md:hidden w-[95vw] md:w-[80vw] h-[600px] md:h-[500px] cursor-pointer mx-auto">
         <div
           className={`relative w-full h-full duration-700 transform-style preserve-3d ${
             flipped ? "rotate-y-180" : ""
@@ -154,7 +122,10 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
         >
           <div className="absolute w-full h-full backface-hidden bg-white p-[20px] flex flex-col  shadow-lg rounded-xl">
             <div className="flex items-center justify-between mb-[1rem]">
-              <span className={`text-[1.3rem] font-en`}>
+              <span
+                className={`text-[1.3rem] font-en`}
+                onClick={() => setFlipped(!flipped)}
+              >
                 {singleProduct.title}
               </span>
               <Icons.CloseCircle
@@ -211,10 +182,10 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
 
           <div className="absolute w-full h-full backface-hidden rotate-y-180  rounded-xl overflow-hidden">
             <Image
+              onClick={() => setFlipped(!flipped)}
               src={`${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`}
               alt=" Introduction image"
               className="object-contain"
-              // className="object-cover"
               quality={100}
               fill
             />
@@ -228,60 +199,16 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
               }}
             />
             <div className="absolute left-0 bottom-0 p-4 w-full flex justify-center backdrop-blur-[5px] bg-white/50">
-              <div className="flex md:flex-col items-center gap-4 w-max">
+              <button onClick={handleShare} className="flex items-center gap-4">
+                <Image
+                  src="/images/share.png"
+                  width={30}
+                  height={30}
+                  className="cursor-pointer mix-blend-multiply"
+                  alt="share"
+                />
                 <span>{t("Share On")}</span>
-                <div className="flex items-center gap-3">
-                  <a
-                    href="https://www.pinterest.com/marjantileco/"
-                    target="_blank"
-                  >
-                    <Image
-                      src="/images/pintrest.png"
-                      width={30}
-                      height={30}
-                      alt=""
-                    />
-                  </a>
-                  <a href="https://instagram.com/marjantileco" target="_blank">
-                    <Image
-                      src="/images/instagram.png"
-                      width={40}
-                      height={40}
-                      alt=""
-                    />
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/company/marjantilecompany"
-                    target="_blank"
-                  >
-                    <Image
-                      src="/images/linkdin.png"
-                      width={40}
-                      height={40}
-                      alt=""
-                    />
-                  </a>
-                  <a href="https://www.aparat.com/marjantile" target="_blank">
-                    <Image
-                      src="/images/aparat.png"
-                      width={35}
-                      height={35}
-                      alt=""
-                    />
-                  </a>
-                  <a
-                    href="https://www.youtube.com/@marjantile6108"
-                    target="_blank"
-                  >
-                    <Image
-                      src="/images/youtube.png"
-                      width={40}
-                      height={40}
-                      alt=""
-                    />
-                  </a>
-                </div>
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -347,3 +274,117 @@ function ItemOther({ setOpenModal, item }) {
 }
 
 // max-h-[350px] md:max-h-max overflow-y-auto
+
+{
+  /* <a
+                  href="https://www.pinterest.com/marjantileco/"
+                  target="_blank"
+                >
+                  <Image
+                    src="/images/pintrest.png"
+                    width={30}
+                    height={30}
+                    className="cursor-pointer mix-blend-multiply"
+                    alt=""
+                  />
+                </a>
+                <a
+                  href="https://instagram.com/marjantileco?utm_medium=copy_link"
+                  target="_blank"
+                >
+                  <Image
+                    src="/images/instagram.png"
+                    width={40}
+                    height={40}
+                    className="cursor-pointer mix-blend-multiply"
+                    alt=""
+                  />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/marjantilecompany"
+                  target="_blank"
+                >
+                  <Image
+                    src="/images/linkdin.png"
+                    width={40}
+                    height={40}
+                    className="cursor-pointer mix-blend-multiply"
+                    alt=""
+                  />
+                </a>
+                <a href="https://www.aparat.com/marjantile" target="_blank">
+                  <Image
+                    src="/images/aparat.png"
+                    width={35}
+                    height={35}
+                    className="cursor-pointer mix-blend-multiply"
+                    alt=""
+                  />
+                </a>
+                <a
+                  href="https://www.youtube.com/@marjantile6108"
+                  target="_blank"
+                >
+                  <Image
+                    src="/images/youtube.png"
+                    width={40}
+                    height={40}
+                    className="cursor-pointer mix-blend-multiply"
+                    alt=""
+                  />
+                </a> */
+}
+
+{
+  /* <div className="flex items-center gap-3">
+                  <a
+                    href="https://www.pinterest.com/marjantileco/"
+                    target="_blank"
+                  >
+                    <Image
+                      src="/images/pintrest.png"
+                      width={30}
+                      height={30}
+                      alt=""
+                    />
+                  </a>
+                  <a href="https://instagram.com/marjantileco" target="_blank">
+                    <Image
+                      src="/images/instagram.png"
+                      width={40}
+                      height={40}
+                      alt=""
+                    />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/company/marjantilecompany"
+                    target="_blank"
+                  >
+                    <Image
+                      src="/images/linkdin.png"
+                      width={40}
+                      height={40}
+                      alt=""
+                    />
+                  </a>
+                  <a href="https://www.aparat.com/marjantile" target="_blank">
+                    <Image
+                      src="/images/aparat.png"
+                      width={35}
+                      height={35}
+                      alt=""
+                    />
+                  </a>
+                  <a
+                    href="https://www.youtube.com/@marjantile6108"
+                    target="_blank"
+                  >
+                    <Image
+                      src="/images/youtube.png"
+                      width={40}
+                      height={40}
+                      alt=""
+                    />
+                  </a>
+                </div> */
+}

@@ -11,11 +11,17 @@ import { fetchhome } from "@/services/home";
 import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
+import translations from "@/components/module/translations";
 
-export const metadata = {
-  title: "Home",
-};
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Home";
 
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Home"}`,
+  };
+}
 export default async function Home({ params }) {
   const { locale } = await params;
   const dataHome = await fetchhome(locale);

@@ -9,9 +9,17 @@ import Customers from "@/components/Industrial/Customers";
 import AboutUs from "@/components/Industrial/AboutUs";
 import { fetchIndustrial } from "@/services/industrial";
 
-export const metadata = {
-  title: "Industrial",
-};
+import translations from "@/components/module/translations";
+
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Industrial";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Industrial"}`,
+  };
+}
 
 export default async function page({ params }) {
   const { locale } = await params;

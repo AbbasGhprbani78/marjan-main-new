@@ -7,10 +7,17 @@ import { fetchSingleProjects } from "@/services/singleproject";
 import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
 
-export const metadata = {
-  title: "Project",
-};
+import translations from "@/components/module/translations";
 
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Project";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Project"}`,
+  };
+}
 export default async function page({ params }) {
   const { locale } = await params;
   const { slug } = await params;

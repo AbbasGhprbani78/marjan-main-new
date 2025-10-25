@@ -8,9 +8,17 @@ import {
 } from "@/services/employmentGet";
 import React from "react";
 
-export const metadata = {
-  title: "Employment",
-};
+import translations from "@/components/module/translations";
+
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Employment";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Employment"}`,
+  };
+}
 export default async function page({ params }) {
   const { locale } = await params;
   const statesData = await fetchStates(locale);

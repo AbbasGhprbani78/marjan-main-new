@@ -185,6 +185,18 @@ input[type="checkbox"]:checked::after {
   display: none;
 }
 
+body {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 @layer utilities {
   .text-stroke-gold {
     text-shadow: -1px -1px 0 #ecd993, 1px -1px 0 #ecd993, -1px 1px 0 #ecd993,

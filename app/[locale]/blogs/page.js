@@ -3,9 +3,17 @@ import { HomeSlider } from "@/components/slider";
 import Blogs from "@/components/templates/Blogs";
 import { fetchBlogs } from "@/services/blogs";
 
-export const metadata = {
-  title: "Blogs",
-};
+import translations from "@/components/module/translations";
+
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Blogs";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Blogs"}`,
+  };
+}
 export default async function page({ params }) {
   const { locale } = await params;
   const blogsData = await fetchBlogs(locale);

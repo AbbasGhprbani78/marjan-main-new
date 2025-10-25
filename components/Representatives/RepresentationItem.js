@@ -4,17 +4,16 @@ import Button2 from "../module/Button2";
 import { useTranslation } from "@/context/TranslationContext";
 import { toPersianDigits } from "@/utils/helper";
 
-export default function RepresentationItem({ city }) {
+export default function RepresentationItem({ city, onAddressClick }) {
   const { t, locale } = useTranslation();
   if (!city) return null;
 
   const openMap = () => {
-    if (!city.address) return;
-    const address = encodeURIComponent(city.address);
-    window.open(
-      `https://www.google.com/maps/search/?api=1&query=${address}`,
-      "_blank"
-    );
+    if (typeof window !== "undefined" && city.x && city.y) {
+      const lat = city.x;
+      const lng = city.y;
+      window.open(`https://www.google.com/maps/place/${lat},${lng}`, "_blank");
+    }
   };
 
   return (
@@ -27,18 +26,27 @@ export default function RepresentationItem({ city }) {
         <span className="font-medium">{t("AgencyName")}:</span>
         {city.agency_name}
       </p>
-      <p>
-        <span className="font-medium">{t("Address")}:</span>
-        {["fa", "ar"].includes(locale)
-          ? toPersianDigits(city.address)
-          : city.address}
-      </p>
-      <p>
-        <span className="font-medium">{t("Phone")}:</span>
-        {["fa", "ar"].includes(locale)
-          ? toPersianDigits(city.phone)
-          : city.phone}
-      </p>
+      {city.address && (
+        <p
+          onClick={() => onAddressClick && onAddressClick(city)}
+          className="cursor-pointer hover:text-blue-600 transition-colors"
+        >
+          <span className="font-medium ">{t("Address")}:</span>
+          {["fa", "ar"].includes(locale)
+            ? toPersianDigits(city.address)
+            : city.address}
+        </p>
+      )}
+
+      {city?.phone && (
+        <p>
+          <span className="font-medium">{t("Phone")}:</span>
+          {["fa", "ar"].includes(locale)
+            ? toPersianDigits(city.phone)
+            : city.phone}
+        </p>
+      )}
+
       {city?.postal_code && (
         <p>
           <span className="font-medium">{t("Postal Code")}:</span>{" "}

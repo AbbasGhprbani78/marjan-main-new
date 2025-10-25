@@ -11,11 +11,18 @@ const customIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-export default function Map({ reps = [], allrepresentives, userLocation }) {
+export default function Map({
+  reps = [],
+  allrepresentives,
+  userLocation,
+  focusedRep,
+}) {
   const [mapCenter, setMapCenter] = useState(null);
 
   useEffect(() => {
-    if (reps.length > 0) {
+    if (focusedRep && focusedRep.x && focusedRep.y) {
+      setMapCenter([focusedRep.x, focusedRep.y]);
+    } else if (reps.length > 0) {
       const firstValidRep = reps.find((rep) => rep.x != null && rep.y != null);
 
       if (firstValidRep) {
@@ -24,15 +31,15 @@ export default function Map({ reps = [], allrepresentives, userLocation }) {
     } else if (userLocation) {
       setMapCenter(userLocation);
     }
-  }, [reps, userLocation]);
+  }, [reps, userLocation, focusedRep]);
 
   const firstValidRep = reps.find((rep) => rep.x != null && rep.y != null);
 
   const center =
     mapCenter ||
-    (firstValidRep ? [firstValidRep.x, firstValidRep.y] : [35.6892, 51.389]);
+    (firstValidRep ? [firstValidRep.x, firstValidRep.y] : [77.6892, 51.389]);
 
-  const zoom = reps.length > 0 ? 10 : 10;
+  const zoom = focusedRep ? 15 : reps.length > 0 ? 10 : 10;
 
   return (
     <div className="lg:min-h-[400px] h-full w-full">

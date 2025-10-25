@@ -15,9 +15,17 @@ import { fetchSingleProduct, getSubjects } from "@/services/singleProduct";
 import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
 
-export const metadata = {
-  title: "Product",
-};
+import translations from "@/components/module/translations";
+
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || "en";
+  const dict = translations[locale] || translations["en"];
+  const pageKey = "Product";
+
+  return {
+    title: `${dict.websiteName} | ${dict[pageKey] || "Product"}`,
+  };
+}
 
 export default async function page({ params }) {
   const { slug } = await params;

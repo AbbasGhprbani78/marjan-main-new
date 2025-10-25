@@ -1,14 +1,16 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import SelectLocation from "../Representatives/SelectLocation";
 import MapWrapper from "../module/MapWrapper";
 import RepresentationItem from "../Representatives/RepresentationItem";
 import styles from "../../app/[locale]/representatives/representatives.module.css";
+import axios from "axios";
 
 export default function Representatives({ representatives }) {
   const [selectedCity, setSelectedCity] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [initialCitySet, setInitialCitySet] = useState(false);
+  const [focusedRepresentative, setFocusedRepresentative] = useState(null);
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371;
@@ -55,41 +57,40 @@ export default function Representatives({ representatives }) {
     [representatives]
   );
 
+  const handleAddressClick = (representative) => {
+    setFocusedRepresentative(representative);
+  };
+
   useEffect(() => {
-    fetch("https://ipwho.is")
+    setFocusedRepresentative(null);
+  }, [selectedCity]);
+
+  const [ip, setIp] = useState("");
+
+  useEffect(() => {
+    fetch("https://api.ipify.org?format=json")
       .then((res) => res.json())
       .then((data) => {
-        if (data && data.latitude && data.longitude) {
-          setUserLocation([data.latitude, data.longitude]);
+        setIp(data.ip);
 
-          const closestCity = findClosestRepresentative(
-            data.latitude,
-            data.longitude
-          );
-          if (closestCity && !initialCitySet) {
-            setSelectedCity(closestCity);
-            setInitialCitySet(true);
-          }
-        }
-      })
-      .catch(() => {});
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const preciseLocation = [pos.coords.latitude, pos.coords.longitude];
-        setUserLocation(preciseLocation);
-
-        const closestCity = findClosestRepresentative(
-          pos.coords.latitude,
-          pos.coords.longitude
+        return axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/app/api/ip-to-xy/`,
+          { params: { ip: data.ip } }
         );
+      })
+      .then((res) => {
+        const { x: latitude, y: longitude } = res.data;
+
+        console.log(latitude, longitude);
+        const closestCity = findClosestRepresentative(latitude, longitude);
+
         if (closestCity && !initialCitySet) {
           setSelectedCity(closestCity);
           setInitialCitySet(true);
         }
-      });
-    }
-  }, [representatives, initialCitySet, findClosestRepresentative]);
+      })
+      .catch((err) => console.error(err));
+  }, [initialCitySet, findClosestRepresentative]);
 
   return (
     <main className="wrapper">
@@ -108,8 +109,13 @@ export default function Representatives({ representatives }) {
             aria-label="نقشه نمایندگان"
           >
             <MapWrapper
-              reps={selectedCity?.representatives || []}
+              reps={
+                focusedRepresentative
+                  ? [focusedRepresentative]
+                  : selectedCity?.representatives || []
+              }
               userLocation={userLocation}
+              focusedRep={focusedRepresentative}
             />
           </section>
 
@@ -118,7 +124,11 @@ export default function Representatives({ representatives }) {
             aria-label="لیست نمایندگان"
           >
             {selectedCity?.representatives?.map((rep) => (
-              <RepresentationItem key={rep.id} city={rep} />
+              <RepresentationItem
+                key={rep.id}
+                city={rep}
+                onAddressClick={handleAddressClick}
+              />
             ))}
           </div>
         </aside>
@@ -128,11 +138,61 @@ export default function Representatives({ representatives }) {
           aria-label="نقشه نمایندگان"
         >
           <MapWrapper
-            reps={selectedCity?.representatives || []}
+            reps={
+              focusedRepresentative
+                ? [focusedRepresentative]
+                : selectedCity?.representatives || []
+            }
             userLocation={userLocation}
+            focusedRep={focusedRepresentative}
           />
         </section>
       </div>
     </main>
   );
 }
+
+// useEffect(() => {
+//   fetch("https://ipwho.is")
+//     .then((res) => res.json())
+//     .then((data) => {
+//       if (data && data.latitude && data.longitude) {
+//         setUserLocation([data.latitude, data.longitude]);
+
+//         const closestCity = findClosestRepresentative(
+//           data.latitude,
+//           data.longitude
+//         );
+
+//         if (closestCity && !initialCitySet) {
+//           setSelectedCity(closestCity);
+//           setInitialCitySet(true);
+//         }
+//       }
+//     })
+//     .catch((err) => {
+//       console.error("Error fetching IP location:", err);
+//     });
+
+//   if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(
+//       (pos) => {
+//         const preciseLocation = [pos.coords.latitude, pos.coords.longitude];
+//         setUserLocation(preciseLocation);
+
+//         const closestCity = findClosestRepresentative(
+//           pos.coords.latitude,
+//           pos.coords.longitude
+//         );
+
+//         if (closestCity && !initialCitySet) {
+//           setSelectedCity(closestCity);
+//           setInitialCitySet(true);
+//         }
+//       },
+//       (err) => {
+//         console.error("Geolocation error:", err);
+//       }
+//     );
+//   }
+// }, [representatives, initialCitySet, findClosestRepresentative]);

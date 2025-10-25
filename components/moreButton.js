@@ -32,12 +32,12 @@ export function MoreButton({
       onMouseLeave={() => setIsHovered(false)}
       className={`flex cursor-pointer button ${
         invert ? "text-gray-white" : ""
-      }  ${className} ${
+      } ${className} ${
         isHovered ? "bg-gray-800 text-gray-white" : ""
       } transition-colors duration-400 backdrop-blur-[4px]`}
       style={{
-        width: `${width}px`,
-        height: `${height}px`,
+        width: width ? `${width}px` : "auto",
+        height: height ? `${height}px` : auto,
       }}
     >
       <p className="ms-auto my-auto">{text}</p>
