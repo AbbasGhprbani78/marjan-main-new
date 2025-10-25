@@ -127,11 +127,12 @@ export default function Texture({ textureImage }) {
             }}
           >
             <div
-              className={`relative aspect-square w-full border-2 transition-all duration-200 ${
-                activeColor === i
-                  ? "border-gray-200 shadow-sm"
-                  : "border-transparent hover:shadow-sm"
-              }`}
+              className={`relative aspect-square w-full rounded-xl transition-all duration-300 ease-in-out 
+    ${
+      activeColor === i
+        ? "scale-105 shadow-[0_8px_20px_rgba(100,100,100,0.35)] overflow-hidden"
+        : "border-transparent hover:shadow-[0_4px_12px_rgba(100,100,100,0.15)] hover:scale-102"
+    }`}
             >
               <Image
                 src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
