@@ -4,6 +4,7 @@ export const fetchhome = async (lang) => {
     headers: {
       "Accept-Language": lang,
     },
+    next: { revalidate: 300 },
   });
 
   if (!res.ok) {

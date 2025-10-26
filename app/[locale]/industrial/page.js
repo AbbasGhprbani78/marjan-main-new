@@ -8,9 +8,10 @@ import Standards from "@/components/Industrial/Standards";
 import Customers from "@/components/Industrial/Customers";
 import AboutUs from "@/components/Industrial/AboutUs";
 import { fetchIndustrial } from "@/services/industrial";
-
 import translations from "@/components/module/translations";
 
+export const revalidate = 300;
+export const dynamicParams = true;
 export async function generateMetadata({ params }) {
   const locale = params?.locale || "en";
   const dict = translations[locale] || translations["en"];

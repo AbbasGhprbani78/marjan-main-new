@@ -42,7 +42,7 @@ export default async function page({ params }) {
         ></div>
 
         <div className="flex flex-col justify-center items-center text-white gap-[1rem] z-10 ">
-          <h2 className="font-medium text-[1.7rem] md:text-[2rem]">
+          <h2 className="font-medium text-[1.7rem] md:text-[2rem] text-center">
             {dict["Subscribenewsletter"]}
           </h2>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 import { useTranslation } from "@/context/TranslationContext";
+import { toPersianDigits } from "@/utils/helper";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 
@@ -13,7 +14,7 @@ export default function MySelect({
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [direction, setDirection] = useState("rtl");
-  const { t, locale } = useTranslation();
+  const { locale } = useTranslation();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -24,7 +25,7 @@ export default function MySelect({
 
   const options = data.map((item) => ({
     value: item.id,
-    label: item.name,
+    label: locale === "fa" ? toPersianDigits(item.name) : item.name,
   }));
 
   const selectedOption =
@@ -41,19 +42,18 @@ export default function MySelect({
       borderBottom: "1px solid #000",
       borderRadius: 0,
       boxShadow: "none",
-      direction: "rtl", // همیشه rtl باشه
       "&:hover": {
         borderBottom: "2px solid #555",
       },
     }),
     menu: (provided) => ({
       ...provided,
-      direction: "rtl", // منو هم همیشه rtl
-      textAlign: locale === "fa" || locale === "ar" ? "right" : "left", // متن بر اساس زبان
+      direction: "rtl",
+      textAlign: locale === "fa" || locale === "ar" ? "right" : "left",
     }),
     option: (provided, state) => ({
       ...provided,
-      textAlign: locale === "fa" || locale === "ar" ? "right" : "left", // متن گزینه‌ها
+      textAlign: locale === "fa" || locale === "ar" ? "right" : "left",
       fontSize: ".9rem",
       paddingTop: "7px",
       paddingBottom: "7px",

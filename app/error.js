@@ -42,10 +42,6 @@ export default function GlobalError({ error, reset }) {
     }
   }, []);
 
-  useEffect(() => {
-    console.error("API Error:", error);
-  }, [error]);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.card}>

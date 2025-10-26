@@ -6,6 +6,8 @@ import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
 import translations from "@/components/module/translations";
 
+export const revalidate = 300;
+export const dynamicParams = true;
 export async function generateMetadata({ params }) {
   const locale = params?.locale || "en";
   const dict = translations[locale] || translations["en"];
@@ -43,13 +45,9 @@ export default async function page({ params }) {
         ></div>
 
         <div className="flex flex-col justify-center items-center text-white gap-[1rem] z-10 ">
-          <h2 className="font-medium text-[1.5rem] md:text-[2rem]">
+          <h2 className="font-medium text-[1.5rem] md:text-[2rem] text-center">
             {dict["FAQ"]}
           </h2>
-          {/* <p className="w-3/4 md:w-full text-[.9rem] md:text-[1rem] font-normal text-center">
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-            استفاده از طراحان گرافیک است.
-          </p> */}
         </div>
       </section>
       <section className=" px-20 md:px-40 lg:px-80 mt-[2.5rem] mb-[2rem]">

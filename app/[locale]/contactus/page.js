@@ -1,9 +1,6 @@
 import React from "react";
-import styles from "./contactus.module.css";
-import ContactusItem from "@/components/ContactUs/ContactusItem";
 import { fetchContactUs } from "@/services/contactus";
 import translations from "@/components/module/translations";
-import MapWrapperContactUs from "@/components/module/MapWrapperContactUs";
 import ContactusPageClient from "./ContactusPageClient";
 
 export async function generateMetadata({ params }) {

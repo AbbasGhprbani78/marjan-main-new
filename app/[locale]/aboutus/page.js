@@ -6,8 +6,10 @@ import AboutHistory from "@/components/About/AboutHistory";
 import BusinessPartners from "@/components/About/BusinessPartners";
 import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchAboutUs } from "@/services/aboutus";
-
 import translations from "@/components/module/translations";
+
+export const revalidate = 300;
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }) {
   const locale = params?.locale || "en";

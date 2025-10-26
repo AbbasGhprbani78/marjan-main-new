@@ -213,8 +213,6 @@ export default function Blogs({ blogs, categories, filters }) {
     }
   }, [searchParams]);
 
-  console.log(blogs);
-
   return (
     <>
       <h2 className="hidden md:block font-[500] title  mb-[1.5rem] md:mb-[2.5rem] text-center">

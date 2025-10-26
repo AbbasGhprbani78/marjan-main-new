@@ -6,6 +6,7 @@ export const fetchAllSaveProducts = async (lang) => {
       headers: {
         "Accept-Language": lang,
       },
+      next: { revalidate: 300 },
     }
   );
 

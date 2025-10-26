@@ -114,24 +114,6 @@ export function NavBar({ dataHeader }) {
     setIsHovered(false);
   }, [pathname, queryFilterKey, queryValues]);
 
-  useEffect(() => {
-    const cookieLang = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("lang="))
-      ?.split("=")[1];
-
-    if (cookieLang && cookieLang !== locale) {
-      const segments = pathname.split("/").filter(Boolean);
-      if (["fa", "en", "ar", "ru"].includes(segments[0])) {
-        segments[0] = cookieLang;
-      } else {
-        segments.unshift(cookieLang);
-      }
-      const newPathname = "/" + segments.join("/");
-      router.replace(newPathname);
-    }
-  }, [locale, pathname]);
-
   return (
     <header
       className={`absolute w-full z-20 bg-gary-black ${
@@ -798,24 +780,6 @@ function MenuMobile({ dataHeader }) {
     setIsShowSearch(false);
   }, [queryString, pathname]);
 
-  useEffect(() => {
-    const cookieLang = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("lang="))
-      ?.split("=")[1];
-
-    if (cookieLang && cookieLang !== locale) {
-      const segments = pathname.split("/").filter(Boolean);
-      if (["fa", "en", "ar", "ru"].includes(segments[0])) {
-        segments[0] = cookieLang;
-      } else {
-        segments.unshift(cookieLang);
-      }
-      const newPathname = "/" + segments.join("/");
-      router.replace(newPathname);
-    }
-  }, [locale, pathname]);
-
   return (
     <div className="fixed w-full left-0 right-0 z-[9999999]  xl:hidden">
       <div className="flex items-center justify-between bg-[#292d32] px-20 py-3">
@@ -1248,3 +1212,39 @@ function MenuLink({ href, children, className = "", onClick }) {
     </Link>
   );
 }
+
+// useEffect(() => {
+//   const cookieLang = document.cookie
+//     .split("; ")
+//     .find((row) => row.startsWith("lang="))
+//     ?.split("=")[1];
+
+//   if (cookieLang && cookieLang !== locale) {
+//     const segments = pathname.split("/").filter(Boolean);
+//     if (["fa", "en", "ar", "ru"].includes(segments[0])) {
+//       segments[0] = cookieLang;
+//     } else {
+//       segments.unshift(cookieLang);
+//     }
+//     const newPathname = "/" + segments.join("/");
+//     router.replace(newPathname);
+//   }
+// }, [locale, pathname]);
+
+// useEffect(() => {
+//   const cookieLang = document.cookie
+//     .split("; ")
+//     .find((row) => row.startsWith("lang="))
+//     ?.split("=")[1];
+
+//   if (cookieLang && cookieLang !== locale) {
+//     const segments = pathname.split("/").filter(Boolean);
+//     if (["fa", "en", "ar", "ru"].includes(segments[0])) {
+//       segments[0] = cookieLang;
+//     } else {
+//       segments.unshift(cookieLang);
+//     }
+//     const newPathname = "/" + segments.join("/");
+//     router.replace(newPathname);
+//   }
+// }, [locale, pathname]);

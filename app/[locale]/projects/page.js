@@ -2,9 +2,9 @@ import React from "react";
 import { HomeSlider } from "@/components/slider";
 import Projects from "@/components/templates/Projects";
 import { fetchAllProjects } from "@/services/allProjects";
-
 import translations from "@/components/module/translations";
-
+export const revalidate = 300;
+export const dynamicParams = true;
 export async function generateMetadata({ params }) {
   const locale = params?.locale || "en";
   const dict = translations[locale] || translations["en"];

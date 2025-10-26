@@ -219,7 +219,7 @@ export default function CalculatorT({ dataSizes }) {
         />
       </section>
       <section className="flex  flex-col items-center  mt-[4rem] pb-[3rem] gap-[2rem]">
-        <div className="flex items-center gap-[2rem] w-full lg:w-1/2">
+        <div className="flex items-center gap-[2rem] w-full flex-col md:flex-row lg:w-1/2">
           <Button2
             text={t("Estimatetilearea")}
             onClick={handleCalculate}

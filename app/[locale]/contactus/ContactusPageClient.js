@@ -4,7 +4,7 @@ import styles from "./contactus.module.css";
 import ContactusItem from "@/components/ContactUs/ContactusItem";
 import MapWrapperContactUs from "@/components/module/MapWrapperContactUs";
 
-export default function ContactusPageClient({ contactusData, locale }) {
+export default function ContactusPageClient({ contactusData }) {
   const [focusedLocation, setFocusedLocation] = useState(null);
 
   const handleLocationClick = (location) => {

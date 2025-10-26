@@ -2,8 +2,10 @@ import React from "react";
 import { HomeSlider } from "@/components/slider";
 import Blogs from "@/components/templates/Blogs";
 import { fetchBlogs } from "@/services/blogs";
-
 import translations from "@/components/module/translations";
+
+export const revalidate = 300;
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }) {
   const locale = params?.locale || "en";
