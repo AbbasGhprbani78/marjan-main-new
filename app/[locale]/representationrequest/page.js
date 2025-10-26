@@ -18,6 +18,7 @@ export async function generateMetadata({ params }) {
     title: `${dict.websiteName} | ${dict[pageKey] || "Representation request"}`,
   };
 }
+
 export default async function page({ params }) {
   const { locale } = await params;
   const provinces = await fetchProvinces(locale);
