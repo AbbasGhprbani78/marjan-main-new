@@ -1,17 +1,42 @@
 "use client";
-import React, { useState } from "react";
-import * as Icons from "iconsax-reactjs";
 import { motion, AnimatePresence } from "framer-motion";
+import * as Icons from "iconsax-reactjs";
 import { useTranslation } from "@/context/TranslationContext";
+import { useState } from "react";
+
+const getMaxDimension = (sizes) => {
+  let max = 0;
+  sizes.forEach((size) => {
+    if (!size) return;
+    const parts = size.split(/[*xX×]/i).map(Number);
+    if (parts.length === 2) {
+      const [h, w] = parts;
+      max = Math.max(max, h, w);
+    }
+  });
+  return max || 1;
+};
+
+const getScaledSize = (size, maxDimension, scale = 300) => {
+  if (!size) return { width: scale, height: scale };
+  const parts = size.split(/[*xX×]/i).map(Number);
+  if (parts.length !== 2) return { width: scale, height: scale };
+  const [h, w] = parts;
+  return {
+    width: (w / maxDimension) * scale,
+    height: (h / maxDimension) * scale,
+  };
+};
 
 export default function PopupGallery({
   open,
   media = [],
+  sizes = [],
   setOpen,
   isdownload = true,
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { t, locale } = useTranslation();
+  const { t } = useTranslation();
 
   const prevImage = () => {
     setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));
@@ -38,6 +63,13 @@ export default function PopupGallery({
     }
   };
 
+  const hasSizes = sizes && sizes[currentIndex];
+  let width, height;
+  if (hasSizes) {
+    const maxDim = getMaxDimension(sizes);
+    ({ width, height } = getScaledSize(sizes[currentIndex], maxDim, 300));
+  }
+
   return (
     <AnimatePresence>
       {open && (
@@ -51,7 +83,6 @@ export default function PopupGallery({
           aria-modal="true"
           role="dialog"
         >
-          {/* Close button */}
           <button
             className="absolute top-[30px] right-[50px] text-[24px] bg-transparent text-white cursor-pointer"
             onClick={() => setOpen(false)}
@@ -60,7 +91,19 @@ export default function PopupGallery({
             <Icons.CloseCircle className="m-auto text-gray-white w-30 h-30" />
           </button>
 
-          <div className="relative flex items-center mb-[20px] max-w-[80vw] max-h-[60dvh]">
+          <div
+            className="relative flex items-center mb-[20px]"
+            style={
+              hasSizes
+                ? {
+                    width: `${width}px`,
+                    height: `${height}px`,
+                    maxWidth: "80vw",
+                    maxHeight: "60dvh",
+                  }
+                : { maxWidth: "80vw", maxHeight: "60dvh" }
+            }
+          >
             <button
               onClick={prevImage}
               className="absolute left-[-8vw] text-white cursor-pointer rounded-full backdrop-blur-[4px] w-[40px] h-[40px] md:w-[50px] md:h-[50px] bg-[background:#24202180]"
@@ -73,13 +116,23 @@ export default function PopupGallery({
               <video
                 src={`${process.env.NEXT_PUBLIC_API_URL}${media[currentIndex]}`}
                 controls
-                className="h-[50dvh] md:h-[60dvh] max-w-[80vw] object-contain"
+                className={`h-[50dvh] md:h-[60dvh] max-w-[80vw] ${
+                  !sizes && "object-contain"
+                }`}
+                style={
+                  hasSizes ? { width: `${width}px`, height: `${height}px` } : {}
+                }
               />
             ) : (
               <img
                 src={`${process.env.NEXT_PUBLIC_API_URL}${media[currentIndex]}`}
                 alt={`Media ${currentIndex + 1}`}
-                className="h-[50dvh] md:h-[60dvh] max-w-[80vw] object-contain"
+                className={`h-[50dvh] md:h-[60dvh] max-w-[80vw] ${
+                  !sizes && "object-contain"
+                }`}
+                style={
+                  hasSizes ? { width: `${width}px`, height: `${height}px` } : {}
+                }
                 draggable={false}
                 onContextMenu={(e) => {
                   if (!isdownload) e.preventDefault();
@@ -107,7 +160,7 @@ export default function PopupGallery({
                   key={i}
                   src={`${process.env.NEXT_PUBLIC_API_URL}${item}`}
                   onClick={() => setCurrentIndex(i)}
-                  className="w-100 h-100 object-cover cursor-pointer"
+                  className="w-[100px] h-[100px] object-cover cursor-pointer"
                   style={{
                     border:
                       i === currentIndex ? "3px solid #fff" : "2px solid #888",
@@ -122,7 +175,7 @@ export default function PopupGallery({
                   src={`${process.env.NEXT_PUBLIC_API_URL}${item}`}
                   alt={`Thumbnail ${i + 1}`}
                   onClick={() => setCurrentIndex(i)}
-                  className="w-100 h-100 object-cover cursor-pointer"
+                  className="w-[100px] h-[100px] object-cover cursor-pointer"
                   style={{
                     border:
                       i === currentIndex ? "3px solid #fff" : "2px solid #888",
@@ -138,7 +191,6 @@ export default function PopupGallery({
             })}
           </div>
 
-          {/* Download button */}
           {isdownload && (
             <button
               onClick={downloadImage}
@@ -152,8 +204,3 @@ export default function PopupGallery({
     </AnimatePresence>
   );
 }
-
-// const link = document.createElement("a");
-//   link.href = media[currentIndex];
-//   link.download = `image-${currentIndex + 1}.jpg`;
-//   link.click();

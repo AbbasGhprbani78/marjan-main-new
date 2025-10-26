@@ -188,13 +188,13 @@ input[type="checkbox"]:checked::after {
 body {
   text-align: justify;
   text-justify: inter-word;
-  hyphens: auto;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: keep-all;
 }
 
 [dir="rtl"] {
   direction: rtl;
-  text-align: justify;
-  text-justify: inter-word;
 }
 
 @layer utilities {
@@ -214,6 +214,13 @@ body {
 @media (min-width: 1025px) {
   .wrapper_image {
     height: 80dvh;
+  }
+}
+
+@media (max-width: 1024px) {
+  body {
+    text-align: start;
+    text-justify: auto;
   }
 }
 

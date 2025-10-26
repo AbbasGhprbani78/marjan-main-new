@@ -9,12 +9,6 @@ export const validateRepresentationrequest = (data, setErrors, t) => {
 
   if (!data.birthYear) {
     newErrors.birthYear = t("Birth year is required");
-  } else if (
-    isNaN(data.birthYear) ||
-    data.birthYear < 1330 ||
-    data.birthYear > 1390
-  ) {
-    newErrors.birthYear = t("Invalid birth year");
   }
 
   if (!data.educationDegree.trim()) {

@@ -207,8 +207,10 @@ export default function Texture({ textureImage }) {
 
                 <PopupGallery
                   media={fullTiles.map((tile) => tile?.image)}
+                  sizes={fullTiles.map((tile) => tile?.size)}
                   open={open}
                   setOpen={setOpen}
+                  isdownload={true}
                 />
               </div>
             </div>

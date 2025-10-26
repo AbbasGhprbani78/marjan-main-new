@@ -6,52 +6,20 @@ import Texterea from "../module/Form/Texterea";
 import { successMessage, ToastContainerCustom } from "../module/Toast";
 import { validateRepresentationrequest } from "@/validation/representationrequestValidate";
 import { useTranslation } from "@/context/TranslationContext";
+import axios from "axios";
 
-const province = [
-  { id: 1, name: "آذربایجان شرقی" },
-  { id: 2, name: "آذربایجان غربی" },
-  { id: 3, name: "اردبیل" },
-  { id: 4, name: "اصفهان" },
-  { id: 5, name: "البرز" },
-  { id: 6, name: "ایلام" },
-  { id: 7, name: "بوشهر" },
-  { id: 8, name: "تهران" },
-  { id: 9, name: "چهارمحال و بختیاری" },
-  { id: 10, name: "خراسان جنوبی" },
-  { id: 11, name: "خراسان رضوی" },
-  { id: 12, name: "خراسان شمالی" },
-  { id: 13, name: "خوزستان" },
-  { id: 14, name: "زنجان" },
-  { id: 15, name: "سمنان" },
-  { id: 16, name: "سیستان و بلوچستان" },
-  { id: 17, name: "فارس" },
-  { id: 18, name: "قزوین" },
-  { id: 19, name: "قم" },
-  { id: 20, name: "کردستان" },
-  { id: 21, name: "کرمان" },
-  { id: 22, name: "کرمانشاه" },
-  { id: 23, name: "کهگیلویه و بویراحمد" },
-  { id: 24, name: "گلستان" },
-  { id: 25, name: "گیلان" },
-  { id: 26, name: "لرستان" },
-  { id: 27, name: "مازندران" },
-  { id: 28, name: "مرکزی" },
-  { id: 29, name: "هرمزگان" },
-  { id: 30, name: "همدان" },
-  { id: 31, name: "یزد" },
-];
-
-const years = [];
-
-for (let i = 1330; i <= 1390; i++) {
-  years.push({ id: i, name: i });
-}
-
-export default function Representationrequest() {
+export default function Representationrequest({
+  provinces,
+  ownership,
+  warehouse,
+  birthYears,
+  warehouseFacilities,
+}) {
   const { t, locale } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
+    langs: locale,
     fullName: "",
     birthYear: "",
     educationDegree: "",
@@ -84,97 +52,76 @@ export default function Representationrequest() {
   const handleSubmit = async () => {
     if (!validateRepresentationrequest(form, setErrors, t)) return;
 
-    setForm({});
-    successMessage(t("SuccessForm"));
-    setForm({
-      fullName: "",
-      birthYear: "",
-      educationDegree: "",
-      fieldOfStudy: "",
-      phoneNumber: "",
-      province: "",
-      storeName: "",
-      storeArea: "",
-      storeOwnershipType: "",
-      storePhone: "",
-      storeAddress: "",
-      warehouseType: "",
-      warehouseArea: "",
-      warehouseFacilities: "",
-      warehouseOwnershipType: "",
-      warehousePhone: "",
-      warehouseAddress: "",
-      representativeCompanies: "",
-      foreignTileActivity: "",
-      reasonForChoosingMarjan: "",
-      salesExperienceYears: "",
-      additionalDescription: "",
-    });
-    // setLoading(true);
-    // try {
-    //   let response;
+    setLoading(true);
+    try {
+      const formattedForm = {
+        full_name: form.fullName,
+        phone_number: form.phoneNumber,
+        birth_year: Number(form.birthYear),
+        education_degree: form.educationDegree,
+        field_of_study: form.fieldOfStudy,
+        province: Number(form.province),
+        store_name: form.storeName,
+        store_area: Number(form.storeArea),
+        store_ownership_type: Number(form.storeOwnershipType),
+        store_phone: form.storePhone,
+        store_address: form.storeAddress,
+        warehouse_type: Number(form.warehouseType),
+        warehouse_area: Number(form.warehouseArea),
+        warehouse_facilities: form.warehouseFacilities,
+        warehouse_ownership_type: Number(form.warehouseOwnershipType),
+        warehouse_phone: form.warehousePhone,
+        warehouse_address: form.warehouseAddress,
+        representative_companies: form.representativeCompanies,
+        foreign_tile_activity: Number(form.foreignTileActivity),
+        reason_for_choosing_marjan: form.reasonForChoosingMarjan,
+        sales_experience_years: Number(form.salesExperienceYears),
+        additional_description: form.additionalDescription,
+        langs: form.langs,
+      };
 
-    //   response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}//`, form);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/app/representation-requests/`,
+        formattedForm
+      );
 
-    //   if (response.status === 201) {
-    //     console.log(response.address);
-    //     successMessage(t("SuccessForm"));
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // } finally {
-    //   setLoading(false);
-    // }
+      if (response.status === 201) {
+        setForm({
+          fullName: "",
+          birthYear: "",
+          educationDegree: "",
+          fieldOfStudy: "",
+          phoneNumber: "",
+          province: "",
+          storeName: "",
+          storeArea: "",
+          storeOwnershipType: "",
+          storePhone: "",
+          storeAddress: "",
+          warehouseType: "",
+          warehouseArea: "",
+          warehouseFacilities: "",
+          warehouseOwnershipType: "",
+          warehousePhone: "",
+          warehouseAddress: "",
+          representativeCompanies: "",
+          foreignTileActivity: "",
+          reasonForChoosingMarjan: "",
+          salesExperienceYears: "",
+          additionalDescription: "",
+        });
+        successMessage(t("SuccessForm"));
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const storeOwnershipType = [
-    {
-      id: 1,
-      name: t("Exclusive"),
-    },
-    {
-      id: 2,
-      name: t("Rental"),
-    },
-  ];
-
-  const typeOfWarehouse = [
-    {
-      id: 1,
-      name: t("Indoor storeage"),
-    },
-    {
-      id: 2,
-      name: t("Outdoor storeage"),
-    },
-    {
-      id: 3,
-      name: t("Both"),
-    },
-  ];
-
-  const warehouseFacilities = [
-    {
-      id: 1,
-      name: t("Ramp"),
-    },
-    {
-      id: 2,
-      name: t("Forklift"),
-    },
-    {
-      id: 3,
-      name: t("Both"),
-    },
-    {
-      id: 4,
-      name: t("None"),
-    },
-  ];
-
   const foreignActivity = [
+    { id: 0, name: t("No") },
     { id: 1, name: t("Yes") },
-    { id: 2, name: t("No") },
   ];
 
   return (
@@ -198,16 +145,15 @@ export default function Representationrequest() {
               maxLength={256}
               label={t("Full Name")}
               noNumber={true}
-              onlyPersian={true}
               error={errors.fullName}
             />
           </div>
           <div className="col-span-12 md:col-span-4">
             <DropDown
               label={t("year of birth")}
-              options={years.map((year) => ({
+              options={birthYears.map((year) => ({
                 id: year?.id,
-                value: year?.name,
+                value: year?.year,
               }))}
               value={form.birthYear}
               onChange={(val) => handleFieldChange("birthYear", val)}
@@ -257,7 +203,7 @@ export default function Representationrequest() {
             <DropDown
               value={form.province}
               onChange={(val) => handleFieldChange("province", val)}
-              options={province.map((item) => ({
+              options={provinces?.map((item) => ({
                 id: item?.id,
                 value: item?.name,
               }))}
@@ -301,7 +247,7 @@ export default function Representationrequest() {
               value={form.storeOwnershipType}
               onChange={(val) => handleFieldChange("storeOwnershipType", val)}
               type="text"
-              options={storeOwnershipType.map((item) => ({
+              options={ownership?.map((item) => ({
                 id: item?.id,
                 value: item?.name,
               }))}
@@ -339,7 +285,7 @@ export default function Representationrequest() {
               value={form.warehouseType}
               onChange={(val) => handleFieldChange("warehouseType", val)}
               label={t("Warehouse type")}
-              options={typeOfWarehouse.map((item) => ({
+              options={warehouse?.map((item) => ({
                 id: item?.id,
                 value: item?.name,
               }))}
@@ -363,9 +309,9 @@ export default function Representationrequest() {
             <DropDown
               value={form.warehouseFacilities}
               onChange={(val) => handleFieldChange("warehouseFacilities", val)}
-              options={warehouseFacilities.map((item) => ({
+              options={warehouseFacilities?.map((item) => ({
                 id: item?.id,
-                value: item?.name,
+                value: item?.facility,
               }))}
               label={t("Warehouse facilities")}
               error={errors.warehouseFacilities}
@@ -379,7 +325,7 @@ export default function Representationrequest() {
               onChange={(val) =>
                 handleFieldChange("warehouseOwnershipType", val)
               }
-              options={storeOwnershipType.map((item) => ({
+              options={ownership?.map((item) => ({
                 id: item?.id,
                 value: item?.name,
               }))}
@@ -455,7 +401,6 @@ export default function Representationrequest() {
               type="text"
               maxLength={256}
               label={t("The reason for choosing Marjan tile")}
-              onlyPersian={true}
               error={errors.reasonForChoosingMarjan}
             />
           </div>

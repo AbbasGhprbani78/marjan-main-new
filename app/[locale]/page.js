@@ -27,6 +27,7 @@ export default async function Home({ params }) {
   const dataHome = await fetchhome(locale);
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
+  console.log(dataHome);
 
   return (
     <div

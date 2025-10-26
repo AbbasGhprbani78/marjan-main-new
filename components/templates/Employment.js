@@ -5,6 +5,7 @@ import Form2 from "../Employment/Form2";
 import Form3 from "../Employment/Form3";
 import Form4 from "../Employment/Form4";
 import { useTranslation } from "@/context/TranslationContext";
+import { useRouter } from "next/navigation";
 
 export default function Employment({
   states,
@@ -13,6 +14,7 @@ export default function Employment({
   dataJobs,
   dataWaysofacquaintance,
 }) {
+  const router = useRouter();
   const [tab, setTab] = useState(1);
   const { locale } = useTranslation();
   const [idForm, setIdForm] = useState("");
@@ -124,6 +126,12 @@ export default function Employment({
       form4: { ...prev.form4, personal_detail: idForm },
     }));
   }, [idForm]);
+
+  useEffect(() => {
+    if (locale !== "fa") {
+      router.replace("/");
+    }
+  }, [locale]);
 
   return (
     <div

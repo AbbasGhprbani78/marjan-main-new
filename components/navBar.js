@@ -40,8 +40,10 @@ export function NavBar({ dataHeader }) {
     }
 
     const newPathname = "/" + segments.join("/");
-    document.cookie = `lang=${newLocale}; path=/; max-age=31536000`;
-    router.push(newPathname);
+
+    document.cookie = `lang=${newLocale}; path=/; max-age=31536000;`;
+
+    router.replace(newPathname);
   }
 
   const currentLocale = pathname.split("/")[1] || "fa";
@@ -111,6 +113,24 @@ export function NavBar({ dataHeader }) {
     setScrolled(false);
     setIsHovered(false);
   }, [pathname, queryFilterKey, queryValues]);
+
+  useEffect(() => {
+    const cookieLang = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("lang="))
+      ?.split("=")[1];
+
+    if (cookieLang && cookieLang !== locale) {
+      const segments = pathname.split("/").filter(Boolean);
+      if (["fa", "en", "ar", "ru"].includes(segments[0])) {
+        segments[0] = cookieLang;
+      } else {
+        segments.unshift(cookieLang);
+      }
+      const newPathname = "/" + segments.join("/");
+      router.replace(newPathname);
+    }
+  }, [locale, pathname]);
 
   return (
     <header
@@ -756,8 +776,10 @@ function MenuMobile({ dataHeader }) {
     }
 
     const newPathname = "/" + segments.join("/");
-    document.cookie = `lang=${newLocale}; path=/; max-age=31536000`;
-    router.push(newPathname);
+
+    document.cookie = `lang=${newLocale}; path=/; max-age=31536000;`;
+
+    router.replace(newPathname);
   }
 
   const queryString = searchParams.toString();
@@ -775,6 +797,24 @@ function MenuMobile({ dataHeader }) {
     setIsOpen(false);
     setIsShowSearch(false);
   }, [queryString, pathname]);
+
+  useEffect(() => {
+    const cookieLang = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("lang="))
+      ?.split("=")[1];
+
+    if (cookieLang && cookieLang !== locale) {
+      const segments = pathname.split("/").filter(Boolean);
+      if (["fa", "en", "ar", "ru"].includes(segments[0])) {
+        segments[0] = cookieLang;
+      } else {
+        segments.unshift(cookieLang);
+      }
+      const newPathname = "/" + segments.join("/");
+      router.replace(newPathname);
+    }
+  }, [locale, pathname]);
 
   return (
     <div className="fixed w-full left-0 right-0 z-[9999999]  xl:hidden">
