@@ -32,6 +32,8 @@ export default async function Home({ params }) {
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
 
+  console.log(dataHome);
+
   return (
     <div
       className={`wrapper w-full h-full ${
@@ -43,6 +45,7 @@ export default async function Home({ params }) {
         route={"/products"}
         delay={dataHome?.delay}
         nameproduct={true}
+        type={2}
       />
       <div className=" pt-[25px]  md:pt-[50px] mb-20 lg:mb-60">
         <p className="mb-[1.3rem] md:mb-0 text-center title font-[500] ">

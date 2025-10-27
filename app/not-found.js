@@ -6,7 +6,7 @@ import styles from "./error.module.css";
 const translations = {
   fa: {
     title: "صفحه یافت نشد",
-    text: "ممکنه آدرس اشتباه باشه یا صفحه حذف شده باشه",
+    text: "ممکن است آدرس اشتباه یا صفحه حذف شده باشد",
     button: "بازگشت به صفحه اصلی",
   },
   en: {
@@ -31,7 +31,6 @@ export default function NotFound() {
   const [locale, setLocale] = useState("fa");
   const [dict, setDict] = useState(translations["fa"]);
 
-  // استخراج زبان از URL
   useEffect(() => {
     const path = window.location.pathname;
     const lang = path.split("/")[1];

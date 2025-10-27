@@ -49,7 +49,7 @@ export default function MapContactus({ province, focusedLocation }) {
       ? [firstValidCity.x, firstValidCity.y]
       : [32.626021, 51.66114]);
 
-  const zoom = focusedLocation ? 15 : cities.length > 0 ? 10 : 10;
+  const zoom = focusedLocation ? 15 : cities.length > 0 ? 12 : 12;
 
   return (
     <div className="lg:min-h-[400px] h-full w-full">

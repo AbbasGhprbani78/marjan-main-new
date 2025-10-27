@@ -8,7 +8,7 @@ export default function ProductItem({ item }) {
   const { localizedHref } = useLocalizedLink();
   return (
     <article>
-      <Link href={localizedHref(`/products/${item?.title}`)}>
+      <Link href={localizedHref(`/products/${item?.slug}`)}>
         <div className=" overflow-hidden ">
           <Image
             src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}

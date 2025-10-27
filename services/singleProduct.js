@@ -11,6 +11,11 @@ export const fetchSingleProduct = async (lang, slug) => {
   );
 
   if (!res.ok) {
+    if (res.status === 404) {
+      const error = new Error("Product not found");
+      error.status = 404;
+      throw error;
+    }
     throw new Error("Failed to fetch posts");
   }
 

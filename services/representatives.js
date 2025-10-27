@@ -4,6 +4,7 @@ export const fetchRepresentatives = async (lang) => {
     headers: {
       "Accept-Language": lang,
     },
+    next: { revalidate: 300 },
   });
 
   if (!res.ok) {

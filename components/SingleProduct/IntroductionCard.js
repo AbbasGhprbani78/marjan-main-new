@@ -33,10 +33,12 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
 
   return (
     <>
-      <div className="hidden md:grid grid-cols-12 md:w-[95vw] lg:w-[70vw] lg:min-h-[510] mx-auto">
+      <div className="hidden md:grid grid-cols-12 md:w-[95vw] lg:w-[70vw] md:min-h-[510] mx-auto">
         <div className="col-span-12 md:col-span-6 xl:col-span-5 h-full text-[var(--color-gray-900)] bg-white p-[1.2rem] ">
           <div className="flex items-center justify-between mb-[1rem] md:mb-[2rem]">
-            <span className="text-[1.3rem] font-en">{singleProduct.title}</span>
+            <span className="text-[1.3rem] font-inherit">
+              {singleProduct.title}
+            </span>
             <Icons.CloseCircle
               size={25}
               className="cursor-pointer hidden md:block"
@@ -83,12 +85,14 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
         </div>
 
         <div className="col-span-12 md:col-span-6 xl:col-span-7 relative">
-          <div className="relative h-[25dvh] md:h-full bg-white">
+          <div className="relative h-[25dvh] md:h-full">
             <Image
               src={`${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`}
               alt="Introduction image"
-              className="object-contain"
+              className="object-cover"
               fill
+              quality={100}
+              unoptimized
             />
             <Icons.CloseCircle
               size={27}
@@ -97,20 +101,22 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
               onClick={() => setOpenModal(false)}
             />
           </div>
-
-          <div className="absolute left-0 bottom-0 p-[1rem] w-full flex justify-end backdrop-blur-[5px] bg-white/50 z-50">
-            <div className="flex items-center gap-[15px] w-full ">
+          {/* backdrop-blur-[5px] bg-white/50 */}
+          <div
+            className={`absolute ${
+              ["ar", "fa"].includes(locale) ? "right-0" : "left-0"
+            }  bottom-0 p-[1rem] w-max flex justify-end  z-50`}
+          >
+            <button onClick={handleShare} className="flex items-center gap-10">
               <span>{t("ShareOn")}</span>
-              <button onClick={handleShare}>
-                <Image
-                  src="/images/share.png"
-                  width={30}
-                  height={30}
-                  className="cursor-pointer mix-blend-multiply"
-                  alt="share"
-                />
-              </button>
-            </div>
+              <Image
+                src="/images/share.png"
+                width={30}
+                height={30}
+                className="cursor-pointer mix-blend-multiply"
+                alt="share"
+              />
+            </button>
           </div>
         </div>
       </div>
@@ -234,7 +240,11 @@ function ItemOther({ setOpenModal, item }) {
   const { localizedHref } = useLocalizedLink();
   const { t, locale } = useTranslation();
   return (
-    <div className="flex items-center justify-between ">
+    <div
+      className={`flex items-center justify-between ${
+        ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
+      }`}
+    >
       <div className="flex items-center gap-[15px]">
         <div className="relative w-[80px] h-[80px]">
           <Image
@@ -246,24 +256,13 @@ function ItemOther({ setOpenModal, item }) {
         </div>
 
         <div className="flex flex-col gap-[6px] ">
-          <sapn className={"font-en"}>{item.title}</sapn>
-          {item.sizes.map((size) => {
-            const parts = size.split("x").reverse().join("x");
-            const finalSize = ["fa", "ar"].includes(locale)
-              ? toPersianDigits(parts)
-              : parts;
-            return (
-              <span key={size} dir="rtl">
-                {finalSize}
-              </span>
-            );
-          })}
+          <sapn>{item.title}</sapn>
         </div>
       </div>
       <button
         onClick={() => {
           setOpenModal(false);
-          router.push(localizedHref(`/products/${item?.title}`));
+          router.push(localizedHref(`/products/${item?.slug}`));
         }}
         className="px-[30px] py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer"
       >
@@ -387,4 +386,18 @@ function ItemOther({ setOpenModal, item }) {
                     />
                   </a>
                 </div> */
+}
+
+{
+  /* {item.sizes.map((size) => {
+            const parts = size.split("x").reverse().join("x");
+            const finalSize = ["fa", "ar"].includes(locale)
+              ? toPersianDigits(parts)
+              : parts;
+            return (
+              <span key={size} dir="rtl">
+                {finalSize}
+              </span>
+            );
+          })} */
 }

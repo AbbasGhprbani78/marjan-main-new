@@ -14,7 +14,7 @@ export default function Categories({ data }) {
   const { localizedHref } = useLocalizedLink();
 
   const baseUrl = "/products";
-  const industrieValues = data.map((item) => item.value).join(",");
+  const industrieValues = data.map((item) => item.value).join("|");
   const queryString = `?industrie=${encodeURIComponent(
     industrieValues
   )}&page=1`;

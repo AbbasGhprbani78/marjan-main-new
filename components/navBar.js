@@ -696,7 +696,7 @@ function SearchItem({ item }) {
         text={t("View")}
         width={100}
         height={40}
-        href={`/products/${item?.title}`}
+        href={`/products/${item?.slug}`}
       />
     </div>
   );
@@ -1212,39 +1212,3 @@ function MenuLink({ href, children, className = "", onClick }) {
     </Link>
   );
 }
-
-// useEffect(() => {
-//   const cookieLang = document.cookie
-//     .split("; ")
-//     .find((row) => row.startsWith("lang="))
-//     ?.split("=")[1];
-
-//   if (cookieLang && cookieLang !== locale) {
-//     const segments = pathname.split("/").filter(Boolean);
-//     if (["fa", "en", "ar", "ru"].includes(segments[0])) {
-//       segments[0] = cookieLang;
-//     } else {
-//       segments.unshift(cookieLang);
-//     }
-//     const newPathname = "/" + segments.join("/");
-//     router.replace(newPathname);
-//   }
-// }, [locale, pathname]);
-
-// useEffect(() => {
-//   const cookieLang = document.cookie
-//     .split("; ")
-//     .find((row) => row.startsWith("lang="))
-//     ?.split("=")[1];
-
-//   if (cookieLang && cookieLang !== locale) {
-//     const segments = pathname.split("/").filter(Boolean);
-//     if (["fa", "en", "ar", "ru"].includes(segments[0])) {
-//       segments[0] = cookieLang;
-//     } else {
-//       segments.unshift(cookieLang);
-//     }
-//     const newPathname = "/" + segments.join("/");
-//     router.replace(newPathname);
-//   }
-// }, [locale, pathname]);

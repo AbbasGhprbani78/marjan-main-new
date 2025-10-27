@@ -30,34 +30,37 @@ export default function Footer() {
       <div className="hidden md:block w-full min-h-[210px] bg-gray-400 md:px-40 lg:px-80 pb-[21px] pt-[33px]">
         <TextRow
           icon="Location"
-          text={`${t("AddressTitleF")} : ${footerData?.address}`}
+          text={
+            <>
+              <span className="font-semibold">{t("AddressTitleF")}</span> :{" "}
+              {footerData?.address}
+            </>
+          }
         />
+
         <div className="flex items-center justify-between mt-[1.3rem]">
           <TextRow
             icon="DirectboxNotif"
-            text={`${t("Postal Code")}: ${
-              ["fa", "ar"].includes(locale)
-                ? toPersianDigits(footerData?.postal_code)
-                : footerData?.postal_code
-            }`}
+            text={
+              <>
+                <span className="font-semibold">{t("Postal Code")}</span> :{" "}
+                {["fa", "ar"].includes(locale)
+                  ? toPersianDigits(footerData?.postal_code)
+                  : footerData?.postal_code}
+              </>
+            }
           />
         </div>
         <div className="flex items-center justify-between mt-[1.3rem]">
           <TextRow
             icon="Call"
             text={
-              t("Phone") +
-              ` : ${
-                ["fa", "ar"].includes(locale)
+              <>
+                <span className="font-semibold">{t("Phone")}</span> :{" "}
+                {["fa", "ar"].includes(locale)
                   ? toPersianDigits(footerData?.phone)
-                  : footerData?.phone
-              }   ` +
-              t("Fax") +
-              ` : ${
-                ["fa", "ar"].includes(locale)
-                  ? toPersianDigits(footerData?.fax)
-                  : footerData?.fax
-              }`
+                  : footerData?.phone}
+              </>
             }
           />
 
@@ -119,9 +122,28 @@ export default function Footer() {
         </div>
         <div className="flex items-center justify-between mt-[1.3rem]">
           <TextRow
-            icon="SmsTracking"
-            text={t("Email") + " : info@marjantileco.com"}
+            icon={"Printer"}
+            text={
+              <>
+                <span className="font-semibold">{t("Fax")}</span> :{" "}
+                {["fa", "ar"].includes(locale)
+                  ? toPersianDigits(footerData?.fax)
+                  : footerData?.fax}
+              </>
+            }
           />
+        </div>
+        <div className="flex items-center justify-between mt-[1.3rem]">
+          <TextRow
+            icon="SmsTracking"
+            text={
+              <>
+                <span className="font-semibold">{t("Email")}</span>:
+                info@marjantileco.com
+              </>
+            }
+          />
+
           <p className="text-[14px] font-[600]">
             © 2025
             <span className="underline underline-offset-4">MarjanTile</span>.
@@ -129,43 +151,61 @@ export default function Footer() {
           </p>
         </div>
       </div>
-
       <div className="px-20 md:hidden pt-[33px]">
         <div className="flex flex-col gap-[1rem]">
           <TextRow
             icon="Location"
-            text={`${t("AddressTitleF")} : ${footerData?.address}`}
+            text={
+              <>
+                <span className="font-semibold">{t("AddressTitleF")}</span> :{" "}
+                {footerData?.address}
+              </>
+            }
           />
           <TextRow
             icon="DirectboxNotif"
-            text={`${t("Postal Code")}: ${
-              ["fa", "ar"].includes(locale)
-                ? toPersianDigits(footerData?.postal_code)
-                : footerData?.postal_code
-            }`}
+            text={
+              <>
+                <span className="font-semibold">{t("Postal Code")}</span> :{" "}
+                {["fa", "ar"].includes(locale)
+                  ? toPersianDigits(footerData?.postal_code)
+                  : footerData?.postal_code}
+              </>
+            }
           />
           <TextRow
             icon="Call"
             text={
-              t("Phone") +
-              ` : ${
-                ["fa", "ar"].includes(locale)
+              <>
+                <span className="font-semibold">{t("Phone")}</span> :{" "}
+                {["fa", "ar"].includes(locale)
                   ? toPersianDigits(footerData?.phone)
-                  : footerData?.phone
-              }   ` +
-              t("Fax") +
-              ` : ${
-                ["fa", "ar"].includes(locale)
+                  : footerData?.phone}
+              </>
+            }
+          />
+          <TextRow
+            icon={"Printer"}
+            text={
+              <>
+                <span className="font-semibold">{t("Fax")}</span> :{" "}
+                {["fa", "ar"].includes(locale)
                   ? toPersianDigits(footerData?.fax)
-                  : footerData?.fax
-              }`
+                  : footerData?.fax}
+              </>
             }
           />
           <TextRow
             icon="SmsTracking"
-            text={`${t("Email")} : ${footerData?.email}`}
+            text={
+              <>
+                <span className="font-semibold">{t("Email")}</span> :{" "}
+                {footerData?.email}
+              </>
+            }
           />
         </div>
+
         <div className="flex flex-col gap-[2rem] mt-[3rem] items-center pb-[1.5rem]">
           <div className="flex gap-[20px] items-center">
             <a href="https://www.pinterest.com/marjantileco/" target="_blank">
@@ -230,11 +270,10 @@ export default function Footer() {
     </footer>
   );
 }
-
 function TextRow({ text, icon }) {
   const Icon = Icons[icon];
   return (
-    <div className="flex items-start  gap-7">
+    <div className="flex items-start gap-7">
       <div className="min-w-[24px] min-h-[24px] flex-shrink-0">
         <Icon size={24} className="text-inherit" variant="Bold" />
       </div>

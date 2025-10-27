@@ -25,7 +25,9 @@ export default function MySelect({
 
   const options = data.map((item) => ({
     value: item.id,
-    label: locale === "fa" ? toPersianDigits(item.name) : item.name,
+    label: ["fa", "ar"].includes(locale)
+      ? toPersianDigits(item.name)
+      : item.name,
   }));
 
   const selectedOption =

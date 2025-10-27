@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import ReadMoreText from "@/components/Projects/ReadMoreText";
 import Gallery from "@/components/Projects/Gallery";
 import Products from "@/components/Projects/Products";
@@ -23,6 +24,12 @@ export default async function page({ params }) {
   const { locale } = await params;
   const { slug } = await params;
   const singleData = await fetchSingleProjects(locale, slug);
+
+  // If API returns 404 (null), redirect to NotFound page
+  if (!singleData) {
+    notFound();
+  }
+
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
 
@@ -36,6 +43,8 @@ export default async function page({ params }) {
           alt="image project"
           className="object-cover"
           style={{ maxHeight: "550px", width: "100%" }}
+          unoptimized
+          quality={100}
         />
         <div
           className="absolute inset-0 bg-black/50 z-10"

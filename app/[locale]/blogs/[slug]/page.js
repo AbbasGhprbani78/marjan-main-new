@@ -5,6 +5,7 @@ import { fetchSingleBlog } from "@/services/singleBlog";
 import Image from "next/image";
 import React from "react";
 import DOMPurify from "dompurify";
+import { notFound } from "next/navigation";
 import translations from "@/components/module/translations";
 
 export const revalidate = 300;
@@ -25,6 +26,10 @@ export default async function page({ params }) {
   const { slug } = await params;
   const singleBlog = await fetchSingleBlog(locale, slug);
 
+  if (!singleBlog) {
+    notFound();
+  }
+
   return (
     <main className="wrapper ">
       <h1 className="sr-only">وبلاگ</h1>
@@ -35,6 +40,8 @@ export default async function page({ params }) {
             fill
             alt="image project "
             className="object-cover"
+            unoptimized
+            quality={100}
           />
           <div className="absolute inset-0 bg-black/50 z-10" />
           <p

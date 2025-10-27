@@ -42,12 +42,10 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
     }
   };
 
-  console.log(product?.new_collection);
-
   return (
     <div className="mb-[30px] box-border cursor-pointer">
       <Link
-        href={localizedHref(`/products/${product?.title}`)}
+        href={localizedHref(`/products/${product?.slug}`)}
         className="block"
       >
         <div className="aspect-[4/2]  h-full  relative overflow-hidden">

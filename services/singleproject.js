@@ -11,6 +11,9 @@ export const fetchSingleProjects = async (lang, slug) => {
   );
 
   if (!res.ok) {
+    if (res.status === 404) {
+      return null; // Return null for 404 errors instead of throwing
+    }
     throw new Error("Failed to fetch posts");
   }
 
