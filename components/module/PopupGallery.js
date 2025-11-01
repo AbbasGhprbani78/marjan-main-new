@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import * as Icons from "iconsax-reactjs";
 import { useTranslation } from "@/context/TranslationContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const getMaxDimension = (sizes) => {
   let max = 0;
@@ -17,14 +17,14 @@ const getMaxDimension = (sizes) => {
   return max || 1;
 };
 
-const getScaledSize = (size, maxDimension, scale = 300) => {
+const getScaledSize = (size, maxDimension, scale = 300, isrevers = false) => {
   if (!size) return { width: scale, height: scale };
   const parts = size.split(/[*xX×]/i).map(Number);
   if (parts.length !== 2) return { width: scale, height: scale };
   const [h, w] = parts;
   return {
-    width: (w / maxDimension) * scale,
-    height: (h / maxDimension) * scale,
+    width: isrevers ? (h / maxDimension) * scale : (w / maxDimension) * scale,
+    height: isrevers ? (w / maxDimension) * scale : (h / maxDimension) * scale,
   };
 };
 
@@ -34,9 +34,23 @@ export default function PopupGallery({
   sizes = [],
   setOpen,
   isdownload = true,
+  isrevers = false,
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { t } = useTranslation();
+
+  const [vhScale, setVhScale] = useState(
+    typeof window !== "undefined" ? window.innerHeight * 0.6 : 300
+  );
+
+  useEffect(() => {
+    const updateVhScale = () => {
+      setVhScale(window.innerHeight * 0.6);
+    };
+    updateVhScale();
+    window.addEventListener("resize", updateVhScale);
+    return () => window.removeEventListener("resize", updateVhScale);
+  }, []);
 
   const prevImage = () => {
     setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));
@@ -67,7 +81,12 @@ export default function PopupGallery({
   let width, height;
   if (hasSizes) {
     const maxDim = getMaxDimension(sizes);
-    ({ width, height } = getScaledSize(sizes[currentIndex], maxDim, 300));
+    ({ width, height } = getScaledSize(
+      sizes[currentIndex],
+      maxDim,
+      vhScale,
+      isrevers
+    ));
   }
 
   return (

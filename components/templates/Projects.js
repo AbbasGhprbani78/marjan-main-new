@@ -216,7 +216,6 @@ export default function Projects({ data, categories }) {
                   <h3 className="text-lg font-semibold mb-2">
                     {t("NoResultsTitle")}
                   </h3>
-                  <p>{t("NoResultsMessage")}</p>
                 </div>
               </>
             )}

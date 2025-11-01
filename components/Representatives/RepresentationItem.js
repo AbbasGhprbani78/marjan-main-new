@@ -20,14 +20,14 @@ export default function RepresentationItem({ city, onAddressClick }) {
     <article className="text-[var(--color-gray-900)] mb-[2rem]">
       <h2 className="font-semi text-[1.2rem] mb-[1.2rem]">{city.store_name}</h2>
 
-      <p>
+      <p className="text-rep text-start">
         <span className="font-semibold text-[.9rem]">{t("AgencyName")} : </span>
         <span className="text-[.9rem]">{city.agency_name}</span>
       </p>
       {city.address && (
         <p
           onClick={() => onAddressClick && onAddressClick(city)}
-          className="cursor-pointer hover:text-blue-600 transition-colors"
+          className="cursor-pointer hover:text-blue-600 transition-colors  text-start"
         >
           <span className="font-semibold text-[.9rem] ">{t("Address")} : </span>
           <span className="text-[.9rem]">
@@ -39,7 +39,7 @@ export default function RepresentationItem({ city, onAddressClick }) {
       )}
 
       {city?.phone && (
-        <p>
+        <p className="text-rep text-start">
           <span className="font-semibold text-[.9rem]">{t("Phone")} : </span>
           <span className="text-[.9rem]">
             {["fa", "ar"].includes(locale)
@@ -50,7 +50,7 @@ export default function RepresentationItem({ city, onAddressClick }) {
       )}
 
       {city?.postal_code && (
-        <p>
+        <p className="text-rep text-start">
           <span className="font-semibold text-[.9rem]">
             {t("Postal Code")} :{" "}
           </span>

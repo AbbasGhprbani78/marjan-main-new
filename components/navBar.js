@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import * as Icons from "iconsax-reactjs";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MoreButton } from "./moreButton";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -609,6 +609,7 @@ export default function BoxSearch({ showBox }) {
   const { t, locale } = useTranslation();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -642,7 +643,11 @@ export default function BoxSearch({ showBox }) {
   };
 
   useEffect(() => {
-    if (!showBox) {
+    if (showBox) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    } else {
       setQuery("");
     }
   }, [showBox]);
@@ -655,6 +660,7 @@ export default function BoxSearch({ showBox }) {
     >
       <div className="bg-white rounded-[50px] py-[7px] px-[15px] flex items-center justify-between">
         <input
+          ref={inputRef}
           type="text"
           autoComplete="off"
           maxLength={50}

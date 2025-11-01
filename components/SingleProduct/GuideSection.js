@@ -1,16 +1,13 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as Icons from "iconsax-reactjs";
 import Modal from "../module/Modal";
-import Input from "../module/Input";
-import SelectDropDown from "../module/SelectDropDown";
-import Button2 from "../module/Button2";
 import Table from "../module/Table";
 import { useLocalizedLink } from "@/utils/helper";
 import { useTranslation } from "@/context/TranslationContext";
 import QuestionForm from "../module/QuestionForm";
-import { successMessage, ToastContainerCustom } from "../module/Toast";
+import { ToastContainerCustom } from "../module/Toast";
 export default function GuideSection({
   text,
   icon,
@@ -105,10 +102,11 @@ export default function GuideSection({
           ) : typeModel == "categories" ? (
             <>
               <Table
+                isEn={true}
                 columns={[
-                  t("Size"),
+                  t("Size_table"),
                   t("palet_size"),
-                  t("Thickness"),
+                  t("Thickness_Technical"),
                   t("Tiles per Carton"),
                   t("Tile Area per Carton (m²)"),
                   t("Approx. Weight per Carton (kg)"),
@@ -117,9 +115,9 @@ export default function GuideSection({
                   t("Approx. Weight per Pallet (kg)"),
                 ]}
                 data={dataPack.map((item) => ({
-                  [t("Size")]: item.size || "-",
+                  [t("Size_table")]: item.size || "-",
                   [t("palet_size")]: item?.palet_size || "-",
-                  [t("Thickness")]: item?.thickness || "-",
+                  [t("Thickness_Technical")]: item?.thickness || "-",
                   [t("Tiles per Carton")]:
                     item.number_of_tiles_per_carton || "-",
                   [t("Tile Area per Carton (m²)")]:
@@ -137,8 +135,9 @@ export default function GuideSection({
           ) : typeModel == "properties" ? (
             <>
               <Table
+                isEn={true}
                 columns={[
-                  t("Size"),
+                  t("Size_table"),
                   t("Abrasion Resistance"),
                   t("Breaking Strength"),
                   t("Chemical Resistance"),
@@ -153,11 +152,11 @@ export default function GuideSection({
                   t("Straightness of Sides"),
                   t("Surface Flatness"),
                   t("Thermal Shock Resistance"),
-                  t("Thickness"),
+                  t("Thickness_Technical"),
                   t("Water Absorption"),
                 ]}
                 data={dataTechnical.map((item) => ({
-                  [t("Size")]: item.size || "-",
+                  [t("Size_table")]: item.size || "-",
                   [t("Abrasion Resistance")]:
                     item.specifications?.abrasion_resistance || "-",
                   [t("Breaking Strength")]:
@@ -187,7 +186,8 @@ export default function GuideSection({
                     item.specifications?.surface_flatness || "-",
                   [t("Thermal Shock Resistance")]:
                     item.specifications?.thermal_shock_resistance || "-",
-                  [t("Thickness")]: item.specifications?.thickness || "-",
+                  [t("Thickness_Technical")]:
+                    item.specifications?.thickness || "-",
                   [t("Water Absorption")]:
                     item.specifications?.water_absorption || "-",
                 }))}

@@ -8,7 +8,7 @@ import { useTranslation } from "@/context/TranslationContext";
 import MySelect from "../module/SelectDropDown";
 import { toPersianDigits } from "@/utils/helper";
 
-export default function Texture({ textureImage }) {
+export default function Texture({ textureImage, isrevers = false }) {
   const [showTexture, setShowTexture] = useState(false);
   const [tailesToShow, setTailesToShow] = useState([]);
   const [activeColor, setActiveColor] = useState(null);
@@ -39,14 +39,16 @@ export default function Texture({ textureImage }) {
     return max || 1;
   };
 
-  const getScaledSize = (size, maxDimension, scale = 150) => {
+  const getScaledSize = (size, maxDimension, scale = 180) => {
     if (!size) return { width: scale, height: scale };
     const parts = size.split(/[*xX×]/i).map(Number);
     if (parts.length !== 2) return { width: scale, height: scale };
     const [h, w] = parts;
     return {
-      width: (w / maxDimension) * scale,
-      height: (h / maxDimension) * scale,
+      width: isrevers ? (h / maxDimension) * scale : (w / maxDimension) * scale,
+      height: isrevers
+        ? (w / maxDimension) * scale
+        : (h / maxDimension) * scale,
     };
   };
 
@@ -170,7 +172,7 @@ export default function Texture({ textureImage }) {
                     const { width, height } = getScaledSize(
                       tile?.size,
                       maxDim,
-                      150
+                      180
                     );
                     const showMore =
                       fullTiles.length > 4 && index === tailesToShow.length - 1;
@@ -211,6 +213,7 @@ export default function Texture({ textureImage }) {
                   open={open}
                   setOpen={setOpen}
                   isdownload={true}
+                  isrevers={isrevers}
                 />
               </div>
             </div>
@@ -242,7 +245,7 @@ export default function Texture({ textureImage }) {
                                 style={getScaledSize(
                                   group[0]?.size,
                                   maxDim,
-                                  150
+                                  180
                                 )}
                                 onClick={() =>
                                   handleTileGroupClick(group, "horizontal", key)
@@ -283,7 +286,7 @@ export default function Texture({ textureImage }) {
                                 style={getScaledSize(
                                   group[0]?.size,
                                   maxDim,
-                                  150
+                                  180
                                 )}
                                 onClick={() =>
                                   handleTileGroupClick(group, "vertical", key)

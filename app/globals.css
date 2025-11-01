@@ -197,6 +197,14 @@ body {
   direction: rtl;
 }
 
+.text-rep {
+  all: revert;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
 @layer utilities {
   .text-stroke-gold {
     text-shadow: -1px -1px 0 #ecd993, 1px -1px 0 #ecd993, -1px 1px 0 #ecd993,

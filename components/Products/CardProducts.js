@@ -31,7 +31,6 @@ export default function CardProducts({ products, isLoading }) {
       >
         <Icons.SearchNormal size={48} className="mb-4" />
         <h3 className="text-lg font-semibold mb-2">{t("NoResultsTitle")}</h3>
-        <p>{t("NoResultsMessage")}</p>
       </div>
     );
   }

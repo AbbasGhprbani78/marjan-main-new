@@ -11,7 +11,7 @@ import GuideSection from "@/components/SingleProduct/GuideSection";
 import VideoContainer from "@/components/SingleProduct/VideoContainer";
 import ProjectsContainer from "@/components/SingleProduct/ProjectsContainer";
 import ReadMoreText from "@/components/module/ReadMoreText";
-import { fetchSingleProduct, getSubjects } from "@/services/singleProduct";
+import { fetchSingleProduct } from "@/services/singleProduct";
 import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
 import { notFound } from "next/navigation";
@@ -38,6 +38,8 @@ export default async function page({ params }) {
     const dataSingleProduct = await fetchSingleProduct(locale, slug);
     const dictArray = await fetchTranslateWords(locale);
     const dict = buildDictionary(dictArray);
+
+    console.log(dataSingleProduct);
 
     return (
       <div className="wrapper">
@@ -118,7 +120,16 @@ export default async function page({ params }) {
           )}
           {dataSingleProduct?.Tiles.length > 0 && (
             <div className="  pb-40 pt-[40px]" id="colors">
-              <Texture textureImage={dataSingleProduct?.Tiles} />
+              <Texture
+                textureImage={dataSingleProduct?.Tiles}
+                isrevers={
+                  dataSingleProduct?.title === "Embossed Elegance" ||
+                  dataSingleProduct?.title === "embossed elegance" ||
+                  dataSingleProduct?.title === "Embossed elegance" ||
+                  dataSingleProduct?.title === "EmbossedElegance" ||
+                  dataSingleProduct?.title === "embossedelegance"
+                }
+              />
             </div>
           )}
         </div>

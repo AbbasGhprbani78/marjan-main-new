@@ -110,42 +110,38 @@ export default function AllProducts({ categories, products }) {
       if (searchTerm.trim().length >= 2) {
         const lowerSearch = searchTerm.toLowerCase();
         const normalizedSearch = normalizeNumbers(lowerSearch);
-
         const inTitle = String(product.title || "")
           .toLowerCase()
           .includes(lowerSearch);
-
-        const inCode = (product.tile_variants || []).some((variant) => {
-          const variantCode = String(variant.code || "").toLowerCase();
-          const normalizedVariantCode = normalizeNumbers(variantCode);
-
-          return (
-            variantCode.includes(lowerSearch) ||
-            normalizedVariantCode.includes(normalizedSearch) ||
-            variantCode.includes(normalizedSearch) ||
-            normalizedVariantCode.includes(lowerSearch)
-          );
+        const inCode = (product.tile_variants || []).some((group) => {
+          const groupVariants = Array.isArray(group?.variants)
+            ? group.variants
+            : [group];
+          return groupVariants.some((variant) => {
+            const variantCode = String(variant?.code || "").toLowerCase();
+            const normalizedVariantCode = normalizeNumbers(variantCode);
+            return (
+              variantCode.includes(lowerSearch) ||
+              normalizedVariantCode.includes(normalizedSearch) ||
+              variantCode.includes(normalizedSearch) ||
+              normalizedVariantCode.includes(lowerSearch)
+            );
+          });
         });
-
         if (!inTitle && !inCode) return false;
       }
-
       return Object.entries(filters).every(([key, values]) => {
         if (!values?.length) return true;
-
         const keyLower = String(key).toLowerCase();
         const productKey = filterKeyMap[keyLower];
         if (!productKey) return true;
-
         const field = product?.[productKey];
         if (field == null) return false;
-
         const selectedStrs = values.map((val) =>
           productKey === "sizes" || keyLower === "size"
             ? normSize(val)
             : normStr(val)
         );
-
         if (keyLower === "thicknesses" || keyLower === "thickness") {
           const productNum = normThickness(field);
           return (
@@ -153,14 +149,12 @@ export default function AllProducts({ categories, products }) {
             selectedStrs.some((val) => normThickness(val) === productNum)
           );
         }
-
         if (Array.isArray(field)) {
           const normalizedField = field.map((f) =>
             productKey === "sizes" ? normSize(f) : normStr(f)
           );
           return selectedStrs.some((val) => normalizedField.includes(val));
         }
-
         return selectedStrs.some(
           (val) =>
             (productKey === "sizes" ? normSize(field) : normStr(field)) === val
@@ -171,7 +165,7 @@ export default function AllProducts({ categories, products }) {
 
   const productsToShow = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+    return filteredProducts?.slice(startIndex, startIndex + itemsPerPage);
   }, [filteredProducts, currentPage]);
 
   useEffect(() => {
@@ -240,6 +234,8 @@ export default function AllProducts({ categories, products }) {
   const hasActiveFilters = Object.entries(filters).some(
     ([key, value]) => key !== "page" && Array.isArray(value) && value.length > 0
   );
+
+  console.log(products);
 
   return (
     <main className="px-20 md:px-40 lg:px-80">
@@ -339,7 +335,7 @@ export default function AllProducts({ categories, products }) {
         </aside>
         <section className="lg:col-span-9 mt-[116px] md:mt-0">
           <CardProducts products={productsToShow} isLoading={isLoading} />
-          {productsToShow.length > 0 && (
+          {productsToShow?.length > 0 && (
             <Pagination
               currentPage={currentPage}
               totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}

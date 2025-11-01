@@ -2,6 +2,8 @@ import Image from "next/image";
 import React from "react";
 
 export default function CirecleProductItem({ item, index }) {
+  const imagePath = item?.image || item?.variants?.[0]?.image;
+  if (!imagePath) return null;
   return (
     <div
       className={`w-[30px] h-[30px] rounded-full overflow-hidden relative -me-12 z-[${
@@ -9,7 +11,7 @@ export default function CirecleProductItem({ item, index }) {
       }] transition-transform duration-300 ease-in-out hover:-translate-y-4 shadow-[0_2px_2px_rgba(0,0,0,0.4)]`}
     >
       <Image
-        src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
+        src={`${process.env.NEXT_PUBLIC_API_URL}${imagePath}`}
         fill
         alt="product-circle"
         className="object-cover overflow-hidden"

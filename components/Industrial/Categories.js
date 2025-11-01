@@ -48,6 +48,9 @@ export default function Categories({ data }) {
               alt={selectedCategory.value}
               fill
               className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
+              unoptimized
+              quality={100}
+              priority
             />
           </div>
         </Link>

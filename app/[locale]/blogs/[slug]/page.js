@@ -4,12 +4,12 @@ import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchSingleBlog } from "@/services/singleBlog";
 import Image from "next/image";
 import React from "react";
-import DOMPurify from "dompurify";
 import { notFound } from "next/navigation";
 import translations from "@/components/module/translations";
+import Blog from "@/components/templates/Blog";
 
-export const revalidate = 300;
-export const dynamicParams = true;
+// export const revalidate = 300;
+// export const dynamicParams = true;
 
 export async function generateMetadata({ params }) {
   const locale = params?.locale || "en";
@@ -25,7 +25,7 @@ export default async function page({ params }) {
   const { locale } = await params;
   const { slug } = await params;
   const singleBlog = await fetchSingleBlog(locale, slug);
-
+  console.log(singleBlog);
   if (!singleBlog) {
     notFound();
   }
@@ -52,34 +52,64 @@ export default async function page({ params }) {
             {singleBlog?.title}
           </p>
         </section>
-        <section className="mt-[2rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)] font-normal  pb-[2rem]">
-          {singleBlog.text && (
-            <div className="leading-[30px] ">
-              <ReadMoreText text={singleBlog?.text} />
-            </div>
-          )}
+        {singleBlog?.category?.title?.toLowerCase() === "articles" ? (
+          <Blog content={singleBlog?.rich_text} />
+        ) : (
+          <section className="mt-[2rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)] font-normal  pb-[2rem]">
+            {singleBlog.text && (
+              <div className="leading-[30px] ">
+                <ReadMoreText text={singleBlog?.text} />
+              </div>
+            )}
 
-          {singleBlog?.media_files.length > 0 && (
-            <div className="mt-[1rem] lg:mt-[2rem] w-full">
-              <GallerySingleBlog
-                media={singleBlog?.media_files?.map((media) => media.url)}
-              />
-            </div>
-          )}
+            {singleBlog?.media_files.length > 0 && (
+              <div className="mt-[1rem] lg:mt-[2rem] w-full">
+                <GallerySingleBlog
+                  media={singleBlog?.media_files?.map((media) => media.url)}
+                />
+              </div>
+            )}
 
-          {singleBlog?.text_two && (
-            <div className="leading-[30px]  mt-[1rem]  lg:mt-[2rem] ">
-              <ReadMoreText text={singleBlog?.text_two} />
-            </div>
-          )}
+            {singleBlog?.text_two && (
+              <div className="leading-[30px]  mt-[1rem]  lg:mt-[2rem] ">
+                <ReadMoreText text={singleBlog?.text_two} />
+              </div>
+            )}
 
-          {(singleBlog.aparat_video || singleBlog.media) && (
-            <BlogVideo singleBlog={singleBlog} />
-          )}
-        </section>
+            {(singleBlog.aparat_video || singleBlog.media) && (
+              <BlogVideo singleBlog={singleBlog} />
+            )}
+          </section>
+        )}
       </article>
     </main>
   );
 }
 
-//dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(singleBlog) }}
+{
+  /* <section className="mt-[2rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)] font-normal  pb-[2rem]">
+  {singleBlog.text && (
+    <div className="leading-[30px] ">
+      <ReadMoreText text={singleBlog?.text} />
+    </div>
+  )}
+
+  {singleBlog?.media_files.length > 0 && (
+    <div className="mt-[1rem] lg:mt-[2rem] w-full">
+      <GallerySingleBlog
+        media={singleBlog?.media_files?.map((media) => media.url)}
+      />
+    </div>
+  )}
+
+  {singleBlog?.text_two && (
+    <div className="leading-[30px]  mt-[1rem]  lg:mt-[2rem] ">
+      <ReadMoreText text={singleBlog?.text_two} />
+    </div>
+  )}
+
+  {(singleBlog.aparat_video || singleBlog.media) && (
+    <BlogVideo singleBlog={singleBlog} />
+  )}
+</section>; */
+}

@@ -81,7 +81,6 @@ export default function Representatives({ representatives }) {
       .then((res) => {
         const { x: latitude, y: longitude } = res.data;
 
-        console.log(latitude, longitude);
         const closestCity = findClosestRepresentative(latitude, longitude);
 
         if (closestCity && !initialCitySet) {
@@ -123,9 +122,11 @@ export default function Representatives({ representatives }) {
             className={`overflow-y-auto flex-1 ${styles.wrapperRepresentation}`}
             aria-label="لیست نمایندگان"
           >
-            {selectedCity?.representatives?.map((rep) => (
+            {selectedCity?.representatives?.map((rep, index) => (
               <RepresentationItem
-                key={rep.id}
+                key={`${rep.id || "rep"}-${rep.phone || ""}-${
+                  rep.link || ""
+                }-${index}`}
                 city={rep}
                 onAddressClick={handleAddressClick}
               />

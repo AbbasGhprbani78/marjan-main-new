@@ -32,8 +32,6 @@ export default async function Home({ params }) {
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
 
-  console.log(dataHome);
-
   return (
     <div
       className={`wrapper w-full h-full ${
@@ -111,7 +109,13 @@ export default async function Home({ params }) {
         <p className="text-center md:text-start title font-[500] text-gray-white mb-[40px]">
           {dataHome?.about?.title}
         </p>
-        <div className="w-full lg:w-[60dvw] xl:w-[38dvw] ">
+        <div
+          className={`w-full   ${
+            ["en", "ru"].includes(locale) ? "lg:w-[51dvw]" : "lg:lg:w-[60dvw]"
+          }  ${
+            ["en", "ru"].includes(locale) ? "xl:w-[29dvw]" : "xl:w-[38dvw]"
+          }`}
+        >
           <div className=" mb-[35px] md:mb-[20px]">
             <ReadMoreText
               text={dataHome.about.description}
