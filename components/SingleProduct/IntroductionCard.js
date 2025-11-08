@@ -34,7 +34,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
   return (
     <>
       <div className="hidden md:grid grid-cols-12 md:w-[95vw] lg:w-[90vw] md:min-h-[90dvh] mx-auto">
-        <div className="col-span-12 md:col-span-6 xl:col-span-5 h-full text-[var(--color-gray-900)] bg-white p-[1.2rem] ">
+        <div className="col-span-12 md:col-span-5  xl:col-span-4 h-full text-[var(--color-gray-900)] bg-white p-[1.2rem] ">
           <div className="flex items-center justify-between mb-[1rem] md:mb-[2rem]">
             <span className="text-[1.3rem] font-inherit">
               {singleProduct.title}
@@ -84,7 +84,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
           </div>
         </div>
 
-        <div className="col-span-12 md:col-span-6 xl:col-span-7 relative">
+        <div className="col-span-12 md:col-span-7  xl:col-span-8 relative">
           <div className="relative h-[25dvh] md:h-full">
             <Image
               src={`${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`}

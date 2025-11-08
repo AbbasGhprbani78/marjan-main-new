@@ -8,8 +8,8 @@ import { notFound } from "next/navigation";
 import translations from "@/components/module/translations";
 import Blog from "@/components/templates/Blog";
 
-// export const revalidate = 300;
-// export const dynamicParams = true;
+export const revalidate = 300;
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }) {
   const locale = params?.locale || "en";
@@ -25,7 +25,7 @@ export default async function page({ params }) {
   const { locale } = await params;
   const { slug } = await params;
   const singleBlog = await fetchSingleBlog(locale, slug);
-  console.log(singleBlog);
+
   if (!singleBlog) {
     notFound();
   }

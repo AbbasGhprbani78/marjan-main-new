@@ -4,13 +4,13 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "marjanapi.nobinco.com",
-        pathname: "/images/**",
+        hostname: "marjantileco.com",
+        pathname: "/api/images/**",
       },
       {
         protocol: "https",
-        hostname: "marjanapi.nobinco.com",
-        pathname: "/media/**",
+        hostname: "marjantileco.com",
+        pathname: "/api/media/**",
       },
     ],
   },

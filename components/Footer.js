@@ -151,6 +151,7 @@ export default function Footer() {
           </p>
         </div>
       </div>
+
       <div className="px-20 md:hidden pt-[33px]">
         <div className="flex flex-col gap-[1rem]">
           <TextRow
@@ -178,12 +179,15 @@ export default function Footer() {
             text={
               <>
                 <span className="font-semibold">{t("Phone")}</span> :{" "}
-                {["fa", "ar"].includes(locale)
-                  ? toPersianDigits(footerData?.phone)
-                  : footerData?.phone}
+                <a href={`tel:${footerData?.phone}`}>
+                  {["fa", "ar"].includes(locale)
+                    ? toPersianDigits(footerData?.phone)
+                    : footerData?.phone}
+                </a>
               </>
             }
           />
+
           <TextRow
             icon={"Printer"}
             text={

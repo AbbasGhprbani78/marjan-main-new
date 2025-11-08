@@ -40,9 +40,9 @@ export default function ContactusItem({ info, onLocationClick }) {
       >
         <p className="font-normal text-[.9rem]">
           <span className="font-medium text-[1rem]">{t("PhoneNumber")} : </span>
-          <span itemProp="name">
+          <a href={`tel:${info.phone}`} itemProp="name">
             {locale === "fa" ? toPersianDigits(info.phone) : info.phone}
-          </span>
+          </a>
         </p>
 
         <p className="font-normal text-[.9rem]">

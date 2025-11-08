@@ -1,5 +1,5 @@
 .wrapperRepresentation {
-  max-height: calc(100dvh - 300px);
+  max-width: calc(100dvh - 300px);
 }
 @media (max-width: 1024px) {
   .mapContainer {
@@ -9,7 +9,7 @@
 
 @media (max-width: 768px) {
   .wrapperRepresentation {
-    max-height: 100%;
+    max-width: 100%;
   }
 }
 

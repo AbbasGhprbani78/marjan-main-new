@@ -40,12 +40,12 @@ export default function RepresentationItem({ city, onAddressClick }) {
 
       {city?.phone && (
         <p className="text-rep text-start">
-          <span className="font-semibold text-[.9rem]">{t("Phone")} : </span>
-          <span className="text-[.9rem]">
+          <span className="font-semibold text-[.9rem]">{t("Phone")} : </span>{" "}
+          <a href={`tel:${city.phone}`} className="text-[.9rem]">
             {["fa", "ar"].includes(locale)
               ? toPersianDigits(city.phone)
               : city.phone}
-          </span>
+          </a>
         </p>
       )}
 

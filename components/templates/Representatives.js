@@ -5,13 +5,40 @@ import MapWrapper from "../module/MapWrapper";
 import RepresentationItem from "../Representatives/RepresentationItem";
 import styles from "../../app/[locale]/representatives/representatives.module.css";
 import axios from "axios";
+import * as Icons from "iconsax-reactjs";
+import { Swiper, SwiperSlide } from "swiper/react";
+import {} from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
+function LeftArrow({ swiper }) {
+  return (
+    <button
+      className="cursor-pointer z-10 rounded-full"
+      onClick={() => swiper?.slidePrev()}
+    >
+      <Icons.ArrowLeft className="m-auto text-black w-25 h-25  " />
+    </button>
+  );
+}
+
+function RightArrow({ swiper }) {
+  return (
+    <button
+      className="cursor-pointer z-10 rounded-full"
+      onClick={() => swiper?.slideNext()}
+    >
+      <Icons.ArrowRight className="m-auto text-black w-25 h-25" />
+    </button>
+  );
+}
 export default function Representatives({ representatives }) {
   const [selectedCity, setSelectedCity] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [initialCitySet, setInitialCitySet] = useState(false);
   const [focusedRepresentative, setFocusedRepresentative] = useState(null);
-
+  const [swiperInstance, setSwiperInstance] = useState(null);
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -96,7 +123,7 @@ export default function Representatives({ representatives }) {
       <h1 className="sr-only">نمایندگان شرکت ما</h1>
 
       <div className="flex flex-col lg:grid lg:grid-cols-12 gap-[2rem] px-20 md:px-40 lg:px-80 pt-[140px] lg:pt-[120px] lg:pb-[3rem]">
-        <aside className="lg:col-span-4 xl:col-span-3 flex flex-col">
+        <aside className="lg:col-span-4 xl:col-span-3 flex flex-col relative">
           <SelectLocation
             locations={representatives}
             onCitySelect={setSelectedCity}
@@ -117,21 +144,33 @@ export default function Representatives({ representatives }) {
               focusedRep={focusedRepresentative}
             />
           </section>
+          {selectedCity?.representatives.length > 1 && (
+            <div className="flex items-center justify-between mb-[1rem]">
+              <RightArrow swiper={swiperInstance} />
+              <LeftArrow swiper={swiperInstance} />
+            </div>
+          )}
 
-          <div
-            className={`overflow-y-auto flex-1 ${styles.wrapperRepresentation}`}
-            aria-label="لیست نمایندگان"
+          <Swiper
+            onSwiper={setSwiperInstance}
+            className="my-swiper w-full max-w-full relative"
+            spaceBetween={0}
+            slidesPerView={1}
+            autoplay={{ disableOnInteraction: false }}
+            style={{ width: "100%", maxWidth: "100%" }}
           >
             {selectedCity?.representatives?.map((rep, index) => (
-              <RepresentationItem
-                key={`${rep.id || "rep"}-${rep.phone || ""}-${
-                  rep.link || ""
-                }-${index}`}
-                city={rep}
-                onAddressClick={handleAddressClick}
-              />
+              <SwiperSlide key={index} style={{ position: "relative" }}>
+                <RepresentationItem
+                  key={`${rep.id || "rep"}-${rep.phone || ""}-${
+                    rep.link || ""
+                  }-${index}`}
+                  city={rep}
+                  onAddressClick={handleAddressClick}
+                />
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </aside>
 
         <section
@@ -152,48 +191,3 @@ export default function Representatives({ representatives }) {
     </main>
   );
 }
-
-// useEffect(() => {
-//   fetch("https://ipwho.is")
-//     .then((res) => res.json())
-//     .then((data) => {
-//       if (data && data.latitude && data.longitude) {
-//         setUserLocation([data.latitude, data.longitude]);
-
-//         const closestCity = findClosestRepresentative(
-//           data.latitude,
-//           data.longitude
-//         );
-
-//         if (closestCity && !initialCitySet) {
-//           setSelectedCity(closestCity);
-//           setInitialCitySet(true);
-//         }
-//       }
-//     })
-//     .catch((err) => {
-//       console.error("Error fetching IP location:", err);
-//     });
-
-//   if (navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(
-//       (pos) => {
-//         const preciseLocation = [pos.coords.latitude, pos.coords.longitude];
-//         setUserLocation(preciseLocation);
-
-//         const closestCity = findClosestRepresentative(
-//           pos.coords.latitude,
-//           pos.coords.longitude
-//         );
-
-//         if (closestCity && !initialCitySet) {
-//           setSelectedCity(closestCity);
-//           setInitialCitySet(true);
-//         }
-//       },
-//       (err) => {
-//         console.error("Geolocation error:", err);
-//       }
-//     );
-//   }
-// }, [representatives, initialCitySet, findClosestRepresentative]);
