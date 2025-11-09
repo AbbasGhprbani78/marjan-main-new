@@ -67,7 +67,7 @@ export default function ChatBot({}) {
       };
 
       const res = await axios.post(
-        `https://api.nobinco.com/chat/product/productinfochatIP/`,
+        `https://marjantileco.com/api/chat/product/productinfochatIP/`,
         body,
         { headers }
       );
