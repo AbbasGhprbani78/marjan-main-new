@@ -37,7 +37,7 @@ export default function ProductChatItem({ item }) {
           <img
             src={
               item.image
-                ? `https://marjanapi.nobinco.com${item?.image}`
+                ? `https://api.nobinco.com/chat${item.image}`
                 : "/images/images.png"
             }
             alt="image"
