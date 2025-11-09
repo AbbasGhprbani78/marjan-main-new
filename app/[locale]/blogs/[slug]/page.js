@@ -39,7 +39,7 @@ export default async function page({ params }) {
             src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog?.image}`}
             fill
             alt="image project "
-            className="object-cover"
+            className="object-center"
             unoptimized
             quality={100}
           />

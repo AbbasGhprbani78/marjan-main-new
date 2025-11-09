@@ -89,7 +89,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
             <Image
               src={`${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`}
               alt="Introduction image"
-              className="object-cover"
+              className="object-center"
               fill
               quality={100}
               unoptimized
@@ -105,15 +105,18 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
           <div
             className={`absolute ${
               ["ar", "fa"].includes(locale) ? "right-0" : "left-0"
-            }  bottom-0 p-[1rem] w-max flex justify-end  z-50`}
+            } bottom-0 p-[1rem] w-max flex justify-end z-50`}
           >
-            <button onClick={handleShare} className="flex items-center gap-10">
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-2 bg-black/50 text-white px-6 py-3 rounded-lg backdrop-blur-sm"
+            >
               <span>{t("ShareOn")}</span>
               <Image
                 src="/images/share.png"
                 width={30}
                 height={30}
-                className="cursor-pointer mix-blend-multiply"
+                className="cursor-pointer mix-blend-normal invert"
                 alt="share"
               />
             </button>
