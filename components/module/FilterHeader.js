@@ -289,9 +289,9 @@ function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
     <Link
       href={`/products?${filterKey}=${encodeURIComponent(filterValue)}&page=1`}
       onClick={() => setShowFilterMenu(false)}
-      className="relative flex items-center justify-between px-20    h-[46px]  bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer"
+      className="relative flex items-center justify-between px-15    h-[46px]  bg-[#f7f5f4] text-[var(--color-gray-900)] cursor-pointer gap-5 "
     >
-      <span className="font-medium" dir="rtl">
+      <span className="font-medium text-[.9rem]" dir="rtl">
         {["fa", "ar"].includes(locale)
           ? toPersianDigits(displayText)
           : displayText}
@@ -303,12 +303,12 @@ function ItemFilterBox({ text, type, item, setShowFilterMenu }) {
             style={{
               width:
                 width && height
-                  ? `${(width / Math.max(width, height)) * 40}px`
-                  : "40px",
+                  ? `${(width / Math.max(width, height)) * 30}px`
+                  : "30px",
               height:
                 width && height
-                  ? `${(height / Math.max(width, height)) * 40}px`
-                  : "40px",
+                  ? `${(height / Math.max(width, height)) * 30}px`
+                  : "30px",
             }}
           />
         ) : (

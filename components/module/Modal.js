@@ -3,7 +3,12 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import * as Icons from "iconsax-reactjs";
 
-export default function Modal({ openModal, setOpenModal, children }) {
+export default function Modal({
+  openModal,
+  setOpenModal,
+  children,
+  customeWidth = false,
+}) {
   return (
     <AnimatePresence>
       {openModal && (
@@ -19,7 +24,9 @@ export default function Modal({ openModal, setOpenModal, children }) {
           ></div>
 
           <motion.div
-            className="z-50 w-[95%] lg:w-auto"
+            className={`z-50 w-[95%]  ${
+              customeWidth ? "lg:w-[95%]" : "lg:w-auto"
+            }`}
             initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 30 }}

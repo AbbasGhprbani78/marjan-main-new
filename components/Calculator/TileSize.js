@@ -45,7 +45,7 @@ export default function TileSize({
     <div>
       <p className=" font-[600] text-[1rem] pb-30">{t("Tilesize")}</p>
       <div className="grid grid-cols-12 items-start gap-[1rem]">
-        <div className="flex flex-col gap-[1rem] col-span-12 md:col-span-6 lg:col-span-4">
+        {/* <div className="flex flex-col gap-[1rem] col-span-12 md:col-span-6 lg:col-span-4">
           <p className="font-bold text-[.9rem]">{t("Duwt")}</p>
           <Options
             isTrue={isSameSize}
@@ -53,9 +53,9 @@ export default function TileSize({
             text1={t("Yes")}
             text2={t("No")}
           />
-        </div>
+        </div> */}
 
-        <div className="col-span-12 lg:col-span-8">
+        <div className="col-span-12 ">
           {isSameSize ? (
             <div className=" flex flex-col md:flex-row md:items-end gap-[1rem] justify-end">
               <span className="font-bold mt-[1.5rem]">

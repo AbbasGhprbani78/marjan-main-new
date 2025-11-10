@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import MySelect from "./../module/SelectDropDown";
 import * as Icons from "iconsax-reactjs";
 import { useTranslation } from "@/context/TranslationContext";
+import { toPersianDigits } from "@/utils/helper";
 
 export default function SelectSurfaceSizeRoom({
   setArea,
@@ -17,7 +18,7 @@ export default function SelectSurfaceSizeRoom({
   const [shape, setShape] = useState("rectangle");
   const [inputs, setInputs] = useState({});
   const [wallHeightsCount, setWallHeightsCount] = useState(1);
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const maxWallsByShape = {
     rectangle: 4,
     square: 4,
@@ -39,12 +40,8 @@ export default function SelectSurfaceSizeRoom({
           { name: "width", label: t("width_meter") },
         ],
         wall: [
-          { name: "length", label: t("room_length_meter") },
-          { name: "width", label: t("room_width_meter") },
-        ],
-        both: [
-          { name: "length", label: t("room_length_meter") },
-          { name: "width", label: t("room_width_meter") },
+          { name: "length", label: t("length_meter") },
+          { name: "width", label: t("width_meter") },
         ],
       },
     },
@@ -52,9 +49,8 @@ export default function SelectSurfaceSizeRoom({
       label: t("square"),
       value: "square",
       inputs: {
-        floor: [{ name: "side", label: t("side_meter") }],
-        wall: [{ name: "side", label: t("room_side_meter") }],
-        both: [{ name: "side", label: t("room_side_meter") }],
+        floor: [{ name: "side", label: t("side") }],
+        wall: [{ name: "side", label: t("side") }],
       },
     },
     {
@@ -63,19 +59,14 @@ export default function SelectSurfaceSizeRoom({
       edges: 3,
       inputs: {
         floor: [
-          { name: "length1", label: t("triangle_side1_meter") },
-          { name: "length2", label: t("triangle_side2_meter") },
-          { name: "length3", label: t("triangle_side3_meter") },
+          { name: "length1", label: t("side1") },
+          { name: "length2", label: t("side2") },
+          { name: "length3", label: t("side3") },
         ],
         wall: [
-          { name: "length1", label: t("triangle_room_side1_meter") },
-          { name: "length2", label: t("triangle_room_side2_meter") },
-          { name: "length3", label: t("triangle_room_side3_meter") },
-        ],
-        both: [
-          { name: "length1", label: t("triangle_side1_meter") },
-          { name: "length2", label: t("triangle_side2_meter") },
-          { name: "length3", label: t("triangle_side3_meter") },
+          { name: "length1", label: t("side1") },
+          { name: "length2", label: t("side2") },
+          { name: "length3", label: t("side3") },
         ],
       },
     },
@@ -84,14 +75,10 @@ export default function SelectSurfaceSizeRoom({
       value: "circle",
       edges: 1,
       inputs: {
-        floor: [{ name: "radius", label: t("radius_meter") }],
+        floor: [{ name: "radius", label: t("radius") }],
         wall: [
-          { name: "radius", label: t("radius_meter") },
-          { name: "height1", label: t("wall_height_meter") },
-        ],
-        both: [
-          { name: "radius", label: t("radius_meter") },
-          { name: "height1", label: t("wall_height_meter") },
+          { name: "radius", label: t("radius") },
+          { name: "height1", label: t("height") },
         ],
       },
     },
@@ -100,9 +87,8 @@ export default function SelectSurfaceSizeRoom({
       value: "semicircle",
       edges: 1,
       inputs: {
-        floor: [{ name: "radius", label: t("radius_meter") }],
-        wall: [{ name: "radius", label: t("radius_meter") }],
-        both: [{ name: "radius", label: t("radius_meter") }],
+        floor: [{ name: "radius", label: t("radius") }],
+        wall: [{ name: "radius", label: t("radius") }],
       },
     },
     {
@@ -111,25 +97,18 @@ export default function SelectSurfaceSizeRoom({
       edges: 4,
       inputs: {
         floor: [
-          { name: "side1", label: t("side1_meter") },
-          { name: "side2", label: t("side2_meter") },
-          { name: "side3", label: t("side3_meter") },
-          { name: "side4", label: t("side4_meter") },
-          { name: "floorHeight", label: t("floor_height_meter") },
+          { name: "side1", label: t("side1") },
+          { name: "side2", label: t("side2") },
+          { name: "side3", label: t("side3") },
+          { name: "side4", label: t("side4") },
+          { name: "floorHeight", label: t("height") },
         ],
         wall: [
-          { name: "side1", label: t("side1_meter") },
-          { name: "side2", label: t("side2_meter") },
-          { name: "side3", label: t("side3_meter") },
-          { name: "side4", label: t("side4_meter") },
-          { name: "floorHeight", label: t("floor_height_meter") },
-        ],
-        both: [
-          { name: "side1", label: t("side1_meter") },
-          { name: "side2", label: t("side2_meter") },
-          { name: "side3", label: t("side3_meter") },
-          { name: "side4", label: t("side4_meter") },
-          { name: "floorHeight", label: t("floor_height_meter") },
+          { name: "side1", label: t("side1") },
+          { name: "side2", label: t("side2") },
+          { name: "side3", label: t("side3") },
+          { name: "side4", label: t("side4") },
+          { name: "floorHeight", label: t("height") },
         ],
       },
     },
@@ -139,19 +118,14 @@ export default function SelectSurfaceSizeRoom({
       edges: 4,
       inputs: {
         floor: [
-          { name: "length1", label: t("parallelogram_side1_meter") },
-          { name: "length2", label: t("parallelogram_side2_meter") },
-          { name: "height1", label: t("parallelogram_height_meter") },
+          { name: "length1", label: t("side1") },
+          { name: "length2", label: t("side2") },
+          { name: "height1", label: t("height") },
         ],
         wall: [
-          { name: "length1", label: t("parallelogram_side1_meter") },
-          { name: "length2", label: t("parallelogram_side2_meter") },
-          { name: "height1", label: t("parallelogram_height_meter") },
-        ],
-        both: [
-          { name: "length1", label: t("parallelogram_side1_meter") },
-          { name: "length2", label: t("parallelogram_side2_meter") },
-          { name: "height1", label: t("parallelogram_height_meter") },
+          { name: "length1", label: t("side1") },
+          { name: "length2", label: t("side2") },
+          { name: "height1", label: t("height") },
         ],
       },
     },
@@ -160,9 +134,8 @@ export default function SelectSurfaceSizeRoom({
       value: "pentagon",
       edges: 5,
       inputs: {
-        floor: [{ name: "length1", label: t("pentagon_side_meter") }],
-        wall: [{ name: "length1", label: t("pentagon_side_meter") }],
-        both: [{ name: "length1", label: t("pentagon_side_meter") }],
+        floor: [{ name: "length1", label: t("side") }],
+        wall: [{ name: "length1", label: t("side") }],
       },
     },
   ];
@@ -290,7 +263,11 @@ export default function SelectSurfaceSizeRoom({
                 <div key={key} className="flex items-end  mb-[2rem]">
                   <div className="flex-1">
                     <Input
-                      label={`ارتفاع دیوار ${index + 1}`}
+                      label={`${t("Wall height")} ${
+                        ["fa", "ar"].includes(locale)
+                          ? toPersianDigits(index + 1)
+                          : index + 1
+                      }`}
                       name={key}
                       value={inputs[key] || ""}
                       onChange={(e) => {

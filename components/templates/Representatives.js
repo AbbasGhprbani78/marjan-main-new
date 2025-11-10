@@ -11,6 +11,7 @@ import {} from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useTranslation } from "@/context/TranslationContext";
 
 function LeftArrow({ swiper }) {
   return (
@@ -39,6 +40,7 @@ export default function Representatives({ representatives }) {
   const [initialCitySet, setInitialCitySet] = useState(false);
   const [focusedRepresentative, setFocusedRepresentative] = useState(null);
   const [swiperInstance, setSwiperInstance] = useState(null);
+  const { locale } = useTranslation();
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -129,7 +131,6 @@ export default function Representatives({ representatives }) {
             onCitySelect={setSelectedCity}
             initialCity={selectedCity}
           />
-
           <section
             className={`block lg:hidden lg:col-span-8 xl:col-span-9 lg:h-full inset-0 z-0 mb-[1rem] ${styles.mapContainer}`}
             aria-label="نقشه نمایندگان"
@@ -144,35 +145,58 @@ export default function Representatives({ representatives }) {
               focusedRep={focusedRepresentative}
             />
           </section>
-          {selectedCity?.representatives.length > 1 && (
-            <div className="flex items-center justify-between mb-[1rem]">
-              <RightArrow swiper={swiperInstance} />
-              <LeftArrow swiper={swiperInstance} />
-            </div>
-          )}
-
-          <Swiper
-            onSwiper={setSwiperInstance}
-            className="my-swiper w-full max-w-full relative"
-            spaceBetween={0}
-            slidesPerView={1}
-            autoplay={{ disableOnInteraction: false }}
-            style={{ width: "100%", maxWidth: "100%" }}
+          <div className="lg:hidden">
+            {selectedCity?.representatives.length > 1 && (
+              <div className="flex items-center justify-between mb-[1rem]">
+                {["ru", "en"].includes(locale) ? (
+                  <>
+                    <LeftArrow swiper={swiperInstance} />
+                    <RightArrow swiper={swiperInstance} />
+                  </>
+                ) : (
+                  <>
+                    <RightArrow swiper={swiperInstance} />
+                    <LeftArrow swiper={swiperInstance} />
+                  </>
+                )}
+              </div>
+            )}
+            <Swiper
+              onSwiper={setSwiperInstance}
+              className="my-swiper w-full max-w-full relative"
+              spaceBetween={0}
+              slidesPerView={1}
+              autoplay={{ disableOnInteraction: false }}
+              style={{ width: "100%", maxWidth: "100%" }}
+            >
+              {selectedCity?.representatives?.map((rep, index) => (
+                <SwiperSlide key={index} style={{ position: "relative" }}>
+                  <RepresentationItem
+                    key={`${rep.id || "rep"}-${rep.phone || ""}-${
+                      rep.link || ""
+                    }-${index}`}
+                    city={rep}
+                    onAddressClick={handleAddressClick}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+          <div
+            className={`overflow-y-auto flex-1 ${styles.wrapperRepresentation} hidden lg:block`}
+            aria-label="لیست نمایندگان"
           >
             {selectedCity?.representatives?.map((rep, index) => (
-              <SwiperSlide key={index} style={{ position: "relative" }}>
-                <RepresentationItem
-                  key={`${rep.id || "rep"}-${rep.phone || ""}-${
-                    rep.link || ""
-                  }-${index}`}
-                  city={rep}
-                  onAddressClick={handleAddressClick}
-                />
-              </SwiperSlide>
+              <RepresentationItem
+                key={`${rep.id || "rep"}-${rep.phone || ""}-${
+                  rep.link || ""
+                }-${index}`}
+                city={rep}
+                onAddressClick={handleAddressClick}
+              />
             ))}
-          </Swiper>
+          </div>
         </aside>
-
         <section
           className={`hidden lg:block lg:col-span-8 xl:col-span-9 lg:h-full inset-0 z-0 ${styles.mapContainer}`}
           aria-label="نقشه نمایندگان"

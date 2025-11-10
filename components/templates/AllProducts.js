@@ -66,7 +66,12 @@ export default function AllProducts({ categories, products }) {
   };
 
   const normSize = (v) =>
-    String(v).trim().toLowerCase().replace(/\s+/g, "").replace(/[×x*]/gi, "x");
+    String(v)
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "")
+      .replace(/[×x*]/gi, "x")
+      .trim();
 
   const handleFilterChange = useCallback(
     (key, selectedValues, pushUrl = true) => {

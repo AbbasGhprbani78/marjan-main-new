@@ -7,47 +7,55 @@ export default function Table({ columns = [], data = [], isEn = false }) {
 
   return (
     <>
-      <div className="hidden md:block w-full max-w-[90vw] max-h-[250px] overflow-x-auto hide-scrollbar border border-gray-200 rounded-lg">
-        <table className="border-collapse border border-gray-300 text-sm w-max">
-          <thead className="bg-[#b3b3bd] sticky top-0 z-10">
-            <tr>
-              {columns.map((col) => (
-                <th
-                  key={col}
-                  className="px-6 py-3 text-center font-medium text-gray-800 uppercase tracking-wider border border-gray-300 whitespace-nowrap"
-                  dir="ltr"
-                >
-                  {col}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="bg-white">
-            {data.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {columns.map((col) => (
-                  <td
-                    dir="rtl"
-                    key={col}
-                    className="px-6 py-4 whitespace-nowrap text-center text-gray-700 border border-gray-300"
-                  >
-                    {isEn
-                      ? row[col] || "-"
-                      : ["fa", "ar"].includes(locale)
-                      ? toPersianDigits(row[col] || "-")
-                      : row[col] || "-"}
+      <div className="hidden md:block w-full max-w-[90vw] md:max-h-[90vh] overflow-x-auto hide-scrollbar border border-gray-300">
+        <div className="max-h-[300px] md:max-h-[90vh] overflow-auto hide-scrollbar">
+          <table className="w-full border-collapse border-gray-300 text-sm">
+            <tbody className="bg-white" dir="ltr">
+              {data.map((row, rowIndex) => (
+                <tr key={rowIndex} className="border-b border-gray-300">
+                  <td className="px-6 py-2 text-gray-700 w-1/2 border-b border-gray-300">
+                    {columns.map((col, colIndex) => (
+                      <div
+                        key={col}
+                        className={`py-1 ${
+                          colIndex < columns.length - 1
+                            ? "border-b border-gray-300"
+                            : ""
+                        }`}
+                      >
+                        {isEn
+                          ? row[col] || "-"
+                          : ["fa", "ar"].includes(locale)
+                          ? toPersianDigits(row[col] || "-")
+                          : row[col] || "-"}
+                      </div>
+                    ))}
                   </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  <td className="px-6 py-2 font-medium text-gray-700 border-r w-1/2 border-b border-gray-300">
+                    {columns.map((col, colIndex) => (
+                      <div
+                        key={col}
+                        className={`py-1 ${
+                          colIndex < columns.length - 1
+                            ? "border-b border-gray-300"
+                            : ""
+                        }`}
+                      >
+                        {col}
+                      </div>
+                    ))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div className=" md:hidden max-h-[300px] overflow-auto hide-scrollbar">
-        <div className="w-full overflow-x-auto rounded-lg border border-gray-200">
-          <table className="w-full border-collapse border border-gray-300 text-sm md:table">
-            <thead className="hidden md:table-header-group">
+      <div className="md:hidden max-h-[300px] overflow-auto hide-scrollbar">
+        <div className="w-full overflow-x-auto rounded-lg border border-gray-300">
+          <table className="w-full border-collapse border border-gray-300 text-sm">
+            <thead className="hidden">
               <tr className="bg-[#b3b3bd]">
                 {columns.map((col) => (
                   <th
@@ -59,20 +67,20 @@ export default function Table({ columns = [], data = [], isEn = false }) {
                 ))}
               </tr>
             </thead>
-            <tbody className="bg-white md:table-row-group">
+            <tbody className="bg-white">
               {data.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
-                  className="block md:table-row mb-4 md:mb-0 border border-gray-300 md:border-none"
+                  className="block mb-4 md:mb-0 border border-gray-300"
                 >
                   {columns.map((col) => (
                     <td
                       key={col}
-                      className="block md:table-cell px-6 py-2 text-gray-700 border md:border-none relative"
+                      className="block px-6 py-2 text-gray-700 border border-gray-300 relative"
                       data-label={col}
                       dir="ltr"
                     >
-                      <span className="md:hidden font-medium">{col} : </span>
+                      <span className="font-medium">{col} :</span>{" "}
                       {isEn
                         ? row[col] || "-"
                         : ["fa", "ar"].includes(locale)

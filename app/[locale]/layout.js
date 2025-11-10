@@ -45,7 +45,7 @@ export default async function RootLayout({ children, params }) {
                 <main className="content">{children}</main>
                 <Footer />
               </div>
-              <ChatBot />
+              {/* <ChatBot /> */}
             </ImageLoadingWrapper>
           </ToggleProvider>
         </TranslationProvider>

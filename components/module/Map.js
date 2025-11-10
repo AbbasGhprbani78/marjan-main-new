@@ -39,7 +39,7 @@ export default function Map({
     mapCenter ||
     (firstValidRep ? [firstValidRep.x, firstValidRep.y] : [77.6892, 51.389]);
 
-  const zoom = focusedRep ? 15 : reps.length > 0 ? 12 : 12;
+  const zoom = focusedRep ? 15 : reps.length > 0 ? 10 : 10;
 
   return (
     <div className="lg:min-h-[400px] h-full w-full">

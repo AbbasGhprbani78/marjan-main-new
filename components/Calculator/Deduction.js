@@ -18,11 +18,11 @@ export default function Deduction({
   const { t } = useTranslation();
 
   const deductionItems = [
-    { key: "door", image: "/images/99.png", name: t("door") },
-    { key: "window", image: "/images/100.png", name: t("window") },
-    { key: "cabinet", image: "/images/101.png", name: t("cabinet") },
-    { key: "closet", image: "/images/101.png", name: t("closet") },
-    { key: "other", image: "/images/101.png", name: t("other") },
+    { key: "door", name: t("door"), icon: "GasStation" },
+    { key: "window", name: t("window"), icon: "Windows" },
+    { key: "cabinet", name: t("cabinet"), icon: "Buliding" },
+    { key: "closet", name: t("closet"), icon: "Bus" },
+    { key: "other", name: t("other"), icon: "Layer" },
   ];
 
   useEffect(() => {
@@ -277,9 +277,9 @@ export default function Deduction({
               )}
             </div>
             <div className=" pt-[1rem]">
-              <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              {/* <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
                 {t("Fractionofthetotalfloorarea")}
-              </h4>
+              </h4> */}
               <div className="">
                 {floorRects.map((item, idx) => (
                   <div key={idx} className="flex items-end gap-5">
@@ -304,7 +304,7 @@ export default function Deduction({
 
                       <Input
                         label={`${t("Width")} (${
-                          uniMeasurement === 1 ? t("Meter") : t("Foot")
+                          uniMeasurement === 1 ? "Meter" : "Foot"
                         })`}
                         value={item.width}
                         onChange={(e) => {
@@ -378,12 +378,14 @@ export default function Deduction({
             </div>
 
             <div className="flex flex-nowrap gap-[1rem] overflow-x-auto  hide-scrollbar">
-              {deductionItems.map((item) => (
-                <button
-                  key={item.key}
-                  type="button"
-                  onClick={() => setActiveTab(item.key)}
-                  className={`flex justify-center gap-4 border-t border-b items-center min-w-[130px] py-[8px] font-bold
+              {deductionItems.map((item) => {
+                const IconComponent = Icons[item.icon];
+                return (
+                  <button
+                    key={item.key}
+                    type="button"
+                    onClick={() => setActiveTab(item.key)}
+                    className={`flex justify-center gap-4 border-t border-b items-center min-w-[130px] py-[8px] font-bold
         transition-colors duration-300
         ${
           activeTab === item.key
@@ -391,11 +393,12 @@ export default function Deduction({
             : "hover:text-white hover:bg-black"
         }
       `}
-                >
-                  {item.name}
-                  <Icons.GasStation size={20} />
-                </button>
-              ))}
+                  >
+                    {item.name}
+                    {IconComponent && <IconComponent size="20" />}
+                  </button>
+                );
+              })}
             </div>
 
             <div className="mt-[2rem]">
@@ -486,12 +489,14 @@ export default function Deduction({
             </div>
 
             <div className="flex flex-nowrap gap-[1rem] overflow-x-auto  hide-scrollbar">
-              {deductionItems.map((item) => (
-                <button
-                  key={item.key}
-                  type="button"
-                  onClick={() => setActiveTab(item.key)}
-                  className={`flex justify-center gap-4 border-t border-b items-center min-w-[130px] py-[8px] font-bold
+              {deductionItems.map((item) => {
+                const IconComponent = Icons[item.icon];
+                return (
+                  <button
+                    key={item.key}
+                    type="button"
+                    onClick={() => setActiveTab(item.key)}
+                    className={`flex justify-center gap-4 border-t border-b items-center min-w-[130px] py-[8px] font-bold
         transition-colors duration-300
         ${
           activeTab === item.key
@@ -499,11 +504,12 @@ export default function Deduction({
             : "hover:text-white hover:bg-black"
         }
       `}
-                >
-                  {item.name}
-                  <Icons.GasStation size={20} />
-                </button>
-              ))}
+                  >
+                    {item.name}
+                    {IconComponent && <IconComponent size="20" />}
+                  </button>
+                );
+              })}
             </div>
 
             <div className="mt-[2rem]">

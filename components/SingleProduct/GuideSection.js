@@ -77,8 +77,12 @@ export default function GuideSection({
         </div>
       )}
 
-      <Modal openModal={openModal} setOpenModal={setOpenModal}>
-        <div className="bg-white  px-[2rem] pb-[2rem] pt-[1rem] flex flex-col ">
+      <Modal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        customeWidth={true}
+      >
+        <div className="bg-white  px-[1rem] pb-[2rem] pt-[1rem] flex flex-col ">
           <div className="flex items-center justify-between pb-[2rem]">
             <span className="font-medium text-[1.2rem]">
               {typeModel == "questions"

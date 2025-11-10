@@ -32,8 +32,8 @@ export default function RepresentationItem({ city, onAddressClick }) {
           <span className="font-semibold text-[.9rem] ">{t("Address")} : </span>
           <span className="text-[.9rem]">
             {["fa", "ar"].includes(locale)
-              ? toPersianDigits(city.address)
-              : city.address}
+              ? toPersianDigits(allowLineBreak(city.address))
+              : allowLineBreak(city.address)}
           </span>
         </p>
       )}
@@ -70,3 +70,12 @@ export default function RepresentationItem({ city, onAddressClick }) {
     </article>
   );
 }
+
+const allowLineBreak = (text) => {
+  if (!text) return "";
+
+  return text
+    .replace(/[\u202F\u00A0]/g, " ") // تبدیل Narrow No-Break Space و No-Break Space به فاصله معمولی
+    .replace(/\s+/g, " ") // چند فاصله → یکی
+    .trim();
+};
