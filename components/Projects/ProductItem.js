@@ -16,6 +16,8 @@ export default function ProductItem({ item }) {
             className="aspect-square object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-[1.15] "
             width={500}
             height={500}
+            quality={100}
+            unoptimized={true}
           />
         </div>
       </Link>

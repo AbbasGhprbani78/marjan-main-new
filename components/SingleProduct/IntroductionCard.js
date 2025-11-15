@@ -6,6 +6,7 @@ import Table from "./Table";
 import { useRouter } from "next/navigation";
 import { useLocalizedLink } from "@/utils/helper";
 import { useTranslation } from "@/context/TranslationContext";
+import Button from "../module/Button";
 
 export default function IntroductionCard({ setOpenModal, singleProduct }) {
   const router = useRouter();
@@ -89,10 +90,10 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
             <Image
               src={`${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`}
               alt="Introduction image"
-              className="object-center"
+              className="object-cover"
               fill
               quality={100}
-              unoptimized
+              unoptimized={true}
             />
             <Icons.CloseCircle
               size={27}
@@ -130,14 +131,8 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
             flipped ? "rotate-y-180" : ""
           }`}
         >
-          <div className="absolute w-full h-full backface-hidden bg-white p-[20px] flex flex-col  shadow-lg rounded-xl">
-            <div className="flex items-center justify-between mb-[1rem]">
-              <span
-                className={`text-[1.3rem] font-en`}
-                onClick={() => setFlipped(!flipped)}
-              >
-                {singleProduct.title}
-              </span>
+          <div className="absolute w-full h-full backface-hidden bg-white px-[20px] pb-[20px] flex flex-col  shadow-lg rounded-xl">
+            <div className="flex justify-end py-[1rem]">
               <Icons.CloseCircle
                 size={25}
                 className="cursor-pointer"
@@ -146,6 +141,17 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                   setOpenModal(false);
                 }}
               />
+            </div>
+            <div className="flex items-center justify-between mb-[1rem]">
+              <span className={`text-[1.3rem] font-en `}>
+                {singleProduct.title}
+              </span>
+              <button
+                onClick={() => setFlipped(!flipped)}
+                className=" bg-gray-800 text-white  rounded-md text-[.8rem] px-10 pb-2 pt-4"
+              >
+                {t("More Detailes")}
+              </button>
             </div>
 
             <div className="flex items-center gap-5 mb-[2rem]">
@@ -192,7 +198,6 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
 
           <div className="absolute w-full h-full backface-hidden rotate-y-180  rounded-xl overflow-hidden">
             <Image
-              onClick={() => setFlipped(!flipped)}
               src={`${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`}
               alt=" Introduction image"
               className="object-contain"
@@ -207,6 +212,13 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                 e.stopPropagation();
                 setOpenModal(false);
               }}
+            />
+
+            <Icons.Eye
+              size={27}
+              color="#fff"
+              className="cursor-pointer absolute left-5 top-5"
+              onClick={() => setFlipped(!flipped)}
             />
             <div className="absolute left-0 bottom-0 p-4 w-full flex justify-center backdrop-blur-[5px] bg-white/50">
               <button onClick={handleShare} className="flex items-center gap-4">
@@ -249,7 +261,7 @@ function ItemOther({ setOpenModal, item }) {
         ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
       }`}
     >
-      <div className="flex items-center gap-[15px]">
+      <div className="flex flex-col sm:flex-row sm:items-center  gap-[15px]">
         <div className="relative w-[80px] h-[80px]">
           <Image
             src={`${process.env.NEXT_PUBLIC_API_URL}${item.product_image}`}

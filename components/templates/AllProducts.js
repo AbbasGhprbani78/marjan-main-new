@@ -240,8 +240,6 @@ export default function AllProducts({ categories, products }) {
     ([key, value]) => key !== "page" && Array.isArray(value) && value.length > 0
   );
 
-  console.log(products);
-
   return (
     <main className="px-20 md:px-40 lg:px-80">
       <section
@@ -258,7 +256,7 @@ export default function AllProducts({ categories, products }) {
         md:relative
         md:left-0
         md:right-0
-        md:z-0
+        md:z-10
         grid grid-cols-1 gap-y-[30px] 
         md:grid-cols-3 md:gap-x-[3rem] md:gap-y-0 
         items-center
@@ -281,7 +279,7 @@ export default function AllProducts({ categories, products }) {
               onSearchChange={setSearchTerm}
             />
           </section>
-          <aside>
+          <aside className="relative z-10">
             <PopFilter className isFilterOpen={isFilterOpen}>
               <div className="border-b border-[#b7b7b7] flex justify-between items-center  pb-7">
                 <h2 className="font-medium">{t("Filters")}</h2>

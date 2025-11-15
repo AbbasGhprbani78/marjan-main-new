@@ -27,7 +27,7 @@ export default function ChatBot({}) {
   const viewportWidth = useViewportWidth();
   const [hideIcon, setHideIcon] = useState(false);
   const { isShowChatbot, setIsShowChatbot } = useToggle();
-  const [headerValue, setHeaderValue] = useState("");
+  const [headerValue, setHeaderValue] = useState("ma");
   const { t, locale } = useTranslation();
 
   const sendMessage = async () => {
@@ -67,7 +67,7 @@ export default function ChatBot({}) {
       };
 
       const res = await axios.post(
-        `https://api.nobinco.com/chat/product/productinfochatIP/`,
+        `https://api.nobinco.com/marjan-chat/`,
         body,
         { headers }
       );
@@ -96,12 +96,19 @@ export default function ChatBot({}) {
 
         setAiResponsesCount((prevCount) => prevCount + 1);
 
-        if (res.data.seggestion_list) {
+        if (res.data.suggestion_list && res.data.suggestion_list.length > 0) {
+          console.log("hello");
           const suggestionMessage = {
             id: crypto.randomUUID(),
             isai: true,
-            images: res.data.seggestion_list,
+
+            suggestions: res.data.suggestion_list.map((item) => ({
+              ...item,
+
+              image: item.image || null,
+            })),
           };
+
           setMessages((prev) => ({
             ...prev,
             [headerValue]: [...prev[headerValue], suggestionMessage],
@@ -355,11 +362,11 @@ export default function ChatBot({}) {
                 {t("Product Sales Assistant")}
               </li>
               <li
-                className="item-chat"
-                onClick={() => {
-                  setHeaderValue("mqa");
-                  setIsShowChat(true);
-                }}
+                className="item-chat pointer-events-none opacity-50 cursor-not-allowed"
+                // onClick={() => {
+                //   setHeaderValue("mqa");
+                //   setIsShowChat(true);
+                // }}
               >
                 {t("Frequently asked questions and answers")}
               </li>

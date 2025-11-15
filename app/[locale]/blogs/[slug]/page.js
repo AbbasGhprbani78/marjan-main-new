@@ -3,7 +3,7 @@ import GallerySingleBlog from "@/components/Blogs/GallerySingleBlog";
 import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchSingleBlog } from "@/services/singleBlog";
 import Image from "next/image";
-import React from "react";
+import React, { cache } from "react";
 import { notFound } from "next/navigation";
 import translations from "@/components/module/translations";
 import Blog from "@/components/templates/Blog";
@@ -11,58 +11,66 @@ import Blog from "@/components/templates/Blog";
 export const revalidate = 300;
 export const dynamicParams = true;
 
+const getSingleBlog = cache(async (locale, slug) => {
+  return await fetchSingleBlog(locale, slug);
+});
+
 export async function generateMetadata({ params }) {
   const locale = params?.locale || "en";
   const dict = translations[locale] || translations["en"];
-  const pageKey = "Blogs";
+
+  const singleBlog = await getSingleBlog(locale, params.slug);
 
   return {
-    title: `${dict.websiteName} | ${dict[pageKey] || "Blogs"}`,
+    title: singleBlog
+      ? `${singleBlog.title} | ${dict.websiteName}`
+      : `${dict.websiteName} | ${dict.Blogs || "Blogs"}`,
   };
 }
 
-export default async function page({ params }) {
-  const { locale } = await params;
-  const { slug } = await params;
-  const singleBlog = await fetchSingleBlog(locale, slug);
+export default async function Page({ params }) {
+  const { locale = "en", slug } = await params;
+
+  const singleBlog = await getSingleBlog(locale, slug);
 
   if (!singleBlog) {
     notFound();
   }
 
   return (
-    <main className="wrapper ">
+    <main className="wrapper">
       <h1 className="sr-only">وبلاگ</h1>
       <article>
-        <section className="w-full relative wrapper_image flex items-center justify-center mt-[130px] lg:mt-0 ">
+        <section className="w-full relative wrapper_image flex items-center justify-center mt-[130px] lg:mt-0">
           <Image
             src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog?.image}`}
             fill
-            alt="image project "
+            alt="image project"
             className="object-center"
-            unoptimized
+            unoptimized={true}
             quality={100}
           />
           <div className="absolute inset-0 bg-black/50 z-10" />
           <p
-            className={`w-max text-white font-normal text-[1.2rem] md:text-[2rem] z-[11] ${
+            className={`w-max text-white font-normal text-[1.2rem] md:text-[2rem] z-[11] text-center ${
               ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
             }`}
           >
             {singleBlog?.title}
           </p>
         </section>
+
         {singleBlog?.category?.title?.toLowerCase() === "articles" ? (
           <Blog content={singleBlog?.rich_text} />
         ) : (
-          <section className="mt-[2rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)] font-normal  pb-[2rem]">
+          <section className="mt-[2rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)] font-normal pb-[2rem]">
             {singleBlog.text && (
-              <div className="leading-[30px] ">
+              <div className="leading-[30px]">
                 <ReadMoreText text={singleBlog?.text} />
               </div>
             )}
 
-            {singleBlog?.media_files.length > 0 && (
+            {singleBlog?.media_files?.length > 0 && (
               <div className="mt-[1rem] lg:mt-[2rem] w-full">
                 <GallerySingleBlog
                   media={singleBlog?.media_files?.map((media) => media.url)}
@@ -71,7 +79,7 @@ export default async function page({ params }) {
             )}
 
             {singleBlog?.text_two && (
-              <div className="leading-[30px]  mt-[1rem]  lg:mt-[2rem] ">
+              <div className="leading-[30px] mt-[1rem] lg:mt-[2rem]">
                 <ReadMoreText text={singleBlog?.text_two} />
               </div>
             )}

@@ -43,7 +43,7 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
   };
 
   return (
-    <div className="mb-[30px] box-border cursor-pointer">
+    <div className="mb-[30px] box-border cursor-pointer relativer z-2">
       <Link
         href={localizedHref(`/products/${product?.slug}`)}
         className="block"

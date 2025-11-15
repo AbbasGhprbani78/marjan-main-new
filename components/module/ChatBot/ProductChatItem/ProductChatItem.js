@@ -1,11 +1,20 @@
+"use client";
 import React from "react";
 import "./productChatItem.css";
 import { useTranslation } from "@/context/TranslationContext";
-
+import { useRouter } from "next/navigation";
+import { useToggle } from "@/context/context";
 export default function ProductChatItem({ item }) {
-  const url = new URL(item?.link, window.location.origin);
-  const relativePath = url.pathname;
+  const { setIsShowChatbot } = useToggle();
   const { locale } = useTranslation();
+  const router = useRouter();
+  // new URL(item.link, window.location.origin).pathname
+  const goToProductHandler = () => {
+    setIsShowChatbot(false);
+    const relativePath = item?.link ? item?.link : "/products";
+
+    router.push(relativePath);
+  };
 
   function fixSizesInText(text, locale = "fa") {
     if (!text) return text;
@@ -31,16 +40,17 @@ export default function ProductChatItem({ item }) {
   const fixedName = fixSizesInText(item?.name, locale);
 
   return (
-    <div className={`productchat`}>
+    <div className={`productchat`} onClick={goToProductHandler}>
       <div className="d-flex align-items-center ">
         <div className="img-chat-wrapp mb-5">
           <img
             src={
               item.image
-                ? `https://api.nobinco.com/chat${item.image}`
+                ? `https://api.nobinco.com/marjan-chat/${item.image}`
                 : "/images/images.png"
             }
-            alt="image"
+            alt={item.name || "Product"}
+            className="product-image"
           />
         </div>
         <span className="product-chat-name">{fixedName}</span>

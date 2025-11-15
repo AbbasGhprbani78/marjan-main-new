@@ -78,6 +78,7 @@ export function HomeSlider({
   const [isHovered, setIsHovered] = useState(false);
   const { locale } = useParams();
 
+  console.log(data);
   return (
     <div
       className="relative mt-[130px] lg:mt-0"
@@ -145,7 +146,7 @@ export function HomeSlider({
                 href={`${route}/${
                   type === 2
                     ? item?.slug
-                    : item?.products?.[0]?.title || item?.title
+                    : item?.products?.[0]?.slug || item?.title
                 }`}
               />
             </div>
@@ -160,7 +161,7 @@ export function HomeSlider({
               width={1980}
               height={1080}
               priority
-              unoptimized
+              unoptimized={true}
               quality={100}
             />
           </SwiperSlide>
@@ -276,7 +277,7 @@ export function BlogSlider({ data, shadow, lineColor, bgcolor }) {
                         className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
                         fill
                         priority
-                        unoptimized
+                        unoptimized={true}
                         quality={100}
                       />
                     </div>
@@ -467,7 +468,7 @@ export function CategorySlider({ data }) {
                   width={500}
                   height={500}
                   priority
-                  unoptimized
+                  unoptimized={true}
                   quality={100}
                 />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
@@ -577,7 +578,7 @@ export function ProjectsSlider({ data, bgcolor }) {
                     alt={item?.title || "Image"}
                     className="object-cover transform transition-transform duration-[2000ms] ease-in-out hover:scale-[1.15]"
                     fill
-                    unoptimized
+                    unoptimized={true}
                     quality={100}
                   />
                 )}
@@ -649,7 +650,7 @@ export function GallerySlider({ data, onClick, ispopup = false }) {
                 width={500}
                 height={500}
                 priority
-                unoptimized
+                unoptimized={true}
                 quality={100}
               />
             );

@@ -44,7 +44,8 @@ export default async function page({ params }) {
             alt="image project"
             className="object-cover"
             style={{ width: "100%" }}
-            unoptimized
+            unoptimized={true}
+            priority={true}
             quality={100}
           />
 
@@ -92,7 +93,7 @@ export default async function page({ params }) {
           alt="image project"
           className="object-cover"
           style={{ maxHeight: "550px", width: "100%" }}
-          unoptimized
+          unoptimized={true}
           quality={100}
         />
 

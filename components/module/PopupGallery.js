@@ -135,8 +135,8 @@ export default function PopupGallery({
               <video
                 src={`${process.env.NEXT_PUBLIC_API_URL}${media[currentIndex]}`}
                 controls
-                className={`h-[50dvh] md:h-[60dvh] max-w-[80vw] ${
-                  !sizes && "object-contain"
+                className={`h-[45dvh] md:h-[60dvh] max-w-[80vw] ${
+                  sizes.length === 0 && "object-cover"
                 }`}
                 style={
                   hasSizes ? { width: `${width}px`, height: `${height}px` } : {}
@@ -146,8 +146,8 @@ export default function PopupGallery({
               <img
                 src={`${process.env.NEXT_PUBLIC_API_URL}${media[currentIndex]}`}
                 alt={`Media ${currentIndex + 1}`}
-                className={`h-[50dvh] md:h-[60dvh] max-w-[80vw] ${
-                  !sizes && "object-contain"
+                className={`h-[45dvh] md:h-[60dvh] max-w-[80vw] ${
+                  sizes.length === 0 && "object-cover"
                 }`}
                 style={
                   hasSizes ? { width: `${width}px`, height: `${height}px` } : {}

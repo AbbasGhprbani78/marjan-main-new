@@ -654,9 +654,21 @@ export default function BoxSearch({ showBox }) {
 
   return (
     <div
-      className={`bg-[#eeedec] px-[20px] pb-[10px] pt-[20px] absolute z-30 text-[var(--color-gray-900)] rounded-[4px] transition-all duration-700 ease-in-out top-[120%] inset-x-[20px] md:inset-x-auto md:w-[355px] rtl:md:right-0 rtl:md:left-auto ltr:md:left-0 ltr:md:right-auto ${
-        showBox ? "opacity-100 visible" : "opacity-0 invisible"
-      }`}
+      className={`
+    bg-[#eeedec] px-[20px] pb-[10px] pt-[20px] 
+    absolute z-30 text-[var(--color-gray-900)] rounded-[4px] 
+    transition-all duration-700 ease-in-out 
+    top-[120%]
+    w-[90vw] md:w-[355px] 
+    ${
+      ["fa", "ar"].includes(locale)
+        ? "left-0 right-auto  xl:right-0 xl:left-auto"
+        : "right-0 left-auto  xl:left-0 xl:right-auto"
+    }
+
+
+    ${showBox ? "opacity-100 visible" : "opacity-0 invisible"}
+  `}
     >
       <div className="bg-white rounded-[50px] py-[7px] px-[15px] flex items-center justify-between">
         <input
@@ -887,12 +899,17 @@ function MenuMobile({ dataHeader }) {
           <MenuLink href="/saved" className="custom-link">
             <Icons.Save2 size={25} />
           </MenuLink>
-          <Icons.SearchNormal1
-            size="25"
-            onClick={() => setIsShowSearch((prev) => !prev)}
-            color="#000"
-          />
-          <BoxSearch showBox={isShowSearch} />
+
+          {/* آیکون سرچ باید مرجع موقعیت باشد */}
+          <div className="relative">
+            <Icons.SearchNormal1
+              size="25"
+              onClick={() => setIsShowSearch((prev) => !prev)}
+              color="#000"
+              className="cursor-pointer"
+            />
+            <BoxSearch showBox={isShowSearch} />
+          </div>
         </div>
       </div>
       <div

@@ -45,10 +45,10 @@ export default function Message({ message }) {
         </p>
       )}
 
-      {message.images?.length > 0 && (
-        <div className="chat-contant-ai ltr w-100">
-          {message.images.map((item) => (
-            <ProductChatItem key={item.name} item={item} />
+      {message.suggestions?.length > 0 && (
+        <div className="chat-contant-ai ltr w-100 mt-3">
+          {message.suggestions.map((item) => (
+            <ProductChatItem key={item.code || item.name} item={item} />
           ))}
         </div>
       )}

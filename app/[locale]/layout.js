@@ -11,7 +11,7 @@ import { fetchTranslateWords } from "@/services/translate";
 
 export const metadata = {
   icons: {
-    icon: "/images/logo3.ico",
+    icon: "/images/site.png",
   },
 };
 
@@ -45,7 +45,7 @@ export default async function RootLayout({ children, params }) {
                 <main className="content">{children}</main>
                 <Footer />
               </div>
-              {/* <ChatBot /> */}
+              <ChatBot />
             </ImageLoadingWrapper>
           </ToggleProvider>
         </TranslationProvider>
