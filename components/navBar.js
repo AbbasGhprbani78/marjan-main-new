@@ -172,12 +172,6 @@ export function NavBar({ dataHeader }) {
                     className="  cursor-pointer w-full flex items-center justify-between "
                     onClick={() => handleLangChange("fa")}
                   >
-                    {/* <Image
-                      alt="flag"
-                      src={"/images/iran.png"}
-                      width={30}
-                      height={20}
-                    /> */}
                     FA
                   </li>
                   <li
@@ -185,12 +179,6 @@ export function NavBar({ dataHeader }) {
                     className="  cursor-pointer  flex items-center justify-between "
                     onClick={() => handleLangChange("en")}
                   >
-                    {/* <Image
-                      alt="flag"
-                      src={"/images/usa.png"}
-                      width={30}
-                      height={20}
-                    /> */}
                     EN
                   </li>
                   <li
@@ -198,12 +186,6 @@ export function NavBar({ dataHeader }) {
                     className="  cursor-pointer flex items-center justify-between"
                     onClick={() => handleLangChange("ar")}
                   >
-                    {/* <Image
-                      alt="flag"
-                      src={"/images/arab.png"}
-                      width={30}
-                      height={20}
-                    /> */}
                     AR
                   </li>
                   {/* <li
@@ -211,12 +193,7 @@ export function NavBar({ dataHeader }) {
                     className="  cursor-pointer flex items-center justify-between"
                     onClick={() => handleLangChange("ru")}
                   >
-                    <Image
-                      alt="flag"
-                      src={"/images/russia.png"}
-                      width={30}
-                      height={20}
-                    />
+                  
                     RU
                   </li> */}
                 </ul>
@@ -845,12 +822,6 @@ function MenuMobile({ dataHeader }) {
                 className=" cursor-pointer w-full flex items-center justify-between "
                 onClick={() => handleLangChange("fa")}
               >
-                {/* <Image
-                  alt="flag"
-                  src={"/images/iran.png"}
-                  width={30}
-                  height={20}
-                /> */}
                 FA
               </li>
               <li
@@ -858,12 +829,6 @@ function MenuMobile({ dataHeader }) {
                 className=" cursor-pointer  flex items-center justify-between "
                 onClick={() => handleLangChange("en")}
               >
-                {/* <Image
-                  alt="flag"
-                  src={"/images/usa.png"}
-                  width={30}
-                  height={20}
-                /> */}
                 EN
               </li>
               <li
@@ -871,12 +836,6 @@ function MenuMobile({ dataHeader }) {
                 className=" cursor-pointer flex items-center justify-between"
                 onClick={() => handleLangChange("ar")}
               >
-                {/* <Image
-                  alt="flag"
-                  src={"/images/arab.png"}
-                  width={30}
-                  height={20}
-                /> */}
                 AR
               </li>
               {/* <li
@@ -884,12 +843,7 @@ function MenuMobile({ dataHeader }) {
                 className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                 onClick={() => handleLangChange("ru")}
               >
-                <Image
-                  alt="flag"
-                  src={"/images/russia.png"}
-                  width={30}
-                  height={20}
-                />
+              
                 RU
               </li> */}
             </ul>
@@ -900,7 +854,6 @@ function MenuMobile({ dataHeader }) {
             <Icons.Save2 size={25} />
           </MenuLink>
 
-          {/* آیکون سرچ باید مرجع موقعیت باشد */}
           <div className="relative">
             <Icons.SearchNormal1
               size="25"

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useTranslation } from "@/context/TranslationContext";
 
 export default function CardItem({ product, setProductIdUnSave = null }) {
-  const [isSaved, setIsSaved] = useState(product?.is_save);
+  const [isSaved, setIsSaved] = useState(product?.isSave || product?.is_save);
   const { localizedHref } = useLocalizedLink();
   const { t, locale } = useTranslation();
 
@@ -42,6 +42,7 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
     }
   };
 
+  console.log(product);
   return (
     <div className="mb-[30px] box-border cursor-pointer relativer z-2">
       <Link

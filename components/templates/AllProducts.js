@@ -240,6 +240,8 @@ export default function AllProducts({ categories, products }) {
     ([key, value]) => key !== "page" && Array.isArray(value) && value.length > 0
   );
 
+  console.log(products);
+
   return (
     <main className="px-20 md:px-40 lg:px-80">
       <section

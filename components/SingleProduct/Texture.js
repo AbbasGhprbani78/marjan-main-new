@@ -105,7 +105,6 @@ export default function Texture({ textureImage, isrevers = false }) {
     setActiveGroupKey(key);
   };
 
-  console.log(textureImage);
   return (
     <div>
       <p className=" font-[500] text-[1.3rem] md:text-[1.5rem]  pb-[30]  px-20 md:px-40 lg:px-80">
@@ -147,7 +146,7 @@ export default function Texture({ textureImage, isrevers = false }) {
             >
               <Image
                 src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
-                className="object-cover"
+                className="object-center"
                 alt="color image"
                 fill
               />

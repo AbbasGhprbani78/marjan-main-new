@@ -97,7 +97,6 @@ export default function ChatBot({}) {
         setAiResponsesCount((prevCount) => prevCount + 1);
 
         if (res.data.suggestion_list && res.data.suggestion_list.length > 0) {
-          console.log("hello");
           const suggestionMessage = {
             id: crypto.randomUUID(),
             isai: true,

@@ -78,7 +78,6 @@ export function HomeSlider({
   const [isHovered, setIsHovered] = useState(false);
   const { locale } = useParams();
 
-  console.log(data);
   return (
     <div
       className="relative mt-[130px] lg:mt-0"
