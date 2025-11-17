@@ -58,17 +58,18 @@ export default function SavedList({ products }) {
           >
             <Icons.SearchNormal size={48} className="mb-4" />
             <h3 className="text-lg font-semibold mb-2">
-              {t("NoResultsTitle")}
+              {t("No product has been added to favorites")}
             </h3>
-            <p>{t("NoFavoritesMessage")}</p>
           </div>
         )}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={Math.ceil(savedProducts.length / itemsPerPage)}
-        onPageChange={handlePageChange}
-      />
+      {productsToShow.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(savedProducts.length / itemsPerPage)}
+          onPageChange={handlePageChange}
+        />
+      )}
     </>
   );
 }

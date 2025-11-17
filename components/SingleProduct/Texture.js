@@ -105,6 +105,7 @@ export default function Texture({ textureImage, isrevers = false }) {
     setActiveGroupKey(key);
   };
 
+  console.log(textureImage);
   return (
     <div>
       <p className=" font-[500] text-[1.3rem] md:text-[1.5rem]  pb-[30]  px-20 md:px-40 lg:px-80">
@@ -129,12 +130,20 @@ export default function Texture({ textureImage, isrevers = false }) {
             }}
           >
             <div
-              className={`relative aspect-square w-full rounded-xl transition-all duration-300 ease-in-out 
-    ${
-      activeColor === i
-        ? "scale-105 shadow-[0_8px_20px_rgba(100,100,100,0.35)] overflow-hidden"
-        : "border-transparent hover:shadow-[0_4px_12px_rgba(100,100,100,0.15)] hover:scale-102"
-    }`}
+              className={`relative w-full rounded-xl transition-all duration-300 ease-in-out
+        ${
+          activeColor === i
+            ? "scale-105 shadow-[0_8px_20px_rgba(100,100,100,0.35)] overflow-hidden"
+            : "border-transparent hover:shadow-[0_4px_12px_rgba(100,100,100,0.15)] hover:scale-102"
+        }
+        ${
+          item.shape === "vertical"
+            ? "aspect-[2/3]"
+            : item.shape === "horizontal"
+            ? "aspect-[3/2]"
+            : "aspect-square"
+        }
+      `}
             >
               <Image
                 src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
@@ -152,6 +161,7 @@ export default function Texture({ textureImage, isrevers = false }) {
           </div>
         ))}
       </div>
+
       {showTexture && (
         <>
           <p className="font-[500] text-[1.3rem] md:text-[1.5rem] py-[2rem] px-20 md:px-40 lg:px-80">

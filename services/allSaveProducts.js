@@ -1,6 +1,7 @@
 export const fetchAllSaveProducts = async (lang) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/product/api/favorites/`,
+
     {
       method: "GET",
       headers: {
@@ -11,6 +12,8 @@ export const fetchAllSaveProducts = async (lang) => {
   );
 
   if (!res.ok) {
+    const text = await res.text();
+    console.error("API Error:", text);
     throw new Error("Failed to fetch posts");
   }
 

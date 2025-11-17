@@ -25,7 +25,7 @@ export default function Modal({
 
           <motion.div
             className={`z-50 w-[95%]  ${
-              customeWidth ? "lg:w-[95%]" : "lg:w-auto"
+              customeWidth ? "lg:w-[85%]" : "lg:w-auto"
             }`}
             initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
