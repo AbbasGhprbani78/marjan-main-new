@@ -188,13 +188,13 @@ export function NavBar({ dataHeader }) {
                   >
                     AR
                   </li>
-                  <li
+                  {/* <li
                     dir="ltr"
                     className="  cursor-pointer flex items-center justify-between"
                     onClick={() => handleLangChange("ru")}
                   >
                     RU
-                  </li>
+                  </li> */}
                 </ul>
               )}
             </div>
@@ -837,13 +837,13 @@ function MenuMobile({ dataHeader }) {
               >
                 AR
               </li>
-              <li
+              {/* <li
                 dir="ltr"
                 className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                 onClick={() => handleLangChange("ru")}
               >
                 RU
-              </li>
+              </li> */}
             </ul>
           )}
         </div>

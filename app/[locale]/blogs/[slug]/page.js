@@ -8,12 +8,9 @@ import { notFound } from "next/navigation";
 import translations from "@/components/module/translations";
 import Blog from "@/components/templates/Blog";
 
-export const revalidate = 300;
-export const dynamicParams = true;
-
-const getSingleBlog = cache(async (locale, slug) => {
+const getSingleBlog = async (locale, slug) => {
   return await fetchSingleBlog(locale, slug);
-});
+};
 
 export async function generateMetadata({ params }) {
   const locale = params?.locale || "en";
@@ -61,7 +58,7 @@ export default async function Page({ params }) {
         </section>
 
         {singleBlog?.category?.title?.toLowerCase() === "articles" ? (
-          <Blog content={singleBlog?.rich_text} />
+          <Blog content={singleBlog?.rich_text} locale={locale} />
         ) : (
           <section className="mt-[2rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)] font-normal pb-[2rem]">
             {singleBlog.text && (

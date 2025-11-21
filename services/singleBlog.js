@@ -6,7 +6,6 @@ export const fetchSingleBlog = async (lang, slug) => {
       headers: {
         "Accept-Language": lang,
       },
-      next: { revalidate: 300 },
     }
   );
 

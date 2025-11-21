@@ -39,6 +39,7 @@ export default async function page({ params }) {
     const dictArray = await fetchTranslateWords(locale);
     const dict = buildDictionary(dictArray);
 
+    console.log(dataSingleProduct);
     return (
       <div className="wrapper">
         <Anchor data={dataSingleProduct?.projects?.length} />
@@ -74,6 +75,7 @@ export default async function page({ params }) {
               text={dict["AskQuestion"]}
               icon={"MessageQuestion"}
               typeModel={"questions"}
+              id={dataSingleProduct?.product_id}
             />
             <GuideSection
               text={dict["WhereToBuy"]}

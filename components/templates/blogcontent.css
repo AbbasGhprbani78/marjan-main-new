@@ -1,0 +1,127 @@
+.blogContent {
+  line-height: 1.85;
+  font-size: 1.05rem;
+  color: #333;
+  text-align: start;
+}
+
+.blogContent h1,
+.blogContent h2,
+.blogContent h3,
+.blogContent h4 {
+  font-weight: 700;
+  color: #111;
+  line-height: 1.3;
+  margin-top: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.blogContent h1 {
+  font-size: 2rem;
+}
+
+.blogContent h2 {
+  font-size: 1.7rem;
+}
+
+.blogContent h3 {
+  font-size: 1.35rem;
+}
+
+.blogContent h4 {
+  font-size: 1.15rem;
+}
+
+.blogContent p {
+  margin-bottom: 1.2rem;
+}
+
+.blogContent strong {
+  font-weight: 700;
+  color: #000;
+}
+
+.blogContent em {
+  font-style: italic;
+  color: #444;
+}
+
+.blogContent a {
+  color: #0066cc;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.blogContent a:hover {
+  color: #004f9e;
+}
+
+.blogContent ul,
+.blogContent ol {
+  padding-left: 1.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.blogContent li {
+  margin-bottom: 0.4rem;
+}
+
+.blogContent blockquote {
+  border-left: 4px solid #0070f3;
+  padding-left: 1rem;
+  margin: 1.8rem 0;
+  color: #555;
+  font-style: italic;
+  background: #f9f9f9;
+  border-radius: 4px;
+}
+
+.blogContent img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  display: block;
+}
+
+.blogContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: #fafafa;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.blogContent th,
+.blogContent td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #e9e9e9;
+}
+
+.blogContent th {
+  background: #f0f0f0;
+  font-weight: 600;
+}
+
+.blogContent pre {
+  background: #1e1e1e;
+  color: #f3f3f3;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.8rem 0;
+}
+
+.blogContent code {
+  font-family: "Fira Code", monospace;
+  background: #eee;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.blogContent hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}

@@ -42,7 +42,6 @@ export default function CardItem({ product, setProductIdUnSave = null }) {
     }
   };
 
-  console.log(product);
   return (
     <div className="mb-[30px] box-border cursor-pointer relativer z-2">
       <Link

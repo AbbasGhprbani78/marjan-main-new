@@ -21,9 +21,10 @@ export default function GuideSection({
   is_industrial = false,
   value = "",
   category = "",
+  id = null,
 }) {
   const { localizedHref } = useLocalizedLink();
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const GuideIcon = Icons[icon];
   const [openModal, setOpenModal] = useState(false);
 
@@ -46,8 +47,8 @@ export default function GuideSection({
           <Link
             href={
               is_industrial
-                ? `/catalog?category=${category}`
-                : `/catalog?category=${category}`
+                ? `/${locale}/catalog?category=${category}`
+                : `/${locale}/catalog?category=${category}`
             }
             className="flex gap-5"
           >
@@ -80,7 +81,7 @@ export default function GuideSection({
       <Modal
         openModal={openModal}
         setOpenModal={setOpenModal}
-        customeWidth={true}
+        customeWidth={typeModel !== "questions" && true}
       >
         <div className="bg-white  px-[1rem] pb-[2rem] pt-[1rem] flex flex-col ">
           <div className="flex items-center justify-between pb-[2rem]">
@@ -101,7 +102,7 @@ export default function GuideSection({
           </div>
           {typeModel == "questions" ? (
             <>
-              <QuestionForm openModal={openModal} subjects={subjects} />
+              <QuestionForm openModal={openModal} subjects={subjects} id={id} />
             </>
           ) : typeModel == "categories" ? (
             <>

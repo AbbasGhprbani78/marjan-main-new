@@ -7,7 +7,7 @@ import Button2 from "./Button2";
 import { successMessage, ToastContainerCustom } from "./Toast";
 import axios from "axios";
 
-export default function QuestionForm({ openModal }) {
+export default function QuestionForm({ openModal, id }) {
   const { t } = useTranslation();
   const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -58,8 +58,6 @@ export default function QuestionForm({ openModal }) {
     e.preventDefault();
     const newErrors = {};
     if (!form.fullName) newErrors.fullName = t("NameRequired");
-    // if (!form.email) newErrors.email = t("EmailRequired");
-    // if (!form.subject) newErrors.subject = t("SubjectRequired");
     if (!form.phoneNumber) newErrors.phoneNumber = t("PhoneNumberRequired");
     if (!form.message) newErrors.message = t("MessageRequired");
 
@@ -79,7 +77,9 @@ export default function QuestionForm({ openModal }) {
       formData.append("email", form.email);
       formData.append("text", form.message);
       formData.append("phone", form.phoneNumber);
-      // formData.append("subject_id", form.subject);
+      if (id) {
+        formData.append("product", id);
+      }
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/app/ask-a-question/`,
