@@ -331,8 +331,7 @@ export function CategorySlider({ data }) {
     "Use case": "environment",
     کاربری: "environment",
     "حالة الاستخدام": "environment",
-    Применение: "environment",
-
+    "Вариант использования": "environment",
     Color: "color",
     رنگ: "color",
     اللون: "color",
