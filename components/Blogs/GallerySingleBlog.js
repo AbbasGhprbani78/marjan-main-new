@@ -14,6 +14,12 @@ import { Grid } from "swiper/modules";
 
 export default function GallerySingleBlog({ media }) {
   const [open, setOpen] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
+
+  const openPopup = (i) => {
+    setStartIndex(i);
+    setOpen(true);
+  };
   const viewportWidth = useViewportWidth();
   const slidesNumber =
     viewportWidth < 768 ? 2 : Math.floor(viewportWidth / 340);
@@ -35,12 +41,12 @@ export default function GallerySingleBlog({ media }) {
           {media?.slice(0, 4).map((item, i) => (
             <SwiperSlide key={i} className="relative group overflow-hidden">
               <div className="relative">
-                <GalleryItem media={item} onClick={() => setOpen(true)} />
+                <GalleryItem media={item} onClick={() => openPopup(i)} />
 
                 {media.length > 4 && i === 3 && (
                   <div
                     className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
-                    onClick={() => setOpen(true)}
+                    onClick={() => openPopup(i)}
                   >
                     <Icons.More className="text-gray-white w-20 h-20 md:w-35 md:h-35" />
                   </div>
@@ -53,12 +59,12 @@ export default function GallerySingleBlog({ media }) {
         <div dir="ltr" className="grid grid-cols-2 gap-10">
           {media?.slice(0, 4).map((item, i) => (
             <div key={i} className="relative group overflow-hidden">
-              <GalleryItem media={item} onClick={() => setOpen(true)} />
+              <GalleryItem media={item} onClick={() => openPopup(i)} />
 
               {media.length > 4 && i === 3 && (
                 <div
                   className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
-                  onClick={() => setOpen(true)}
+                  onClick={() => openPopup(i)}
                 >
                   <Icons.More className="text-gray-white w-20 h-20 md:w-35 md:h-35" />
                 </div>
@@ -73,6 +79,7 @@ export default function GallerySingleBlog({ media }) {
         setOpen={setOpen}
         media={media}
         isdownload={false}
+        startIndex={startIndex}
       />
     </>
   );

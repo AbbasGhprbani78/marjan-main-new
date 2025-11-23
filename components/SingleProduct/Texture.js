@@ -15,6 +15,11 @@ export default function Texture({ textureImage, isrevers = false }) {
   const [isHorizontal, setIsHorizontal] = useState(true);
   const [fullTiles, setFullTiles] = useState([]);
   const [open, setOpen] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
+  const openPopup = (i) => {
+    setStartIndex(i);
+    setOpen(true);
+  };
   const { t, locale } = useTranslation();
   const [activeGroupKey, setActiveGroupKey] = useState(null);
 
@@ -194,7 +199,7 @@ export default function Texture({ textureImage, isrevers = false }) {
                           width: `${width}px`,
                           height: `${height}px`,
                         }}
-                        onClick={() => setOpen(true)}
+                        onClick={() => openPopup(index)}
                       >
                         <Image
                           src={`${process.env.NEXT_PUBLIC_API_URL}${tile?.image}`}
@@ -206,7 +211,7 @@ export default function Texture({ textureImage, isrevers = false }) {
                         {showMore && (
                           <div
                             className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
-                            onClick={() => setOpen(true)}
+                            onClick={() => openPopup(index)}
                           >
                             <Icons.More className="text-gray-white w-12 h-12 md:w-20 md:h-20" />
                           </div>

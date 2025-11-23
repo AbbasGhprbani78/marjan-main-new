@@ -15,6 +15,12 @@ import { Grid } from "swiper/modules";
 
 export default function Gallery({ gallery }) {
   const [open, setOpen] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
+
+  const openPopup = (i) => {
+    setStartIndex(i);
+    setOpen(true);
+  };
   const { t } = useTranslation();
   const viewportWidth = useViewportWidth();
   const slidesNumber =
@@ -38,11 +44,11 @@ export default function Gallery({ gallery }) {
           {gallery?.slice(0, 4).map((item, i) => (
             <SwiperSlide key={i} className="relative group overflow-hidden">
               <div className="relative">
-                <GalleryItem media={item} onClick={() => setOpen(true)} />
+                <GalleryItem media={item} onClick={() => openPopup(i)} />
                 {gallery.length > 4 && i === 3 && (
                   <div
                     className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
-                    onClick={() => setOpen(true)}
+                    onClick={() => openPopup(i)}
                   >
                     <Icons.More className="text-gray-white w-20 h-20 md:w-35 md:h-35" />
                   </div>
@@ -55,11 +61,11 @@ export default function Gallery({ gallery }) {
         <div className="grid grid-cols-2 gap-10">
           {gallery?.slice(0, 4).map((item, i) => (
             <div key={i} className="relative group overflow-hidden">
-              <GalleryItem media={item} onClick={() => setOpen(true)} />
+              <GalleryItem media={item} onClick={() => openPopup(i)} />
               {gallery.length > 4 && i === 3 && (
                 <div
                   className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 cursor-pointer"
-                  onClick={() => setOpen(true)}
+                  onClick={() => openPopup(i)}
                 >
                   <Icons.More className="text-gray-white w-20 h-20 md:w-35 md:h-35" />
                 </div>
@@ -74,6 +80,7 @@ export default function Gallery({ gallery }) {
         setOpen={setOpen}
         media={gallery}
         isdownload={false}
+        startIndex={startIndex}
       />
     </>
   );

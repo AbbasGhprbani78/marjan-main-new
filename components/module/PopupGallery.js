@@ -35,8 +35,9 @@ export default function PopupGallery({
   setOpen,
   isdownload = true,
   isrevers = false,
+  startIndex = 0,
 }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(startIndex);
   const { t } = useTranslation();
 
   const [vhScale, setVhScale] = useState(
@@ -51,6 +52,12 @@ export default function PopupGallery({
     window.addEventListener("resize", updateVhScale);
     return () => window.removeEventListener("resize", updateVhScale);
   }, []);
+
+  useEffect(() => {
+    if (open) {
+      setCurrentIndex(Number.isFinite(+startIndex) ? startIndex : 0);
+    }
+  }, [open, startIndex]);
 
   const prevImage = () => {
     setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));

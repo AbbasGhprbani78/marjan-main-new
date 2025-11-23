@@ -48,16 +48,6 @@ export default async function page({ params }) {
             priority={true}
             quality={100}
           />
-
-          {/* {singleData?.name && (
-            <p
-              className={`w-max text-white font-normal text-[1.5rem] md:text-[2rem] z-10 ${
-                ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
-              }`}
-            >
-              {singleData?.name}
-            </p>
-          )} */}
         </section>
         <div className="flex flex-col gap-[1rem] px-20 md:px-40 lg:px-80 mt-[2.5rem] bg-white">
           {singleData?.name && (
@@ -96,16 +86,6 @@ export default async function page({ params }) {
           unoptimized={true}
           quality={100}
         />
-
-        {/* {singleData?.name && (
-          <p
-            className={`w-max text-white font-normal text-[1.5rem] md:text-[2rem] z-10 ${
-              ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
-            }`}
-          >
-            {singleData?.name}
-          </p>
-        )} */}
       </section>
       <section className="mt-[3rem] px-20 md:px-40 lg:px-80 lg:hidden">
         <div className="flex flex-col gap-[1rem]">
@@ -152,4 +132,28 @@ export default async function page({ params }) {
       )}
     </main>
   );
+}
+
+{
+  /* {singleData?.name && (
+          <p
+            className={`w-max text-white font-normal text-[1.5rem] md:text-[2rem] z-10 ${
+              ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
+            }`}
+          >
+            {singleData?.name}
+          </p>
+        )} */
+}
+
+{
+  /* {singleData?.name && (
+            <p
+              className={`w-max text-white font-normal text-[1.5rem] md:text-[2rem] z-10 ${
+                ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
+              }`}
+            >
+              {singleData?.name}
+            </p>
+          )} */
 }
