@@ -8,8 +8,6 @@ const CategoryFilters = ({
   handleFilterChange,
   isEmptyCheckBox,
   ismobile = false,
-  queryFilterKey,
-  queryValues,
   filters,
 }) => {
   const { t } = useTranslation();

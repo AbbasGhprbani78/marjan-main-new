@@ -148,6 +148,19 @@ export default function AllProducts({ categories, products }) {
             : normStr(val)
         );
         if (keyLower === "thicknesses" || keyLower === "thickness") {
+          // Handle array of thicknesses
+          if (Array.isArray(field)) {
+            const normalizedProductThicknesses = field
+              .map((t) => normThickness(t))
+              .filter((t) => Number.isFinite(t));
+            return selectedStrs.some((val) => {
+              const normalizedVal = normThickness(val);
+              return (
+                Number.isFinite(normalizedVal) &&
+                normalizedProductThicknesses.includes(normalizedVal)
+              );
+            });
+          }
           const productNum = normThickness(field);
           return (
             Number.isFinite(productNum) &&

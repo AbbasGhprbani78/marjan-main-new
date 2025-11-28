@@ -31,13 +31,14 @@ export default function ImagesContainer({ dataSingleProduct, images }) {
         />
       </div>
 
-      <Modal openModal={openModal} setOpenModal={setOpenModal}>
+      <Modal openModal={openModal} setOpenModal={setOpenModal} isCanter={false}>
         {selectedImage && (
           <IntroductionCard
             setOpenModal={setOpenModal}
             singleProduct={{
               title: dataSingleProduct?.title,
               image: selectedImage?.image,
+              gallery: dataSingleProduct?.gallery,
               size: dataSingleProduct?.size,
               color: images,
               thickness: dataSingleProduct?.thickness,

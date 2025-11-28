@@ -3,7 +3,7 @@ import GallerySingleBlog from "@/components/Blogs/GallerySingleBlog";
 import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchSingleBlog } from "@/services/singleBlog";
 import Image from "next/image";
-import React, { cache } from "react";
+import React from "react";
 import { notFound } from "next/navigation";
 import translations from "@/components/module/translations";
 import Blog from "@/components/templates/Blog";
@@ -19,9 +19,13 @@ export async function generateMetadata({ params }) {
   const singleBlog = await getSingleBlog(locale, params.slug);
 
   return {
-    title: singleBlog
-      ? `${singleBlog.title} | ${dict.websiteName}`
-      : `${dict.websiteName} | ${dict.Blogs || "Blogs"}`,
+    title: `${singleBlog?.title} | ${dict?.websiteName}`,
+    description: singleBlog?.excerpt,
+    openGraph: {
+      title: singleBlog.title,
+      description: singleBlog.title,
+      images: [`${process.env.NEXT_PUBLIC_API_URL}${singleBlog?.image}`],
+    },
   };
 }
 
@@ -34,9 +38,9 @@ export default async function Page({ params }) {
     notFound();
   }
 
+  console.log(singleBlog);
   return (
     <main className="wrapper">
-      <h1 className="sr-only">وبلاگ</h1>
       <article>
         <section className="w-full relative wrapper_image flex items-center justify-center mt-[130px] lg:mt-0">
           <Image
@@ -48,13 +52,13 @@ export default async function Page({ params }) {
             quality={100}
           />
           <div className="absolute inset-0 bg-black/50 z-10" />
-          <p
+          <h1
             className={`w-max text-white font-normal text-[1.2rem] md:text-[2rem] z-[11] text-center ${
               ["fa", "ar"].includes(locale) ? "font-fa" : "font-en"
             }`}
           >
             {singleBlog?.title}
-          </p>
+          </h1>
         </section>
 
         {singleBlog?.category?.title?.toLowerCase() === "articles" ? (
@@ -87,6 +91,22 @@ export default async function Page({ params }) {
           </section>
         )}
       </article>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: singleBlog?.title,
+            image: `${process.env.NEXT_PUBLIC_API_URL}${singleBlog?.image}`,
+            datePublished: singleBlog?.created_at,
+            dateModified: singleBlog?.updated_at,
+            publisher: {
+              "@type": "Organization",
+            },
+          }),
+        }}
+      />
     </main>
   );
 }

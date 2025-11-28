@@ -213,8 +213,8 @@ export default function Deduction({
     }
   `}
                 >
-                  {t("door")}
-                  <Icons.GasStation size={20} />
+                  {tab === "floor" ? t("deduction") : t("door")}
+                  {tab !== "floor" && <Icons.GasStation size={20} />}
                 </button>
               </div>
 

@@ -33,6 +33,8 @@ export default async function page({ params }) {
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
 
+  console.log(singleData.category);
+
   return (
     <main className="wrapper text-[var(--color-gray-900)] ">
       <h1 className="sr-only"> project name</h1>
@@ -75,6 +77,11 @@ export default async function page({ params }) {
             </p>
           )}
         </div>
+      </div>
+      <div className="px-20 md:px-40 lg:px-80 hidden lg:block">
+        {singleData?.descriptions && (
+          <ReadMoreText text={singleData?.descriptions} />
+        )}
       </div>
       <section className="w-full relative aspect-[3/2] max-h-[550px] wrapper_image flex items-center justify-center mt-[130px] lg:mt-0 lg:hidden">
         <Image

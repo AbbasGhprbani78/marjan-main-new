@@ -8,12 +8,16 @@ export default function Modal({
   setOpenModal,
   children,
   customeWidth = false,
+  isCanter = true,
 }) {
   return (
     <AnimatePresence>
       {openModal && (
         <motion.div
-          className="fixed inset-0   z-50 bg-[#292D32CC] flex items-center justify-center"
+          style={!isCanter && { paddingTop: "5dvh" }}
+          className={`fixed inset-0   z-100 bg-[#292D32CC] flex ${
+            isCanter && "items-center"
+          } justify-center`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

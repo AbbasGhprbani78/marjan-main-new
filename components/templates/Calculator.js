@@ -16,11 +16,12 @@ import { toPersianDigits } from "@/utils/helper";
 export default function CalculatorT({ dataSizes }) {
   const [uniMeasurement, setUnitMeasurement] = useState(1);
   const { t, locale } = useTranslation();
+
   const TABS = [
     { label: t("Floor"), value: "floor" },
     { label: t("Wall"), value: "wall" },
-    // { label: t("FloorWall"), value: "both" },
   ];
+
   const [area, setArea] = useState({
     floorArea: "0.00",
     wallArea: "0.00",

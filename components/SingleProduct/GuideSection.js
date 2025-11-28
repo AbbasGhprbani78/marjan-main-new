@@ -27,6 +27,7 @@ export default function GuideSection({
   const { t, locale } = useTranslation();
   const GuideIcon = Icons[icon];
   const [openModal, setOpenModal] = useState(false);
+  console.log(dataTechnical);
 
   return (
     <>

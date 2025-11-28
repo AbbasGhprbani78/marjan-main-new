@@ -1,18 +1,22 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Icons from "iconsax-reactjs";
 import Table from "./Table";
 import { useRouter } from "next/navigation";
 import { useLocalizedLink } from "@/utils/helper";
 import { useTranslation } from "@/context/TranslationContext";
-import Button from "../module/Button";
 
 export default function IntroductionCard({ setOpenModal, singleProduct }) {
   const router = useRouter();
   const { localizedHref } = useLocalizedLink();
   const { t, locale } = useTranslation();
   const [flipped, setFlipped] = useState(false);
+  const [currentImage, setCurrentImage] = useState(singleProduct.image || "");
+
+  useEffect(() => {
+    setCurrentImage(singleProduct.image || "");
+  }, [singleProduct.image]);
 
   const handleShare = async () => {
     const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`;
@@ -32,100 +36,154 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
     }
   };
 
+  const gallery =
+    singleProduct?.gallery?.map((g) => g.url || g.image || g) || [];
+
+  const handleNext = () => {
+    const currentIndex = gallery.indexOf(currentImage);
+    const nextIndex = (currentIndex + 1) % gallery.length;
+    setCurrentImage(gallery[nextIndex]);
+  };
+
+  const handlePrev = () => {
+    const currentIndex = gallery.indexOf(currentImage);
+    const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+    setCurrentImage(gallery[prevIndex]);
+  };
+
   return (
     <>
-      <div className="hidden md:grid grid-cols-12 md:w-[95vw] lg:w-[90vw] md:min-h-[90dvh] mx-auto">
-        <div className="col-span-12 md:col-span-5  xl:col-span-4 h-full text-[var(--color-gray-900)] bg-white p-[1.2rem] ">
-          <div className="flex items-center justify-between mb-[1rem] md:mb-[2rem]">
-            <span className="text-[1.3rem] font-inherit">
-              {singleProduct.title}
-            </span>
-            <Icons.CloseCircle
-              size={25}
-              className="cursor-pointer hidden md:block"
-              onClick={() => setOpenModal(false)}
-            />
-          </div>
-
-          <div className="flex items-center  w-full gap-[5px]">
-            <button
-              onClick={() => router.push(localizedHref("/representatives"))}
-              className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer text-[.9rem]"
-            >
-              {t("WhereToBuy")}
-              <Icons.Location size={15} />
-            </button>
-            <button
-              onClick={() => router.push("https://marjan.ariisco.com/en")}
-              className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer text-[.9rem]"
-            >
-              {t("SmartLayout")}
-              <Icons.Box2 size={15} />
-            </button>
-          </div>
-
-          <div className="w-full mt-[1rem]">
-            <Table
-              title={""}
-              thickness={singleProduct.thickness}
-              colors={singleProduct.color}
-              surface={singleProduct.surface}
-              size={singleProduct.size}
-            />
-          </div>
-
-          <div className="flex flex-col gap-[20px] max-h-[300] overflow-y-auto hide-scrollbar mt-[2rem] md:mt-[3rem]">
-            {singleProduct?.products.map((item) => (
-              <ItemOther
-                key={item.id}
-                setOpenModal={setOpenModal}
-                item={item}
+      <div className="absolute hidden lg:flex items-center justify-between px-4 z-50 left-[5%] right-[5%] top-[45%]">
+        <button
+          onClick={handlePrev}
+          className="p-2 bg-black/30 rounded-full backdrop-blur-sm"
+        >
+          <Icons.ArrowRight color="#fff" className="w-30 h-30" />
+        </button>
+        <button
+          onClick={handleNext}
+          className="p-2 bg-black/30 rounded-full backdrop-blur-sm"
+        >
+          <Icons.ArrowLeft color="#fff" className="w-30 h-30" />
+        </button>
+      </div>
+      <div className=" hidden lg:block w-[80vw]  relative mx-auto">
+        <div className="grid grid-cols-12  md:min-h-[82dvh] mx-auto w-full">
+          <div className="col-span-12 md:col-span-5  xl:col-span-4 h-full text-[var(--color-gray-900)] bg-white p-[1.2rem] ">
+            <div className="flex items-center justify-between mb-[1rem] md:mb-[2rem]">
+              <span className="text-[1.3rem] font-inherit">
+                {singleProduct.title}
+              </span>
+              <Icons.CloseCircle
+                size={25}
+                className="cursor-pointer hidden md:block"
+                onClick={() => setOpenModal(false)}
               />
-            ))}
+            </div>
+
+            <div className="flex items-center  w-full gap-[5px]">
+              <button
+                onClick={() => router.push(localizedHref("/representatives"))}
+                className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer text-[.9rem]"
+              >
+                {t("WhereToBuy")}
+                <Icons.Location size={15} />
+              </button>
+              <button
+                onClick={() => router.push("https://marjan.ariisco.com/en")}
+                className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer text-[.9rem]"
+              >
+                {t("SmartLayout")}
+                <Icons.Box2 size={15} />
+              </button>
+            </div>
+
+            <div className="w-full mt-[1rem]">
+              <Table
+                title={""}
+                thickness={singleProduct.thickness}
+                colors={singleProduct.color}
+                surface={singleProduct.surface}
+                size={singleProduct.size}
+              />
+            </div>
+
+            <div className="flex flex-col gap-[20px] max-h-[300] overflow-y-auto hide-scrollbar mt-[2rem] md:mt-[3rem]">
+              {singleProduct?.products.map((item) => (
+                <ItemOther
+                  key={item.id}
+                  setOpenModal={setOpenModal}
+                  item={item}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="col-span-12 md:col-span-7  xl:col-span-8 relative">
+            <div className="relative h-[25dvh] md:h-full">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_API_URL}${currentImage}`}
+                alt="Introduction image"
+                className="object-cover"
+                fill
+                quality={100}
+                unoptimized={true}
+              />
+              <Icons.CloseCircle
+                size={27}
+                color="#fff"
+                className="cursor-pointer absolute z-20 right-10 top-20 md:hidden"
+                onClick={() => setOpenModal(false)}
+              />
+            </div>
+
+            <div
+              className={`absolute ${
+                ["ar", "fa"].includes(locale) ? "right-0" : "left-0"
+              } bottom-0 p-[1rem] w-max flex justify-end z-50`}
+            >
+              <button
+                onClick={handleShare}
+                className="flex items-center gap-2 bg-black/50 text-white px-6 py-3 rounded-lg backdrop-blur-sm"
+              >
+                <span>{t("ShareOn")}</span>
+                <Image
+                  src="/images/share.png"
+                  width={30}
+                  height={30}
+                  className="cursor-pointer mix-blend-normal invert"
+                  alt="share"
+                />
+              </button>
+            </div>
           </div>
         </div>
-
-        <div className="col-span-12 md:col-span-7  xl:col-span-8 relative">
-          <div className="relative h-[25dvh] md:h-full">
-            <Image
-              src={`${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`}
-              alt="Introduction image"
-              className="object-cover"
-              fill
-              quality={100}
-              unoptimized={true}
-            />
-            <Icons.CloseCircle
-              size={27}
-              color="#fff"
-              className="cursor-pointer absolute z-20 right-10 top-20 md:hidden"
-              onClick={() => setOpenModal(false)}
-            />
-          </div>
-
-          <div
-            className={`absolute ${
-              ["ar", "fa"].includes(locale) ? "right-0" : "left-0"
-            } bottom-0 p-[1rem] w-max flex justify-end z-50`}
-          >
-            <button
-              onClick={handleShare}
-              className="flex items-center gap-2 bg-black/50 text-white px-6 py-3 rounded-lg backdrop-blur-sm"
-            >
-              <span>{t("ShareOn")}</span>
-              <Image
-                src="/images/share.png"
-                width={30}
-                height={30}
-                className="cursor-pointer mix-blend-normal invert"
-                alt="share"
-              />
-            </button>
-          </div>
+        <div className="hidden lg:flex gap-3 items-center mt-3 px-4 py-4 overflow-x-auto whitespace-nowrap hide-scrollbar">
+          {singleProduct?.gallery?.map((g) => {
+            const imgPath = g.url || g.image || g;
+            const thumbSrc = `${process.env.NEXT_PUBLIC_API_URL}${imgPath}`;
+            const isActive = imgPath === currentImage;
+            return (
+              <button
+                key={g.id || thumbSrc}
+                onClick={() => setCurrentImage(imgPath)}
+                className={`relative flex-shrink-0  overflow-hidden w-[70px] h-[70px] `}
+              >
+                <Image
+                  src={thumbSrc}
+                  alt={g.title || "thumb"}
+                  width={70}
+                  height={70}
+                  quality={80}
+                  className="object-cover w-full h-full"
+                />
+                {!isActive && <div className="absolute inset-0 bg-black/40 " />}
+              </button>
+            );
+          })}
         </div>
       </div>
-
-      <div className=" md:hidden w-[95vw] md:w-[80vw] h-[600px] md:h-[500px] cursor-pointer mx-auto">
+      <div className=" lg:hidden w-[95vw] md:w-[80vw] h-[600px] md:h-[500px] cursor-pointer mx-auto">
         <div
           className={`relative w-full h-full duration-700 transform-style preserve-3d ${
             flipped ? "rotate-y-180" : ""
