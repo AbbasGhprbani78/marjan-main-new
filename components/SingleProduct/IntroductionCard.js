@@ -11,12 +11,20 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
   const router = useRouter();
   const { localizedHref } = useLocalizedLink();
   const { t, locale } = useTranslation();
-  const [flipped, setFlipped] = useState(false);
+  const [flipped, setFlipped] = useState(true);
   const [currentImage, setCurrentImage] = useState(singleProduct.image || "");
 
   useEffect(() => {
-    setCurrentImage(singleProduct.image || "");
-  }, [singleProduct.image]);
+    // prefer explicit image, otherwise fallback to first gallery item
+    setCurrentImage(
+      singleProduct.image ||
+        singleProduct?.gallery?.[0]?.url ||
+        singleProduct?.gallery?.[0]?.image ||
+        singleProduct?.gallery?.[0] ||
+        "" ||
+        ""
+    );
+  }, [singleProduct.image, singleProduct.gallery]);
 
   const handleShare = async () => {
     const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`;
@@ -39,6 +47,18 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
   const gallery =
     singleProduct?.gallery?.map((g) => g.url || g.image || g) || [];
 
+  const buildSrc = (path) => {
+    if (!path) return "";
+    const p = String(path);
+    if (p.startsWith("http") || p.startsWith("data:") || p.startsWith("blob:"))
+      return p;
+    const base = process.env.NEXT_PUBLIC_API_URL || "";
+    if (!base) return p;
+    if (base.endsWith("/") && p.startsWith("/")) return base + p.slice(1);
+    if (!base.endsWith("/") && !p.startsWith("/")) return base + "/" + p;
+    return base + p;
+  };
+
   const handleNext = () => {
     const currentIndex = gallery.indexOf(currentImage);
     const nextIndex = (currentIndex + 1) % gallery.length;
@@ -53,7 +73,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
 
   return (
     <>
-      <div className="absolute hidden lg:flex items-center justify-between px-4 z-50 left-[5%] right-[5%] top-[45%]">
+      <div className="absolute hidden lg:flex items-center justify-between px-4 z-50 lg:left-[5%] lg:right-[5%] top-[45%]">
         <button
           onClick={handlePrev}
           className="p-2 bg-black/30 rounded-full backdrop-blur-sm"
@@ -67,6 +87,22 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
           <Icons.ArrowLeft color="#fff" className="w-30 h-30" />
         </button>
       </div>
+
+      <div className="absolute flex lg:hidden items-center justify-between px-4 z-50 left-[5px] right-[5px] top-[45%]">
+        <button
+          onClick={handlePrev}
+          className="p-2 bg-black/30 rounded-full backdrop-blur-sm"
+        >
+          <Icons.ArrowRight color="#fff" className="w-30 h-30" />
+        </button>
+        <button
+          onClick={handleNext}
+          className="p-2 bg-black/30 rounded-full backdrop-blur-sm"
+        >
+          <Icons.ArrowLeft color="#fff" className="w-30 h-30" />
+        </button>
+      </div>
+
       <div className=" hidden lg:block w-[80vw]  relative mx-auto">
         <div className="grid grid-cols-12  md:min-h-[82dvh] mx-auto w-full">
           <div className="col-span-12 md:col-span-5  xl:col-span-4 h-full text-[var(--color-gray-900)] bg-white p-[1.2rem] ">
@@ -122,7 +158,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
           <div className="col-span-12 md:col-span-7  xl:col-span-8 relative">
             <div className="relative h-[25dvh] md:h-full">
               <Image
-                src={`${process.env.NEXT_PUBLIC_API_URL}${currentImage}`}
+                src={buildSrc(currentImage)}
                 alt="Introduction image"
                 className="object-cover"
                 fill
@@ -161,8 +197,9 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
         <div className="hidden lg:flex gap-3 items-center mt-3 px-4 py-4 overflow-x-auto whitespace-nowrap hide-scrollbar">
           {singleProduct?.gallery?.map((g) => {
             const imgPath = g.url || g.image || g;
-            const thumbSrc = `${process.env.NEXT_PUBLIC_API_URL}${imgPath}`;
-            const isActive = imgPath === currentImage;
+            const thumbSrc = buildSrc(imgPath);
+            const isActive =
+              thumbSrc === buildSrc(currentImage) || imgPath === currentImage;
             return (
               <button
                 key={g.id || thumbSrc}
@@ -175,6 +212,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                   width={70}
                   height={70}
                   quality={80}
+                  unoptimized={true}
                   className="object-cover w-full h-full"
                 />
                 {!isActive && <div className="absolute inset-0 bg-black/40 " />}
@@ -183,14 +221,15 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
           })}
         </div>
       </div>
-      <div className=" lg:hidden w-[95vw] md:w-[80vw] h-[600px] md:h-[500px] cursor-pointer mx-auto">
+
+      <div className="lg:hidden w-[95vw] md:w-[80vw] h-[80dvh]  cursor-pointer mx-auto">
         <div
           className={`relative w-full h-full duration-700 transform-style preserve-3d ${
             flipped ? "rotate-y-180" : ""
           }`}
         >
           <div className="absolute w-full h-full backface-hidden bg-white px-[20px] pb-[20px] flex flex-col  shadow-lg rounded-xl">
-            <div className="flex justify-end py-[1rem]">
+            <div className="flex justify-between py-[1rem]">
               <Icons.CloseCircle
                 size={25}
                 className="cursor-pointer"
@@ -199,17 +238,17 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                   setOpenModal(false);
                 }}
               />
+              <Icons.Eye
+                size={25}
+                color="#000"
+                className="cursor-pointer "
+                onClick={() => setFlipped(!flipped)}
+              />
             </div>
             <div className="flex items-center justify-between mb-[1rem]">
               <span className={`text-[1.3rem] font-en `}>
                 {singleProduct.title}
               </span>
-              <button
-                onClick={() => setFlipped(!flipped)}
-                className=" bg-gray-800 text-white  rounded-md text-[.8rem] px-10 pb-2 pt-4"
-              >
-                {t("More Detailes")}
-              </button>
             </div>
 
             <div className="flex items-center gap-5 mb-[2rem]">
@@ -256,11 +295,12 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
 
           <div className="absolute w-full h-full backface-hidden rotate-y-180  rounded-xl overflow-hidden">
             <Image
-              src={`${process.env.NEXT_PUBLIC_API_URL}${singleProduct.image}`}
+              src={buildSrc(currentImage || singleProduct.image)}
               alt=" Introduction image"
               className="object-contain"
               quality={100}
               fill
+              unoptimized={true}
             />
             <Icons.CloseCircle
               size={27}
@@ -271,23 +311,22 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                 setOpenModal(false);
               }}
             />
-
-            <Icons.Eye
-              size={27}
-              color="#fff"
-              className="cursor-pointer absolute left-5 top-5"
-              onClick={() => setFlipped(!flipped)}
-            />
-            <div className="absolute left-0 bottom-0 p-4 w-full flex justify-center backdrop-blur-[5px] bg-white/50">
+            <div className="absolute left-0 bottom-0 p-8 w-full flex justify-between backdrop-blur-[5px] bg-white/50">
               <button onClick={handleShare} className="flex items-center gap-4">
                 <Image
                   src="/images/share.png"
-                  width={30}
-                  height={30}
+                  width={25}
+                  height={25}
                   className="cursor-pointer mix-blend-multiply"
                   alt="share"
                 />
                 <span>{t("Share On")}</span>
+              </button>
+              <button
+                onClick={() => setFlipped(!flipped)}
+                className="cursor-pointer mix-blend-multiply"
+              >
+                {t("More Detailes")}
               </button>
             </div>
           </div>
@@ -304,6 +343,35 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
             transform: rotateY(180deg);
           }
         `}</style>
+
+        <div className="flex lg:hidden gap-3 items-center mt-3 px-4 py-4 overflow-x-auto whitespace-nowrap hide-scrollbar">
+          {singleProduct?.gallery?.map((g) => {
+            const imgPath = g.url || g.image || g;
+            const thumbSrc = buildSrc(imgPath);
+            const isActive =
+              thumbSrc === buildSrc(currentImage) || imgPath === currentImage;
+            return (
+              <button
+                key={g.id || thumbSrc}
+                onClick={() => setCurrentImage(imgPath)}
+                className={`relative flex-shrink-0 overflow-hidden w-[60px] h-[60px] ${
+                  isActive ? "ring-2 ring-gray-800" : ""
+                }`}
+              >
+                <Image
+                  src={thumbSrc}
+                  alt={g.title || "thumb"}
+                  width={60}
+                  height={60}
+                  quality={80}
+                  unoptimized={true}
+                  className="object-cover w-full h-full"
+                />
+                {!isActive && <div className="absolute inset-0 bg-black/40 " />}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </>
   );
