@@ -6,7 +6,6 @@ import { Pagination, Autoplay } from "swiper/modules";
 import * as Icons from "iconsax-reactjs";
 import { MoreButton } from "./moreButton";
 import {} from "swiper";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";

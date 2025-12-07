@@ -193,6 +193,7 @@ export default function PopupGallery({
                     opacity: i === currentIndex ? 1 : 0.6,
                     userSelect: "none",
                   }}
+                  controls={true}
                   muted
                 />
               ) : (

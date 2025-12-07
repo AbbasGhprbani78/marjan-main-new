@@ -62,7 +62,12 @@ export default async function Page({ params }) {
         </section>
 
         {singleBlog?.category?.title?.toLowerCase() === "articles" ? (
-          <Blog content={singleBlog?.rich_text} locale={locale} />
+          <Blog
+            content={singleBlog?.rich_text}
+            locale={locale}
+            related_blogs={singleBlog?.related_blogs}
+            related_products={singleBlog?.related_products}
+          />
         ) : (
           <section className="mt-[2rem] px-20 md:px-40 lg:px-80 text-[var(--color-gray-900)] font-normal pb-[2rem]">
             {singleBlog.text && (

@@ -44,6 +44,7 @@ export default function BlogVideo({ singleBlog }) {
               src={`${process.env.NEXT_PUBLIC_API_URL}${singleBlog.media}`}
               controls
               className="w-full h-full object-cover"
+              muted
             />
           ) : (
             <Image

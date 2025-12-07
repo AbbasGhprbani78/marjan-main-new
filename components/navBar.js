@@ -380,7 +380,7 @@ function Menu({ show, setShowInnerMenu }) {
                   </li>
                   <li className="py-[10px] ">
                     <Link
-                      href="https://marjan.ariisco.com/en"
+                      href="https://marjan.ariisco.com"
                       className="custom-link"
                       target="_blank"
                     >
@@ -986,7 +986,7 @@ function MenuMobile({ dataHeader }) {
                     },
                     {
                       label: t("Smart Layout Software"),
-                      href: "https://marjan.ariisco.com/en",
+                      href: "https://marjan.ariisco.com",
                     },
                     {
                       label: t("Estimatetilearea"),

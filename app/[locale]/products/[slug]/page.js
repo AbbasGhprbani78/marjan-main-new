@@ -94,7 +94,7 @@ export default async function page({ params }) {
               text={dict["SmartLayout"]}
               icon={"Box2"}
               isLink={"true"}
-              href="https://marjan.ariisco.com/en"
+              href="https://marjan.ariisco.com"
             />
             <GuideSection
               text={dict["CategoryTable"]}

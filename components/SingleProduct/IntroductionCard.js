@@ -126,7 +126,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                 <Icons.Location size={15} />
               </button>
               <button
-                onClick={() => router.push("https://marjan.ariisco.com/en")}
+                onClick={() => router.push("https://marjan.ariisco.com")}
                 className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer text-[.9rem]"
               >
                 {t("SmartLayout")}
@@ -265,7 +265,7 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  router.push("https://marjan.ariisco.com/en");
+                  router.push("https://marjan.ariisco.com");
                 }}
                 className="flex-1 py-7 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md text-[.8rem]"
               >
