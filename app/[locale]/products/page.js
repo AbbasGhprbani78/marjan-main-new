@@ -30,7 +30,7 @@ export default async function page({ params }) {
       .map(String)
       .map((t) => `${t}mm`),
   };
-  console.log(dataProducts?.products);
+
   return (
     <div className="wrapper">
       <h1 className="sr-only">همه محصولات</h1>

@@ -110,6 +110,8 @@ export default function Texture({ textureImage, isrevers = false }) {
     setActiveGroupKey(key);
   };
 
+  console.log(textureImage);
+
   return (
     <div>
       <p className=" font-[500] text-[1.3rem] md:text-[1.5rem]  pb-[30]  px-20 md:px-40 lg:px-80">
@@ -123,49 +125,64 @@ export default function Texture({ textureImage, isrevers = false }) {
           direction: "ltr",
         }}
       >
-        {textureImage.map((item, i) => (
-          <div
-            className={`flex flex-col cursor-pointer w-full`}
-            key={i}
-            onClick={() => {
-              showImages(item);
-              setShowTexture(true);
-              setActiveColor(i);
-            }}
-          >
+        {textureImage.map((item, i) => {
+          const allTiles = [
+            ...(item.imagesTailes?.horizontal || []),
+            ...(item.imagesTailes?.vertical || []),
+          ];
+
+          const maxDim = allTiles.length > 0 ? getMaxDimension(allTiles) : 120;
+
+          const referenceTile =
+            item.imagesTailes?.horizontal?.[0] ||
+            item.imagesTailes?.vertical?.[0] ||
+            allTiles[0];
+
+          const tileSize = referenceTile?.size || item.size || "120x120";
+
+          const { width, height } = getScaledSize(tileSize, maxDim, 180);
+
+          return (
             <div
-              className={`relative w-full rounded-xl transition-all duration-300 ease-in-out
-        ${
-          activeColor === i
-            ? "scale-105 shadow-[0_8px_20px_rgba(100,100,100,0.35)] overflow-hidden"
-            : "border-transparent hover:shadow-[0_4px_12px_rgba(100,100,100,0.15)] hover:scale-102"
-        }
-        ${
-          item.shape === "vertical"
-            ? "aspect-[2/3]"
-            : item.shape === "horizontal"
-            ? "aspect-[3/2]"
-            : "aspect-square"
-        }
-      `}
+              key={i}
+              className="flex flex-col items-center cursor-pointer"
+              onClick={() => {
+                showImages(item);
+                setShowTexture(true);
+                setActiveColor(i);
+              }}
             >
-              <Image
-                src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
-                className="object-center"
-                alt="color image"
-                fill
-              />
-            </div>
-            <div className="flex items-center justify-between mt-[7px] text-sm flex-wrap">
-              <span>{item.code}</span>
-              <div className="flex items-center gap-[5px]">
-                <span>{item.title}</span>
+              <div
+                className={`
+          relative overflow-hidden bg-gray-100  transition-all duration-300
+          ${
+            activeColor === i
+              ? " scale-110 z-10"
+              : "hover:shadow-lg hover:scale-105 shadow-md"
+          }
+        `}
+                style={{
+                  width: `${width}px`,
+                  height: `${height}px`,
+                }}
+              >
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_API_URL}${item?.image}`}
+                  alt={item.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 120px, 180px"
+                />
+              </div>
+
+              <div className="mt-[1rem] text-center flex items-center gap-5">
+                <p className="font-semibold text-sm">{item.code}</p>
+                <p className="text-xs text-gray-600">{item.title}</p>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
-
       {showTexture && (
         <>
           <p className="font-[500] text-[1.3rem] md:text-[1.5rem] py-[2rem] px-20 md:px-40 lg:px-80">

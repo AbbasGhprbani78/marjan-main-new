@@ -33,8 +33,6 @@ export default async function page({ params }) {
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
 
-  console.log(singleData.category);
-
   return (
     <main className="wrapper text-[var(--color-gray-900)] ">
       <h1 className="sr-only"> project name</h1>

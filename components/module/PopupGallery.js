@@ -110,7 +110,7 @@ export default function PopupGallery({
           role="dialog"
         >
           <button
-            className="absolute top-[30px] right-[50px] text-[24px] bg-transparent text-white cursor-pointer"
+            className="absolute top-[30px] right-[50px] text-[24px] bg-transparent text-white cursor-pointer z-50"
             onClick={() => setOpen(false)}
             aria-label="Close Gallery"
           >
@@ -142,22 +142,36 @@ export default function PopupGallery({
               <video
                 src={`${process.env.NEXT_PUBLIC_API_URL}${media[currentIndex]}`}
                 controls
-                className={`h-[45dvh] md:h-[60dvh] max-w-[80vw] ${
-                  sizes.length === 0 && "object-cover"
-                }`}
+                className={`${
+                  !hasSizes ? "h-[45dvh] md:h-[60dvh] max-w-[80vw]" : ""
+                } ${sizes.length === 0 && "object-cover"}`}
                 style={
-                  hasSizes ? { width: `${width}px`, height: `${height}px` } : {}
+                  hasSizes
+                    ? {
+                        width: `${width}px`,
+                        height: `${height}px`,
+                        maxWidth: "100%",
+                        objectFit: "contain",
+                      }
+                    : {}
                 }
               />
             ) : (
               <img
                 src={`${process.env.NEXT_PUBLIC_API_URL}${media[currentIndex]}`}
                 alt={`Media ${currentIndex + 1}`}
-                className={`h-[45dvh] md:h-[60dvh] max-w-[80vw] ${
-                  sizes.length === 0 && "object-cover"
-                }`}
+                className={`${
+                  !hasSizes ? "h-[45dvh] md:h-[60dvh] max-w-[80vw]" : ""
+                } ${sizes.length === 0 && "object-cover"}`}
                 style={
-                  hasSizes ? { width: `${width}px`, height: `${height}px` } : {}
+                  hasSizes
+                    ? {
+                        width: `${width}px`,
+                        height: `${height}px`,
+                        maxWidth: "100%",
+                        objectFit: "contain",
+                      }
+                    : {}
                 }
                 draggable={false}
                 onContextMenu={(e) => {

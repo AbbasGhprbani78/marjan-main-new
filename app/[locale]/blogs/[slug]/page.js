@@ -38,7 +38,6 @@ export default async function Page({ params }) {
     notFound();
   }
 
-  console.log(singleBlog);
   return (
     <main className="wrapper">
       <article>
