@@ -1,12 +1,13 @@
+import { fetchWithAnalytics } from "@/utils/fetchWithAnalytics";
+
 export const fetchAllProjects = async (lang) => {
-  const res = await fetch(
+  const res = await fetchWithAnalytics(
     `${process.env.NEXT_PUBLIC_API_URL}/app/project-list/`,
     {
       method: "GET",
       headers: {
         "Accept-Language": lang,
       },
-      next: { revalidate: 300 },
     }
   );
 

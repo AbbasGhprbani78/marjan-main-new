@@ -1,12 +1,13 @@
+import { fetchWithAnalytics } from "@/utils/fetchWithAnalytics";
+
 export const fetchCatalogs = async (lang) => {
-  const res = await fetch(
+  const res = await fetchWithAnalytics(
     `${process.env.NEXT_PUBLIC_API_URL}/app/catalog-list/`,
     {
       method: "GET",
       headers: {
         "Accept-Language": lang,
       },
-      next: { revalidate: 300 },
     }
   );
 

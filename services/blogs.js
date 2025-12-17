@@ -1,12 +1,13 @@
+import { fetchWithAnalytics } from "@/utils/fetchWithAnalytics";
+
 export const fetchBlogs = async (lang) => {
-  const res = await fetch(
+  const res = await fetchWithAnalytics(
     `${process.env.NEXT_PUBLIC_API_URL}/app/api/blog-data/`,
     {
       method: "GET",
       headers: {
         "Accept-Language": lang,
       },
-      next: { revalidate: 300 },
     }
   );
 

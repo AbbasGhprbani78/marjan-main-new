@@ -1,5 +1,7 @@
+import { fetchWithAnalytics } from "@/utils/fetchWithAnalytics";
+
 export const fetchContactUs = async (lang) => {
-  const res = await fetch(
+  const res = await fetchWithAnalytics(
     `${process.env.NEXT_PUBLIC_API_URL}/app/api/contact-us/`,
     {
       method: "GET",

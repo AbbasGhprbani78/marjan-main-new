@@ -1,10 +1,15 @@
+import { fetchWithAnalytics } from "@/utils/fetchWithAnalytics";
+
 export const fetchProvinces = async (lang) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/provinces/`, {
-    method: "GET",
-    headers: {
-      "Accept-Language": lang,
-    },
-  });
+  const res = await fetchWithAnalytics(
+    `${process.env.NEXT_PUBLIC_API_URL}/app/provinces/`,
+    {
+      method: "GET",
+      headers: {
+        "Accept-Language": lang,
+      },
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch posts");
@@ -12,7 +17,6 @@ export const fetchProvinces = async (lang) => {
 
   return res.json();
 };
-
 export const fetchOwnership = async (lang) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/app/ownership-types/`,

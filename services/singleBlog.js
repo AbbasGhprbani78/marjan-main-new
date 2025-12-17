@@ -1,5 +1,7 @@
+import { fetchWithAnalytics } from "@/utils/fetchWithAnalytics";
+
 export const fetchSingleBlog = async (lang, slug) => {
-  const res = await fetch(
+  const res = await fetchWithAnalytics(
     `${process.env.NEXT_PUBLIC_API_URL}/app/api/blog/${slug}`,
     {
       method: "GET",
@@ -11,7 +13,7 @@ export const fetchSingleBlog = async (lang, slug) => {
 
   if (!res.ok) {
     if (res.status === 404) {
-      return null; // Return null for 404 errors instead of throwing
+      return null;
     }
     throw new Error("Failed to fetch posts");
   }

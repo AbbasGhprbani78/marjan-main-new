@@ -1,22 +1,29 @@
+import { fetchWithAnalytics } from "@/utils/fetchWithAnalytics";
+
 export const fetchhome = async (lang) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/app/home-page/`, {
-    method: "GET",
-    headers: {
-      "Accept-Language": lang,
-    },
-    next: { revalidate: 300 },
-  });
+  const res = await fetchWithAnalytics(
+    `${process.env.NEXT_PUBLIC_API_URL}/app/home-page/`,
+    {
+      method: "GET",
+      headers: {
+        "Accept-Language": lang,
+      },
+    }
+  );
 
   if (!res.ok) {
+    let message = "خطای ناشناخته از سرور";
+
     try {
       const errorData = await res.json();
-      console.error("Server error:", errorData);
-      throw new Error(errorData.message || "خطای ناشناخته از سرور");
+      message = errorData.message || message;
     } catch {
       const errorText = await res.text();
-      console.error("Server error (text):", errorText);
-      throw new Error(errorText || "خطای ناشناخته از سرور");
+      message = errorText || message;
     }
+
+    console.error("Server error:", message);
+    throw new Error(message);
   }
 
   return res.json();

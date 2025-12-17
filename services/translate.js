@@ -6,7 +6,6 @@ export const fetchTranslateWords = async (lang) => {
       headers: {
         "Accept-Language": lang,
       },
-      next: { revalidate: 300 },
     }
   );
 

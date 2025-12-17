@@ -1,5 +1,7 @@
+import { fetchWithAnalytics } from "@/utils/fetchWithAnalytics";
+
 export const fetchTypeofActivity = async (lang) => {
-  const res = await fetch(
+  const res = await fetchWithAnalytics(
     `${process.env.NEXT_PUBLIC_API_URL}/app/api/fields-of-activity/`,
     {
       method: "GET",

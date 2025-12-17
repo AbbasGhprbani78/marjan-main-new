@@ -15,7 +15,6 @@ export function middleware(request) {
 
   if (isMissingLocale && !isPublicFile && pathname !== "/favicon.ico") {
     const lang = request.cookies.get("lang")?.value || "fa";
-
     const url = request.nextUrl.clone();
     url.pathname = `/${lang}${pathname}`;
     return NextResponse.redirect(url);

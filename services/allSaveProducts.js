@@ -1,13 +1,13 @@
-export const fetchAllSaveProducts = async (lang) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/product/api/favorites/`,
+import { fetchWithAnalytics } from "@/utils/fetchWithAnalytics";
 
+export const fetchAllSaveProducts = async (lang) => {
+  const res = await fetchWithAnalytics(
+    `${process.env.NEXT_PUBLIC_API_URL}/product/api/favorites/`,
     {
       method: "GET",
       headers: {
         "Accept-Language": lang,
       },
-      next: { revalidate: 300 },
     }
   );
 

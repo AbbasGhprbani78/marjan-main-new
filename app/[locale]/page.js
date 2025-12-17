@@ -12,7 +12,6 @@ import ReadMoreText from "@/components/module/ReadMoreText";
 import { fetchTranslateWords } from "@/services/translate";
 import { buildDictionary } from "@/utils/buildDictionary";
 import translations from "@/components/module/translations";
-
 export const revalidate = 300;
 export const dynamicParams = true;
 
@@ -28,6 +27,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Home({ params }) {
   const { locale } = await params;
+
   const dataHome = await fetchhome(locale);
   const dictArray = await fetchTranslateWords(locale);
   const dict = buildDictionary(dictArray);
@@ -65,12 +65,12 @@ export default async function Home({ params }) {
               {dict["DigitalAssistant"]}
             </p>
           </div>
-          <FeatureTabs data={dataHome.tabsData} />
+          <FeatureTabs data={dataHome?.tabsData} />
         </div>
       </div>
       <div className="pt-[45.8px] md:pt-[90px] xl:pt-0 mb-60px text-center ">
         <p className="title font-[500]">{dict["Projects"]}</p>
-        <ProjectsSlider data={dataHome.desginStory.projects} />
+        <ProjectsSlider data={dataHome?.desginStory?.projects} />
 
         <MoreButton
           text={dict["More"]}
@@ -118,7 +118,7 @@ export default async function Home({ params }) {
         >
           <div className=" mb-[35px] md:mb-[20px]">
             <ReadMoreText
-              text={dataHome.about.description}
+              text={dataHome?.about?.description}
               textColor="text-white"
               isgradient={false}
             />

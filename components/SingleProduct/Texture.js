@@ -110,8 +110,6 @@ export default function Texture({ textureImage, isrevers = false }) {
     setActiveGroupKey(key);
   };
 
-  console.log(textureImage);
-
   return (
     <div>
       <p className=" font-[500] text-[1.3rem] md:text-[1.5rem]  pb-[30]  px-20 md:px-40 lg:px-80">
@@ -177,7 +175,7 @@ export default function Texture({ textureImage, isrevers = false }) {
 
               <div className="mt-[1rem] text-center flex items-center gap-5">
                 <p className="font-semibold text-sm">{item.code}</p>
-                <p className="text-xs text-gray-600">{item.title}</p>
+                <p className="text-md text-gray-600">{item.title}</p>
               </div>
             </div>
           );
