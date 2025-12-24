@@ -79,7 +79,7 @@ export default function Footer() {
               target="_blank"
             >
               <Image
-                src={"/images/instagram.png"}
+                src={"/images/instagram.webp"}
                 width={40}
                 height={40}
                 className="object-fill cursor-pointer mix-blend-multiply"
@@ -226,7 +226,7 @@ export default function Footer() {
               target="_blank"
             >
               <Image
-                src={"/images/instagram.png"}
+                src={"/images/instagram.webp"}
                 width={40}
                 height={40}
                 className="object-fill cursor-pointer mix-blend-multiply"

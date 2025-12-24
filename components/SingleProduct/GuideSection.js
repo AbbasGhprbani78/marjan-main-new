@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import * as Icons from "iconsax-reactjs";
 import Modal from "../module/Modal";
 import Table from "../module/Table";
@@ -8,6 +8,7 @@ import { useLocalizedLink } from "@/utils/helper";
 import { useTranslation } from "@/context/TranslationContext";
 import QuestionForm from "../module/QuestionForm";
 import { ToastContainerCustom } from "../module/Toast";
+import MySelect from "../module/SelectDropDown";
 export default function GuideSection({
   text,
   icon,
@@ -27,6 +28,60 @@ export default function GuideSection({
   const { t, locale } = useTranslation();
   const GuideIcon = Icons[icon];
   const [openModal, setOpenModal] = useState(false);
+
+  const isTechnicalObject =
+    dataTechnical &&
+    !Array.isArray(dataTechnical) &&
+    typeof dataTechnical === "object";
+  const isPackObject =
+    dataPack && !Array.isArray(dataPack) && typeof dataPack === "object";
+
+  const technicalSizeKeys = useMemo(() => {
+    if (isTechnicalObject) {
+      return Object.keys(dataTechnical || {});
+    }
+    if (Array.isArray(dataTechnical)) {
+      const set = new Set(
+        dataTechnical
+          .map((item) => item.size)
+          .filter((size) => typeof size === "string" && size.trim() !== "")
+      );
+      return Array.from(set);
+    }
+    return [];
+  }, [dataTechnical, isTechnicalObject]);
+
+  const packSizeKeys = useMemo(() => {
+    if (isPackObject) {
+      return Object.keys(dataPack || {});
+    }
+    if (Array.isArray(dataPack)) {
+      const set = new Set(
+        dataPack
+          .map((item) => item.size)
+          .filter((size) => typeof size === "string" && size.trim() !== "")
+      );
+      return Array.from(set);
+    }
+    return [];
+  }, [dataPack, isPackObject]);
+
+  const [selectedTechnicalSize, setSelectedTechnicalSize] = useState(
+    technicalSizeKeys[0] || ""
+  );
+  const [selectedPackSize, setSelectedPackSize] = useState(
+    packSizeKeys[0] || ""
+  );
+
+  const technicalSelectData = technicalSizeKeys.map((size) => ({
+    id: size,
+    name: size,
+  }));
+
+  const packSelectData = packSizeKeys.map((size) => ({
+    id: size,
+    name: size,
+  }));
 
   return (
     <>
@@ -81,10 +136,10 @@ export default function GuideSection({
       <Modal
         openModal={openModal}
         setOpenModal={setOpenModal}
-        customeWidth={typeModel !== "questions" && true}
+        customeWidth={""}
       >
         <div className="bg-white  px-[1rem] pb-[2rem] pt-[1rem] flex flex-col ">
-          <div className="flex items-center justify-between pb-[2rem]">
+          <div className="flex items-center justify-between ">
             <span className="font-medium text-[1.2rem]">
               {typeModel == "questions"
                 ? t("AskQuestion")
@@ -100,6 +155,30 @@ export default function GuideSection({
               onClick={() => setOpenModal(false)}
             />
           </div>
+          {(typeModel === "categories" || typeModel === "properties") && (
+            <div className="my-15 md:w-1/2">
+              {typeModel === "categories" && packSelectData.length > 0 && (
+                <MySelect
+                  label={t("Size")}
+                  data={packSelectData}
+                  value={selectedPackSize}
+                  onChange={(option) =>
+                    setSelectedPackSize(option ? option.value : "")
+                  }
+                />
+              )}
+              {typeModel === "properties" && technicalSelectData.length > 0 && (
+                <MySelect
+                  label={t("Size")}
+                  data={technicalSelectData}
+                  value={selectedTechnicalSize}
+                  onChange={(option) =>
+                    setSelectedTechnicalSize(option ? option.value : "")
+                  }
+                />
+              )}
+            </div>
+          )}
           {typeModel == "questions" ? (
             <>
               <QuestionForm openModal={openModal} subjects={subjects} id={id} />
@@ -119,22 +198,55 @@ export default function GuideSection({
                   t("Area per Pallet (m²)"),
                   t("Approx. Weight per Pallet (kg)"),
                 ]}
-                data={dataPack.map((item) => ({
-                  [t("Size_table")]: item.size || "-",
-                  [t("palet_size")]: item?.palet_size || "-",
-                  [t("Thickness_Technical")]: item?.thickness || "-",
-                  [t("Tiles per Carton")]:
-                    item.number_of_tiles_per_carton || "-",
-                  [t("Tile Area per Carton (m²)")]:
-                    item.tile_meters_per_carton || "-",
-                  [t("Approx. Weight per Carton (kg)")]:
-                    item.approximate_weight_of_each_carton || "-",
-                  [t("Cartons per Pallet")]:
-                    item.number_of_cartons_per_pallet || "-",
-                  [t("Area per Pallet (m²)")]: item.area_of_each_pallet || "-",
-                  [t("Approx. Weight per Pallet (kg)")]:
-                    item.approximate_weight_of_each_pallet || "-",
-                }))}
+                data={(() => {
+                  if (!dataPack) return [];
+
+                  if (isPackObject) {
+                    const rows =
+                      (selectedPackSize && dataPack[selectedPackSize]) || [];
+                    return rows.map((item) => ({
+                      [t("Size_table")]: item.size || selectedPackSize || "-",
+                      [t("palet_size")]: item?.palet_size || "-",
+                      [t("Thickness_Technical")]: item?.thickness || "-",
+                      [t("Tiles per Carton")]:
+                        item.number_of_tiles_per_carton || "-",
+                      [t("Tile Area per Carton (m²)")]:
+                        item.tile_meters_per_carton || "-",
+                      [t("Approx. Weight per Carton (kg)")]:
+                        item.approximate_weight_of_each_carton || "-",
+                      [t("Cartons per Pallet")]:
+                        item.number_of_cartons_per_pallet || "-",
+                      [t("Area per Pallet (m²)")]:
+                        item.area_of_each_pallet || "-",
+                      [t("Approx. Weight per Pallet (kg)")]:
+                        item.approximate_weight_of_each_pallet || "-",
+                    }));
+                  }
+
+                  const source = Array.isArray(dataPack) ? dataPack : [];
+                  const filtered =
+                    selectedPackSize && selectedPackSize !== ""
+                      ? source.filter((item) => item.size === selectedPackSize)
+                      : source;
+
+                  return filtered.map((item) => ({
+                    [t("Size_table")]: item.size || "-",
+                    [t("palet_size")]: item?.palet_size || "-",
+                    [t("Thickness_Technical")]: item?.thickness || "-",
+                    [t("Tiles per Carton")]:
+                      item.number_of_tiles_per_carton || "-",
+                    [t("Tile Area per Carton (m²)")]:
+                      item.tile_meters_per_carton || "-",
+                    [t("Approx. Weight per Carton (kg)")]:
+                      item.approximate_weight_of_each_carton || "-",
+                    [t("Cartons per Pallet")]:
+                      item.number_of_cartons_per_pallet || "-",
+                    [t("Area per Pallet (m²)")]:
+                      item.area_of_each_pallet || "-",
+                    [t("Approx. Weight per Pallet (kg)")]:
+                      item.approximate_weight_of_each_pallet || "-",
+                  }));
+                })()}
               />
             </>
           ) : typeModel == "properties" ? (
@@ -160,42 +272,88 @@ export default function GuideSection({
                   t("Thickness_Technical"),
                   t("Water Absorption"),
                 ]}
-                data={dataTechnical.map((item) => ({
-                  [t("Size_table")]: item.size || "-",
-                  [t("Abrasion Resistance")]:
-                    item.specifications?.abrasion_resistance || "-",
-                  [t("Breaking Strength")]:
-                    item.specifications?.breaking_strength || "-",
-                  [t("Chemical Resistance")]:
-                    item.specifications?.chemical_resistance || "-",
-                  [t("Crazing Resistance")]:
-                    item.specifications?.crazing_resistance || "-",
-                  [t("Friction Class")]:
-                    item.specifications?.friction_class || "-",
-                  [t("Frost Resistance")]:
-                    item.specifications?.frost_resistance || "-",
-                  [t("Impact Resistance")]:
-                    item.specifications?.impact_resistance || "-",
-                  [t("Linear Thermal Expansion Coefficient")]:
-                    item.specifications?.linear_thermal_expansion_coefficient ||
-                    "-",
-                  [t("Modulus of Rupture")]:
-                    item.specifications?.modulus_of_rupture || "-",
-                  [t("Rectangularity")]:
-                    item.specifications?.rectangularity || "-",
-                  [t("Stain Resistance")]:
-                    item.specifications?.stain_resistance || "-",
-                  [t("Straightness of Sides")]:
-                    item.specifications?.straightness_of_sides || "-",
-                  [t("Surface Flatness")]:
-                    item.specifications?.surface_flatness || "-",
-                  [t("Thermal Shock Resistance")]:
-                    item.specifications?.thermal_shock_resistance || "-",
-                  [t("Thickness_Technical")]:
-                    item.specifications?.thickness || "-",
-                  [t("Water Absorption")]:
-                    item.specifications?.water_absorption || "-",
-                }))}
+                data={(() => {
+                  if (!dataTechnical) return [];
+
+                  if (isTechnicalObject) {
+                    const rows =
+                      (selectedTechnicalSize &&
+                        dataTechnical[selectedTechnicalSize]) ||
+                      [];
+                    return rows.map((item) => ({
+                      [t("Size_table")]:
+                        item.size || selectedTechnicalSize || "-",
+                      [t("Abrasion Resistance")]:
+                        item.abrasion_resistance || "-",
+                      [t("Breaking Strength")]: item.breaking_strength || "-",
+                      [t("Chemical Resistance")]:
+                        item.chemical_resistance || "-",
+                      [t("Crazing Resistance")]: item.crazing_resistance || "-",
+                      [t("Friction Class")]: item.friction_class || "-",
+                      [t("Frost Resistance")]: item.frost_resistance || "-",
+                      [t("Impact Resistance")]: item.impact_resistance || "-",
+                      [t("Linear Thermal Expansion Coefficient")]:
+                        item.linear_thermal_expansion_coefficient || "-",
+                      [t("Modulus of Rupture")]: item.modulus_of_rupture || "-",
+                      [t("Rectangularity")]: item.rectangularity || "-",
+                      [t("Stain Resistance")]: item.stain_resistance || "-",
+                      [t("Straightness of Sides")]:
+                        item.straightness_of_sides || "-",
+                      [t("Surface Flatness")]: item.surface_flatness || "-",
+                      [t("Thermal Shock Resistance")]:
+                        item.thermal_shock_resistance || "-",
+                      [t("Thickness_Technical")]: item.thickness || "-",
+                      [t("Water Absorption")]: item.water_absorption || "-",
+                    }));
+                  }
+
+                  const source = Array.isArray(dataTechnical)
+                    ? dataTechnical
+                    : [];
+                  const filtered =
+                    selectedTechnicalSize && selectedTechnicalSize !== ""
+                      ? source.filter(
+                          (item) => item.size === selectedTechnicalSize
+                        )
+                      : source;
+
+                  return filtered.map((item) => ({
+                    [t("Size_table")]: item.size || "-",
+                    [t("Abrasion Resistance")]:
+                      item.specifications?.abrasion_resistance || "-",
+                    [t("Breaking Strength")]:
+                      item.specifications?.breaking_strength || "-",
+                    [t("Chemical Resistance")]:
+                      item.specifications?.chemical_resistance || "-",
+                    [t("Crazing Resistance")]:
+                      item.specifications?.crazing_resistance || "-",
+                    [t("Friction Class")]:
+                      item.specifications?.friction_class || "-",
+                    [t("Frost Resistance")]:
+                      item.specifications?.frost_resistance || "-",
+                    [t("Impact Resistance")]:
+                      item.specifications?.impact_resistance || "-",
+                    [t("Linear Thermal Expansion Coefficient")]:
+                      item.specifications
+                        ?.linear_thermal_expansion_coefficient || "-",
+                    [t("Modulus of Rupture")]:
+                      item.specifications?.modulus_of_rupture || "-",
+                    [t("Rectangularity")]:
+                      item.specifications?.rectangularity || "-",
+                    [t("Stain Resistance")]:
+                      item.specifications?.stain_resistance || "-",
+                    [t("Straightness of Sides")]:
+                      item.specifications?.straightness_of_sides || "-",
+                    [t("Surface Flatness")]:
+                      item.specifications?.surface_flatness || "-",
+                    [t("Thermal Shock Resistance")]:
+                      item.specifications?.thermal_shock_resistance || "-",
+                    [t("Thickness_Technical")]:
+                      item.specifications?.thickness || "-",
+                    [t("Water Absorption")]:
+                      item.specifications?.water_absorption || "-",
+                  }));
+                })()}
               />
             </>
           ) : null}

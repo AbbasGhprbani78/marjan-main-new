@@ -96,18 +96,25 @@ export default async function page({ params }) {
               isLink={"true"}
               href="https://marjan.ariisco.com"
             />
-            <GuideSection
-              text={dict["CategoryTable"]}
-              icon={"Box"}
-              typeModel={"categories"}
-              dataPack={dataSingleProduct?.packing_tables}
-            />
-            <GuideSection
-              text={dict["TechnicalSpecsTable"]}
-              icon={"InfoCircle"}
-              typeModel={"properties"}
-              dataTechnical={dataSingleProduct?.technical_specifications}
-            />
+            {dataSingleProduct?.paking_table_size &&
+              Object.keys(dataSingleProduct?.paking_table_size).length > 0 && (
+                <GuideSection
+                  text={dict["CategoryTable"]}
+                  icon={"Box"}
+                  typeModel={"categories"}
+                  dataPack={dataSingleProduct?.paking_table_size}
+                />
+              )}
+            {dataSingleProduct?.technical_special_size &&
+              Object.keys(dataSingleProduct?.technical_special_size).length >
+                0 && (
+                <GuideSection
+                  text={dict["TechnicalSpecsTable"]}
+                  icon={"InfoCircle"}
+                  typeModel={"properties"}
+                  dataTechnical={dataSingleProduct?.technical_special_size}
+                />
+              )}
           </div>
         </div>
         <div className="border-b-1 border-[#919191]" id="gallery">

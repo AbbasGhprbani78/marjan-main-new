@@ -29,6 +29,10 @@ export const validateRepresentationrequest = (data, setErrors, t) => {
     newErrors.province = t("Province is required");
   }
 
+  if (!data.country.trim()) {
+    newErrors.country = t("Country is required");
+  }
+
   if (!data.storeName.trim()) {
     newErrors.storeName = t("Store name is required");
   }

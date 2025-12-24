@@ -12,6 +12,9 @@ export default function Suppliers({ suppliersData, typesOfService }) {
   const { t, locale } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [fileError, setFileError] = useState("");
+
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -23,6 +26,7 @@ export default function Suppliers({ suppliersData, typesOfService }) {
     phone_number: "",
     email: "",
     Typeofservice: "",
+    description: "",
   });
 
   const handleFieldChange = (field, value) => {
@@ -30,46 +34,73 @@ export default function Suppliers({ suppliersData, typesOfService }) {
     setErrors({ ...errors, [field]: "" });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFileError("");
+    setSelectedFile(null);
+
+    if (!file) return;
+
+    // محدودیت 50 مگابایت
+    const maxSize = 50 * 1024 * 1024;
+    if (file.size > maxSize) {
+      setFileError(t("File size must be less than 50MB"));
+      return;
+    }
+
+    setSelectedFile(file);
+  };
+
+  const removeFile = () => {
+    setSelectedFile(null);
+    setFileError("");
+    if (document.getElementById("file-upload")) {
+      document.getElementById("file-upload").value = "";
+    }
+  };
+
   const handleSubmit = async () => {
     if (!validateSupliers(form, setErrors)) return;
 
     setLoading(true);
-    try {
-      const formData = {
-        ...form,
-        Typeofservice: form.Typeofservice
-          ? parseInt(form.Typeofservice, 10)
-          : null,
-        country: form.country ? parseInt(form.country, 10) : null,
-      };
 
-      if (formData.Typeofservice !== null && isNaN(formData.Typeofservice)) {
-        setErrors((prev) => ({
-          ...prev,
-          Typeofservice: t("InvalidTypeOfService"),
-        }));
-        setLoading(false);
-        return;
+    try {
+      const formData = new FormData();
+
+      formData.append("first_name", form.first_name.trim());
+      formData.append("last_name", form.last_name.trim());
+      formData.append("address", form.address.trim());
+      formData.append("state", form.state.trim());
+      formData.append("city", form.city.trim());
+      formData.append("postal_code", form.postal_code.trim());
+      formData.append("phone_number", form.phone_number.trim());
+      formData.append("email", form.email.trim());
+      formData.append("description", form.description.trim());
+
+      if (form.country) {
+        formData.append("country", parseInt(form.country, 10));
+      }
+      if (form.Typeofservice) {
+        formData.append("type_of_service", parseInt(form.Typeofservice, 10));
       }
 
-      if (formData.country !== null && isNaN(formData.country)) {
-        setErrors((prev) => ({
-          ...prev,
-          country: t("InvalidCountry"),
-        }));
-        setLoading(false);
-        return;
+      if (selectedFile) {
+        formData.append("file", selectedFile);
       }
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/app/suppliers/`,
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 200) {
         successMessage(t("SuccessForm"));
         setForm({
-          langs: locale,
           first_name: "",
           last_name: "",
           country: "",
@@ -80,13 +111,24 @@ export default function Suppliers({ suppliersData, typesOfService }) {
           phone_number: "",
           email: "",
           Typeofservice: "",
+          description: "",
         });
+        setSelectedFile(null);
+        if (document.getElementById("file-upload")) {
+          document.getElementById("file-upload").value = "";
+        }
       }
     } catch (error) {
-      console.log(error);
+      console.error("Submission error:", error);
+      let errorMsg = t("SubmissionFailed");
+
+      if (error.response?.data) {
+        console.log(error.response.data);
+      }
+
       setErrors((prev) => ({
         ...prev,
-        general: t("SubmissionFailed"),
+        general: errorMsg,
       }));
     } finally {
       setLoading(false);
@@ -217,6 +259,51 @@ export default function Suppliers({ suppliersData, typesOfService }) {
               }))}
               label={t("Type of service")}
             />
+          </div>
+        </div>
+        <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
+          <div className="col-span-12 ">
+            <Texterea
+              label={t("توضیحات")}
+              value={form.description}
+              onChange={(val) => handleFieldChange("description", val)}
+              maxLength={2000}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
+          <div className="col-span-12">
+            <label className="text-[.7rem] font-bold">
+              پیوست فایل اختیاری حداکثر ۵۰ مگابایت
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              onChange={handleFileChange}
+              className="block w-full text-sm text-gray-500
+                file:mr-4 file:py-6 file:px-6
+                file:rounded file:border-0
+                file:text-sm file:font-semibold
+                file:bg-gray-500 file:text-white
+                hover:file:bg-gray-600
+              "
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.zip"
+            />
+            {fileError && (
+              <p className="text-red-500 text-sm mt-1">{fileError}</p>
+            )}
+            {selectedFile && (
+              <div className="mt-3 flex items-center justify-between bg-gray-100 p-3 rounded">
+                <span className="text-sm truncate">{selectedFile.name}</span>
+                <button
+                  type="button"
+                  onClick={removeFile}
+                  className="text-red-600 hover:text-red-800 text-sm"
+                >
+                  حذف
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <div className="grid grid-cols-12 gap-[1rem] w-full my-[1rem]">

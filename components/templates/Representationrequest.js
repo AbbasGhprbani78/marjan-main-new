@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../module/Form/Input";
 import DropDown from "../module/Form/DropDown";
 import Texterea from "../module/Form/Texterea";
@@ -9,15 +9,16 @@ import { useTranslation } from "@/context/TranslationContext";
 import axios from "axios";
 
 export default function Representationrequest({
-  provinces,
   ownership,
   warehouse,
   birthYears,
   warehouseFacilities,
+  countries,
 }) {
   const { t, locale } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [provinces, setProvinces] = useState([]);
   const [form, setForm] = useState({
     langs: locale,
     fullName: "",
@@ -26,6 +27,7 @@ export default function Representationrequest({
     fieldOfStudy: "",
     phoneNumber: "",
     province: "",
+    country: "",
     storeName: "",
     storeArea: "",
     storeOwnershipType: "",
@@ -61,6 +63,7 @@ export default function Representationrequest({
         education_degree: form.educationDegree,
         field_of_study: form.fieldOfStudy,
         province: Number(form.province),
+        country: Number(form.country),
         store_name: form.storeName,
         store_area: Number(form.storeArea),
         store_ownership_type: Number(form.storeOwnershipType),
@@ -93,6 +96,7 @@ export default function Representationrequest({
           fieldOfStudy: "",
           phoneNumber: "",
           province: "",
+          country: "",
           storeName: "",
           storeArea: "",
           storeOwnershipType: "",
@@ -118,6 +122,43 @@ export default function Representationrequest({
       setLoading(false);
     }
   };
+
+  const fetchProvinces = async (countryId) => {
+    if (!countryId) {
+      setProvinces([]);
+      return;
+    }
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/app/provinces/?country_id=${countryId}`,
+        {
+          method: "GET",
+          headers: {
+            "Accept-Language": locale,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch provinces");
+      }
+
+      const data = await res.json();
+      setProvinces(data);
+    } catch (error) {
+      console.error("Error fetching provinces:", error);
+      setProvinces([]);
+    }
+  };
+
+  useEffect(() => {
+    if (form.country) {
+      fetchProvinces(form.country);
+    } else {
+      setProvinces([]);
+      handleFieldChange("province", "");
+    }
+  }, [form.country, locale]);
 
   const foreignActivity = [
     { id: 0, name: t("No") },
@@ -199,6 +240,20 @@ export default function Representationrequest({
           </div>
         </div>
         <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
+          <div className="col-span-12 md:col-span-6">
+            <DropDown
+              value={form.country}
+              onChange={(val) => handleFieldChange("country", val)}
+              options={countries?.map((item) => ({
+                id: item?.id,
+                value: item?.name,
+              }))}
+              type="text"
+              maxLength={256}
+              label={t("Country")}
+              error={errors.country}
+            />
+          </div>
           <div className="col-span-12 md:col-span-6">
             <DropDown
               value={form.province}

@@ -52,7 +52,7 @@ export default function Table({ columns = [], data = [], isEn = false }) {
         </div>
       </div>
 
-      <div className="md:hidden max-h-[300px] overflow-auto hide-scrollbar">
+      <div className="md:hidden max-h-[400px] overflow-auto hide-scrollbar">
         <div className="w-full overflow-x-auto rounded-lg border border-gray-300">
           <table className="w-full border-collapse border border-gray-300 text-sm">
             <thead className="hidden">
