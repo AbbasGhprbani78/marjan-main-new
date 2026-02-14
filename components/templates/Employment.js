@@ -44,7 +44,7 @@ export default function Employment({
       type_of_service_deficit: null,
       service_deficit_amount: null,
       history_of_service_in__the_basij: null,
-      state: null,
+      state_name: "",
       landline: null,
       mobile: null,
       address: null,
@@ -174,7 +174,6 @@ export default function Employment({
             data={formData.form1}
             setData={(newData) => setFormData({ ...formData, form1: newData })}
             onSuccess={handleNext}
-            states={states}
             setIdForm={setIdForm}
             idForm={idForm}
             savedSteps={savedSteps}

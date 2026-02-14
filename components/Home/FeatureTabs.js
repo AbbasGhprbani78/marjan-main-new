@@ -32,7 +32,7 @@ export default function FeatureTabs({ data }) {
   }, [activeButton, data]);
 
   const tabLinks = {
-    [data[0]?.id]: "https://marjan.ariisco.com",
+    [data[0]?.id]: "#",
     [data[1]?.id]: "/calculator",
     [data[2]?.id]: null,
   };
@@ -128,7 +128,7 @@ export default function FeatureTabs({ data }) {
         </div>
 
         <MoreButton
-          text={t("More")}
+          text={activeButton === data[0].id ? t("coming soon") : t("More")}
           width={263}
           height={46}
           className="mx-auto lg:mx-0 my-[15px] md:my-0"

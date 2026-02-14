@@ -121,8 +121,8 @@ export function HomeSlider({
                     nameproduct
                       ? "font-en"
                       : ["fa", "ar"].includes(locale)
-                      ? "font-fa"
-                      : "font-en"
+                        ? "font-fa"
+                        : "font-en"
                   }`}
                 >
                   {truncateText(item.title, 80)}
@@ -137,7 +137,6 @@ export function HomeSlider({
 
               <MoreButton
                 text={t("MoreDetails")}
-                width={157}
                 height={38}
                 invert={true}
                 className={"m-auto mt-0"}
@@ -381,7 +380,7 @@ export function CategorySlider({ data }) {
         <button
           onClick={() => {
             const currentIndex = data.findIndex(
-              (item) => item.id === activeButton
+              (item) => item.id === activeButton,
             );
             if (currentIndex > 0) setActiveButton(data[currentIndex - 1].id);
           }}
@@ -403,7 +402,7 @@ export function CategorySlider({ data }) {
         <button
           onClick={() => {
             const currentIndex = data.findIndex(
-              (item) => item.id === activeButton
+              (item) => item.id === activeButton,
             );
             if (currentIndex < data.length - 1)
               setActiveButton(data[currentIndex + 1].id);
@@ -454,8 +453,8 @@ export function CategorySlider({ data }) {
               <Link
                 href={localizedHref(
                   `/products?${filterKey}=${encodeURIComponent(
-                    item.title
-                  )}&page=1`
+                    item.title,
+                  )}&page=1`,
                 )}
               >
                 <Image
@@ -524,7 +523,7 @@ export function ProjectsSlider({ data, bgcolor }) {
 
   const totalSlidesWidth = data.reduce(
     (sum, _, index) => sum + getSlideWidth(index),
-    0
+    0,
   );
   const showArrows = totalSlidesWidth > windowWidth;
 

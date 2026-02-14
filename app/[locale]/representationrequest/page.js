@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
 
 export default async function page({ params }) {
   const { locale } = await params;
-  const countries = await fetchCountries(locale);
+  // const countries = await fetchCountries(locale);
   const ownership = await fetchOwnership(locale);
   const warehouse = await fetchWarehouse(locale);
   const birthYears = await fetchBirthYears(locale);
@@ -34,7 +34,7 @@ export default async function page({ params }) {
         warehouse={warehouse}
         birthYears={birthYears}
         warehouseFacilities={warehouseFacilities}
-        countries={countries}
+        // countries={countries}
       />
     </div>
   );

@@ -10,7 +10,6 @@ export default function Form1({
   data,
   setData,
   onSuccess,
-  states,
   setIdForm,
   savedSteps,
   setSavedSteps,
@@ -417,38 +416,36 @@ export default function Form1({
         <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
           <div className="col-span-12 md:col-span-6">
             <span className="font-bold block mb-[1rem]">تاریخ شروع خدمت</span>
-            <DatePicker
+            {/* <DatePicker
               startYear={1330}
               endYear={""}
               value={data.service_start_date}
               onChange={(val) => handleFieldChange("service_start_date", val)}
               error={errors.service_start_date}
-            />
+            /> */}
           </div>
           <div className="col-span-12 md:col-span-6">
             <span className="font-bold block mb-[1rem]">تاریخ پایان خدمت</span>
-            <DatePicker
+            {/* <DatePicker
               startYear={1330}
               endYear={""}
               value={data.service_end_date}
               onChange={(val) => handleFieldChange("service_end_date", val)}
               error={errors.service_end_date}
-            />
+            /> */}
           </div>
         </div>
       )}
 
       <div className="grid grid-cols-12 gap-[1rem] w-full mt-[1rem]">
         <div className="col-span-12 md:col-span-4">
-          <DropDown
-            value={data.state}
-            onChange={(val) => handleFieldChange("state", val)}
-            options={states.map((state) => ({
-              id: state?.id,
-              value: state?.name,
-            }))}
+          <Input
+            value={data.state_name}
+            onChange={(val) => handleFieldChange("state_name", val)}
+            type="text"
+            maxLength={256}
             label="استان"
-            error={errors.state}
+            error={errors.state_name}
           />
         </div>
         <div className="col-span-12 md:col-span-4">
@@ -505,3 +502,14 @@ export default function Form1({
     </form>
   );
 }
+
+// <DropDown
+//           value={data.state}
+//           onChange={(val) => handleFieldChange("state", val)}
+//           options={states.map((state) => ({
+//             id: state?.id,
+//             value: state?.name,
+//           }))}
+//           label="استان"
+//           error={errors.state}
+//         />

@@ -20,12 +20,13 @@ export default function Blogs({ blogs, categories, filters }) {
   const queryPage = Number(searchParams.get("page")) || 1;
   const [currentPage, setCurrentPage] = useState(queryPage);
   const [selectedCategory, setSelectedCategory] = useState(
-    searchParams.get("category") || categories[0]?.value
+    searchParams.get("category")?.toLowerCase() ||
+      categories[0]?.value?.toLowerCase(),
   );
   const [filterList, setFilterList] = useState([]);
 
   const [activeFilters, setActiveFilters] = useState(
-    searchParams.getAll("filter") || []
+    (searchParams.getAll("filter") || []).map((f) => f.toLowerCase()),
   );
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -37,47 +38,81 @@ export default function Blogs({ blogs, categories, filters }) {
   const { localizedHref } = useLocalizedLink();
   const [showArrows, setShowArrows] = useState(false);
 
+  const normalizedBlogs = useMemo(() => {
+    if (!blogs) return {};
+    return Object.entries(blogs).reduce((acc, [k, v]) => {
+      acc[k?.toLowerCase()] = v;
+      return acc;
+    }, {});
+  }, [blogs]);
+
+  const normalizedFilters = useMemo(() => {
+    if (!filters) return {};
+    return Object.entries(filters).reduce((acc, [k, v]) => {
+      acc[k?.toLowerCase()] = v;
+      return acc;
+    }, {});
+  }, [filters]);
+
   useEffect(() => {
     const urlTab = Number(searchParams.get("tab"));
     if (urlTab && urlTab !== tab) setTab(urlTab);
 
-    const urlCategory = searchParams.get("category");
+    const urlCategory = searchParams.get("category")?.toLowerCase();
     if (urlCategory && urlCategory !== selectedCategory) {
       setSelectedCategory(urlCategory);
     }
 
-    const urlFilters = searchParams.getAll("filter");
+    const urlFilters = (searchParams.getAll("filter") || []).map((f) =>
+      f.toLowerCase(),
+    );
     if (JSON.stringify(urlFilters) !== JSON.stringify(activeFilters)) {
       setActiveFilters(urlFilters);
     }
   }, [searchParams]);
 
-  const updateQuery = (newTab, category, filtersArr) => {
+  const updateQuery = (newTab, category, filtersArr, resetPage = false) => {
     const params = new URLSearchParams(window.location.search);
 
     params.set("tab", newTab);
-    if (category) params.set("category", category);
+
+    if (category) {
+      params.set("category", category.toLowerCase());
+    } else {
+      params.delete("category");
+    }
+
     params.delete("filter");
-    if (filtersArr?.length)
-      filtersArr.forEach((f) => params.append("filter", f));
+    if (filtersArr?.length) {
+      filtersArr.forEach((f) => params.append("filter", f.toLowerCase()));
+    }
+
+    // مهم‌ترین بخش ↓
+    if (resetPage) {
+      params.delete("page");
+      params.delete("filter");
+      params.set("page", "1");
+    }
 
     const newUrl = `${window.location.pathname}?${params.toString()}`;
-
     window.history.replaceState({}, "", newUrl);
   };
 
   const handleTabChange = (newTab, category = selectedCategory) => {
     setTab(newTab);
-    setSelectedCategory(category);
-    updateQuery(newTab, category, activeFilters);
+    const cat = category?.toLowerCase();
+    setSelectedCategory(cat);
+    updateQuery(newTab, cat, activeFilters);
   };
 
   const productsToShow = useMemo(() => {
-    const selectedData = blogs[selectedCategory] || [];
+    const selectedData = normalizedBlogs[selectedCategory] || [];
 
     const filtered = activeFilters.length
       ? selectedData.filter((item) =>
-          activeFilters.every((f) => item.filters?.includes(f))
+          activeFilters.every((f) =>
+            (item.filters || []).some((ff) => ff?.toLowerCase() === f),
+          ),
         )
       : selectedData;
 
@@ -97,19 +132,12 @@ export default function Blogs({ blogs, categories, filters }) {
     });
   };
 
-  const normalizeValue = (value) => {
-    if (/^[A-Za-z]/.test(value)) {
-      // For English locale, always use lowercase in query param (e.g., "articles")
-      return locale === "en" ? value.toLowerCase() : value;
-    }
-    return value;
-  };
-
   const chnageHndler = (e) => {
-    const value = normalizeValue(e.target.value);
-    setSelectedCategory(value);
+    const value = e.target.value;
+    const v = value?.toLowerCase();
+    setSelectedCategory(v);
     setCurrentPage(1);
-    updateQuery(tab, value, activeFilters);
+    updateQuery(tab, v, activeFilters, true);
   };
 
   const tabTitle = () => {
@@ -148,7 +176,7 @@ export default function Blogs({ blogs, categories, filters }) {
       const params = new URLSearchParams(window.location.search);
 
       params.delete("filter");
-      newFilters.forEach((f) => params.append("filter", f));
+      newFilters.forEach((f) => params.append("filter", f.toLowerCase()));
 
       params.set("page", "1");
 
@@ -183,7 +211,7 @@ export default function Blogs({ blogs, categories, filters }) {
       const { offsetLeft, offsetWidth } = currentButton;
       setUnderlineStyle({ left: offsetLeft, width: offsetWidth });
     }
-    setFilterList(filters[selectedCategory]);
+    setFilterList(normalizedFilters[selectedCategory] || []);
     setActiveFilters([]);
   }, [selectedCategory, filters]);
 
@@ -203,7 +231,7 @@ export default function Blogs({ blogs, categories, filters }) {
 
   useEffect(() => {
     const urlFilters = searchParams.getAll("filter");
-    setActiveFilters(urlFilters);
+    setActiveFilters((urlFilters || []).map((f) => f.toLowerCase()));
   }, [searchParams]);
 
   useEffect(() => {
@@ -227,21 +255,21 @@ export default function Blogs({ blogs, categories, filters }) {
           {categories.map((cat) => (
             <button
               key={cat.value}
-              ref={(el) => (buttonsRef.current[cat.value] = el)}
+              ref={(el) => (buttonsRef.current[cat.value.toLowerCase()] = el)}
               role="tab"
-              aria-selected={selectedCategory === cat.value}
-              aria-controls={`panel-${cat.value}`}
-              id={`tab-${cat.value}`}
+              aria-selected={selectedCategory === cat.value.toLowerCase()}
+              aria-controls={`panel-${cat.value.toLowerCase()}`}
+              id={`tab-${cat.value.toLowerCase()}`}
               onClick={() => {
                 if (tab === 1) {
-                  setSelectedCategory(cat.value);
+                  setSelectedCategory(cat.value.toLowerCase());
                   setCurrentPage(1);
                 } else {
-                  handleTabChange(2, cat.value);
+                  handleTabChange(2, cat.value.toLowerCase());
                 }
               }}
               className={`text-[1rem] relative px-4 pt-2 pb-[.5rem] transition-all duration-300 ${
-                selectedCategory === cat.value
+                selectedCategory === cat.value.toLowerCase()
                   ? "text-[var(--color-gray-900)]"
                   : "text-gray-500"
               }`}
@@ -288,9 +316,9 @@ export default function Blogs({ blogs, categories, filters }) {
                 key={i}
                 label={item.label}
                 name="filter"
-                checked={activeFilters.includes(item.value)}
-                value={item.value}
-                onChange={() => toggleFilter(item.value)}
+                checked={activeFilters.includes(item.value?.toLowerCase())}
+                value={item.value?.toLowerCase()}
+                onChange={() => toggleFilter(item.value?.toLowerCase())}
               />
             ))}
           </div>
@@ -309,7 +337,7 @@ export default function Blogs({ blogs, categories, filters }) {
                   name={categoryName}
                   key={categoryName}
                 />
-              ) : null
+              ) : null,
             )}
           </div>
           <div className="relative md:hidden">
@@ -374,10 +402,10 @@ export default function Blogs({ blogs, categories, filters }) {
               <div className="flex flex-col mt-[1rem] gap-[.8rem]">
                 {categories.map((category) => (
                   <CheckBox
-                    label={category.value}
-                    checked={selectedCategory === category.value}
+                    label={category.label.toLowerCase()}
+                    checked={selectedCategory === category.value.toLowerCase()}
                     onChange={chnageHndler}
-                    value={category.value}
+                    value={category.value.toLowerCase()}
                     key={category.value}
                   />
                 ))}
@@ -400,9 +428,9 @@ export default function Blogs({ blogs, categories, filters }) {
                     key={i}
                     label={item.label}
                     name="filter"
-                    checked={activeFilters.includes(item.value)}
-                    value={item.value}
-                    onChange={() => toggleFilter(item.value)}
+                    checked={activeFilters.includes(item.value?.toLowerCase())}
+                    value={item.value?.toLowerCase()}
+                    onChange={() => toggleFilter(item.value?.toLowerCase())}
                   />
                 ))}
               </div>
@@ -411,13 +439,14 @@ export default function Blogs({ blogs, categories, filters }) {
               {activeFilters.length > 0 && (
                 <p className="font-medium text-[1.1rem] border-b border-[var(--color-gray-900)] pb-[.5rem] mb-[.9rem]">
                   {
-                    filterList.find((item) => item.value === activeFilters[0])
-                      ?.label
+                    filterList.find(
+                      (item) => item.value?.toLowerCase() === activeFilters[0],
+                    )?.label
                   }
                 </p>
               )}
 
-              {productsToShow.length > 0 ? (
+              {productsToShow?.length > 0 ? (
                 <div className="grid grid-cols-12 gap-x-[1.5rem] gap-y-[2.2rem] md:gap-y-[4rem]">
                   {productsToShow.map((item, i) => (
                     <div
@@ -449,7 +478,7 @@ export default function Blogs({ blogs, categories, filters }) {
                   <Pagination
                     currentPage={currentPage}
                     totalPages={Math.ceil(
-                      blogs[selectedCategory]?.length / itemsPerPage
+                      blogs[selectedCategory]?.length / itemsPerPage,
                     )}
                     onPageChange={handlePageChange}
                   />

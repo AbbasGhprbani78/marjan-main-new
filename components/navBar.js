@@ -55,17 +55,15 @@ export function NavBar({ dataHeader }) {
   const shouldApplyScrolledStyles =
     scrolled || isHovered || isSpecialPage || isChangeBg;
 
-  // چک کردن فعال بودن لینک (بدون در نظر گرفتن locale)
   const isActive = (route) => {
     const target = route === "/" ? "/" : route;
     return cleanPathname === target;
   };
 
-  // تغییر زبان — همیشه clean path + locale جدید
   function handleLangChange(newLocale) {
     let cleanSegments = pathname.split("/").filter(Boolean);
 
-    // حذف locale فعلی اگر وجود داشته باشه
+    // حذف locale فعلی
     if (
       cleanSegments.length > 0 &&
       ["fa", "en", "ar", "ru"].includes(cleanSegments[0])
@@ -73,7 +71,7 @@ export function NavBar({ dataHeader }) {
       cleanSegments.shift();
     }
 
-    // ساخت مسیر جدید
+    // مسیر جدید بدون query
     const newSegments =
       newLocale === "fa" && cleanSegments.length === 0
         ? [newLocale]
@@ -81,12 +79,10 @@ export function NavBar({ dataHeader }) {
 
     const newPathname = "/" + newSegments.join("/");
 
-    // حفظ query string اگر وجود داشته باشه
-    const query = searchParams.toString();
-    const finalPath = query ? `${newPathname}?${query}` : newPathname;
-
+    // فقط pathname، بدون query
     document.cookie = `lang=${newLocale}; path=/; max-age=31536000;`;
-    router.replace(finalPath);
+    router.replace(newPathname);
+
     setIsOpenLang(false);
   }
 
@@ -96,7 +92,6 @@ export function NavBar({ dataHeader }) {
     setShowFilterMenu(menu === "filter" ? !showFilterMenu : false);
   };
 
-  // اسکرول
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 5);
@@ -105,7 +100,6 @@ export function NavBar({ dataHeader }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ریست حالت‌ها هنگام تغییر مسیر یا فیلتر
   useEffect(() => {
     setShowFilterMenu(false);
     setIsOpenLang(false);
@@ -115,7 +109,6 @@ export function NavBar({ dataHeader }) {
     setIsHovered(false);
   }, [pathname, searchParams.get("filterKey"), searchParams.get("values")]);
 
-  // قفل اسکرول وقتی منوی داخلی بازه
   useEffect(() => {
     if (showInnerMenu) {
       document.body.classList.add("overflow-hidden");
@@ -271,17 +264,13 @@ export function NavBar({ dataHeader }) {
             } object-contain`}
           />
         </Link>
+        <Menu show={showInnerMenu} setShowInnerMenu={setShowInnerMenu} />
+        <FilterHeader
+          show={showFilterMenu}
+          setShowFilterMenu={setShowFilterMenu}
+          dataHeader={dataHeader}
+        />
       </div>
-
-      {/* منوهای اضافی */}
-      <Menu show={showInnerMenu} setShowInnerMenu={setShowInnerMenu} />
-      <FilterHeader
-        show={showFilterMenu}
-        setShowFilterMenu={setShowFilterMenu}
-        dataHeader={dataHeader}
-      />
-
-      {/* منوی موبایل */}
       <MenuMobile dataHeader={dataHeader} />
     </header>
   );
@@ -351,8 +340,8 @@ function Menu({ show, setShowInnerMenu }) {
                 ? "translate-x-0"
                 : "translate-x-0"
               : ["fa", "ar"].includes(locale)
-              ? "translate-x-full"
-              : "-translate-x-full"
+                ? "translate-x-full"
+                : "-translate-x-full"
           }`}
       >
         <ul className="flex flex-col items-start gap-[2.5rem] text-[var(--color-gray-900)] h-full overflow-y-auto hide-scrollbar w-[53%] bg-white lg:px-80 pb-[2rem] pt-10">
@@ -388,12 +377,8 @@ function Menu({ show, setShowInnerMenu }) {
                     <span className="custom-link">{t("Chatbot")}</span>
                   </li>
                   <li className="py-[10px]">
-                    <Link
-                      href="https://marjan.ariisco.com"
-                      className="custom-link"
-                      target="_blank"
-                    >
-                      {t("Smart Layout Software")}
+                    <Link href="#" className="custom-link">
+                      {`${t("Smart Layout Software")} (${t("coming soon")})`}
                     </Link>
                   </li>
                   <li className="py-[10px]">
@@ -434,13 +419,13 @@ function Menu({ show, setShowInnerMenu }) {
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm text-black"
                 >
                   {[
-                    { label: t("Articles"), category: "articles" },
-                    { label: t("Videos"), category: "videos" },
-                    { label: t("News"), category: "news" },
+                    { label: t("Articles"), category: t("Articles") },
+                    { label: t("Videos"), category: t("Videos") },
+                    { label: t("News"), category: t("News") },
                   ].map((item) => (
                     <li key={item.category} className="py-[10px]">
                       <Link
-                        href={`/blogs?tab=2&category=${item.category}`}
+                        href={`/blogs?tab=2&category=${item.category.toLowerCase()}`} // بدون locale
                         className={`custom-link ${
                           isBlogCategoryActive(item.category) ? "active" : ""
                         }`}
@@ -621,7 +606,7 @@ export default function BoxSearch({ showBox }) {
           headers: {
             "Accept-Language": locale,
           },
-        }
+        },
       );
       if (response.status === 200) {
         setResults(response.data);
@@ -772,10 +757,9 @@ function MenuMobile({ dataHeader }) {
     const newPathname = "/" + newSegments.join("/");
 
     document.cookie = `lang=${newLocale}; path=/; max-age=31536000;`;
-    router.replace(
-      newPathname +
-        (searchParams.toString() ? `?${searchParams.toString()}` : "")
-    );
+
+    // بدون query
+    router.replace(newPathname);
   }
 
   useEffect(() => {
@@ -873,8 +857,8 @@ function MenuMobile({ dataHeader }) {
           isOpen
             ? "translate-x-0"
             : isRTL
-            ? "translate-x-full"
-            : "-translate-x-full"
+              ? "translate-x-full"
+              : "-translate-x-full"
         }`}
       >
         <ul className="px-20 py-30 text-[var(--color-gray-900)] flex flex-col gap-[2rem]">
@@ -1004,12 +988,12 @@ function MenuMobile({ dataHeader }) {
                   </li>
                   <li className="py-[10px] ms-[15px]">
                     <a
-                      href="https://marjan.ariisco.com"
-                      target="_blank"
+                      href="#"
+                      // target="_blank"
                       rel="noopener noreferrer"
                       className="custom-link"
                     >
-                      {t("Smart Layout Software")}
+                      {`${t("Smart Layout Software")} (${t("coming soon")})`}
                     </a>
                   </li>
                   <li className="py-[10px] ms-[15px]">
@@ -1052,13 +1036,13 @@ function MenuMobile({ dataHeader }) {
                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
                 >
                   {[
-                    { label: t("Articles"), category: "articles" },
-                    { label: t("Videos"), category: "videos" },
-                    { label: t("News"), category: "news" },
+                    { label: t("Articles"), category: t("Articles") },
+                    { label: t("Videos"), category: t("Videos") },
+                    { label: t("News"), category: t("News") },
                   ].map((item) => (
                     <li key={item.category} className="py-[10px] ms-[15px]">
                       <Link
-                        href={`/blogs?tab=2&category=${item.category}`}
+                        href={`/blogs?tab=2&category=${item.category.toLowerCase()}`}
                         onClick={() => {
                           setActiveBlog(item.category);
                           setIsOpen(false);
@@ -1181,3 +1165,55 @@ function MenuMobile({ dataHeader }) {
     </div>
   );
 }
+
+// function handleLangChange(newLocale) {
+//   let cleanSegments = pathname.split("/").filter(Boolean);
+
+//   if (
+//     cleanSegments.length > 0 &&
+//     ["fa", "en", "ar", "ru"].includes(cleanSegments[0])
+//   ) {
+//     cleanSegments.shift();
+//   }
+
+//   const newSegments =
+//     newLocale === "fa" && cleanSegments.length === 0
+//       ? [newLocale]
+//       : [newLocale, ...cleanSegments];
+
+//   const newPathname = "/" + newSegments.join("/");
+
+//   document.cookie = `lang=${newLocale}; path=/; max-age=31536000;`;
+//   router.replace(
+//     newPathname +
+//       (searchParams.toString() ? `?${searchParams.toString()}` : ""),
+//   );
+// }
+
+// function handleLangChange(newLocale) {
+//   let cleanSegments = pathname.split("/").filter(Boolean);
+
+//   // حذف locale فعلی اگر وجود داشته باشه
+//   if (
+//     cleanSegments.length > 0 &&
+//     ["fa", "en", "ar", "ru"].includes(cleanSegments[0])
+//   ) {
+//     cleanSegments.shift();
+//   }
+
+//   // ساخت مسیر جدید
+//   const newSegments =
+//     newLocale === "fa" && cleanSegments.length === 0
+//       ? [newLocale]
+//       : [newLocale, ...cleanSegments];
+
+//   const newPathname = "/" + newSegments.join("/");
+
+//   // حفظ query string اگر وجود داشته باشه
+//   const query = searchParams.toString();
+//   const finalPath = query ? `${newPathname}?${query}` : newPathname;
+
+//   document.cookie = `lang=${newLocale}; path=/; max-age=31536000;`;
+//   router.replace(finalPath);
+//   setIsOpenLang(false);
+// }

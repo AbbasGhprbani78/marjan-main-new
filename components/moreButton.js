@@ -36,6 +36,7 @@ export function MoreButton({
         isHovered ? "bg-gray-800 text-gray-white" : ""
       } transition-colors duration-400 backdrop-blur-[4px]`}
       style={{
+        minWidth: "157px",
         width: width ? `${width}px` : "auto",
         height: height ? `${height}px` : auto,
       }}

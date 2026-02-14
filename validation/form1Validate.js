@@ -29,7 +29,7 @@ export const validateForm1 = (data, setErrors) => {
   if (!data.marital_status) newErrors.marital_status = "وضعیت تاهل الزامی است";
   if (!data.height) newErrors.height = "قد الزامی است";
   if (!data.weight) newErrors.weight = "وزن الزامی است";
-  if (!data.state) newErrors.state = "استان الزامی است";
+  if (!data.state_name) newErrors.state_name = "استان الزامی است";
   if (!data.mobile) {
     newErrors.mobile = "تلفن همراه الزامی است";
   } else if (!validateIranianMobile(data.mobile)) {

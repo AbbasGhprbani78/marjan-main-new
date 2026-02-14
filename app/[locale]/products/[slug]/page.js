@@ -38,6 +38,7 @@ export default async function page({ params }) {
     const dataSingleProduct = await fetchSingleProduct(locale, slug);
     const dictArray = await fetchTranslateWords(locale);
     const dict = buildDictionary(dictArray);
+    console.log("dataSingleProduct=>", dataSingleProduct);
 
     return (
       <div className="wrapper">
@@ -91,10 +92,11 @@ export default async function page({ params }) {
               category={dataSingleProduct?.category}
             />
             <GuideSection
-              text={dict["SmartLayout"]}
+              text={`${dict["SmartLayout"]} (${dict["coming soon"]})`}
               icon={"Box2"}
               isLink={"true"}
-              href="https://marjan.ariisco.com"
+              href="#"
+              disabled
             />
             {dataSingleProduct?.paking_table_size &&
               Object.keys(dataSingleProduct?.paking_table_size).length > 0 && (

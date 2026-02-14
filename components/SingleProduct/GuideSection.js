@@ -23,6 +23,7 @@ export default function GuideSection({
   value = "",
   category = "",
   id = null,
+  disabled = false,
 }) {
   const { localizedHref } = useLocalizedLink();
   const { t, locale } = useTranslation();
@@ -82,6 +83,15 @@ export default function GuideSection({
     id: size,
     name: size,
   }));
+
+  if (disabled) {
+    return (
+      <div className="flex gap-5  select-none">
+        <GuideIcon size="24" className="text-gray-700" />
+        <p className="my-auto font-[700] text-[14px] text-gray-700">{text}</p>
+      </div>
+    );
+  }
 
   return (
     <>

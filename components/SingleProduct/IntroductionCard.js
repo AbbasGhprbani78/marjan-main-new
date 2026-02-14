@@ -78,13 +78,23 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
           onClick={handlePrev}
           className="p-2 bg-black/30 rounded-full backdrop-blur-sm"
         >
-          <Icons.ArrowRight color="#fff" className="w-30 h-30" />
+          <Icons.ArrowRight
+            color="#fff"
+            className={`w-30 h-30 ${
+              ["ru", "en"].includes(locale) && "rotate-180"
+            }`}
+          />
         </button>
         <button
           onClick={handleNext}
           className="p-2 bg-black/30 rounded-full backdrop-blur-sm"
         >
-          <Icons.ArrowLeft color="#fff" className="w-30 h-30" />
+          <Icons.ArrowLeft
+            color="#fff"
+            className={`w-30 h-30 ${
+              ["ru", "en"].includes(locale) && "rotate-180"
+            }`}
+          />
         </button>
       </div>
 
@@ -93,13 +103,23 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
           onClick={handlePrev}
           className="p-2 bg-black/30 rounded-full backdrop-blur-sm"
         >
-          <Icons.ArrowRight color="#fff" className="w-30 h-30" />
+          <Icons.ArrowRight
+            color="#fff"
+            className={`w-30 h-30 ${
+              ["ru", "en"].includes(locale) && "rotate-180"
+            }`}
+          />
         </button>
         <button
           onClick={handleNext}
           className="p-2 bg-black/30 rounded-full backdrop-blur-sm"
         >
-          <Icons.ArrowLeft color="#fff" className="w-30 h-30" />
+          <Icons.ArrowLeft
+            color="#fff"
+            className={`w-30 h-30 ${
+              ["ru", "en"].includes(locale) && "rotate-180"
+            }`}
+          />
         </button>
       </div>
 
@@ -126,10 +146,10 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
                 <Icons.Location size={15} />
               </button>
               <button
-                onClick={() => router.push("https://marjan.ariisco.com")}
+                onClick={() => router.push("#")}
                 className="flex-1 py-[7px] bg-[var(--color-gray-800)] text-white flex items-center gap-[5px] justify-center cursor-pointer text-[.9rem]"
               >
-                {t("SmartLayout")}
+                {t("coming soon")}
                 <Icons.Box2 size={15} />
               </button>
             </div>
@@ -265,11 +285,11 @@ export default function IntroductionCard({ setOpenModal, singleProduct }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  router.push("https://marjan.ariisco.com");
+                  router.push("#");
                 }}
                 className="flex-1 py-7 bg-gray-800 text-white flex items-center justify-center gap-2 rounded-md text-[.8rem]"
               >
-                {t("SmartLayout")}
+                {t("coming soon")}
                 <Icons.Box2 size={15} />
               </button>
             </div>

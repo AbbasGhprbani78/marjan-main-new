@@ -1,7 +1,7 @@
 import { useParams } from "next/navigation";
 export function truncateText(text, maxLength) {
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength).trim() + "  ...";
+  if (text?.length <= maxLength) return text;
+  return text?.slice(0, maxLength)?.trim() + "  ...";
 }
 
 export function toPersianDigits(number) {
@@ -23,3 +23,6 @@ export function useLocalizedLink() {
 
   return { localizedHref };
 }
+
+// http://localhost:3000/ru/blogs?tab=2&category=cтатьи
+// http://localhost:3000/ru/blogs?tab=2&category=статьи

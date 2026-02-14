@@ -1,493 +1,4 @@
-function MenuLink({ href, children, className = "", onClick }) {
-  const { locale } = useParams();
 
-  const cleanHref = href.startsWith("/") ? href.slice(1) : href;
-
-  const linkHref = href.startsWith("/")
-    ? `/${locale}/${cleanHref}`
-    : `/${locale}/${href}`;
-
-  return (
-    <Link href={linkHref}>
-      <span onClick={onClick} className={`cursor-pointer ${className}`}>
-        {children}
-      </span>
-    </Link>
-  );
-}
-
-// function MenuMobile({ dataHeader }) {
-//   const { locale } = useParams();
-//   const { t } = useTranslation();
-//   const [isOpenLanguage, setIsOpenLanguage] = useState(false);
-//   const [isOpen, setIsOpen] = useState(false);
-//   const [isShowSearch, setIsShowSearch] = useState(false);
-//   const router = useRouter();
-//   const [openItems, setOpenItems] = useState({
-//     assistant: false,
-//     blog: false,
-//     collab: false,
-//     product: false,
-//   });
-
-//   const pathname = usePathname();
-//   const searchParams = useSearchParams();
-//   const { setIsShowChatbot } = useToggle();
-//   const [activeBlog, setActiveBlog] = useState(null);
-
-//   const localizedPath = (path) => `/${locale}${path}`;
-
-//   const toggleItem = (key) => {
-//     setOpenItems((prev) => ({
-//       ...prev,
-//       [key]: !prev[key],
-//     }));
-//   };
-
-//   useEffect(() => {
-//     document.body.classList.toggle("overflow-hidden", isOpen);
-//     return () => {
-//       document.body.classList.remove("overflow-hidden");
-//     };
-//   }, [isOpen]);
-
-//   const isActive = (route) => {
-//     if (route === "/") {
-//       return pathname === `/${locale}` || pathname === `/${locale}/`;
-//     }
-//     return pathname === `/${locale}${route}`;
-//   };
-
-//   const isRTL = ["fa", "ar"].includes(locale);
-
-//   const currentLocale = pathname.split("/")[1] || "fa";
-
-//   function handleLangChange(newLocale) {
-//     const segments = pathname.split("/").filter(Boolean);
-
-//     if (segments.length && ["fa", "en", "ar", "ru"].includes(segments[0])) {
-//       segments[0] = newLocale;
-//     } else {
-//       segments.unshift(newLocale);
-//     }
-
-//     const newPathname = "/" + segments.join("/");
-
-//     document.cookie = `lang=${newLocale}; path=/; max-age=31536000;`;
-
-//     router.replace(newPathname);
-//   }
-
-//   const queryString = searchParams.toString();
-
-//   const categoryMap = {
-//     fa: "چرا مرجان",
-//     ar: "لماذا المرجان",
-//     en: "Why Coral",
-//     ru: "Почему коралл",
-//   };
-
-//   const category = categoryMap[locale] || categoryMap.fa;
-
-//   useEffect(() => {
-//     setIsOpen(false);
-//     setIsShowSearch(false);
-//   }, [queryString, pathname]);
-
-//   return (
-//     <div className="fixed w-full left-0 right-0 z-[9999999]  xl:hidden">
-//       <div className="flex items-center justify-between bg-[#292d32] px-20 py-3">
-//         <div
-//           className="cursor-pointer"
-//           onClick={() => setIsOpen((prev) => !prev)}
-//         >
-//           <HamburgerButton isOpen={isOpen} />
-//         </div>
-//         <Link href={`/`}>
-//           <Image
-//             src={
-//               ["fa"].includes(locale)
-//                 ? "/images/logofa.png"
-//                 : "/images/logo1.png"
-//             }
-//             alt="White Logo"
-//             width={150}
-//             height={50}
-//           />
-//         </Link>
-//       </div>
-//       <div
-//         className={`flex items-center justify-between py-[15px] px-20 bg-white/60 backdrop-blur-xs `}
-//       >
-//         <div className="relative">
-//           <div
-//             dir={"ltr"}
-//             className="cursor-pointer flex items-center gap-[5px] select-none"
-//             onClick={() => setIsOpenLanguage((prev) => !prev)}
-//           >
-//             {currentLocale.toUpperCase()}
-//             <Icons.ArrowDown2
-//               size="20"
-//               className={`transition-transform duration-300 ${
-//                 isOpen ? "rotate-180" : ""
-//               }`}
-//             />
-//           </div>
-
-//           {isOpenLanguage && (
-//             <ul className="absolute top-full mt-2 bg-white shadow-md text-sm overflow-hidden z-50 text-[var(--color-gray-900)] px-4 flex flex-col gap-4">
-//               <li
-//                 dir="ltr"
-//                 className=" cursor-pointer w-full flex items-center justify-between "
-//                 onClick={() => handleLangChange("fa")}
-//               >
-//                 FA
-//               </li>
-//               <li
-//                 dir="ltr"
-//                 className=" cursor-pointer  flex items-center justify-between "
-//                 onClick={() => handleLangChange("en")}
-//               >
-//                 EN
-//               </li>
-//               <li
-//                 dir="ltr"
-//                 className=" cursor-pointer flex items-center justify-between"
-//                 onClick={() => handleLangChange("ar")}
-//               >
-//                 AR
-//               </li>
-//               <li
-//                 dir="ltr"
-//                 className=" hover:bg-gray-100 cursor-pointer flex items-center justify-between"
-//                 onClick={() => handleLangChange("ru")}
-//               >
-//                 RU
-//               </li>
-//             </ul>
-//           )}
-//         </div>
-//         <div className="flex items-start gap-[15px] md:relative">
-//           <MenuLink href="/saved" className="custom-link">
-//             <Icons.Save2 size={25} />
-//           </MenuLink>
-
-//           <div className="relative">
-//             <Icons.SearchNormal1
-//               size="25"
-//               onClick={() => setIsShowSearch((prev) => !prev)}
-//               color="#000"
-//               className="cursor-pointer"
-//             />
-//             <BoxSearch showBox={isShowSearch} />
-//           </div>
-//         </div>
-//       </div>
-//       <div
-//         className={`fixed top-[66.94px] h-[calc(100dvh-66.94px)] pb-[20px] w-full bg-white z-50 transform transition-transform duration-300 overflow-y-auto ${
-//           isOpen
-//             ? "translate-x-0"
-//             : isRTL
-//             ? "translate-x-full"
-//             : "-translate-x-full"
-//         }`}
-//       >
-//         <ul className="px-20 py-30 text-[var(--color-gray-900)] flex flex-col gap-[2rem]">
-//           <li className="font-medium">
-//             <MenuLink
-//               href={"/"}
-//               onClick={() => setIsOpen(false)}
-//               className={`pb-1 ${
-//                 isActive("/") ? "border-b-2 border-primary" : ""
-//               }`}
-//             >
-//               {t("Home")}
-//             </MenuLink>
-//           </li>
-//           <li className="w-full font-medium">
-//             <div
-//               onClick={() => toggleItem("product")}
-//               className="flex items-center gap-[10px] cursor-pointer"
-//             >
-//               {t("Products")}
-//               <Icons.ArrowDown2
-//                 size="20"
-//                 className={`transition-transform duration-300 ${
-//                   openItems.product ? "rotate-180" : ""
-//                 }`}
-//               />
-//             </div>
-//             <AnimatePresence>
-//               {openItems.product && (
-//                 <motion.ul
-//                   initial={{ height: 0, opacity: 0 }}
-//                   animate={{ height: "auto", opacity: 1 }}
-//                   exit={{ height: 0, opacity: 0 }}
-//                   transition={{ duration: 0.3 }}
-//                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
-//                 >
-//                   <MenuLink
-//                     href={"/products"}
-//                     className={`w-max flex justify-between  py-3 font-medium text-[var(--color-gray-900)] ms-[15px] ${
-//                       isActive("/products") ? "border-b-2 border-primary" : ""
-//                     }`}
-//                   >
-//                     {t("AllProducts")}
-//                   </MenuLink>
-//                   <MenuLink
-//                     href={"/industrial"}
-//                     className={`w-max mt-[.5rem] flex justify-between  py-3 font-medium text-[var(--color-gray-900)] ms-[15px] ${
-//                       isActive("/industrial") ? "border-b-2 border-primary" : ""
-//                     }`}
-//                   >
-//                     {t("Industrial")}
-//                   </MenuLink>
-//                   <MenuLink
-//                     href={`/catalog?category=${encodeURIComponent(category)}`}
-//                     className={`w-max mt-[.5rem] flex justify-between  py-3 font-medium text-[var(--color-gray-900)] ms-[15px] `}
-//                   >
-//                     {t("Why Marjan")}
-//                   </MenuLink>
-
-//                   <FilterHeader
-//                     show={isOpen}
-//                     setShowFilterMenu={setIsOpen}
-//                     dataHeader={dataHeader}
-//                   />
-//                 </motion.ul>
-//               )}
-//             </AnimatePresence>
-//           </li>
-
-//           {[
-//             { label: t("Catalog"), href: "/catalog" },
-//             { label: t("Representatives"), href: "/representatives" },
-//             { label: t("About"), href: "/aboutus" },
-//           ].map(({ label, href }) => (
-//             <li className="font-medium" key={href}>
-//               <MenuLink
-//                 href={href}
-//                 onClick={() => setIsOpen(false)}
-//                 className={`pb-1 ${
-//                   isActive(href) ? "border-b-2 border-primary" : ""
-//                 }`}
-//               >
-//                 {label}
-//               </MenuLink>
-//             </li>
-//           ))}
-
-//           <li className="w-full font-medium">
-//             <div
-//               onClick={() => toggleItem("assistant")}
-//               className="flex items-center gap-[10px] cursor-pointer"
-//             >
-//               {t("DigitalAssistant")}
-//               <Icons.ArrowDown2
-//                 size="20"
-//                 className={`transition-transform duration-300 ${
-//                   openItems.assistant ? "rotate-180" : ""
-//                 }`}
-//               />
-//             </div>
-//             <AnimatePresence>
-//               {openItems.assistant && (
-//                 <motion.ul
-//                   initial={{ height: 0, opacity: 0 }}
-//                   animate={{ height: "auto", opacity: 1 }}
-//                   exit={{ height: 0, opacity: 0 }}
-//                   transition={{ duration: 0.3 }}
-//                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
-//                 >
-//                   {[
-//                     {
-//                       label: t("Chatbot"),
-//                       action: () => setIsShowChatbot(true),
-//                     },
-//                     {
-//                       label: t("Smart Layout Software"),
-//                       href: "https://marjan.ariisco.com",
-//                     },
-//                     {
-//                       label: t("Estimatetilearea"),
-//                       href: "/calculator",
-//                     },
-//                   ].map(({ label, href, action }, i) => (
-//                     <li className="py-[10px]" key={i}>
-//                       {href ? (
-//                         href.startsWith("http") ? (
-//                           <a
-//                             href={href}
-//                             target="_blank"
-//                             rel="noopener noreferrer"
-//                             onClick={() => setIsOpen(false)}
-//                             className="ms-[15px] custom-link"
-//                           >
-//                             {label}
-//                           </a>
-//                         ) : (
-//                           <MenuLink
-//                             href={href}
-//                             onClick={() => setIsOpen(false)}
-//                             className={`ms-[15px] custom-link ${
-//                               isActive(href) ? "border-b-2 border-primary" : ""
-//                             }`}
-//                           >
-//                             {label}
-//                           </MenuLink>
-//                         )
-//                       ) : (
-//                         <button
-//                           onClick={() => {
-//                             action?.();
-//                             setIsOpen(false);
-//                           }}
-//                           className="ms-[15px] custom-link"
-//                         >
-//                           {label}
-//                         </button>
-//                       )}
-//                     </li>
-//                   ))}
-//                 </motion.ul>
-//               )}
-//             </AnimatePresence>
-//           </li>
-
-//           <li className="w-full font-medium">
-//             <div
-//               onClick={() => toggleItem("blog")}
-//               className="flex items-center gap-[10px] cursor-pointer"
-//             >
-//               {t("Blog")}
-//               <Icons.ArrowDown2
-//                 size="20"
-//                 className={`transition-transform duration-300 ${
-//                   openItems.blog ? "rotate-180" : ""
-//                 }`}
-//               />
-//             </div>
-//             <AnimatePresence>
-//               {openItems.blog && (
-//                 <motion.ul
-//                   initial={{ height: 0, opacity: 0 }}
-//                   animate={{ height: "auto", opacity: 1 }}
-//                   exit={{ height: 0, opacity: 0 }}
-//                   transition={{ duration: 0.3 }}
-//                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
-//                 >
-//                   {[
-//                     { label: t("Articles"), category: "articles" },
-//                     { label: t("Videos"), category: "videos" },
-//                     { label: t("News"), category: "news" },
-//                   ].map((item, i) => (
-//                     <li key={i} className="py-[10px] ms-[15px]">
-//                       <Link
-//                         href={localizedPath(
-//                           `/blogs?tab=2&category=${item.label.toLowerCase()}`
-//                         )}
-//                         className={`custom-link ${
-//                           activeBlog === item?.category ? "active" : ""
-//                         }`}
-//                         onClick={() => setActiveBlog(item.category)}
-//                       >
-//                         {item.label}
-//                       </Link>
-//                     </li>
-//                   ))}
-//                 </motion.ul>
-//               )}
-//             </AnimatePresence>
-//           </li>
-
-//           {[
-//             { label: t("Projects"), href: "/projects" },
-//             { label: t("Newsletter"), href: "/newsletter" },
-//             { label: t("FAQ"), href: "/faq" },
-//           ].map(({ label, href }) => (
-//             <li className="font-medium" key={href}>
-//               <MenuLink
-//                 href={href}
-//                 onClick={() => setIsOpen(false)}
-//                 className={`pb-1 ${
-//                   isActive(href) ? "border-b-2 border-primary" : ""
-//                 }`}
-//               >
-//                 {label}
-//               </MenuLink>
-//             </li>
-//           ))}
-
-//           <li className="w-full font-medium">
-//             <div
-//               onClick={() => toggleItem("collab")}
-//               className="flex items-center gap-[10px] cursor-pointer"
-//             >
-//               {t("Join Us")}
-//               <Icons.ArrowDown2
-//                 size="20"
-//                 className={`transition-transform duration-300 ${
-//                   openItems.collab ? "rotate-180" : ""
-//                 }`}
-//               />
-//             </div>
-//             <AnimatePresence>
-//               {openItems.collab && (
-//                 <motion.ul
-//                   initial={{ height: 0, opacity: 0 }}
-//                   animate={{ height: "auto", opacity: 1 }}
-//                   exit={{ height: 0, opacity: 0 }}
-//                   transition={{ duration: 0.3 }}
-//                   className="overflow-hidden mt-[10px] flex flex-col gap-2 text-sm"
-//                 >
-//                   {[
-//                     ...(locale === "fa"
-//                       ? [{ label: t("employment"), href: "/employment" }]
-//                       : []),
-//                     {
-//                       label: t("representationrequest"),
-//                       href: "/representationrequest",
-//                     },
-//                     ...(locale === "fa"
-//                       ? [{ label: t("suppliers"), href: "/suppliers" }]
-//                       : []),
-//                   ].map((item, i) => (
-//                     <li className="py-[10px] ms-[15px]" key={i}>
-//                       <MenuLink
-//                         href={item.href}
-//                         onClick={() => setIsOpen(false)}
-//                         className={`custom-link ${
-//                           isActive(item.href) ? "border-b-2 border-primary" : ""
-//                         }`}
-//                       >
-//                         {item.label}
-//                       </MenuLink>
-//                     </li>
-//                   ))}
-//                 </motion.ul>
-//               )}
-//             </AnimatePresence>
-//           </li>
-//           {[{ label: t("Contactus"), href: "/contactus" }].map(
-//             ({ label, href }) => (
-//               <li className="font-medium" key={href}>
-//                 <MenuLink
-//                   href={href}
-//                   onClick={() => setIsOpen(false)}
-//                   className={`pb-1 ${
-//                     isActive(href) ? "border-b-2 border-primary" : ""
-//                   }`}
-//                 >
-//                   {label}
-//                 </MenuLink>
-//               </li>
-//             )
-//           )}
-//         </ul>
-//       </div>
-//     </div>
-//   );
-// }
 
 
 
@@ -1059,4 +570,277 @@ function MenuLink({ href, children, className = "", onClick }) {
 
 
 
-=
+
+
+
+
+// export function NavBar({ dataHeader }) {
+//   const [scrolled, setScrolled] = useState(false);
+//   const [showInnerMenu, setShowInnerMenu] = useState(false);
+//   const [isShowSearch, setIsShowSearch] = useState(false);
+//   const [showFilterMenu, setShowFilterMenu] = useState(false);
+//   const [isOpenLang, setIsOpenLang] = useState(false); // برای dropdown زبان
+//   const [isHovered, setIsHovered] = useState(false);
+//   const [isChangeBg, setIsChangeBg] = useState(false);
+
+//   const router = useRouter();
+//   const pathname = usePathname();
+//   const searchParams = useSearchParams();
+//   const { locale } = useParams();
+//   const { t } = useTranslation();
+
+//   // locale فعلی مستقیم از useParams
+//   const currentLocale = locale || "fa";
+
+//   // clean pathname بدون locale (برای مقایسه مسیرها و استایل‌ها)
+//   const cleanPathname = pathname.startsWith(`/${locale}`)
+//     ? pathname.slice(locale.length + 1) || "/"
+//     : pathname || "/";
+
+//   const isInDustrial = cleanPathname === "/industrial";
+
+//   const isSpecialPage =
+//     cleanPathname === "/products" ||
+//     cleanPathname === "/catalog" ||
+//     cleanPathname === "/representatives" ||
+//     cleanPathname === "/contactus" ||
+//     cleanPathname === "/calculator" ||
+//     cleanPathname === "/employment" ||
+//     cleanPathname === "/representationrequest" ||
+//     cleanPathname === "/suppliers" ||
+//     cleanPathname === "/saved";
+
+//   const shouldApplyScrolledStyles =
+//     scrolled || isHovered || isSpecialPage || isChangeBg;
+
+//   // چک کردن فعال بودن لینک (بدون در نظر گرفتن locale)
+//   const isActive = (route) => {
+//     const target = route === "/" ? "/" : route;
+//     return cleanPathname === target;
+//   };
+
+//   // تغییر زبان — همیشه clean path + locale جدید
+//   function handleLangChange(newLocale) {
+//     let cleanSegments = pathname.split("/").filter(Boolean);
+
+//     // حذف locale فعلی اگر وجود داشته باشه
+//     if (
+//       cleanSegments.length > 0 &&
+//       ["fa", "en", "ar", "ru"].includes(cleanSegments[0])
+//     ) {
+//       cleanSegments.shift();
+//     }
+
+//     // ساخت مسیر جدید
+//     const newSegments =
+//       newLocale === "fa" && cleanSegments.length === 0
+//         ? [newLocale]
+//         : [newLocale, ...cleanSegments];
+
+//     const newPathname = "/" + newSegments.join("/");
+
+//     // حفظ query string اگر وجود داشته باشه
+//     const query = searchParams.toString();
+//     const finalPath = query ? `${newPathname}?${query}` : newPathname;
+
+//     document.cookie = `lang=${newLocale}; path=/; max-age=31536000;`;
+//     router.replace(finalPath);
+//     setIsOpenLang(false);
+//   }
+
+//   const handleToggle = (menu) => {
+//     setShowInnerMenu(menu === "inner" ? !showInnerMenu : false);
+//     setIsShowSearch(menu === "search" ? !isShowSearch : false);
+//     setShowFilterMenu(menu === "filter" ? !showFilterMenu : false);
+//   };
+
+//   // اسکرول
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       setScrolled(window.scrollY > 5);
+//     };
+//     window.addEventListener("scroll", handleScroll);
+//     return () => window.removeEventListener("scroll", handleScroll);
+//   }, []);
+
+//   // ریست حالت‌ها هنگام تغییر مسیر یا فیلتر
+//   useEffect(() => {
+//     setShowFilterMenu(false);
+//     setIsOpenLang(false);
+//     setIsChangeBg(false);
+//     setIsShowSearch(false);
+//     setScrolled(false);
+//     setIsHovered(false);
+//   }, [pathname, searchParams.get("filterKey"), searchParams.get("values")]);
+
+//   // قفل اسکرول وقتی منوی داخلی بازه
+//   useEffect(() => {
+//     if (showInnerMenu) {
+//       document.body.classList.add("overflow-hidden");
+//     } else {
+//       document.body.classList.remove("overflow-hidden");
+//     }
+//     return () => document.body.classList.remove("overflow-hidden");
+//   }, [showInnerMenu]);
+
+//   return (
+//     <header
+//       className={`absolute w-full z-20 bg-gary-black ${
+//         ["ar", "fa"].includes(locale) ? "font-fa" : "font-en"
+//       }`}
+//       onMouseEnter={() => setIsHovered(true)}
+//       onMouseLeave={() => setIsHovered(false)}
+//     >
+//       {/* نوار اصلی دسکتاپ */}
+//       <div
+//         className={`hidden xl:flex flex-row justify-between w-full fixed z-10 h-102 px-40 xl:px-80 py-10 transition-all duration-300 ${
+//           shouldApplyScrolledStyles
+//             ? isInDustrial
+//               ? "bg-[#fabd02]"
+//               : "bg-gray-white"
+//             : ""
+//         }`}
+//       >
+//         <nav
+//           className={`flex flex-row my-auto lg:gap-30 xl:gap-50 text-[16px] ${
+//             shouldApplyScrolledStyles
+//               ? isInDustrial
+//                 ? "text-gray-700"
+//                 : "text-gray-900"
+//               : "text-gray-white"
+//           }`}
+//         >
+//           {/* آیکن‌های سمت چپ */}
+//           <div className="flex items-center gap-[30px]">
+//             <HamburgerButton
+//               isOpen={showInnerMenu}
+//               onClick={() => {
+//                 handleToggle("inner");
+//                 setIsChangeBg((prev) => !prev);
+//               }}
+//               scrolled={scrolled}
+//               isSpecialPage={shouldApplyScrolledStyles}
+//             />
+
+//             {/* تغییر زبان */}
+//             <div className="relative">
+//               <div
+//                 dir="ltr"
+//                 className="cursor-pointer flex items-center gap-[5px] select-none"
+//                 onClick={() => setIsOpenLang((prev) => !prev)}
+//               >
+//                 {currentLocale.toUpperCase()}
+//                 <Icons.ArrowDown2
+//                   size="20"
+//                   className={`transition-transform duration-300 ${
+//                     isOpenLang ? "rotate-180" : ""
+//                   }`}
+//                 />
+//               </div>
+
+//               {isOpenLang && (
+//                 <ul className="absolute top-full mt-2 bg-white shadow-md rounded-md text-sm z-[9999] text-[var(--color-gray-900)] px-4 py-4 flex flex-col gap-3">
+//                   {["fa", "en", "ar", "ru"].map((lang) => (
+//                     <li
+//                       key={lang}
+//                       dir="ltr"
+//                       className="cursor-pointer hover:bg-gray-100 px-3 py-1 rounded"
+//                       onClick={() => handleLangChange(lang)}
+//                     >
+//                       {lang.toUpperCase()}
+//                     </li>
+//                   ))}
+//                 </ul>
+//               )}
+//             </div>
+
+//             {/* جستجو */}
+//             <div className="relative cursor-pointer">
+//               <Icons.SearchNormal1
+//                 size="20"
+//                 onClick={() => handleToggle("search")}
+//               />
+//               <BoxSearch showBox={isShowSearch} />
+//             </div>
+
+//             {/* ذخیره شده‌ها */}
+//             <Link
+//               href="/saved"
+//               className={`custom-link ${isActive("/saved") ? "active" : ""}`}
+//             >
+//               <Icons.Save2 size="20" />
+//             </Link>
+//           </div>
+
+//           {/* لینک‌های اصلی */}
+//           <Link
+//             href="/"
+//             className={`custom-link ${isActive("/") ? "active" : ""}`}
+//           >
+//             {t("Home")}
+//           </Link>
+
+//           <li
+//             className="flex cursor-pointer items-center"
+//             onClick={() => handleToggle("filter")}
+//           >
+//             <p>{t("Products")}</p>
+//             <motion.div
+//               animate={{ rotate: showFilterMenu ? 180 : 0 }}
+//               transition={{ duration: 0.3 }}
+//               className="ms-2"
+//             >
+//               <Icons.ArrowDown2 size="20" />
+//             </motion.div>
+//           </li>
+
+//           <Link
+//             href="/catalog"
+//             className={`custom-link ${isActive("/catalog") ? "active" : ""}`}
+//           >
+//             {t("Catalog")}
+//           </Link>
+
+//           <Link
+//             href="/representatives"
+//             className={`custom-link ${
+//               isActive("/representatives") ? "active" : ""
+//             }`}
+//           >
+//             {t("Representatives")}
+//           </Link>
+
+//           <Link
+//             href="/aboutus"
+//             className={`custom-link ${isActive("/aboutus") ? "active" : ""}`}
+//           >
+//             {t("About")}
+//           </Link>
+//         </nav>
+
+//         {/* لوگو */}
+//         <Link href="/" className="relative w-[0px] aspect-[3/2] md:w-[205px]">
+//           <Image
+//             src={locale === "fa" ? "/images/logofa.png" : "/images/logo1.png"}
+//             alt="Logo"
+//             fill
+//             className={`${
+//               shouldApplyScrolledStyles ? "invert" : ""
+//             } object-contain`}
+//           />
+//         </Link>
+//       </div>
+
+//       {/* منوهای اضافی */}
+//       <Menu show={showInnerMenu} setShowInnerMenu={setShowInnerMenu} />
+//       <FilterHeader
+//         show={showFilterMenu}
+//         setShowFilterMenu={setShowFilterMenu}
+//         dataHeader={dataHeader}
+//       />
+
+//       {/* منوی موبایل */}
+//       <MenuMobile dataHeader={dataHeader} />
+//     </header>
+//   );
+// }

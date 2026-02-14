@@ -25,12 +25,12 @@ export const validateRepresentationrequest = (data, setErrors, t) => {
     newErrors.phoneNumber = t("Invalid mobile number");
   }
 
-  if (!data.province.trim()) {
-    newErrors.province = t("Province is required");
+  if (!data.province_name.trim()) {
+    newErrors.province_name = t("Province is required");
   }
 
-  if (!data.country.trim()) {
-    newErrors.country = t("Country is required");
+  if (!data.country_name.trim()) {
+    newErrors.country_name = t("Country is required");
   }
 
   if (!data.storeName.trim()) {
@@ -41,7 +41,7 @@ export const validateRepresentationrequest = (data, setErrors, t) => {
     newErrors.storeArea = t("Store area is required");
   }
 
-  if (!data.storeOwnershipType.trim()) {
+  if (!data.storeOwnershipType) {
     newErrors.storeOwnershipType = t("Store ownership type is required");
   }
 
@@ -55,7 +55,7 @@ export const validateRepresentationrequest = (data, setErrors, t) => {
     newErrors.storeAddress = t("Store address is required");
   }
 
-  if (!data.warehouseType.trim()) {
+  if (!data.warehouseType) {
     newErrors.warehouseType = t("Warehouse type is required");
   }
 
@@ -63,13 +63,13 @@ export const validateRepresentationrequest = (data, setErrors, t) => {
     newErrors.warehouseArea = t("Warehouse area is required");
   }
 
-  if (!data.warehouseFacilities.trim()) {
+  if (!data.warehouseFacilities) {
     newErrors.warehouseFacilities = t("Warehouse facilities are required");
   }
 
-  if (!data.warehouseOwnershipType.trim()) {
+  if (!data.warehouseOwnershipType) {
     newErrors.warehouseOwnershipType = t(
-      "Warehouse ownership type is required"
+      "Warehouse ownership type is required",
     );
   }
 
@@ -85,17 +85,17 @@ export const validateRepresentationrequest = (data, setErrors, t) => {
 
   if (!data.representativeCompanies.trim()) {
     newErrors.representativeCompanies = t(
-      "Representative companies are required"
+      "Representative companies are required",
     );
   }
 
-  if (!data.foreignTileActivity.trim()) {
+  if (!data.foreignTileActivity) {
     newErrors.foreignTileActivity = t("Foreign tile activity is required");
   }
 
   if (!data.reasonForChoosingMarjan.trim()) {
     newErrors.reasonForChoosingMarjan = t(
-      "Reason for choosing Marjan is required"
+      "Reason for choosing Marjan is required",
     );
   }
 
